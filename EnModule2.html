@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2 — City of Light | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#1D4ED8 0%,#2563EB 55%,#3B82F6 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:'🏙️';font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.82);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:#93C5FD;color:rgba(255,255,255,.88)}
+  .module-banner .mobj strong{color:#fff}
+  .sec-nav{display:flex;flex-wrap:wrap;gap:8px;padding:14px 28px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90;transition:background .25s}
+  .sec-pill{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:5px 13px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+  .sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+  .script-box{background:var(--ink);color:#93C5FD;border-radius:var(--rsm);padding:14px 18px;font-family:'JetBrains Mono','Courier New',monospace;font-size:13px;line-height:1.7;margin:10px 0;border-left:4px solid #3B82F6}
+  [data-theme="dark"] .script-box{background:#0a0e18}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}
+  .fc{color:var(--ok-t)}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #3B82F6;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .coord-box{background:var(--ink);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .coord-box{background:#0a0e18}
+  .cx{color:#F87171}.cy{color:#4ADE80}.cz{color:#60A5FA}.cm{color:#FCD34D}
+  .anchor-target{scroll-margin-top:130px}
+  code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dashboard</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="sec-nav">
+  <a href="#overview"   class="sec-pill">1 · Overview</a>
+  <a href="#flow"       class="sec-pill">2 · Instructional Flow</a>
+  <a href="#tech"       class="sec-pill">3 · Technical Deep-Dive</a>
+  <a href="#multi"      class="sec-pill">4 · Multiplayer</a>
+  <a href="#trouble"    class="sec-pill">5 · Troubleshooting</a>
+  <a href="#protips"    class="sec-pill">6 · Pro-Tips</a>
+  <a href="#test-cta"   class="sec-pill">7 · Knowledge Check</a>
+</div>
+
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Module 2 of 5</div>
+    <div class="mh1">🏙️ City of Light</div>
+    <p>Advanced mechanics, cooperative world-building, and architectural thinking — students move from solo survival to building a shared city together using coordinates, clone commands, and Redstone traps.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Module 2 Objectives:</strong> Master exact vs. relative coordinates · Use /clone for structural symmetry · Build interactive Redstone traps (Pressure Plates, Dispensers, TNT) · Introduce Crafting Table mechanics · Execute cooperative multiplayer city planning with defined team roles.
+    </div>
+  </div>
+</div>
+
+<div class="cbody">
+
+<div id="overview" class="anchor-target">
+  <div class="section-head">1 · Module Overview &amp; Regional Customisation</div>
+</div>
+
+<div class="card">
+  <h4>Scope Escalation from Module 1</h4>
+  <p>Module 2 introduces three major escalations: (1) Commands now require precise coordinate arguments — students can no longer rely on relative positions alone. (2) The social context shifts from solo to cooperative — students must negotiate, plan, and communicate. (3) The build complexity increases from single-contraption automation to multi-element city districts requiring architectural planning.</p>
+</div>
+
+<div class="card">
+  <h4>Regional Customisation Note</h4>
+  <p>MakeCode logic and Minecraft mechanics are universal. However, narrative hooks and icebreakers may be adapted to local culture — use familiar local landmarks, cartoons, or real city examples as analogies. <strong>Core technical objectives must never be changed</strong>. A tutor in Istanbul may reference Istanbul's city grid; a tutor in São Paulo may reference that city's street layout. The coordinate lesson is identical regardless of which city is referenced.</p>
+</div>
+
+<div id="flow" class="anchor-target">
+  <div class="section-head">2 · Instructional Flow</div>
+</div>
+
+<div class="card">
+  <h4>Step-by-Step Session Guide</h4>
+  <ol style="padding-left:18px;margin-top:8px">
+    <li style="margin-bottom:8px"><strong>Icebreaker (00:00–00:05):</strong> "Name one building in your city you wish you could redesign." This primes architectural thinking and creates a personal connection to today's city-building theme.</li>
+    <li style="margin-bottom:8px"><strong>Coordinate Review (00:05–00:12):</strong> Rapid-fire recap of Module 1 coordinates. Ask students to state X/Y/Z axis meanings without notes. Then introduce exact coordinates: "Today we'll use real coordinate addresses, not relative offsets."</li>
+    <li style="margin-bottom:8px"><strong>Crafting Table Introduction (00:12–00:20):</strong> Demonstrate opening the Crafting Table (3×3 grid), placing materials in the exact pattern to craft a stone pickaxe. Students craft one tool each as a warm-up. Confirm everyone has their crafted item before proceeding.</li>
+    <li style="margin-bottom:8px"><strong>Redstone Trap Build (00:20–00:30):</strong> Step-by-step: (a) Dig a 2×2 pressure plate pit. (b) Place Pressure Plates on the floor. (c) Connect via Redstone dust to a Dispenser loaded with arrows or Splash Potions. (d) Test by walking over the plates. Students test each other's traps.</li>
+    <li style="margin-bottom:8px"><strong>Cognitive Break (00:30–00:35):</strong> Mandatory. Physical activity or off-screen quiz.</li>
+    <li style="margin-bottom:8px"><strong>Clone Command + City Planning (00:35–00:55):</strong> Teach /clone to duplicate a structure. Assign team roles (Bridge Builders, Lighthouse Keepers, City Planners). Students build their city district using exact coordinates to align structures.</li>
+    <li><strong>Reflection (00:55–01:00):</strong> Each team presents their district. One sentence each: "We built [X] and used [Y technique]."</li>
+  </ol>
+</div>
+
+<div id="tech" class="anchor-target">
+  <div class="section-head">3 · Technical Deep-Dive — Module 2</div>
+</div>
+
+<div class="card">
+  <h4>3.1 · Crafting Table Mechanics</h4>
+  <p>The Crafting Table provides a <strong>3×3 grid</strong> (9 total slots) compared to the player's inventory 2×2 grid (4 slots). More slots = more complex, more powerful recipes. Key Module 2 recipes:</p>
+  <div class="coord-box">
+    Stone Pickaxe:      [Stone][Stone][Stone] / [  ][Stick][  ] / [  ][Stick][  ]<br>
+    Dispenser:          [Cobble][Cobble][Cobble] / [Cobble][Bow][Cobble] / [Cobble][Redstone][Cobble]<br>
+    Pressure Plate (Stone): [Stone][Stone] / (2×1 grid — any row)
+  </div>
+  <p style="margin-top:8px"><strong>Key teaching point:</strong> Recipes are positional — the arrangement of materials in the grid defines the item produced. Placing materials in the wrong relative positions produces nothing. This is students' first encounter with positional data structures, a foundational programming concept.</p>
+</div>
+
+<div class="card">
+  <h4>3.2 · Exact Coordinates vs. Relative Coordinates</h4>
+  <div class="coord-box">
+    <span class="cm">EXACT coordinates</span> — fixed positions in the world grid:<br>
+    <span class="cy">/tp @s 100 64 200</span>  →  always teleports to X=100, Y=64, Z=200, regardless of current position<br><br>
+    <span class="cm">RELATIVE coordinates</span> — offset from current position:<br>
+    <span class="cy">/tp @s ~5 ~0 ~0</span>   →  teleports 5 blocks East from wherever you currently are<br><br>
+    <span class="cm">Mixed syntax (valid):</span><br>
+    <span class="cy">/tp @s ~0 64 ~0</span>   →  same X and Z as now, but set altitude to exactly Y=64<br><br>
+    <span style="color:#F87171">Critical test:</span> /tp @a 0 64 0  (no tildes) always sends ALL players to world origin.<br>
+    <span style="color:#F87171">Compare:</span>    /tp @a ~0 ~0 ~0 (all tildes) does NOT move anyone — offsets are all zero.
+  </div>
+</div>
+
+<div class="card">
+  <h4>3.3 · The /clone Command — Structural Duplication</h4>
+  <p>The /clone command copies a defined 3D region to a new location:</p>
+  <div class="coord-box">
+    Syntax:  /clone [x1 y1 z1] [x2 y2 z2] [dest-x dest-y dest-z]<br><br>
+    [x1 y1 z1] = one corner of the source region<br>
+    [x2 y2 z2] = the opposite corner of the source region (defines the full 3D box)<br>
+    [dest-x dest-y dest-z] = the corner of the destination (where the copy appears)<br><br>
+    Example — copy a 5×5×5 house starting at 100,64,200 to 120,64,200:<br>
+    <span class="cy">/clone 100 64 200  104 68 204  120 64 200</span>
+  </div>
+  <p style="margin-top:10px"><strong>Architectural application:</strong> Build one tower section, then /clone it to create a perfectly symmetrical duplicate on the other side of a road. This is the principle behind modular architecture — design one element well, then replicate.</p>
+  <div class="callout cw" style="margin-top:8px">
+    <span class="ci">⚠️</span>
+    <div><strong>Overlap error:</strong> Source and destination regions cannot overlap. If they do, the command errors out silently. Always ensure the destination coordinates are at a sufficient distance from the source region bounds.</div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>3.4 · Redstone Traps — Components &amp; Circuit Design</h4>
+  <div class="two-col" style="margin-top:8px">
+    <div class="card">
+      <h4>Pressure Plate</h4>
+      <p>Emits a continuous Redstone signal while a player, mob, or item stack is standing on it. Signal stops the moment the entity leaves. Two variants: <strong>Stone</strong> (only mobs/players trigger it) and <strong>Wood</strong> (items also trigger it). For Module 2 traps, Stone is preferred — prevents accidental triggering by dropped items.</p>
+    </div>
+    <div class="card">
+      <h4>Dispenser</h4>
+      <p>On receiving a Redstone pulse, ejects one item from its inventory in the direction it faces. Loaded with arrows = projectile trap. Loaded with Splash Potions = area-effect trap. Loaded with TNT = explosion trigger (use with caution in group sessions — can destroy nearby builds). Right-click to open its 3×3 inventory and load items.</p>
+    </div>
+    <div class="card">
+      <h4>TNT</h4>
+      <p>Activated by Redstone signal or fire, TNT has a 4-tick fuse (0.2 seconds) then detonates. Explosion radius: ~4 blocks. In Module 2 traps, chain TNT to a Dispenser output: Dispenser ejects a TNT block, which the Pressure Plate circuit immediately activates via a secondary wire. Result: the trap fires and explodes in sequence.</p>
+    </div>
+    <div class="card">
+      <h4>Trap Circuit Logic</h4>
+      <p><strong>Standard trap wiring:</strong> Pressure Plate → Redstone dust (1–15 blocks) → Dispenser. When a player stands on the Plate, the signal travels the wire and activates the Dispenser. <strong>Timing note:</strong> Redstone signals travel at 1 block per tick — 15 blocks of wire adds 15 ticks (0.75 seconds) of effective delay before the Dispenser fires.</p>
+    </div>
+  </div>
+</div>
+
+<div id="multi" class="anchor-target">
+  <div class="section-head">4 · Cooperative Multiplayer City Planning</div>
+</div>
+
+<div class="card">
+  <h4>Team Role Assignment</h4>
+  <p>Split the class into 2–3 teams with distinct, non-overlapping responsibilities. Each team has a specific coordinate zone to prevent overlap:</p>
+  <ul style="margin-top:8px">
+    <li><strong>Bridge Builders:</strong> Construct pathways connecting district zones. Must use exact coordinates to ensure their bridges align with the endpoints in other teams' zones.</li>
+    <li><strong>Lighthouse Keepers:</strong> Build a tall landmark (15+ blocks high) with working Redstone lighting at the top — a Redstone Lamp connected to a Daylight Sensor for automatic on/off.</li>
+    <li><strong>City Planners:</strong> Lay out roads and public spaces. Must define a coordinate grid (e.g., main road at Z=200, every city block is 20×20 blocks) and communicate it to other teams.</li>
+  </ul>
+</div>
+
+<div class="callout cw">
+  <span class="ci">⚠️</span>
+  <div>
+    <strong>The #1 Multiplayer Risk: Students Destroying Each Other's Builds</strong><br>
+    This must be pre-empted, not reacted to. Establish "Neighbourhood Rules" in the first 5 minutes of every multiplayer session, before students enter the shared world.<br>
+    <div class="script-box" style="margin-top:8px">"Before we enter the city, what are the rules every good neighbour follows? No breaking neighbours' houses! No taking items from other people's chests! If you accidentally break something, you rebuild it — that's the Neighbourhood Rule."</div>
+    <strong>When a violation occurs:</strong> Do not remove the student from the session. Reference the Neighbourhood Rule by name ("Remember the Neighbourhood Rule we agreed on?") and guide them to help rebuild. Punitive responses create resentment; restorative responses build community standards.
+  </div>
+</div>
+
+<div id="trouble" class="anchor-target">
+  <div class="section-head">5 · Troubleshooting Catalog — Module 2 (5 Scenarios)</div>
+</div>
+
+<div style="overflow-x:auto">
+  <table class="trouble-table">
+    <thead>
+      <tr>
+        <th style="width:22%">Mistake / Symptom</th>
+        <th style="width:27%">Root Cause</th>
+        <th style="width:31%">Exact Fix</th>
+        <th style="width:20%">Prevention Script</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mc">/clone command errors silently — nothing appears at the destination</td>
+        <td>Source and destination regions overlap; OR destination coordinates were entered in wrong order (dest must be the bottom-left-front corner)</td>
+        <td>Verify: (1) Destination is outside the source bounding box. (2) First corner [x1,y1,z1] and second corner [x2,y2,z2] are opposite corners of the source — walk to each corner and read coords. (3) Destination [dx,dy,dz] is the equivalent of the first corner but at the new location.</td>
+        <td class="fc">"Write down all three corner coordinates before typing the command. One wrong number = silent failure."</td>
+      </tr>
+      <tr>
+        <td class="mc">Pressure Plate activates but Dispenser does not fire</td>
+        <td>Redstone dust wire is broken (gap in the line); OR Dispenser is facing the wrong direction; OR Dispenser inventory is empty</td>
+        <td>Trace the wire: place a temporary torch on each Redstone dust block to check which segment is unpowered. Fix any gaps. Confirm Dispenser faces the correct direction (right-click to check inventory — is it loaded?). Test by powering the Dispenser directly with a Lever.</td>
+        <td class="fc">"Three-step trap check: wire continuous? Dispenser stocked? Dispenser facing the right way? Check all three before testing with a student."</td>
+      </tr>
+      <tr>
+        <td class="mc">Student struggles to align their /clone destination with another team's structures — bridges don't connect</td>
+        <td>Teams didn't agree on a shared coordinate grid before building; each team used different starting points</td>
+        <td>Pause all teams. Have the City Planners team announce the shared grid: "Main road is at Z=200. Every district starts at a multiple of 20 blocks East (X = 100, 120, 140...)." All teams then adjust their starting points to match the grid. Use /tp to verify alignment before building continues.</td>
+        <td class="fc">"Before any team places a single block, City Planners must announce the coordinate grid in chat. Everyone screenshot it."</td>
+      </tr>
+      <tr>
+        <td class="mc">Student accidentally breaks Redstone wire while building around it, destroying the trap circuit</td>
+        <td>Redstone dust is destroyed by block placement nearby; students don't know Redstone is sensitive to adjacent block changes</td>
+        <td>Teach: Redstone dust is destroyed if a solid block is placed on top of it. Always build walls and floors first, then lay Redstone on the finished surface. For existing circuits, use /undo (if available) or rebuild the wire segment. Encourage students to photograph their working circuit before decorating around it.</td>
+        <td class="fc">"Build the shell first, wire it last. Redstone goes on finished surfaces only."</td>
+      </tr>
+      <tr>
+        <td class="mc">Crafting Table recipe produces the wrong item or nothing at all</td>
+        <td>Materials placed in incorrect positional pattern — crafting recipes are position-specific; mirroring or offset by one slot produces a different result or no result</td>
+        <td>Have student screenshot their failed arrangement, then compare side-by-side with the correct recipe in the Crafting Book (compass icon, bottom-right of the Crafting Table UI). Identify which slot is wrong. Emphasise: "Crafting is like programming — the exact position of every item matters."</td>
+        <td class="fc">"Show me your grid screenshot and the recipe screenshot side by side. One is slightly different — can you spot it?"</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="protips" class="anchor-target">
+  <div class="section-head">6 · Tutor Pro-Tips &amp; Real-World Analogies</div>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Coordinates = The "City Street Grid" Analogy (Extended for Module 2)</strong><br>
+  <em>"In a real city, architects don't just say 'build the skyscraper somewhere over there.' They say 'Build at 100 East 5th Avenue, from the ground floor to the 20th floor.' That's exactly what exact coordinates give you — a precise construction address. Your city district has a coordinate address, and every building inside it is defined by its own sub-address."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 /clone = The "Architectural Blueprint" Analogy</strong><br>
+  <em>"Real architects don't design every floor of a skyscraper separately — they design one typical floor perfectly, then copy it 40 times. The /clone command is your blueprint copy machine. Design one city block perfectly, then clone it across the map."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Symmetry vs. Chaos — The "Spot the Design Error" Game</strong><br>
+  Before students build, show them a screenshot of a deliberately chaotic, asymmetric sample building. Ask: "What feels wrong here?" Students will identify imbalance, uneven windows, random block choices. Then show a symmetrical version: "What changed?" This activates the architectural instinct before students start building, so they have a quality target in mind.</p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 The Crafting Recipe = The "Exact Recipe" Analogy</strong><br>
+  <em>"Imagine you're baking a cake. If the recipe says 'two cups of flour on the left, one egg on the right,' swapping them doesn't make a better cake — it makes a different cake, or no cake at all. Crafting Table recipes work identically: every slot's position is part of the formula."</em></p>
+</div>
+
+<div id="test-cta" class="anchor-target">
+  <div class="section-head">7 · Module 2 Knowledge Check</div>
+</div>
+
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Ready for the Module 2 Knowledge Check?</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+    6 questions drawn exclusively from Module 2 content. A score of <strong>70% (5/6) or above</strong> unlocks Module 3. All questions are entirely distinct from both Module 1 questions and the final DST.
+  </p>
+  <div class="btn-row center">
+    <a href="EnModule2Test.html" class="btn-primary">Start Module 2 Test →</a>
+    <button class="btn-outline" onclick="goHome()">← Dashboard</button>
+  </div>
+</div>
+
+</div><!-- /.cbody -->
+
+<footer>© 2026 Kodland. Internal tutor training material — not for external distribution.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(2)) { alert('Please complete Module 1 first.'); goHome(); }
+</script>
+</body>
+</html>

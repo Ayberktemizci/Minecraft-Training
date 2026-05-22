@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 Test — Oasis of Logic | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{background:linear-gradient(135deg,#6D28D9,#8B5CF6);padding:24px 32px;color:#fff;text-align:center}
+  .quiz-header h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+  .quiz-header p{color:rgba(255,255,255,.8);font-size:13px}
+  .feedback-box{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:13.5px;line-height:1.6;border:2px solid}
+  .feedback-box.show{display:block}
+  .feedback-box.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+  .feedback-box.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Module 3</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="quiz-header">
+  <h2>📝 Module 3 Knowledge Check</h2>
+  <p>🧩 Oasis of Logic · 6 Questions · 70% to Pass</p>
+</div>
+
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Next Question →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Submit Answers</button>
+  </div>
+</div>
+
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+</div>
+
+<footer>© 2026 Kodland. Internal tutor training material.</footer>
+<script src="shared.js"></script>
+<script>
+/*
+  MODULE 3 — 6 UNIQUE QUESTIONS (zero overlap with Mods 1-2 or DST)
+  Correct answer indices (0=A, 1=B, 2=C, 3=D):
+  Q1→B(1)  Q2→C(2)  Q3→A(0)  Q4→D(3)  Q5→B(1)  Q6→C(2)
+  Pattern: 1,2,0,3,1,2 — varied, no two consecutive identical answers.
+*/
+const MODULE_ID = 3;
+const PASS_PCT  = 70;
+
+const QUESTIONS = [
+  {
+    q: "A student's 'score' variable always displays as 1 immediately when the programme starts, before the player has walked at all. What is the precise cause?",
+    opts: [
+      "The On Player Walk event fires automatically once at programme initialisation",
+      "The 'set score = 0' initialisation block is inside the On Player Walk event, so every walk step resets score to 0 before incrementing — resulting in score always being 1",
+      "MakeCode variables always start at 1 unless explicitly set in an On Start block",
+      "The 'change score by 1' block is running in an infinite background loop"
+    ],
+    correct: 1,  // B
+    feedback: "Correct. If 'set score = 0' is placed inside the On Walk event, the sequence on every step is: (1) set score to 0, (2) change score by 1 — score always equals 1. The fix: move 'set score = 0' to an On Start block so it runs only once at programme launch."
+  },
+  {
+    q: "A student wants the win condition to trigger when the player has collected 10 or more gems, but the condition never fires even when gems = 12. The code reads: if gems = 10 then { say 'You Win!' }. What is the issue and the fix?",
+    opts: [
+      "The variable must be named 'score' not 'gems' — MakeCode only recognises default variable names",
+      "The 'say' block must be replaced with a 'print' block inside conditionals",
+      "The condition uses = (exactly equals 10) instead of ≥ (greater than or equal to 10) — if the player collects 12, gems never equals exactly 10, so the condition is never true",
+      "Conditionals cannot read variables directly — a separate 'read' block must be added first"
+    ],
+    correct: 2,  // C
+    feedback: "Correct. With condition 'gems = 10', the programme checks whether gems is exactly 10. If the player collects gems in batches (e.g., +3 at a time), gems jumps from 9 to 12 — skipping 10 entirely. The condition is never true. Fix: change the operator to ≥ (greater than or equal to), which triggers when gems reaches 10 or any value above it."
+  },
+  {
+    q: "Which of the following correctly describes the scope of variables in MakeCode Education?",
+    opts: [
+      "All variables are global — any event block anywhere in the programme can read and modify any variable",
+      "Variables are local to the event block in which they are created — other blocks cannot access them",
+      "Variables only exist while their creator event block is actively running",
+      "MakeCode variables must be declared with a type (number, text, or boolean) before they can be used"
+    ],
+    correct: 0,  // A
+    feedback: "Correct. In MakeCode Education, all variables are global by default. A variable created in an On Start block is fully accessible and modifiable inside On Player Walk, On Block Broken, and all other event blocks. There are no local variable scopes. This simplifies coding for young learners but means students must be careful — any event can accidentally overwrite a variable."
+  },
+  {
+    q: "After reaching the win condition (score ≥ 10), a student's fireworks animation triggers on every single walk step, not just once. What is the most precise technical cause?",
+    opts: [
+      "The fireworks block has an internal repeat setting that is set to 'infinite'",
+      "The On Player Walk event has a built-in double-fire bug that triggers twice per step",
+      "The comparison operator ≥ should be changed to = to prevent the condition from re-triggering",
+      "Score is not being reset to 0 (or the game state is not being changed) inside the win condition block — score remains ≥ 10 after the first win, so every subsequent walk step re-triggers the condition"
+    ],
+    correct: 3,  // D
+    feedback: "Correct. After the win triggers, if score remains at 10 (or above), every subsequent walk step evaluates 'if score ≥ 10' → true → fireworks again. Fix: either add 'set score = 0' as the last line inside the win block (resets for replay), or introduce a boolean 'gameActive' variable set to false on win, then wrap the entire On Walk block in 'if gameActive = true'."
+  },
+  {
+    q: "A tutor wants to help a student avoid placing code outside the event block. Which pedagogical technique is most effective before the student begins coding?",
+    opts: [
+      "Ask the student to watch the tutor's screen while the tutor builds the programme, then copy it",
+      "Ask the student to draw a rectangle on paper, label it with the event block name, and physically decide which instructions belong inside and outside it before touching MakeCode",
+      "Give the student a pre-built programme to modify rather than building from scratch",
+      "Tell the student to check the MakeCode documentation page if they are unsure about block placement"
+    ],
+    correct: 1,  // B
+    feedback: "Correct. The 'block boundary drawing' technique physically externalises the cognitive task of block containment. Students who draw the rectangle before coding make the inside/outside error significantly less often because the boundary becomes a tangible spatial concept rather than an abstract structural rule. It also requires the student to plan before coding — a foundational professional programming habit."
+  },
+  {
+    q: "A student wants their programme to display the text 'Current Score: 7' when the player walks. They place a 'say' block containing only the variable 'score'. The output shows '7' but not the label text. How should this be fixed?",
+    opts: [
+      "Add a second separate 'say' block that outputs only the label text; MakeCode will display them together",
+      "Use a 'print' block instead of 'say' — print supports combined text",
+      "Use a 'text join' block to concatenate the string \"Current Score: \" with the variable score, then pass the joined result to a single 'say' block",
+      "Variables cannot be displayed in-game using 'say' — they must be shown in the MakeCode console only"
+    ],
+    correct: 2,  // C
+    feedback: "Correct. The 'say' block accepts a single value. To combine text and a variable, students must use the 'text join' block: [join [\"Current Score: \"] [score]] → this produces the single combined string \"Current Score: 7\", which is then passed to 'say'. Two separate 'say' blocks would display on separate lines, not combined."
+  }
+];
+
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('question-area').innerHTML = `
+    <div class="qnum">Question ${current + 1} of ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list" id="opt-list">
+      ${q.opts.map((o, i) => `
+        <div class="opt" id="opt-${i}" onclick="selectOpt(${i})">
+          <span class="opt-letter">${LETTERS[i]}</span><span>${o}</span>
+        </div>`).join('')}
+    </div>`;
+}
+
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i)    el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  document.getElementById('feedback-area').innerHTML = `
+    <div class="feedback-box ${isRight ? 'ok' : 'bad'} show">
+      ${isRight ? '✅ ' : '❌ '} ${q.feedback}
+    </div>`;
+  if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+  else document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+
+function nextQuestion() { current++; renderQuestion(); window.scrollTo(0,0); }
+
+function submitQuiz() {
+  const score  = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+  const pct    = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+  if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+  document.getElementById('quiz-screen').style.display   = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed?'🎉':'😅'}</div>
+    <div class="result-title">${passed?'Module 3 Complete!':'Not Quite There Yet'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-sub">You answered <strong>${score} of ${QUESTIONS.length}</strong> correctly.
+      ${passed?' Excellent — Module 3 complete!'
+              :` A score of <strong>${PASS_PCT}%</strong> is required. Review the material and try again.`}
+    </div>`;
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="EnModule4.html" class="btn-primary">Continue to Module 4 →</a>
+       <button class="btn-outline" onclick="goHome()">← Dashboard</button>`
+    : `<button class="btn-primary" onclick="retake()">Retake Test</button>
+       <a href="EnModule3.html" class="btn-outline">← Review Module 3</a>`;
+  window.scrollTo(0,0);
+}
+
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display    = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion(); window.scrollTo(0,0);
+}
+
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) { alert('Please complete the previous modules first.'); goHome(); }
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

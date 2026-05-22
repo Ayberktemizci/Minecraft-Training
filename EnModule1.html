@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Level 1 Pedagogy &amp; Course Architecture | Kodland Tutor Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ── Page extras ─────────────────────────────────────────── */
+.ped-hero{
+  background:linear-gradient(135deg,#0e1f0a 0%,#1c3b12 55%,#2f5a1e 100%);
+  padding:52px 32px 42px; position:relative; overflow:hidden;
+  border-bottom:3px solid var(--lime);
+}
+.ped-hero::before{
+  content:'🌿'; font-size:220px; position:absolute;
+  right:-30px; bottom:-30px; opacity:.06; line-height:1; pointer-events:none;
+}
+.ped-hero .eyebrow{ background:rgba(196,240,70,.15); border-color:rgba(196,240,70,.35); color:var(--lime); }
+.ped-hero h1{ font-family:'Nunito',sans-serif; font-size:clamp(22px,3.8vw,36px); font-weight:900;
+  letter-spacing:-.5px; line-height:1.1; color:#fff; margin:14px 0 10px; }
+.ped-hero p{ color:rgba(255,255,255,.72); font-size:14px; line-height:1.65; max-width:640px; }
+
+/* Sticky section nav */
+.sec-nav{
+  display:flex; flex-wrap:wrap; gap:6px; padding:12px 24px;
+  background:var(--surface2); border-bottom:2px solid var(--border);
+  position:sticky; top:62px; z-index:90;
+}
+.sec-pill{
+  font-family:'Nunito',sans-serif; font-weight:900; font-size:11px;
+  text-transform:uppercase; letter-spacing:.4px; padding:5px 12px;
+  border-radius:var(--rpill); background:var(--surface); border:2px solid var(--border);
+  color:var(--text2); text-decoration:none; transition:all .15s; white-space:nowrap;
+}
+.sec-pill:hover,.sec-pill.active{ background:var(--lime); border-color:var(--lime-d); color:var(--ink); }
+
+/* scroll target */
+.anchor{ scroll-margin-top:128px; }
+
+/* Spiral roadmap grid */
+.spiral-grid{
+  display:grid; grid-template-columns:repeat(5,1fr);
+  border:2px solid var(--border); border-radius:var(--r); overflow:hidden; margin:14px 0;
+}
+.spiral-col{
+  padding:16px 14px; border-right:2px solid var(--border);
+  background:var(--surface); display:flex; flex-direction:column;
+}
+.spiral-col:last-child{ border-right:none; }
+.spiral-col-head{
+  font-family:'Nunito',sans-serif; font-weight:900; font-size:11px;
+  text-transform:uppercase; letter-spacing:.4px; padding:5px 10px;
+  border-radius:var(--rpill); text-align:center; margin-bottom:8px; line-height:1.4;
+}
+.spiral-col-body{ font-size:12px; color:var(--text2); line-height:1.55; flex:1; }
+.spiral-col-body ul{ padding-left:14px; margin:0; }
+.spiral-col-body li{ margin-bottom:4px; }
+.spiral-note{ font-style:italic; font-size:11px; color:var(--text-muted); margin-top:8px; }
+@media(max-width:760px){
+  .spiral-grid{ grid-template-columns:1fr; }
+  .spiral-col{ border-right:none; border-bottom:2px solid var(--border); }
+  .spiral-col:last-child{ border-bottom:none; }
+}
+
+/* Timeline */
+.timeline{ position:relative; padding-left:28px; margin:8px 0; }
+.timeline::before{
+  content:''; position:absolute; left:9px; top:4px; bottom:4px;
+  width:2px; background:var(--border); border-radius:2px;
+}
+.tl-item{ position:relative; margin-bottom:22px; }
+.tl-item::before{
+  content:''; position:absolute; left:-22px; top:5px;
+  width:10px; height:10px; border-radius:50%;
+  background:var(--lime); border:2px solid var(--lime-d);
+}
+.tl-time{ font-family:'Nunito',sans-serif; font-weight:900; font-size:11px;
+  text-transform:uppercase; letter-spacing:.8px; color:var(--pink); margin-bottom:3px; }
+.tl-head{ font-weight:700; font-size:13.5px; color:var(--text); margin-bottom:4px; }
+.tl-body{ font-size:13px; color:var(--text2); line-height:1.65; }
+
+/* Script box */
+.script{
+  background:var(--ink); color:#C4F046;
+  font-family:'JetBrains Mono','Courier New',monospace;
+  font-size:12.5px; line-height:1.7; padding:14px 18px;
+  border-radius:var(--rsm); border-left:4px solid var(--lime); margin:10px 0;
+}
+[data-theme="dark"] .script{ background:#070e07; }
+.script .lbl{ color:#6B8A5A; font-size:11px; display:block; margin-bottom:6px;
+  text-transform:uppercase; letter-spacing:.8px; }
+
+/* Compare grid */
+.compare-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+@media(max-width:580px){ .compare-grid{ grid-template-columns:1fr; } }
+
+/* Two-col */
+.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:580px){ .two-col{ grid-template-columns:1fr; } }
+
+/* Numbered deep list */
+ol.deep{ counter-reset:dc; padding:0; margin:8px 0; }
+ol.deep li{
+  counter-increment:dc; list-style:none; position:relative;
+  padding:10px 14px 10px 46px; margin-bottom:8px;
+  background:var(--surface); border:1.5px solid var(--border); border-radius:var(--rsm);
+  font-size:13px; color:var(--text2); line-height:1.6;
+}
+ol.deep li::before{
+  content:counter(dc); position:absolute; left:12px; top:50%; transform:translateY(-50%);
+  width:22px; height:22px; border-radius:50%; background:var(--lime); border:2px solid var(--lime-d);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Nunito',sans-serif; font-weight:900; font-size:11px; color:var(--ink);
+}
+
+/* Progress crumbs */
+.crumbs{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:16px; }
+.crumb{
+  display:flex; align-items:center; gap:6px; padding:6px 14px;
+  border-radius:var(--rpill); font-size:12px; font-weight:700;
+  font-family:'Nunito',sans-serif; border:2px solid rgba(196,240,70,.3);
+  background:rgba(196,240,70,.1); color:var(--lime);
+}
+.crumb.here{ background:var(--lime); border-color:var(--lime-d); color:var(--ink); }
+.crumb.dim{ opacity:.55; }
+.crumb-sep{ color:rgba(255,255,255,.4); font-size:14px; }
+
+/* CTA bottom block */
+.cta-block{
+  background:linear-gradient(135deg,#0e1f0a,#1c3b12);
+  border-radius:var(--r); padding:40px 32px; text-align:center;
+  margin-top:36px; border:2px solid rgba(196,240,70,.25); overflow:hidden; position:relative;
+}
+.cta-block::before{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(196,240,70,.1) 0%,transparent 75%);
+  pointer-events:none;
+}
+.cta-block h3{ font-family:'Nunito',sans-serif; font-size:22px; font-weight:900;
+  color:#fff; margin-bottom:8px; position:relative; }
+.cta-block p{ color:rgba(255,255,255,.68); font-size:13.5px; line-height:1.65;
+  max-width:520px; margin:0 auto 22px; position:relative; }
+
+/* inline code */
+code{ font-family:'JetBrains Mono',monospace; font-size:12px;
+  background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:4px; padding:1px 6px; color:var(--pink); }
+[data-theme="dark"] code{ color:var(--lime); }
+kbd{ background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:4px; padding:1px 5px; font-size:11px;
+  font-family:'JetBrains Mono',monospace; color:var(--text); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span>
+    <div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dashboard</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-bar" style="width:0%"></div></div>
+
+<!-- SECTION NAV -->
+<div class="sec-nav">
+  <a class="sec-pill" href="#sec0">0 · Course Roadmap</a>
+  <a class="sec-pill" href="#sec1">1 · Cognitive Profile</a>
+  <a class="sec-pill" href="#sec2">2 · 60-Min Flow</a>
+  <a class="sec-pill" href="#sec3">3 · Soft Skills &amp; Scripts</a>
+  <a class="sec-pill" href="#sec-cta">→ Tech Deep-Dive</a>
+</div>
+
+<!-- HERO -->
+<div class="ped-hero">
+  <div style="max-width:820px;margin:0 auto;position:relative">
+    <div class="eyebrow">📚 Level 1 Tutor Training · Pedagogy &amp; Course Architecture</div>
+    <h1>Level 1 Pedagogy &amp; Course Architecture</h1>
+    <p>This file is exclusively for course structure, pedagogy frameworks, and teacher soft skills. No technical coding blocks or module-specific mechanics live here — those are in the Technical Deep-Dive. Master this framework first: it determines whether every technical skill you teach actually lands.</p>
+    <div class="crumbs">
+      <div class="crumb here">📖 Pedagogy — You are here</div>
+      <div class="crumb-sep">→</div>
+      <div class="crumb dim">🔧 Tech Deep-Dive</div>
+      <div class="crumb-sep">→</div>
+      <div class="crumb dim">📝 Module 1 Test</div>
+    </div>
+  </div>
+</div>
+
+<div class="cbody">
+
+<!-- ═══════════════════════════════════════
+     0. GENERAL COURSE INTRODUCTION & ROADMAP
+     ═══════════════════════════════════════ -->
+<div id="sec0" class="anchor">
+  <div class="section-head">0 · General Course Introduction &amp; Curriculum Roadmap</div>
+</div>
+
+<div class="card">
+  <h4>Why the Roadmap Comes Before the Content</h4>
+  <p>Most training programs begin with Lesson 1. This one begins with architecture. A tutor who does not understand the structural logic of the five-module sequence will teach each session as an isolated event, losing the cumulative momentum that makes Level 1 transformative. Minecraft Education Level 1 is not five separate lessons — it is a <strong>single spiral curriculum</strong> in which every module deliberately revisits and deepens all prior concepts while introducing one new layer of complexity.</p>
+  <p style="margin-top:9px">By Module 5, your students are not doing "Module 5 things." They are synthesising Modules 1 through 5 simultaneously. Understanding this changes how you teach every session from day one.</p>
+</div>
+
+<!-- Spiral grid -->
+<div class="section-head">The Minecraft Level 1 Spiral — Module Interdependency Map</div>
+
+<div class="spiral-grid">
+  <div class="spiral-col">
+    <div class="spiral-col-head" style="background:rgba(92,135,49,.18);color:#5C8731;border:1.5px solid rgba(92,135,49,.4)">
+      🌿 M1<br>Green Stone World
+    </div>
+    <div class="spiral-col-body">
+      <ul>
+        <li>3D navigation (X/Y/Z)</li>
+        <li>/tp + relative coords (~)</li>
+        <li>MakeCode: Repeat loops</li>
+        <li>Agent movement &amp; orientation</li>
+        <li>Redstone signal decay (15 blocks)</li>
+        <li>Observer → Piston chain</li>
+        <li>Bamboo farm build</li>
+        <li>Water+Lava cobblestone factory</li>
+      </ul>
+      <p class="spiral-note">Entry: raw spatial awareness + first automation reflex</p>
+    </div>
+  </div>
+  <div class="spiral-col">
+    <div class="spiral-col-head" style="background:rgba(37,99,235,.14);color:#2563EB;border:1.5px solid rgba(37,99,235,.3)">
+      🏙️ M2<br>City of Light
+    </div>
+    <div class="spiral-col-body">
+      <ul>
+        <li>Exact coords (absolute)</li>
+        <li>/clone duplication</li>
+        <li>Crafting Table 3×3 grid</li>
+        <li>Pressure plate traps</li>
+        <li>Multiplayer team roles</li>
+        <li>Neighbourhood Rules</li>
+      </ul>
+      <p class="spiral-note">Deepens M1 coords. Adds: architectural replication &amp; social contracts</p>
+    </div>
+  </div>
+  <div class="spiral-col">
+    <div class="spiral-col-head" style="background:rgba(124,58,237,.14);color:#7C3AED;border:1.5px solid rgba(124,58,237,.3)">
+      🧩 M3<br>Oasis of Logic
+    </div>
+    <div class="spiral-col-body">
+      <ul>
+        <li>Event-driven paradigm</li>
+        <li>On Walk / On Broken / Chat</li>
+        <li>Variables (global, set/change)</li>
+        <li>If–Then / If–Then–Else</li>
+        <li>Operators (=, ≠, >, <, ≥, ≤)</li>
+        <li>Mini-game build</li>
+      </ul>
+      <p class="spiral-note">Deepens M1-2 MakeCode. Adds: interactivity, reactive logic</p>
+    </div>
+  </div>
+  <div class="spiral-col">
+    <div class="spiral-col-head" style="background:rgba(217,119,6,.14);color:#D97706;border:1.5px solid rgba(217,119,6,.3)">
+      🌲 M4<br>Mechanical Forest
+    </div>
+    <div class="spiral-col-body">
+      <ul>
+        <li>Agent as gardener (nested loops)</li>
+        <li>Farmland + hydration prereqs</li>
+        <li>Crop growth stages (0–7)</li>
+        <li>Hopper: Shift+click, rate, capacity</li>
+        <li>2-chest sorting system</li>
+        <li>Detect→Trigger→Collect→Store</li>
+      </ul>
+      <p class="spiral-note">Full synthesis of M1–3 into one autonomous industrial pipeline</p>
+    </div>
+  </div>
+  <div class="spiral-col">
+    <div class="spiral-col-head" style="background:rgba(236,72,153,.12);color:#EC4899;border:1.5px solid rgba(236,72,153,.3)">
+      🏰 M5<br>Creator's Castle
+    </div>
+    <div class="spiral-col-body">
+      <ul>
+        <li>Blueprint Phase</li>
+        <li>Custom Functions (DRY)</li>
+        <li>Team roles (Architect / Programmer / Decorator / Demo)</li>
+        <li>Build → Debug → Decorate</li>
+        <li>Game Studio Launch presentation</li>
+      </ul>
+      <p class="spiral-note">Abstract functional optimisation + project management — applies M1–M4 in combination</p>
+    </div>
+  </div>
+</div>
+
+<div class="callout ct">
+  <span class="ci">ℹ️</span>
+  <div>
+    <strong>How to read the spiral:</strong> Each column inherits everything to its left. A Module 4 session uses /tp from M1, absolute coordinates from M2, and conditional thinking from M3 — all simultaneously, to build a sorting pipeline. Your M1 teaching is not forgotten by M4; it is the load-bearing foundation. Every concept you teach should be presented as if it will be load-bearing in every future session — because it will be.
+  </div>
+</div>
+
+<div class="section-head" style="margin-top:28px">Why the Spiral Requires the Co-Explorer Identity</div>
+
+<div class="card">
+  <h4>The Cognitive Load Argument — Why Lecturer Mode Fails the Spiral</h4>
+  <p>In Module 1, a student manages approximately <strong>3–4 new concepts simultaneously</strong> (navigation, MakeCode UI, Agent orientation, Redstone signal). By Module 4, they are integrating <strong>12–15 distinct concepts</strong> in a single build session. By Module 5, all of that plus project planning, team negotiation, Function abstraction, and live presentation.</p>
+  <p style="margin-top:9px">A <strong>Lecturer</strong> transmits information in one direction. When cognitive load exceeds the student's capacity to receive, the lecturer has no adaptive mechanism. The session fails silently — students nod and copy without building any transferable skill.</p>
+  <p style="margin-top:9px">A <strong>Co-Explorer</strong> creates guided discovery conditions — missions with authentic stakes where the student's own curiosity drives engagement. Under this model, cognitive overload is mitigated because the student is always working at the edge of their current competence (challenge zone), with the tutor providing calibrated hints to maintain forward momentum. This is the only pedagogical architecture that can sustain a 5-module spiral curriculum for 8–9 year olds.</p>
+</div>
+
+<div class="compare-grid">
+  <div class="card" style="background:var(--no-bg);border-color:var(--no-b)">
+    <h4 style="color:var(--no-t)">❌ Lecturer — Why It Fails the Spiral</h4>
+    <p style="color:var(--no-t);font-size:13px;line-height:1.6">One-directional transmission. No adaptive feedback loop. When load spikes at M3–M4, the only tool is repeating the lecture louder. No differentiation mechanism. Fast students disengage; struggling students fall behind silently. By M5, the session is a performance by the tutor — students are passive observers of their own learning.</p>
+  </div>
+  <div class="card" style="background:var(--ok-bg);border-color:var(--ok-b)">
+    <h4 style="color:var(--ok-t)">✅ Co-Explorer — How It Sustains the Spiral</h4>
+    <p style="color:var(--ok-t);font-size:13px;line-height:1.6">Creates missions with authentic urgency. Students discover rather than receive. Adaptive in real time. Fast students get Extra Tasks; struggling students get targeted questions, not solutions. By M5, the session is a production by the students — the tutor is invisible infrastructure, not the main act.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Mission Framing — The Co-Explorer's Primary Tool</h4>
+  <p>Every session must open with a mission that makes the technical objective feel urgent and personally meaningful. The mission must be intrinsic to the Minecraft world. Do not invent external stakes — use the game's built-in pressure systems. Three structural requirements: (1) a time constraint creating urgency, (2) a specific deliverable creating direction, (3) a narrative context making the task meaningful rather than academic.</p>
+  <div class="script" style="margin-top:10px">
+    <span class="lbl">// Proven mission frames — memorise at least one per module</span>
+    M1 SURVIVAL:   "Night is falling — build a shelter before the monsters arrive!"
+    M1 FACTORY:    "We're running out of cobblestone — we need an automated factory NOW."
+    M2 CITY:       "The City Council needs a new district built by sunrise — coordinates posted."
+    M3 GAME:       "Design a walking game for the village — furthest player wins the crown."
+    M4 HARVEST:    "The kingdom's food supply is failing — automate the harvest before winter."
+    M5 LAUNCH:     "Your team has one session to build and present your Game Studio's first release."
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     1. COGNITIVE DEVELOPMENT PROFILE
+     ═══════════════════════════════════ -->
+<div id="sec1" class="anchor">
+  <div class="section-head">1 · Cognitive Development Profile — Ages 8–9</div>
+</div>
+
+<div class="card">
+  <h4>Piaget's Concrete Operational Stage — Operational Implications</h4>
+  <p>Students aged 8–9 occupy Piaget's <strong>Concrete Operational Stage</strong>. At this stage learners can handle sequential cause-and-effect reasoning and basic reversible logic operations — but only when anchored to tangible, observable referents. Abstract concepts presented without a physical or visual anchor are not processed as meaningful information; they are stored as noise and discarded within hours.</p>
+  <p style="margin-top:9px"><strong>Operational consequences:</strong></p>
+  <ul style="padding-left:16px;margin-top:6px">
+    <li style="margin-bottom:5px"><strong>Demonstrate before abstracting.</strong> Show the bamboo farm working before explaining Observer signal physics. The observable phenomenon creates the cognitive anchor the abstract explanation can attach to.</li>
+    <li style="margin-bottom:5px"><strong>Use physical metaphors with spatial structure.</strong> "Redstone signal travels like electricity in a house wall" works — houses are tangible. "Data flows through a register" does not — registers are not.</li>
+    <li><strong>Serialize instructions as single steps.</strong> "Place an Observer facing the bamboo, then connect its back to the Piston with Redstone dust" = two instructions. Deliver with a Panda check between each.</li>
+  </ul>
+</div>
+
+<div class="two-col">
+  <div class="card">
+    <h4>Working Memory Envelope</h4>
+    <p>Ages 8–9: approximately <strong>5–7 discrete items</strong> simultaneously in working memory (Miller's Law, age-adjusted). This is the neurological ceiling for simultaneous cognitive load at this developmental stage — not a soft guideline.</p>
+    <p style="margin-top:8px">In practice: any single instruction containing more than 2–3 embedded conditions will exceed this ceiling for approximately 60% of students. Complexity must be serialised, not parallelised.</p>
+    <div class="callout cw" style="margin-top:10px">
+      <span class="ci">⚠️</span>
+      <div><strong>Self-check:</strong> Count embedded conditions in your planned instruction. If &gt;3, split it into sequential steps with a Panda check between each.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h4>Attention Span Data Points</h4>
+    <p><strong>Passive listening:</strong> 10–15 minutes maximum before significant collapse. After minute 15 of uninterrupted instruction, information retention drops to below 30%.</p>
+    <p style="margin-top:8px"><strong>Active goal-directed building:</strong> 20–30 minutes sustained, provided the task has visible progress markers and an authentic goal.</p>
+    <p style="margin-top:8px"><strong>After a physical movement break:</strong> The attention clock resets. The Cognitive Break at minute 30 is not courtesy — it is the mechanism that makes the final 25 minutes productive.</p>
+    <p style="margin-top:8px;font-size:12px;color:var(--text-muted)">These numbers are the direct scientific rationale for the 20-min intro ceiling and the mandatory break. They are not arbitrary.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Psychological Safety as Technical Infrastructure</h4>
+  <p>At ages 8–9, the amygdala responds to perceived failure or social humiliation by suppressing prefrontal cortex activity — the exact region responsible for logical reasoning and instruction-following. A student who hears "you did it wrong" experiences a measurable neurobiological reduction in the cognitive functions the lesson requires.</p>
+  <p style="margin-top:9px">Psychological safety is therefore not a classroom atmosphere preference. It is <strong>technical infrastructure for cognitive performance</strong>. Without it, the lesson cannot function at the neural level, regardless of how well the technical content is prepared. Every soft skill in Section 3 below is designed to maintain this infrastructure throughout the session.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     2. 60-MINUTE LESSON FLOW
+     ═══════════════════════════════════ -->
+<div id="sec2" class="anchor">
+  <div class="section-head">2 · The Standardised 60-Minute Lesson Flow</div>
+</div>
+
+<div class="callout cw">
+  <span class="ci">⚠️</span>
+  <div><strong>Non-Negotiable Standardisation.</strong> The 60-minute structure is the single QA mechanism guaranteeing consistent outcomes across all Kodland regions. A session recording showing a missing Cognitive Break, a 30-minute intro, or no reflection phase is a documented QA failure — regardless of technical delivery quality.</div>
+</div>
+
+<div class="card">
+  <h4>Phase-by-Phase Timeline</h4>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-time">00:00 – 00:05 · Pre-Flight Check + Icebreaker (5 min)</div>
+      <div class="tl-head">Silent technical setup, running in parallel with icebreaker activation</div>
+      <div class="tl-body">
+        While students answer the icebreaker in chat, silently verify across all students: (1) Minecraft Education launches and correct world loads. (2) Login credentials work. (3) World imported — confirm by thumbnail. (4) Audio works — ask students to type <kbd>👍</kbd> in MC chat.<br><br>
+        <strong>Why silent:</strong> Diagnosing one connection issue out loud holds four students hostage. Handle via private message while others proceed.
+        <div class="script" style="margin-top:8px">
+          <span class="lbl">// Icebreaker scripts — rotate each session</span>
+          "What is your favourite cartoon right now?"
+          "If you could add one new mob to Minecraft, what would it do?"
+          "What game have you been playing most this week?"
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">00:05 – 00:20 · Mission Frame + Direct Instruction (15 min STRICT)</div>
+      <div class="tl-head">⚠️ THE 20-MINUTE INTRO CEILING — most commonly violated guardrail</div>
+      <div class="tl-body">
+        Deliver the mission narrative (~30 seconds). Demonstrate the single technical concept once via screen share (~7 minutes). Assign students an independent task immediately. Never explain the concept twice before students attempt it.<br><br>
+        <strong>The failure pattern:</strong> 25–30 min explaining → 20 min building → session ends with incomplete builds and no independent practice. Correct ratio: 10–12 min framing : 40–42 min building.<br><br>
+        <strong>Hard protocol:</strong> If the clock reads 20:00 and no task has been assigned, stop mid-sentence and assign it. The content can wait; the ratio cannot be recovered.
+        <div class="callout cw" style="margin-top:8px">
+          <span class="ci">⚠️</span>
+          <div>QA reviews check whether students received a task by minute 20. If no, the session is flagged regardless of everything that follows.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">00:20 – 00:30 · Guided Practice (10 min)</div>
+      <div class="tl-head">Students attempt the task; tutor circulates with targeted hints — never solutions</div>
+      <div class="tl-body">
+        Screen-share the expected outcome at reduced scale. Circulate by calling student names directly — "Sofia, where are you up to?" — rather than waiting for raised hands (~3× higher response rate).<br><br>
+        <strong>Hint, not solution.</strong> "What block detects block state changes?" rather than "Place the Observer here." A student who receives the solution cannot reproduce it next session.
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">00:30 – 00:35 · 🧠 Cognitive Break — Bilişsel Mola (5 min MANDATORY)</div>
+      <div class="tl-head">Screen completely off. Physical activity. Never shortened, never skipped.</div>
+      <div class="tl-body">
+        Students close Minecraft (not minimise — close). Tutor leads a physical activity: arm stretches, Simon Says, 5 verbal questions on an unrelated topic.<br><br>
+        <strong>Neuroscience rationale:</strong> After 30 continuous minutes of screen-based spatial reasoning, prefrontal cortex executive function is measurably reduced, and hippocampal encoding efficiency drops. A 5-minute screen-off physical break partially reverses both effects. Instruction delivered in the 20 minutes following the break is retained at substantially higher rates than equivalent instruction without the break.<br><br>
+        <strong>Skipping to "catch up" is self-defeating.</strong> Instruction delivered during cognitive fatigue is not retained. You waste more time than you save.
+        <div class="callout cw" style="margin-top:8px">
+          <span class="ci">⚠️</span>
+          <div>A session with no Cognitive Break is a documented QA failure. No exceptions.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">00:35 – 00:55 · Independent Practice + Differentiation (20 min)</div>
+      <div class="tl-head">Highest-value window — students consolidate by applying independently</div>
+      <div class="tl-body">
+        This is where learning consolidates. Monitor and differentiate — do not introduce new content.
+        <ul style="margin-top:8px;padding-left:14px">
+          <li style="margin-bottom:5px"><strong>Fast finishers:</strong> Assign a pre-prepared Extra Task immediately (see Section 3).</li>
+          <li style="margin-bottom:5px"><strong>Struggling students:</strong> One targeted hint per student, maximum two interventions in this phase.</li>
+          <li><strong>Middle majority:</strong> Resist the urge to intervene. Productive struggle is a documented learning mechanism, not a problem to solve.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">00:55 – 01:00 · Reflection + Homework (5 min)</div>
+      <div class="tl-head">Consolidation, metacognition activation, parent visibility loop closure</div>
+      <div class="tl-body">
+        <div class="script" style="margin-top:4px">
+          <span class="lbl">// Two mandatory reflection questions — in this order</span>
+          Q1: "What did we build today?"               ← episodic recall
+          Q2: "What was the hardest part for you?"    ← metacognitive processing
+          FOLLOW-UP: "Which part could you explain to a friend who missed today?"
+        </div>
+        <strong>Homework:</strong> Screenshot task with specific criteria: "Take a screenshot of your completed [build] with [specific visible element] and send it to the WhatsApp group before tomorrow morning." Specific, verifiable, deadline-bound.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+  <h4>Pre-Session Preparation Checklist (Phase 0)</h4>
+  <ol class="deep">
+    <li>Write 2–3 Extra Tasks for fast finishers in your notes. Never improvise these in the moment.</li>
+    <li>Pin today's spawn coordinates. Emergency recall command ready: <code>/tp @a [X] [Y] [Z]</code></li>
+    <li>Test <code>/code</code> in the session world — "Enable Code Builder" must be ON in world settings or the command silently fails.</li>
+    <li>Prepare one mission narrative and two icebreaker options.</li>
+    <li>Review notes from the previous session — any student who struggled needs targeted support in the first 5 minutes.</li>
+  </ol>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     3. SOFT SKILLS & SCRIPTS
+     ═══════════════════════════════════ -->
+<div id="sec3" class="anchor">
+  <div class="section-head">3 · Soft Skills &amp; Active Involvement Scripts</div>
+</div>
+
+<div class="callout ct">
+  <span class="ci">ℹ️</span>
+  <div>
+    <strong>The "No Problem!" Rule — Error Normalisation + EQ</strong><br>
+    Programming is iterative by definition. A student whose code fails has not made a mistake — they have generated a data point. Every professional developer debugs constantly. The language you use in response to failure will either activate or suppress the prefrontal cortex function the student needs to solve the problem.<br><br>
+    <strong>Prohibited language categories:</strong> identity attribution ("you did it wrong"), comparison ("your teammate got it right"), implication of inattention ("if you'd listened").<br><br>
+    <div class="script" style="margin-top:10px">
+      <span class="lbl">// The canonical "No Problem!" script — use verbatim until internalised</span>
+      "No problem! If it doesn't work the first time, don't panic.
+      Let's check your blocks step-by-step.
+      Bugs are part of the adventure — every real engineer debugs constantly!"
+    </div>
+    <strong>Why the exact phrasing matters:</strong> "No problem!" immediately neutralises failure's emotional charge. "Step-by-step" provides an action pathway. "Every real engineer" reframes the student as a professional, not as someone who failed.
+  </div>
+</div>
+
+<div class="card">
+  <h4>Specific, Behaviour-Linked Praise</h4>
+  <p>Generic praise ("Good job!") contains zero information about which behaviour to repeat. It activates no reinforcement loop. Specific praise names the exact action, contextualises it as professionally valuable, and creates a loop that increases the probability of that behaviour recurring.</p>
+  <p style="margin-top:8px;font-size:12px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Formula: [student name] + [specific observable action] + [professional framing of what that action demonstrates]</p>
+  <div class="compare-grid" style="margin-top:10px">
+    <div class="card" style="background:var(--no-bg);border-color:var(--no-b)">
+      <h4 style="color:var(--no-t)">❌ Generic — Zero Reinforcement</h4>
+      <p style="color:var(--no-t);font-size:13px">"Good job!" · "Nice work!" · "Well done!" · "You're so smart." · "Great effort."<br><br>None of these tell the student what to repeat. "Smart" is additionally harmful — it attributes success to a fixed trait, promoting fixed mindset.</p>
+    </div>
+    <div class="card" style="background:var(--ok-bg);border-color:var(--ok-b)">
+      <h4 style="color:var(--ok-t)">✅ Specific — Active Reinforcement</h4>
+      <p style="color:var(--ok-t);font-size:13px">"Excellent — you placed the Observer facing the bamboo without being told. That's exactly what a real Redstone engineer does."<br><br>"You spotted the signal dying and added a Repeater before I mentioned it. That's professional debugging instinct right there."</p>
+    </div>
+  </div>
+  <div class="script" style="margin-top:10px">
+    <span class="lbl">// Module-specific praise scripts — adapt per situation</span>
+    M1 COORD:  "[Name], you pinned the spawn coords before touching anything — that's how professionals work."
+    M1 AGENT:  "[Name], you drew the Agent's path on paper first. Architects do exactly that before building."
+    M2 CLONE:  "[Name], you checked both corners before typing /clone — that prevented the overlap failure."
+    M3 VAR:    "[Name], you used 'score' not 's' — that means you can read and debug your own code."
+    M4 PIPE:   "[Name], you tested each stage before connecting them. That's how industrial engineers work."
+  </div>
+</div>
+
+<div class="callout ct">
+  <span class="ci">ℹ️</span>
+  <div>
+    <strong>The Panda Rule — Active Involvement Verification</strong><br>
+    Engagement cannot be assumed — it must be confirmed. The Panda Rule verifies comprehension in real time without cold-calling (anxiety risk) or "does everyone understand?" (produces universal nodding regardless of actual state).<br><br>
+    <div class="script" style="margin-top:8px">
+      <span class="lbl">// Introduction script — deliver in the first 3 minutes of every session</span>
+      "One rule before we start: whenever you hear a new rule,
+      or successfully complete a step, send a 🐼 Panda emoji in the chat!"
+    </div>
+    <strong>When to trigger:</strong> After every instruction step before students attempt it · After key concept explanations · After the Cognitive Break (confirms everyone is back) · After homework assignment (confirms the task was understood).<br><br>
+    <strong>Interpreting response:</strong> All pandas ≤10 seconds → proceed. &lt;80% response → instruction failed for at least one student; rephrase and re-trigger. No response from one student → private message immediately.
+  </div>
+</div>
+
+<div class="card">
+  <h4>The Fast Finisher Protocol — Pre-Prepared Extra Tasks</h4>
+  <p>A student who finishes early with nothing to do will create disruption within 60 seconds. This is not a behaviour problem — it is a preparation failure. "Wait quietly" is never an acceptable response.</p>
+  <p style="margin-top:8px"><strong>Non-negotiable rule:</strong> Write 2–3 Extra Tasks in your session notes <em>before the session starts</em>. Do not improvise in the moment.</p>
+  <ol class="deep" style="margin-top:10px">
+    <li><strong>Must extend the current build</strong>, not preview future module content. "Build a second bamboo farm row" reinforces M1. "Try the /clone command" skips a dependency chain.</li>
+    <li><strong>Deliverable in one sentence, typed by name in chat:</strong> "Amara — bonus mission: add a second Observer–Piston pair to double your bamboo farm output." Named delivery signals achievement recognition, not marginalisation.</li>
+    <li><strong>Must produce a visible, screenshot-able output</strong> connecting to the homework accountability loop.</li>
+  </ol>
+  <div class="script" style="margin-top:10px">
+    <span class="lbl">// Extra Task template bank — adapt per module context</span>
+    STRUCTURAL:   "Add a perimeter wall or fence around your [completed build]."
+    TECHNICAL:    "Add a Redstone Lamp indicator that lights when the circuit is active."
+    SCALE:        "Add a second row of [repeating element] to double the output."
+    DECORATIVE:   "Colour-code your Redstone wires using different coloured blocks as labels."
+    DOCUMENTATION:"Take 3 screenshots — before / during / after your build — explain each in chat."
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     BOTTOM CTA → TECHNICAL DEEP-DIVE
+     ═══════════════════════════════════ -->
+<div id="sec-cta" class="anchor cta-block">
+  <h3>Pedagogy Complete — Proceed to the Technical Deep-Dive</h3>
+  <p>You have covered the full architecture of Minecraft Level 1: the spiral curriculum model, the cognitive profile of your students, the standardised 60-minute session structure, and every soft-skill script. This framework governs every technical session you teach.<br><br>The next file opens the Module 1 Technical Deep-Dive — 3D coordinates, MakeCode overlay, Agent mechanics, Redstone signal physics, the automated bamboo farm, and the cobblestone factory — with a full 6-scenario troubleshooting catalog and concept analogies.</p>
+  <a href="EnModule1Tech.html" class="btn-primary" style="font-size:15px;padding:14px 38px;position:relative;">Proceed to Technical Deep-Dive → Module 1</a>
+</div>
+
+</div><!-- /.cbody -->
+
+<footer>© 2026 Kodland · Internal tutor training material — not for external distribution.</footer>
+
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-bar').style.width = `${getOverallProgress() / 5 * 100}%`;
+
+  // Active pill highlight
+  const pills = document.querySelectorAll('.sec-pill');
+  const ids   = ['sec0','sec1','sec2','sec3','sec-cta'];
+  window.addEventListener('scroll', () => {
+    let active = 0;
+    ids.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 150) active = i;
+    });
+    pills.forEach((p, i) => p.classList.toggle('active', i === active));
+  }, { passive: true });
+</script>
+</body>
+</html>

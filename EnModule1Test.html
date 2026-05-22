@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Module 1 Knowledge Check | Kodland Tutor Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ── Test-page extras ─────────────────────────────────────────── */
+.test-header{
+  background:linear-gradient(135deg,#1a2e0a 0%,#2f5222 55%,#4a7830 100%);
+  padding:36px 32px 28px; border-bottom:3px solid var(--lime); text-align:center;
+}
+.test-header h2{ font-family:'Nunito',sans-serif; font-size:clamp(20px,3.5vw,28px);
+  font-weight:900; color:#fff; margin-bottom:6px; }
+.test-header p{ color:rgba(255,255,255,.72); font-size:13px; }
+.test-header .badges{ display:flex; align-items:center; justify-content:center; gap:8px;
+  flex-wrap:wrap; margin-top:12px; }
+.tbadge{ display:inline-flex; align-items:center; gap:5px; padding:5px 13px;
+  border-radius:var(--rpill); font-family:'Nunito',sans-serif; font-weight:900;
+  font-size:11px; text-transform:uppercase; letter-spacing:.4px; }
+.tbadge.lime{ background:rgba(196,240,70,.2); border:2px solid rgba(196,240,70,.4); color:var(--lime); }
+.tbadge.pink{ background:rgba(240,61,158,.2); border:2px solid rgba(240,61,158,.4); color:#F472B6; }
+
+/* Feedback box per question */
+.q-feedback{
+  display:none; margin-top:12px; border-radius:var(--rsm);
+  padding:13px 16px; font-size:13px; line-height:1.6; border:2px solid;
+}
+.q-feedback.show{ display:block; }
+.q-feedback.ok{ background:var(--ok-bg); border-color:var(--ok-b); color:var(--ok-t); }
+.q-feedback.bad{ background:var(--no-bg); border-color:var(--no-b); color:var(--no-t); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span>
+    <div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="window.location.href='EnModule1Tech.html'">← Module 1 Tech</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-bar" style="width:0%"></div></div>
+
+<!-- TEST HEADER -->
+<div class="test-header">
+  <h2>📝 Module 1 Knowledge Check</h2>
+  <p>Brave New Green Stone World — Technical Assessment</p>
+  <div class="badges">
+    <span class="tbadge lime">6 Questions</span>
+    <span class="tbadge lime">≥ 70% to Pass</span>
+    <span class="tbadge pink">Zero DST Overlap</span>
+    <span class="tbadge lime">Per-Question Feedback</span>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="quiz-screen">
+  <div class="quiz-wrap">
+    <!-- Progress -->
+    <div class="q-progress">
+      <div class="q-prog-track"><div class="q-prog-fill" id="q-fill" style="width:0%"></div></div>
+      <span class="q-count" id="q-count">Question 1 of 6</span>
+    </div>
+
+    <!-- Question area -->
+    <div id="q-num" class="qnum"></div>
+    <div id="q-text" class="qtext"></div>
+    <div id="q-opts" class="opt-list"></div>
+    <div id="q-feedback" class="q-feedback"></div>
+
+    <!-- Next / Submit buttons -->
+    <div class="btn-row" style="margin-top:20px">
+      <button class="btn-primary" id="btn-next" onclick="nextQ()" style="display:none">Next Question →</button>
+      <button class="btn-primary" id="btn-submit" onclick="submitQuiz()" style="display:none">Submit &amp; See Results</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" id="result-actions" style="margin-top:20px"></div>
+</div>
+
+<footer>© 2026 Kodland · Internal tutor training material — not for external distribution.</footer>
+
+<script src="shared.js"></script>
+<script>
+/*
+ * ─── MODULE 1 KNOWLEDGE CHECK ────────────────────────────────────────────────
+ *
+ * CORRECT ANSWER DISTRIBUTION:
+ *   Q1 → C (index 2)   Q2 → A (index 0)   Q3 → D (index 3)
+ *   Q4 → B (index 1)   Q5 → A (index 0)   Q6 → D (index 3)
+ *   Pattern:  2, 0, 3, 1, 0, 3
+ *   A count: 2  |  B count: 1  |  C count: 1  |  D count: 2
+ *   No consecutive duplicate indices. All four letters represented.
+ *
+ * DST OVERLAP CHECK — These 6 questions cover topics NOT tested in the DST:
+ *   Q1 → Mixed tilde syntax (DST tests tilde symbol only, not mixed command application)
+ *   Q2 → MakeCode "On Chat Command" purpose (DST tests Repeat loop, not event triggers)
+ *   Q3 → Agent orientation tracking after turns (not in DST)
+ *   Q4 → Observer face vs. back orientation (DST tests which block is a sensor, not its faces)
+ *   Q5 → Cobblestone vs. Obsidian production conditions (DST tests water+lava result only)
+ *   Q6 → Code Builder world settings prerequisite (not in DST)
+ *   RESULT: ZERO content overlap with DST questions.
+ */
+
+const MODULE_ID  = 1;
+const PASS_SCORE = 70;
+
+const QUESTIONS = [
+  // ── Q1 — Correct: C (index 2) ──
+  {
+    text: "A tutor needs to teleport all students to X=200, keeping their current Z positions, and snap them precisely to Y=64 (sea level). Which command syntax achieves this?",
+    opts: [
+      "A) /tp @a 200 64 200",
+      "B) /tp @a ~200 ~64 ~0",
+      "C) /tp @a 200 64 ~0",
+      "D) /tp @a ~0 64 ~0"
+    ],
+    correct: 2,
+    feedback: "✅ Correct. Option C uses mixed syntax: 200 is an absolute X value (always X=200), 64 is an absolute Y value (always sea level), and ~0 is a relative Z offset of zero (each player keeps their own current Z position). Option A would move everyone to Z=200 too. Option B applies all values as relative offsets, which would add 200 to each player's current X. Option D keeps both X and Z relative, only snapping Y."
+  },
+
+  // ── Q2 — Correct: A (index 0) ──
+  {
+    text: "In MakeCode, what is the precise function of the 'On Chat Command [word]' block, and when does the code placed inside it actually execute?",
+    opts: [
+      "A) It is an event handler: the enclosed code executes exactly once each time the player types that specific word in the Minecraft in-game chat.",
+      "B) It runs its enclosed code automatically every 0.5 seconds as a background loop.",
+      "C) It runs its enclosed code once when the MakeCode editor is first opened.",
+      "D) It sends a message to all players in the server whenever activated."
+    ],
+    correct: 0,
+    feedback: "✅ Correct. 'On Chat Command' is an event handler — it registers a listener that waits passively until the trigger condition (the player typing the exact word in Minecraft chat) fires. Code inside runs only when the event fires; code outside this block runs only once at program load. This distinction is critical: student code placed outside the block will not respond to chat input."
+  },
+
+  // ── Q3 — Correct: D (index 3) ──
+  {
+    text: "A student writes this Agent programme: [turn right] → [turn right] → [move forward 3]. The Agent starts facing North. After executing the full sequence, in which direction has the Agent moved and by how many blocks?",
+    opts: [
+      "A) North 3 blocks — two right turns cancel each other out",
+      "B) East 3 blocks — one net right turn from North equals East",
+      "C) West 3 blocks — two right turns from North passes through East to South then West",
+      "D) South 3 blocks — the first right turn faces East; the second right turn from East faces South; move forward 3 moves South by 3 blocks"
+    ],
+    correct: 3,
+    feedback: "✅ Correct. Starting facing North: Turn right → now facing East. Turn right again → now facing South. 'Move forward 3' from a South-facing orientation moves the Agent 3 blocks South (+Z direction). Two consecutive right turns = 180° rotation = now facing the exact opposite cardinal direction from the start. This question tests the core Agent orientation tracking skill that prevents diagonal-path bugs."
+  },
+
+  // ── Q4 — Correct: B (index 1) ──
+  {
+    text: "When placing an Observer block to build the automated bamboo farm, a student places it so the carved texture (face) points away from the bamboo and toward the Piston. The Observer fires visually but the Piston never extends. What is the exact cause?",
+    opts: [
+      "A) The Piston must be a Sticky Piston, not a regular Piston, for the circuit to work.",
+      "B) The Observer's face (carved texture) is the detection side — it must point AT the bamboo. The smooth back side is the output/transmitter that must face the Piston. The student has the two sides swapped.",
+      "C) The bamboo plant is the wrong block type — bamboo must be replaced with a Bamboo Sapling.",
+      "D) The Redstone signal requires a Lever on the Piston to amplify the Observer's pulse."
+    ],
+    correct: 1,
+    feedback: "✅ Correct. The Observer has two distinct functional sides: the face (carved/eye texture) is the sensor that watches for block state changes in the block it directly faces — it must point AT the bamboo. The back (smooth output side) is where the Redstone pulse is emitted — it must point toward the Piston or the connecting wire. With the sides swapped, the Observer is watching the Piston (which doesn't change state) rather than the bamboo, so it either never fires or fires for the wrong reason."
+  },
+
+  // ── Q5 — Correct: A (index 0) ──
+  {
+    text: "A student builds a cobblestone factory but places the Water source block and the Lava source block directly next to each other with no gap. The factory produces Obsidian instead of Cobblestone. What is the precise cause, and what is the correct configuration?",
+    opts: [
+      "A) Two adjacent source blocks produce Obsidian because both are stationary — there is no flowing fluid collision. The fix: ensure exactly one empty block gap between the two source blocks so both fluids must flow before meeting in the centre gap, producing Cobblestone.",
+      "B) The student used the wrong Lava type — regular Lava must be replaced with Nether Lava from the Nether dimension.",
+      "C) The Lava source must be placed above the Water source, not beside it, for Cobblestone generation.",
+      "D) Obsidian and Cobblestone are produced identically — the student must use a Stone Pickaxe to mine the Obsidian, which then converts it to Cobblestone."
+    ],
+    correct: 0,
+    feedback: "✅ Correct. When a Lava source block is placed directly adjacent to a Water source block, they are both stationary — neither is flowing. The collision rule is: flowing Water + flowing Lava = Cobblestone; stationary Lava source + adjacent Water source = Obsidian. The 1-block gap forces both fluids to flow toward the centre before meeting, producing Cobblestone. Obsidian requires a Diamond Pickaxe to mine and regenerates if the sources remain adjacent — a session-blocking failure if not caught early."
+  },
+
+  // ── Q6 — Correct: D (index 3) ──
+  {
+    text: "During a live session, a student types '/code' in the Minecraft chat and nothing happens — no MakeCode overlay appears and no error message is shown. The student's internet connection is confirmed working. What is the most likely cause and the precise fix?",
+    opts: [
+      "A) The student is using an incompatible browser — MakeCode requires Chrome version 90 or above.",
+      "B) The /code command is case-sensitive — the student must type '/Code' with a capital C.",
+      "C) The student needs to be in Creative Mode; /code does not work in Survival Mode.",
+      "D) 'Enable Code Builder' was not toggled ON in the world settings before the session began. The fix: close the world, open world settings (pencil icon on the world thumbnail), enable the Code Builder toggle, re-enter the world, and retry /code."
+    ],
+    correct: 3,
+    feedback: "✅ Correct. 'Enable Code Builder' is a per-world setting in Minecraft Education Edition that must be explicitly activated before any student enters the world. When it is OFF, the /code command runs silently with no feedback — no error message, no response — which is confusing for both students and tutors. This is the most common cause of /code failure when internet connectivity is confirmed. It must be checked as part of the Pre-Flight preparation before every session."
+  }
+];
+
+/* ─── Engine ─────────────────────────────────────────────────────── */
+const LETTERS = ['A','B','C','D'];
+let current  = 0;
+let answers  = new Array(QUESTIONS.length).fill(null);
+let answered = false;
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+
+  document.getElementById('q-fill').style.width    = `${(current / QUESTIONS.length) * 100}%`;
+  document.getElementById('q-count').textContent   = `Question ${current + 1} of ${QUESTIONS.length}`;
+  document.getElementById('q-num').textContent     = `Q${current + 1} of ${QUESTIONS.length}`;
+  document.getElementById('q-text').textContent    = q.text;
+  document.getElementById('btn-next').style.display   = 'none';
+  document.getElementById('btn-submit').style.display = 'none';
+
+  const fb = document.getElementById('q-feedback');
+  fb.className   = 'q-feedback';
+  fb.textContent = '';
+
+  // Render options
+  const container = document.getElementById('q-opts');
+  container.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'opt';
+    btn.id = `opt-${i}`;
+    btn.innerHTML = `<span class="opt-letter">${LETTERS[i]}</span><span>${opt.slice(3)}</span>`;
+    btn.addEventListener('click', () => pickAnswer(i));
+    container.appendChild(btn);
+  });
+}
+
+function pickAnswer(i) {
+  if (answered) return;
+  answered = true;
+  answers[current] = i;
+
+  const q = QUESTIONS[current];
+  const isRight = i === q.correct;
+
+  // Style all options
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i)    el.classList.add('wrong');
+  }
+
+  // Show feedback
+  const fb = document.getElementById('q-feedback');
+  fb.className   = `q-feedback show ${isRight ? 'ok' : 'bad'}`;
+  fb.innerHTML   = `<strong>${isRight ? '✅ Correct!' : '❌ Incorrect.'}</strong><br>${q.feedback.replace(/^[✅❌]\s*\w+[!\.]?\s*/, '')}`;
+
+  // Show appropriate next control
+  if (current < QUESTIONS.length - 1) {
+    document.getElementById('btn-next').style.display = 'inline-flex';
+  } else {
+    document.getElementById('btn-submit').style.display = 'inline-flex';
+  }
+}
+
+function nextQ() {
+  current++;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function submitQuiz() {
+  const score  = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+  const pct    = Math.round((score / QUESTIONS.length) * 100);
+  const passed = pct >= PASS_SCORE;
+
+  if (passed) {
+    const prev = getModuleScore(MODULE_ID);
+    if (!prev || pct > prev) markModulePassed(MODULE_ID, pct);
+  }
+
+  document.getElementById('quiz-screen').style.display    = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+
+  // Build per-question review
+  let reviewHtml = '<div style="margin-top:14px;text-align:left">';
+  QUESTIONS.forEach((q, i) => {
+    const correct = answers[i] === q.correct;
+    reviewHtml += `
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--text2)">
+        <span style="font-size:14px">${correct ? '✅' : '❌'}</span>
+        <span>Q${i+1}: ${correct ? 'Correct' : `Incorrect — correct answer was <strong style="color:var(--text)">${LETTERS[q.correct]}</strong>`}</span>
+      </div>`;
+  });
+  reviewHtml += '</div>';
+
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed ? '🎉' : '📚'}</div>
+    <div class="result-title">${passed ? 'Module 1 Passed!' : 'Keep Studying'}</div>
+    <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+    <div class="result-sub">
+      You answered <strong>${score} of ${QUESTIONS.length}</strong> questions correctly.
+      ${passed
+        ? ' Excellent — you have demonstrated solid understanding of Module 1 technical content. Module 2 is now unlocked.'
+        : ` A score of <strong>${PASS_SCORE}%</strong> or above is required to progress. Review the Module 1 Technical Deep-Dive and try again.`}
+    </div>
+    ${reviewHtml}
+  `;
+
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="EnModule2.html"     class="btn-primary">Continue to Module 2 →</a>
+       <button class="btn-outline"  onclick="goHome()">← Dashboard</button>`
+    : `<button class="btn-primary"  onclick="retake()">Retake Test</button>
+       <a href="EnModule1Tech.html" class="btn-outline">← Review Module 1</a>`;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function retake() {
+  current  = 0;
+  answers  = new Array(QUESTIONS.length).fill(null);
+  answered = false;
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display    = 'block';
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ─── Init ─────────────────────────────────────────────────────── */
+initShared();
+document.getElementById('top-bar').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

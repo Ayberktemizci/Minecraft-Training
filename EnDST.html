@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library of Successful Lessons &amp; Digital Skill Test | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ══ Banner ══════════════════════════════════════════════ */
+.dst-banner{
+  background:linear-gradient(135deg,#111111 0%,#1E2A18 60%,#2A3D22 100%);
+  padding:44px 32px 36px; position:relative; overflow:hidden;
+  border-bottom:3px solid var(--lime);
+}
+.dst-banner::before{
+  content:'🏆'; font-size:200px; position:absolute;
+  right:-30px; top:-50px; opacity:.06; line-height:1; pointer-events:none;
+}
+.dst-banner .meyebrow{
+  color:var(--lime); font-size:11px; font-weight:900;
+  text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px;
+}
+.dst-banner .mh1{
+  color:#fff; font-family:'Nunito',sans-serif;
+  font-size:clamp(22px,4vw,34px); font-weight:900;
+  letter-spacing:-.5px; line-height:1.1; margin-bottom:10px;
+}
+.dst-banner p{ color:rgba(255,255,255,.74); font-size:14px; line-height:1.65; max-width:640px; }
+.dst-banner .sub-pill{
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(196,240,70,.15); border:2px solid rgba(196,240,70,.3);
+  border-radius:var(--rpill); padding:5px 14px;
+  font-family:'Nunito',sans-serif; font-size:12px; font-weight:900;
+  color:var(--lime); margin-top:14px;
+}
+
+/* ══ Section nav ══════════════════════════════════════════ */
+.sec-nav{
+  display:flex; flex-wrap:wrap; gap:6px; padding:12px 24px;
+  background:var(--surface2); border-bottom:2px solid var(--border);
+  position:sticky; top:62px; z-index:90;
+}
+.sec-pill{
+  font-family:'Nunito',sans-serif; font-weight:900; font-size:11px;
+  text-transform:uppercase; letter-spacing:.4px; padding:5px 12px;
+  border-radius:var(--rpill); background:var(--surface); border:2px solid var(--border);
+  color:var(--text2); text-decoration:none; transition:all .15s; white-space:nowrap;
+}
+.sec-pill:hover{ background:var(--lime); border-color:var(--lime-d); color:var(--ink); }
+
+/* ══ Scroll targets ══════════════════════════════════════ */
+.anchor-target{ scroll-margin-top:128px; }
+
+/* ══ Responsive video ════════════════════════════════════ */
+.video-outer{
+  border-radius:var(--r); overflow:hidden;
+  border:2px solid var(--border); box-shadow:var(--shadow-h);
+  background:#000; margin:16px 0; position:relative;
+}
+.video-ratio{
+  /* 16:9 responsive padding trick */
+  position:relative; width:100%; padding-bottom:56.25%;
+}
+.video-ratio iframe{
+  position:absolute; inset:0; width:100%; height:100%; border:none;
+}
+.video-meta{
+  display:flex; align-items:center; gap:10px;
+  background:var(--surface2); padding:10px 16px;
+  border-top:1px solid var(--border);
+}
+.video-live-pill{
+  display:inline-flex; align-items:center; gap:5px;
+  background:rgba(239,68,68,.12); border:1.5px solid rgba(239,68,68,.3);
+  border-radius:var(--rpill); padding:3px 11px;
+  font-family:'Nunito',sans-serif; font-weight:900; font-size:11px;
+  color:#F87171; text-transform:uppercase; letter-spacing:.4px;
+}
+.video-live-pill::before{ content:'▶'; font-size:8px; }
+.video-meta-text{ font-size:12px; color:var(--text-muted); }
+
+/* ══ Timeline container ══════════════════════════════════ */
+.timeline-list{
+  list-style:none; padding:0; margin:20px 0 0;
+  display:flex; flex-direction:column; gap:0;
+}
+
+/* ── Single timeline card ── */
+.tl-card{
+  display:flex; gap:0; position:relative;
+}
+/* Vertical spine */
+.tl-card::before{
+  content:''; position:absolute; left:46px; top:0; bottom:0;
+  width:2px; background:var(--border); z-index:0;
+}
+.tl-card:last-child::before{ bottom:auto; height:28px; }
+
+/* Left col — time badge + dot */
+.tl-left{
+  flex-shrink:0; width:92px; padding-top:20px;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  position:relative; z-index:1;
+}
+.tl-dot{
+  width:16px; height:16px; border-radius:50%;
+  background:var(--lime); border:3px solid var(--lime-d);
+  flex-shrink:0; margin-top:4px;
+}
+.tl-time{
+  font-family:'Nunito',sans-serif; font-weight:900; font-size:11.5px;
+  color:var(--pink); background:var(--surface);
+  border:1.5px solid var(--border); border-radius:6px;
+  padding:3px 8px; text-align:center; line-height:1.3;
+  white-space:nowrap; box-shadow:var(--shadow);
+}
+/* Jump-to-video chip */
+.tl-jump{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:28px; height:18px; border-radius:4px;
+  background:rgba(240,61,158,.12); border:1.5px solid rgba(240,61,158,.3);
+  cursor:pointer; font-size:8px; color:var(--pink);
+  transition:all .15s; text-decoration:none;
+}
+.tl-jump:hover{ background:var(--pink); color:#fff; }
+
+/* Right col — content */
+.tl-right{
+  flex:1; padding:18px 0 24px 20px;
+}
+.tl-phase{
+  font-size:11px; font-weight:700; text-transform:uppercase;
+  letter-spacing:.8px; color:var(--text-muted); margin-bottom:4px;
+}
+.tl-heading{
+  font-family:'Nunito',sans-serif; font-size:15px; font-weight:900;
+  color:var(--text); margin-bottom:8px;
+}
+
+/* Action block */
+.tl-action{
+  background:var(--surface); border:1.5px solid var(--border);
+  border-radius:var(--rsm); padding:12px 14px; margin-bottom:8px;
+  font-size:13px; color:var(--text2); line-height:1.65;
+  box-shadow:var(--shadow);
+}
+.tl-action-label{
+  font-family:'Nunito',sans-serif; font-weight:900; font-size:11px;
+  text-transform:uppercase; letter-spacing:.6px; color:var(--text-muted);
+  margin-bottom:5px;
+}
+
+/* QA Analysis block */
+.tl-qa{
+  border-radius:var(--rsm); padding:13px 15px;
+  font-size:13px; line-height:1.7;
+}
+.tl-qa-label{
+  font-family:'Nunito',sans-serif; font-weight:900; font-size:11px;
+  text-transform:uppercase; letter-spacing:.6px; margin-bottom:5px;
+}
+/* Green tint for passed items */
+.tl-qa.pass{
+  background:var(--callout-green-bg);
+  border:1.5px solid var(--callout-green-b);
+  color:var(--callout-green-t);
+}
+.tl-qa.pass .tl-qa-label{ color:var(--callout-green-t); }
+/* Amber tint for flagged items */
+.tl-qa.flag{
+  background:var(--callout-warn-bg);
+  border:1.5px solid var(--callout-warn-b);
+  color:var(--callout-warn-t);
+}
+.tl-qa.flag .tl-qa-label{ color:var(--callout-warn-t); }
+
+.tl-qa strong{ font-weight:700; }
+
+/* Verdict pill inside QA block */
+.verdict{
+  display:inline-flex; align-items:center; gap:4px;
+  padding:2px 9px; border-radius:4px; font-weight:900; font-size:11px;
+  text-transform:uppercase; letter-spacing:.3px; margin-bottom:7px;
+}
+.v-pass{ background:var(--ok-bg); color:var(--ok-t); border:1.5px solid var(--ok-b); }
+.v-flag{ background:var(--callout-warn-bg); color:var(--callout-warn-t); border:1.5px solid var(--callout-warn-b); }
+
+/* ══ Competency checklist ════════════════════════════════ */
+.comp-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 0; }
+@media(max-width:580px){ .comp-grid{ grid-template-columns:1fr; } }
+.comp-item{
+  background:var(--surface); border:1.5px solid var(--border);
+  border-radius:var(--rsm); padding:12px 14px;
+  display:flex; gap:10px; align-items:flex-start; box-shadow:var(--shadow);
+}
+.comp-check{
+  width:20px; height:20px; border-radius:50%;
+  background:var(--lime); border:2px solid var(--lime-d);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-top:1px; font-size:10px; color:var(--ink); font-weight:900;
+}
+.comp-text{ font-size:13px; color:var(--text2); line-height:1.55; }
+.comp-text strong{ color:var(--text); }
+
+/* ══ DST CTA block ══════════════════════════════════════ */
+.dst-cta{
+  background:linear-gradient(135deg,var(--surface),var(--surface2));
+  border:2px solid var(--lime-d); border-radius:var(--r);
+  padding:32px; text-align:center; box-shadow:var(--shadow-h);
+  position:relative; overflow:hidden;
+}
+.dst-cta::before{
+  content:''; position:absolute; top:-60px; right:-60px;
+  width:180px; height:180px; border-radius:50%;
+  background:var(--lime); opacity:.06; pointer-events:none;
+}
+.dst-cta-title{
+  font-family:'Nunito',sans-serif; font-size:22px;
+  font-weight:900; color:var(--text); margin-bottom:8px;
+}
+.dst-cta-sub{
+  font-size:14px; color:var(--text2); line-height:1.65;
+  margin-bottom:20px; max-width:500px; margin-left:auto; margin-right:auto;
+}
+
+/* ══ Locked notice ══════════════════════════════════════ */
+.locked-banner{
+  background:var(--callout-warn-bg); border:2px solid var(--callout-warn-b);
+  border-radius:var(--r); padding:28px; text-align:center;
+  margin:32px auto; max-width:520px;
+}
+.locked-banner h3{
+  font-family:'Nunito',sans-serif; font-size:18px; font-weight:900;
+  color:var(--callout-warn-t); margin-bottom:8px;
+}
+.locked-banner p{ font-size:13.5px; color:var(--callout-warn-t); line-height:1.6; }
+
+/* Misc */
+code{
+  font-family:'JetBrains Mono',monospace; font-size:12px;
+  background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:4px; padding:1px 6px; color:var(--pink);
+}
+[data-theme="dark"] code{ color:var(--lime); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dashboard</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="sec-nav">
+  <a href="#library"      class="sec-pill">3 · Reference Session</a>
+  <a href="#qa-framework" class="sec-pill">QA Framework</a>
+  <a href="#dst-section"  class="sec-pill">4 · Digital Skill Test</a>
+  <a href="#competencies" class="sec-pill">Competencies</a>
+  <a href="#dst-form"     class="sec-pill">Take the Test</a>
+</div>
+
+<!-- BANNER -->
+<div class="dst-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Sections 3 &amp; 4 — Final Stage</div>
+    <div class="mh1">Library of Successful Lessons &amp; Digital Skill Test</div>
+    <p>Study the annotated reference session below, verify your readiness against the competency checklist, then proceed to the Digital Skill Test. A score of <strong>80% or above</strong> on the test is required to lead a live group independently.</p>
+    <div class="sub-pill">🔒 Requires all 5 Module Tests passed · 20 Questions · Pass mark: 80%</div>
+  </div>
+</div>
+
+<!-- LOCKED NOTICE -->
+<div id="locked-notice" style="display:none">
+  <div class="cbody">
+    <div class="locked-banner">
+      <h3>🔒 Complete All 5 Modules First</h3>
+      <p>You must pass the knowledge check for all five modules before accessing the Library of Successful Lessons and the Digital Skill Test. Return to the dashboard to see which modules are outstanding.</p>
+      <div class="btn-row center" style="margin-top:16px">
+        <button class="btn-primary" onclick="goHome()">← Return to Dashboard</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main-content" style="display:none">
+<div class="cbody">
+
+<!-- ═══════════════════════════════════
+     SECTION 3 — LIBRARY OF LESSONS
+     ═══════════════════════════════════ -->
+
+<div id="library" class="anchor-target">
+  <div class="section-head">3 · Library of Successful Lessons</div>
+</div>
+
+<div class="card">
+  <h4>Purpose of This Library</h4>
+  <p>This section contains a real, recorded Kodland Level 1 session evaluated by the Senior Quality Assurance team. Study each timestamped annotation carefully — not to memorise scripts, but to internalise the <em>reasoning</em> behind each instructional decision. A tutor who understands <strong>why</strong> a behaviour is effective can adapt it to any unexpected classroom situation; a tutor who only mimics surface actions will struggle the moment the lesson departs from the script.</p>
+  <p style="margin-top:8px">Watch the video, then read the annotation cards beneath it. Each card identifies the exact moment, describes what the tutor did, and explains the pedagogical principle that makes it work — or the gap that needs correction.</p>
+</div>
+
+<!-- ── Video embed ── -->
+<div id="qa-module1" class="anchor-target">
+  <div class="section-head">QA-001 · Module 1, Lesson 1 — Annotated Reference Session</div>
+</div>
+
+<!--
+  ╔══════════════════════════════════════════════════════════╗
+  ║  VIDEO SWAP GUIDE                                        ║
+  ║  Replace YOUR_VIDEO_ID in the src attribute below       ║
+  ║  with the actual YouTube video ID.                       ║
+  ║  Example: if your URL is youtube.com/watch?v=wDFSmWRABRg ║
+  ║  then set:  src="https://www.youtube.com/embed/wDFSmWRABRg" ║
+  ╚══════════════════════════════════════════════════════════╝
+-->
+<div class="video-outer">
+  <div class="video-ratio">
+    <iframe
+      id="qa-video-player"
+      src="https://www.youtube.com/embed/wDFSmWRABRg"
+      title="Kodland Minecraft Level 1 — QA Reference Session"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
+  </div>
+  <div class="video-meta">
+    <span class="video-live-pill">Live Session Recording</span>
+    <span class="video-meta-text">Module 1 · Minecraft Education Level 1 · Senior QA Evaluated</span>
+  </div>
+</div>
+
+<div class="callout ct" style="margin-bottom:20px">
+  <span class="ci">💡</span>
+  <div>Use the <strong>▶ jump buttons</strong> on each annotation card below to skip directly to that moment in the video. Green cards highlight excellent practice; amber cards identify one area for improvement.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     16-CARD VERTICAL TIMELINE
+     ══════════════════════════════════════════════ -->
+<ul class="timeline-list">
+
+  <!-- ── CARD 1 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:00:00</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=0&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Session Opening</div>
+      <div class="tl-heading">Technical Setup &amp; Audio Checks</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        The tutor runs audio and connectivity tests for approximately eight minutes before addressing any student directly. Multiple verbal soundcheck calls confirm microphone and platform stability before instruction begins.
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Pre-Flight Protocol</span><br>
+        This extended setup period demonstrates the right instinct: <strong>resolve all technical issues before starting instruction, not during it.</strong> For 8–9 year old learners, beginning a lesson with audio dropouts or missing students creates immediate trust erosion — they experience the tutor as unprepared, which suppresses the psychological safety required for active learning. The standard is to have all issues resolved silently before minute five. This session ran longer than ideal, but the core discipline of resolving completely before teaching is correct and must be preserved in every future session.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 2 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:10:28</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=628&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Warm-Up</div>
+      <div class="tl-heading">Genuine Greeting &amp; Weekly Check-In</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        The tutor opens with a warm "Hi, how are you guys doing? How was your week?" and engages genuinely when one student describes a creative Nether portal house build — asking real follow-up questions and allowing the conversation to develop naturally for several minutes.
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Warm-Up &amp; Rapport</span><br>
+        Both requirements are met: a friendly greeting and an explicit personal question about students' lives outside the session. The quality exceeds the minimum — the tutor does not just tick the box ("How was your week? Good. Let's start") but genuinely engages with the student's creative story. For children aged 8–9, this social connection moment is neurologically significant: genuine acknowledgement activates a sense of belonging that primes the brain for active engagement with the upcoming technical content. A student who feels seen is a student ready to take risks in the lesson.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 3 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:12:43</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=763&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Social Architecture</div>
+      <div class="tl-heading">New Student Welcome &amp; Group Introductions</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        A new student joins for the first time. The tutor pauses the session completely to acknowledge the arrival, runs a full round of introductions, and models self-disclosure first — sharing personal interests (skateboarding, anime) before asking students to share theirs.
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Inclusive Social Architecture</span><br>
+        Introducing a new student is one of the highest-stakes social moments in a children's group. A child who feels like an outsider will not take academic risks for the rest of the session. The tutor handles this with two excellent moves: pausing the lesson gives the introduction proper weight, signalling that every member matters. Modelling self-disclosure first — sharing real personal details — lowers the perceived vulnerability of sharing, making it safer for every student to do the same. All four students were actively engaged throughout this segment.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 4 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:18:41</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=1121&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Lesson Framing</div>
+      <div class="tl-heading">Today's Plan &amp; World Import Instructions</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        The tutor states what will happen today: "We're going to start building — I'm sharing the world link now. We'll build houses, learn to code, learn logic, and work on creativity." The world import link is distributed via platform chat. Login troubleshooting for the new student runs in parallel without interrupting the group.
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Clear Lesson Objectives</span><br>
+        Lesson goals are stated using <strong>action verbs connected to tangible outcomes</strong> — "build houses," "learn to code," "work on creativity" — rather than abstract academic language. For concrete-operational-stage learners, this framing is essential: abstract goals are not meaningful anchors, but "we will build a house today" is immediately understandable. Running the new student's login troubleshooting silently in parallel while explaining the session to the rest of the group also demonstrates efficient time management — a genuine intermediate-level teaching skill.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 5 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:31:42</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=1902&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Discovery Learning</div>
+      <div class="tl-heading">Finding the Secret Base &amp; Exploring the Stash</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        Students organically discover a hidden base containing a chest full of resources, a command block, a lever, and a pressure plate. The tutor facilitates rather than directing: "What's in there?" When a student finds a lever near a command block, the tutor asks: "Where do you usually place something that needs to work with electricity?"
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Discovery-Based Learning + Socratic Scaffolding</span><br>
+        This is the Co-Explorer model in action. Students were not told to go to specific coordinates — they found the secret base through genuine exploration. The Socratic question about electricity activates prior knowledge (Redstone = electricity, taught in the previous session), creates a real cognitive challenge, and allows the student to reach the correct answer independently. Students who discover information through their own reasoning retain it far more reliably than students who are told the same information directly.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 6 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:39:10</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=2350&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Timed Challenge</div>
+      <div class="tl-heading">Launching the 10-Minute Building Challenge</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        The tutor launches the timed house-building challenge with clear, low-pressure framing: "Build a house with the materials you have — 10 to 15 minutes, doesn't matter what it looks like, just build." Countdown reminders are given at eight, four, three, two minutes, and at 45 and 10 seconds remaining.
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Instruction Chunking + Managed Independence</span><br>
+        The task is framed with one clear goal, a time boundary, and explicit permission to be imperfect ("doesn't matter what it looks like"). This removes performance anxiety before a creative task, which is known to increase output quality in young learners. The countdown structure is a best-practice time management technique for ages 8–9: this age group has limited internal time awareness, and frequent reminders maintain pace urgency without adding anxiety, while giving concrete temporal anchors that help students self-regulate task completion.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 7 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:39:51</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=2391&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Narrative Architecture</div>
+      <div class="tl-heading">Five-World Course Overview &amp; Learning Arc</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        While students build independently, the tutor delivers the macro course overview: "There are five worlds. Each one is harder, but our skills get better. The world is abandoned — we're eventually going to save it and bring everyone back. We'll learn to automate things. We're going to become heroes."
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Narrative Continuity + Long-Term Motivation</span><br>
+        This is one of the highest-quality moments in the session. The curriculum is not described abstractly — it is embedded inside a story with emotional stakes: a world to save, heroes to become. For 8–9 year old learners, this is the optimal motivational architecture. Abstract educational goals become a heroic mission, triggering intrinsic motivation that sustains engagement across all five modules. Critically, this overview is delivered while students are building — it supplements active work rather than competing with it for attention.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 8 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:41:22</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=2482&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Retrieval Practice</div>
+      <div class="tl-heading">Interactive Review — The Agent &amp; MakeCode</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        The tutor asks students to recall what the Agent is from the previous session: "Do you guys remember?" Students respond — "a tiny little robot," "he basically makes houses for you." The tutor confirms, adds detail, and asks follow-up questions. Multiple students contribute without being cold-called.
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Broad Participation + Retrieval Practice</span><br>
+        The technique used here is retrieval practice — asking students to reconstruct prior knowledge from memory rather than presenting it again as new information. This produces measurably stronger long-term retention, especially in the 8–9 age band where memory consolidation is still developing. The tutor amplifies each student response ("That's right") before expanding, affirming publicly and building psychological safety for further contributions. Multiple students contributed — no single student dominated.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 9 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:44:18</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=2658&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Teacher Modeling</div>
+      <div class="tl-heading">Live Demonstration — Commands &amp; Teleportation</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        The tutor demonstrates the lever-activated command block teleportation mechanic live on screen — places a lever next to a command block, flips it, and teleports instantly back to spawn. Narrates: "That was cool — we're going to learn to do that ourselves, and then you can teleport literally all over the world."
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Effective Modeling Before Independence</span><br>
+        The demonstration achieves three goals simultaneously: an abstract concept becomes tangible ("commands control your position in the world"), forward anticipation is created ("we're going to learn this ourselves"), and the demo is placed after students have experimented with the lever themselves — so they have experiential context for what they are watching. Observe-before-understand sequencing is the optimal pattern for concrete operational learners, who need to see and touch before abstract explanations become meaningful.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 10 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:47:49</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=2869&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Real-Time Support</div>
+      <div class="tl-heading">Student Screen Sharing &amp; Navigation Guidance</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        The tutor asks students to share screens during the build challenge. When one student gets lost in the world, the tutor guides them back using verbal directional hints — "turn right, towards your right, are we heading the right way?" — without touching the student's keyboard or completing the navigation for them.
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Screen Share + Hint-Not-Solution</span><br>
+        The navigation assistance is exemplary: verbal hints maintain the student's agency — the student completes the navigation themselves and builds spatial competence in the process. Completing the task for the student would produce someone who cannot navigate independently in the next session. The hint-not-solution principle is most often violated under time pressure; applying it correctly here, while also managing four other students, is a mark of intermediate-level delivery skill.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 11 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">00:55:44</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=3344&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Showcase &amp; Feedback</div>
+      <div class="tl-heading">Student Project Showcases &amp; Specific Praise</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        Each student shares their completed house. The tutor gives specific design-referenced feedback: "That's really creative — it's like a massive skylight, almost like a dungeon." "I love the glass and the trapdoor — that's genuinely creative." "Combining spruce and oak usually looks messy, but here it gives it character — you made it work."
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Specific, Behaviour-Linked Feedback</span><br>
+        Each feedback instance names a concrete design decision, frames it architecturally, and attributes the quality to the student's deliberate creative choice — not to luck or natural talent. The feedback on the mixed wood type is particularly strong: the tutor reframes the student's own negative self-assessment ("I usually find that ugly") as a positive design outcome ("gives it character"). This is a direct growth mindset intervention at the individual level — the kind of moment that changes how a student approaches creative risk-taking in future sessions.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 12 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">01:05:14</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=3914&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Aspirational Demonstration</div>
+      <div class="tl-heading">Coding Demo — Automated House Building</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        The tutor demonstrates a pre-written programme that builds a complete house with one chat command. Explains: "In future, we can write code like this and just type a word like 'home' to build a whole house." A student unprompted analogises: "A command is like when you say 'make me an ice cream' and someone makes it." The tutor validates and formalises: "Yes — a single instruction. A programme is a sequence of commands."
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Capability Gap Demonstration + Analogy Validation</span><br>
+        Showing a polished end-state creates a visible capability gap with a clear path to closure — a powerful motivational mechanism. The student's unprompted analogy (command = food order) is a genuine metacognitive achievement: they independently mapped a computer science concept onto a real-world schema. The tutor's correct response — validating then formalising — moves the student from intuitive metaphor to precise conceptual language. This is precisely the Concrete-to-Abstract learning progression that Piaget identified as the key mechanism for this age group.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 13 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">01:09:48</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=4188&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Accountability Closure</div>
+      <div class="tl-heading">Homework Assignment — Survival Decoration Challenge</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        Homework is given with full specificity: "Spend more time on your house — decorate it, add rooms, glass panels, extra floors. Turn it into a hotel if you want. Then send a picture to the WhatsApp group." Survival mode is confirmed as the primary mode. Comprehension is verified with a thumbs-up check.
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Specific Homework + Comprehension Verification</span><br>
+        Three quality markers are present: task specificity (concrete additions — rooms, glass, floors, hotel-scale ambition), delivery channel (WhatsApp group closes the parent visibility loop), and comprehension verification (thumbs-up check confirms every student understood the task). Homework that students cannot describe back accurately after the session is homework that will not be completed. Merely assigning homework without confirming understanding earns zero points on the QA rubric.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 14 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">01:14:17</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=4457&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Consolidation</div>
+      <div class="tl-heading">Student Reflection &amp; Lesson Wrap-Up</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        The tutor asks: "What did you learn today?" Students answer substantively — "how to build a house and make more stuff in survival," "I liked mixing the oak and spruce — I usually find that ugly but today I liked it," "I was trying to make a floating bed within the time limit." The tutor facilitates without adding new content.
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Tutor-Led &amp; Student-Led Wrap-Up</span><br>
+        Both wrap-up requirements are satisfied simultaneously. Student responses demonstrate genuine consolidation — not just surface recall ("we built houses") but metacognitive insight ("I usually dislike mixed wood, but this time it worked"). One student's unprompted extension goal ("I was trying to make a floating bed") is a particularly strong signal: a student who self-generates an extension challenge has internalised the learning environment as a place for creative problem-solving, not just instruction-following. This is precisely the long-term outcome the Co-Explorer framework is designed to produce.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 15 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">01:16:27</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=4587&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Forward Hook</div>
+      <div class="tl-heading">Next Lesson Preview — Coordinates &amp; the Agent</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        The tutor previews the next session specifically: "We're going to start working with coordinates ourselves, learn to control water, and you're finally going to get acquainted with the Agent. We'll start actual coding and work towards what you saw earlier — making a house appear out of thin air, like magic."
+      </div>
+      <div class="tl-qa pass">
+        <div class="tl-qa-label">Senior QA Analysis</div>
+        <span class="verdict v-pass">✅ Specific Next Lesson Preview</span><br>
+        The preview contains concrete topics ("coordinates," "water," "the Agent") rather than vague language ("we'll do more coding"). Critically, it links back to the aspirational coding demonstration shown earlier in the session — tying the short-term homework directly to the long-term capability goal. For young learners, the gap between sessions is long relative to their temporal experience. A strong forward hook significantly increases the probability that students will complete their homework and return engaged. "See you next week" without a topic preview earns zero on this dimension.
+      </div>
+    </div>
+  </li>
+
+  <!-- ── CARD 16 ── -->
+  <li class="tl-card">
+    <div class="tl-left">
+      <div class="tl-dot"></div>
+      <div class="tl-time">01:19:01</div>
+      <a class="tl-jump" title="Jump to this moment"
+         onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=4741&autoplay=1'">▶</a>
+    </div>
+    <div class="tl-right">
+      <div class="tl-phase">Professional Closure</div>
+      <div class="tl-heading">Final Goodbyes, Parent Q&amp;A &amp; Technical Issue Resolution</div>
+      <div class="tl-action">
+        <div class="tl-action-label">What the Tutor Did</div>
+        Goodbyes are warm and individual. A parent raises a scheduling question about a missed session — the tutor responds correctly: "We'll arrange a one-on-one makeup session on a date that works." The persistent screen-sharing technical failure throughout the session is explicitly owned: "I'm going to speak to the tech team — by next week this will be sorted."
+      </div>
+      <div class="tl-qa flag">
+        <div class="tl-qa-label">Senior QA Analysis — One Area to Improve</div>
+        <span class="verdict v-flag">⚠️ Camera-On Request Missing</span><br>
+        Three quality behaviours are executed well here: the makeup session protocol is communicated correctly; the technical issue is owned with a resolution timeline rather than left unaddressed; the farewell maintains the warmth established in the opening. However, throughout the entire session the tutor did not once explicitly ask students to turn their cameras on. Camera presence for young learners supports attentional regulation and the social connection that underpins engagement. <strong>For every future session: make the camera-on request within the first five minutes of the warm-up phase — not as a rule enforcement, but as a friendly invitation.</strong>
+      </div>
+    </div>
+  </li>
+
+</ul>
+<!-- /timeline -->
+
+
+<!-- ═══════════════════════════════════
+     QA FRAMEWORK
+     ═══════════════════════════════════ -->
+<div id="qa-framework" class="anchor-target">
+  <div class="section-head">QA Evaluation Framework — How Every Session Is Assessed</div>
+</div>
+
+<div class="card">
+  <h4>The Five Assessment Dimensions</h4>
+  <p>Every Kodland session is evaluated against five dimensions. Understanding them helps you self-assess in real time during lessons.</p>
+  <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+    <div class="card hi">
+      <h4>Dimension 1 — Timing Discipline</h4>
+      <p>Pre-Flight Check complete by minute five · Intro ceiling respected (20 minutes maximum) · Mandatory screen-off break delivered at minute 30 · Independent practice occupies minutes 35–55 · Reflection delivered in the final five minutes. A session that violates any timing guardrail is flagged regardless of content quality.</p>
+    </div>
+    <div class="card" style="background:var(--ok-bg);border-color:var(--ok-b)">
+      <h4 style="color:var(--ok-t)">Dimension 2 — Pedagogical Alignment</h4>
+      <p style="color:var(--ok-t)">Co-Explorer framing used consistently · Error normalisation applied to all student mistakes · Specific, behaviour-linked feedback used (not generic praise) · Active involvement confirmed at key checkpoints · Fast finishers redirected to prepared extension tasks immediately.</p>
+    </div>
+    <div class="card" style="background:var(--callout-tip-bg);border-color:var(--callout-tip-b)">
+      <h4 style="color:var(--callout-tip-t)">Dimension 3 — Technical Accuracy</h4>
+      <p style="color:var(--callout-tip-t)">Concepts taught match the module's objectives · Explanations are correct — no technical errors passed as facts to students · Correct terminology used throughout.</p>
+    </div>
+    <div class="card">
+      <h4>Dimension 4 — Student Engagement</h4>
+      <p>All students attempt every task independently · No student is idle for more than two minutes · The tutor does not complete tasks on behalf of students · Engagement is verified, not assumed.</p>
+    </div>
+    <div class="card warn">
+      <h4>Dimension 5 — Accountability Closure</h4>
+      <p>Reflection questions asked at end of session · Homework assigned with specific success criteria · Screenshot or output requested with a concrete deadline · Parent communication channel used where applicable.</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Common Failure Patterns — Know These Before Your First Live Session</h4>
+  <ul style="margin-top:8px">
+    <li style="margin-bottom:6px"><strong>Intro overrun:</strong> Spending more than 20 minutes explaining before students build. The most common failure. Result: students disengage and the session ends without independent practice.</li>
+    <li style="margin-bottom:6px"><strong>Missing screen-off break:</strong> Skipping the break at minute 30 to "catch up." Result: student attention collapses in minutes 35–50, negating the time saved.</li>
+    <li style="margin-bottom:6px"><strong>Solving instead of hinting:</strong> Completing the task for a student instead of guiding them. Result: the student cannot replicate the work independently in the next session.</li>
+    <li style="margin-bottom:6px"><strong>Generic praise:</strong> "Good job" without specificity. Result: zero reinforcement — the student has no information about which behaviour to repeat.</li>
+    <li><strong>No extension tasks prepared:</strong> Fast finishers sit idle. Result: disruption and wasted capacity in your most capable students.</li>
+  </ul>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     SECTION 4 — DST GATEWAY
+     ═══════════════════════════════════ -->
+<div id="dst-section" class="anchor-target">
+  <div class="section-head">4 · Digital Skill Test — Readiness Assessment</div>
+</div>
+
+<div class="card">
+  <h4>What the Test Assesses</h4>
+  <p>The Digital Skill Test is the formal readiness gate that determines whether you are ready to lead a live Minecraft Level 1 group independently. It measures two dimensions:</p>
+  <ul style="margin-top:8px">
+    <li style="margin-bottom:5px"><strong>Hard Skills (10 questions):</strong> Technical knowledge across all five modules — coordinates, Redstone mechanics, MakeCode blocks, Hopper mechanics, Agent commands, and more.</li>
+    <li><strong>Pedagogy and Soft Skills (10 questions):</strong> Application of teaching frameworks — the 60-minute session structure, the mandatory break, error normalisation, active involvement techniques, specific praise, and cooperative multiplayer management.</li>
+  </ul>
+  <div class="callout cw" style="margin-top:12px">
+    <span class="ci">⚠️</span>
+    <div><strong>Pass mark: 80% (16 of 20).</strong> This is higher than the module knowledge checks because the Digital Skill Test is the final professional gate before independent teaching. It requires demonstrated mastery across all dimensions, not just general familiarity.</div>
+  </div>
+</div>
+
+<!-- Competency checklist -->
+<div id="competencies" class="anchor-target">
+  <div class="section-head">Pre-Test Self-Assessment Checklist</div>
+</div>
+
+<div class="card">
+  <h4>Before Taking the Test, Confirm You Can Answer These Without Notes</h4>
+</div>
+
+<div class="comp-grid">
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Coordinates:</strong> State X, Y, and Z axis meanings; explain the ~ relative prefix; write the emergency recall command</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Redstone signal decay:</strong> State the maximum propagation distance and describe how a Repeater extends it</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Observer block:</strong> Explain what it detects, describe correct face orientation, and state what type of signal it emits</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Button vs. Lever:</strong> Describe the difference in signal type and give a use case for each</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Crafting Table:</strong> State the grid size and explain why recipe position matters</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Relative vs. exact coordinates:</strong> Write a /tp command that keeps X and Z but snaps to a specific altitude</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>/clone command:</strong> State all three coordinate arguments and describe the overlap failure condition</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Hopper placement:</strong> Describe the exact action required to connect a Hopper to a chest</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Event-driven programming:</strong> Explain the difference between code inside vs. outside an event block</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Variables in MakeCode:</strong> Describe variable scope and explain the set vs. change distinction</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>60-minute session structure:</strong> State all phases with their correct timing from memory</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Mandatory screen-off break:</strong> State when it occurs, how long it lasts, and the neurological rationale</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Error normalisation:</strong> Recite the exact response script and explain why corrective language is prohibited</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Active involvement check:</strong> Explain the mechanism and state when to trigger it</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Fast Finisher Protocol:</strong> Describe the three criteria for a valid extension task</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Specific praise:</strong> Write one example of specific, behaviour-linked praise for a Module 4 automation task</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Multiplayer conflict response:</strong> Describe the restorative (not punitive) response to a build violation</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Blueprint Phase:</strong> List the four items that must be agreed before building begins in Module 5</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>MakeCode Functions:</strong> Explain the difference between a Function definition and a Function call</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Build → Debug → Decorate:</strong> State why the order is strict and what goes wrong if decoration precedes debugging</div></div>
+</div>
+
+<!-- DST form CTA -->
+<div id="dst-form" class="anchor-target" style="margin-top:28px">
+  <div class="dst-cta">
+    <div style="font-size:52px;margin-bottom:14px">🎯</div>
+    <div class="dst-cta-title">You Are Ready for the Digital Skill Test</div>
+    <div class="dst-cta-sub">
+      You have completed all five training modules and studied the Library of Successful Lessons. The test contains <strong>20 questions</strong> across hard skills and pedagogy, with a pass mark of <strong>80%</strong>. Results are reviewed by the Kodland training team.
+    </div>
+    <div style="background:var(--surface2);border:2px solid var(--border);border-radius:var(--rsm);padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--text2);text-align:left;max-width:480px;margin-left:auto;margin-right:auto">
+      <strong style="color:var(--text)">Before you begin:</strong>
+      <ul style="padding-left:16px;margin-top:6px">
+        <li style="margin-bottom:4px">Find a quiet environment with no distractions</li>
+        <li style="margin-bottom:4px">The test is not timed — read each question carefully</li>
+        <li style="margin-bottom:4px">Do not use notes or re-open training material during the test</li>
+        <li>Your name and email are required in the form for result tracking</li>
+      </ul>
+    </div>
+    <div class="btn-row center">
+      <a href="https://forms.gle/rtos7DTjdNxeo8tr7" target="_blank" rel="noopener"
+         class="btn-primary" style="font-size:16px;padding:15px 36px">
+        🎯 Take the Digital Skill Test →
+      </a>
+    </div>
+    <p style="margin-top:16px;font-size:12px;color:var(--text-muted)">
+      Opens in a new tab · Hosted on Google Forms · Results reviewed within 3 business days
+    </p>
+  </div>
+</div>
+
+<!-- Score summary -->
+<div style="margin-top:20px;background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)" id="score-summary">
+  <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:12px">Your Module Scores</div>
+  <div id="score-grid" style="display:flex;gap:10px;flex-wrap:wrap"></div>
+</div>
+
+</div><!-- /.cbody -->
+</div><!-- /#main-content -->
+
+<footer>© 2026 Kodland. Internal tutor training material — not for external distribution.</footer>
+
+<script src="shared.js"></script>
+<script>
+  initShared();
+
+  const progress  = getOverallProgress();
+  const allPassed = progress >= 5 || isDevMode();
+
+  document.getElementById('top-progress').style.width = `${progress / 5 * 100}%`;
+
+  if (!allPassed) {
+    document.getElementById('locked-notice').style.display = 'block';
+  } else {
+    document.getElementById('main-content').style.display = 'block';
+
+    // Score summary strip
+    const names = ['🌿 Module 1','🏙️ Module 2','🧩 Module 3','🌲 Module 4','🏰 Module 5'];
+    const grid  = document.getElementById('score-grid');
+    for (let i = 1; i <= 5; i++) {
+      const sc  = getModuleScore(i);
+      const ok  = isModulePassed(i);
+      const div = document.createElement('div');
+      div.style.cssText = `background:${ok?'var(--ok-bg)':'var(--surface2)'};border:2px solid ${ok?'var(--ok-b)':'var(--border)'};border-radius:var(--rsm);padding:10px 14px;text-align:center;min-width:100px`;
+      div.innerHTML = `
+        <div style="font-size:13px;color:var(--text-muted);font-weight:600;margin-bottom:3px">${names[i-1]}</div>
+        <div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:${ok?'var(--ok-t)':'var(--text-muted)'}">${sc !== null ? sc + '%' : '—'}</div>
+        <div style="font-size:11px;color:${ok?'var(--ok-t)':'var(--text-muted)'};font-weight:700">${ok?'✅ Passed':'⏳ Pending'}</div>`;
+      grid.appendChild(div);
+    }
+  }
+</script>
+</body>
+</html>

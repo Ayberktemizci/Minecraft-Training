@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4 — Mechanical Forest | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#B45309 0%,#D97706 55%,#F59E0B 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:'🌲';font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.85);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:#FDE68A;color:rgba(255,255,255,.9)}
+  .module-banner .mobj strong{color:#fff}
+  .sec-nav{display:flex;flex-wrap:wrap;gap:8px;padding:14px 28px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90;transition:background .25s}
+  .sec-pill{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:5px 13px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+  .sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+  .script-box{background:var(--ink);color:#FDE68A;border-radius:var(--rsm);padding:14px 18px;font-family:'JetBrains Mono','Courier New',monospace;font-size:13px;line-height:1.7;margin:10px 0;border-left:4px solid #D97706}
+  [data-theme="dark"] .script-box{background:#180e00}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}.fc{color:var(--ok-t)}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #D97706;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .code-block{background:var(--ink);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .code-block{background:#180e00}
+  .ck{color:#C792EA}.cf{color:#82AAFF}.cs{color:#C3E88D}.cn{color:#F78C6C}.cm{color:#FCD34D}
+  .anchor-target{scroll-margin-top:130px}
+  code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dashboard</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="sec-nav">
+  <a href="#overview"  class="sec-pill">1 · Overview</a>
+  <a href="#agent"     class="sec-pill">2 · Agent as Gardener</a>
+  <a href="#circuits"  class="sec-pill">3 · Conditional Circuits</a>
+  <a href="#hoppers"   class="sec-pill">4 · Hopper Sorting</a>
+  <a href="#pipeline"  class="sec-pill">5 · Full Pipeline</a>
+  <a href="#trouble"   class="sec-pill">6 · Troubleshooting</a>
+  <a href="#protips"   class="sec-pill">7 · Pro-Tips</a>
+  <a href="#test-cta"  class="sec-pill">8 · Knowledge Check</a>
+</div>
+
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Module 4 of 5</div>
+    <div class="mh1">🌲 Mechanical Forest</div>
+    <p>Living automation — students apply every skill from Modules 1–3 to build a complete, end-to-end automated farm: the Agent plants seeds, Redstone circuits harvest when crops are ready, and Hoppers sort and store the output.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Module 4 Objectives:</strong> Program the Agent as an automated Gardener (loop + plant commands) · Build conditional Redstone harvesting circuits (Observer → Piston) · Implement Hopper-based item sorting and storage · Understand the complete automation pipeline: Detect → Trigger → Collect → Store.
+    </div>
+  </div>
+</div>
+
+<div class="cbody">
+
+<div id="overview" class="anchor-target">
+  <div class="section-head">1 · Module Overview — Integration &amp; Escalation</div>
+</div>
+
+<div class="card">
+  <h4>Why Module 4 Is the "Integration Module"</h4>
+  <p>Each previous module introduced isolated concepts. Module 4 is the first module that explicitly asks students to <strong>combine every prior skill</strong> into a single system:</p>
+  <ul style="margin-top:8px">
+    <li><strong>From Module 1:</strong> Agent control + Redstone Observer–Piston circuit</li>
+    <li><strong>From Module 2:</strong> Coordinate positioning for the farm grid layout</li>
+    <li><strong>From Module 3:</strong> Conditional logic ("if the plant is grown, then harvest it")</li>
+  </ul>
+  <p style="margin-top:8px">The result is a <strong>fully autonomous farming system</strong> that runs without player intervention — the highest complexity build in Level 1. Students who successfully complete Module 4 have demonstrated the ability to design, build, and debug a multi-component automated system.</p>
+</div>
+
+<div id="agent" class="anchor-target">
+  <div class="section-head">2 · The Agent as Gardener — Automated Planting</div>
+</div>
+
+<div class="card">
+  <h4>Programming the Agent to Plant in Rows</h4>
+  <p>In Module 1, students moved the Agent manually with basic movement commands. Module 4 uses the Agent to <strong>plant seeds automatically in a structured grid</strong> — the first use of the Agent as a productive automated tool rather than a demonstration toy.</p>
+  <div class="code-block">
+    <span class="cm">// Load seeds into Agent inventory first (right-click Agent, add Seeds to slot 1)</span><br>
+    on chat command <span class="cs">"plant"</span> {<br>
+    &nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> times {                 ← plant 5 seeds in a row<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent place on move</span> down      ← places item below as Agent moves<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> forward <span class="cn">1</span>          ← advance one block<br>
+    &nbsp;&nbsp;}<br>
+    }
+  </div>
+  <p style="margin-top:10px"><strong>Critical pre-conditions for this to work:</strong></p>
+  <ol style="padding-left:18px;margin-top:6px">
+    <li style="margin-bottom:6px">Seeds must be loaded in the Agent's inventory before the chat command fires.</li>
+    <li style="margin-bottom:6px">The Agent must be positioned at the first planting spot, facing the correct direction for the row.</li>
+    <li style="margin-bottom:6px">The ground must be tilled farmland (use a Hoe on dirt/grass, then water it within 4 blocks).</li>
+    <li>Agent planting uses "place on move down" which places the item in the block directly below the Agent as it advances.</li>
+  </ol>
+  <div class="callout cw" style="margin-top:10px">
+    <span class="ci">⚠️</span>
+    <div><strong>Most common Agent planting failure:</strong> The Agent drops seeds on the ground rather than planting them. This happens when the ground is not tilled farmland — seeds placed on regular dirt blocks are treated as dropped items, not planted crops. Always confirm the ground is tilled and within 4 blocks of a water source before running the planting command.</div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Multi-Row Planting — Nested Loops</h4>
+  <p>For a 5×5 farm, students need nested loops: an outer loop for rows, and an inner loop for the length of each row. This is Module 4's introduction to nested iteration — a concept that directly prefigures 2D array traversal in later programming education.</p>
+  <div class="code-block">
+    on chat command <span class="cs">"farm"</span> {<br>
+    &nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> times {             ← outer loop: 5 rows<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> times {           ← inner loop: 5 columns<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent place on move</span> down<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> forward <span class="cn">1</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> right <span class="cn">1</span>         ← shift one row to the right<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent turn</span> around              ← face the opposite direction for next row<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> back <span class="cn">5</span>           ← return to start of row<br>
+    &nbsp;&nbsp;}<br>
+    }
+  </div>
+</div>
+
+<div id="circuits" class="anchor-target">
+  <div class="section-head">3 · Conditional Harvesting Circuits</div>
+</div>
+
+<div class="card">
+  <h4>The Observer–Piston Harvest Circuit — Applied to Crops</h4>
+  <p>Students already built an Observer–Piston chain for bamboo in Module 1. Module 4 applies the same principle to wheat, carrots, potatoes, and other farmable crops. The key difference is <strong>growth stage detection</strong>:</p>
+  <ul style="margin-top:8px">
+    <li>Bamboo: grows in distinct whole-block increments — easy to detect.</li>
+    <li>Wheat/Carrots/Potatoes: go through 8 growth stages (0–7). <strong>Stage 7 is fully grown</strong>. The Observer detects the transition from stage 6 → 7 as a block state change and fires.</li>
+    <li>Repeat the Module 1 circuit: Observer face → crop row. Observer back → Piston input (or Redstone wire). Piston extends horizontally to break the mature crop row.</li>
+  </ul>
+  <div class="callout ct" style="margin-top:10px">
+    <span class="ci">💡</span>
+    <div><strong>Teaching the "grow to harvest" conditional:</strong> Frame it as an if-then even though it's implemented in hardware: <em>"IF the wheat reaches stage 7 (fully grown) THEN the Observer fires THEN the Piston breaks the crops THEN seeds and food items drop."</em> This language bridges the MakeCode conditional logic from Module 3 to the Redstone conditional logic of Module 4.</div>
+  </div>
+</div>
+
+<div id="hoppers" class="anchor-target">
+  <div class="section-head">4 · Hopper Mechanics &amp; Item Sorting Systems</div>
+</div>
+
+<div class="card">
+  <h4>What Is a Hopper?</h4>
+  <p>A <strong>Hopper</strong> is a funnel-shaped block with two functions: (1) it collects items that fall into it from above, and (2) it transfers items from its own inventory into an adjacent container (chest, furnace, another Hopper) or deposits them downward through its output spout.</p>
+  <div class="two-col" style="margin-top:10px">
+    <div class="card">
+      <h4>Hopper Placement Rules</h4>
+      <ul>
+        <li><strong>Output direction:</strong> determined by which block the Hopper is facing — its spout points toward the block it was placed onto.</li>
+        <li><strong>To connect to a chest:</strong> hold Shift + right-click the chest. Without Shift, the chest inventory opens instead of placing the Hopper.</li>
+        <li><strong>To chain Hoppers:</strong> place them end-to-end; items transfer through the chain at 2.5 items per second per Hopper.</li>
+        <li><strong>Capacity:</strong> each Hopper holds 5 item stacks (×64 per stack).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Basic Sorting System</h4>
+      <p>A simple two-chest sort: one Hopper above each chest, each loaded with a filter item (the item you want to route to that chest). When items flow through, items matching the filter stack to that Hopper's chest; non-matching items pass to the next Hopper.</p>
+      <p style="margin-top:8px"><strong>Module 4 target:</strong> Route wheat to one chest, seeds to another — separating food output from replanting material automatically.</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Hopper Transfer Timing — Practical Numbers</h4>
+  <p>Transfer rate: a Hopper processes one item every <strong>4 game ticks</strong> (0.2 seconds). At 20 ticks/second, that is <strong>2.5 items per second</strong>. For a large farm producing high volumes, a single Hopper chain can become a bottleneck. Solutions:</p>
+  <ul style="margin-top:8px">
+    <li>Use <strong>parallel Hopper chains</strong> — multiple collection points each feeding their own chest.</li>
+    <li>Use a <strong>Hopper Minecart</strong> over a collection rail — Hopper Minecarts transfer at twice the speed of stationary Hoppers.</li>
+  </ul>
+</div>
+
+<div id="pipeline" class="anchor-target">
+  <div class="section-head">5 · The Complete Automation Pipeline</div>
+</div>
+
+<div class="card">
+  <h4>The Four-Stage Pipeline — Detect → Trigger → Collect → Store</h4>
+  <p>Module 4's signature teaching framework. Every fully automated farm system can be described as four sequential stages:</p>
+  <div class="two-col" style="margin-top:10px">
+    <div class="card" style="border-left:4px solid var(--lime)">
+      <h4 style="color:var(--lime-d)">Stage 1: Detect</h4>
+      <p>The <strong>Observer block</strong> monitors the crop block for a state change (growth stage 6 → 7). When detected, it emits a 1-tick Redstone pulse.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--amber)">
+      <h4 style="color:var(--amber-d,#D97706)">Stage 2: Trigger</h4>
+      <p>The Observer's pulse powers the <strong>Piston</strong> via Redstone wire. The Piston extends, breaking the fully grown crop block. The crop drops as item entities on the ground.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--pink)">
+      <h4 style="color:var(--pink-d)">Stage 3: Collect</h4>
+      <p>The <strong>Hopper</strong> positioned below the crop row collects falling item entities. Items enter the Hopper's 5-slot inventory automatically within 0.5 seconds of being in Hopper range.</p>
+    </div>
+    <div class="card" style="border-left:4px solid #3B82F6">
+      <h4 style="color:#1D4ED8">Stage 4: Store</h4>
+      <p>The Hopper transfers collected items into the connected <strong>Chest</strong> at 2.5 items per second. The sorting system routes different item types to different chests based on Hopper filters.</p>
+    </div>
+  </div>
+  <div class="callout cg" style="margin-top:14px">
+    <span class="ci">✅</span>
+    <div><strong>Teaching moment:</strong> Once all four stages are built and tested, have students describe the pipeline in their own words without looking at their code: "What detects? What triggers? What collects? What stores?" This verbal encoding solidifies the conceptual framework and prepares them for Module 5's project design work.</div>
+  </div>
+</div>
+
+<div id="trouble" class="anchor-target">
+  <div class="section-head">6 · Troubleshooting Catalog — Module 4 (5 Scenarios)</div>
+</div>
+
+<div style="overflow-x:auto">
+  <table class="trouble-table">
+    <thead>
+      <tr><th style="width:22%">Mistake / Symptom</th><th style="width:27%">Root Cause</th><th style="width:31%">Exact Fix</th><th style="width:20%">Prevention Script</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mc">Agent drops seeds on the ground rather than planting them</td>
+        <td>The ground beneath the Agent is untilled dirt or grass, not farmland. Seeds placed on non-farmland blocks appear as item entities (dropped items), not planted crops.</td>
+        <td>Before running the plant command: (1) Use a Hoe on each dirt block to till it into farmland. (2) Place a water source within 4 blocks of the farmland to hydrate it (dark brown = hydrated, light tan = dry — crops grow much slower on dry farmland). (3) Confirm by running the Agent over already-tilled farmland first.</td>
+        <td class="fc">"Before the Agent can plant, the ground must be tilled and watered. Check the soil colour — dark brown = ready to plant."</td>
+      </tr>
+      <tr>
+        <td class="mc">Hopper fills up with items but does not transfer them to the chest</td>
+        <td>The Hopper's output spout is not pointing at the chest — it was placed without holding Shift, so the chest inventory opened instead of a connection being formed. The Hopper is now pointing downward into the air.</td>
+        <td>Break the Hopper and replace it: hold Shift, then right-click directly on the chest block. Confirm the Hopper's spout visually connects to the chest side. Alternatively, break the Hopper and re-place it adjacent to the chest in a horizontal orientation (chest can be to the side, not only below).</td>
+        <td class="fc">"Always hold Shift when placing a Hopper onto a chest. No Shift = chest opens = Hopper lands wrong."</td>
+      </tr>
+      <tr>
+        <td class="mc">Observer fires when crops grow but Piston does not extend — crops never harvest</td>
+        <td>The Observer output face is not connected to the Piston. This is the same orientation issue as Module 1 but often more confusing because the farm layout is more complex.</td>
+        <td>Test in isolation: disconnect the Observer from the farm circuit. Place a Redstone Lamp directly behind the Observer output face. If the Lamp lights on crop growth, the Observer works correctly and the problem is downstream (wire gap or Piston orientation). Fix the gap or re-place the Piston facing the correct direction.</td>
+        <td class="fc">"Test each stage separately. Observer works? Then check the wire. Wire works? Then check the Piston orientation."</td>
+      </tr>
+      <tr>
+        <td class="mc">The Agent's nested row-planting loop plants crops in a spiral or random pattern instead of a grid</td>
+        <td>The Agent's facing direction after "turn around" is not correctly oriented — the student used "turn left" twice but forgot that after an odd number of "turn right" commands, "turn left + turn left" ≠ 180° turn in all cases. Or the step count in the return move is wrong.</td>
+        <td>Draw the Agent's path on paper before coding. Mark each turn explicitly. Verify: after completing row 1, does the Agent face the opposite direction? Does "move back 5" return it exactly to the start of the row? Test with 1 row first, observe, then extend to 5 rows.</td>
+        <td class="fc">"Draw the path before coding it. Which direction after turn 1? After turn 2? The Agent doesn't know where it 'should' go — only where its code says to go."</td>
+      </tr>
+      <tr>
+        <td class="mc">The sorting system routes ALL items to the first chest regardless of item type</td>
+        <td>The filter Hopper's inventory slots are not set up correctly — the filter items must partially fill a slot in the Hopper's inventory so that only matching items are held there. Alternatively, no filter was set and the first Hopper takes all items indiscriminately.</td>
+        <td>Hopper sorting requires placing a filter item in each slot of the filter Hopper's inventory, leaving no empty slots. Items that match the filter fill the filter slots; non-matching items pass through. A common simplification: use Locked Hoppers with specific items — this requires a Redstone comparator circuit. For Module 4, use the simpler visual filter method and test with two distinct items (wheat vs. seeds) to confirm routing.</td>
+        <td class="fc">"The sorting Hopper needs a 'template' — put one of each target item in its inventory slots. It keeps matching items and lets others pass."</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="protips" class="anchor-target">
+  <div class="section-head">7 · Tutor Pro-Tips &amp; Real-World Analogies</div>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Hopper Sorting = The "Recycling Plant" Analogy</strong><br>
+  <em>"Think of a recycling plant: different conveyor belts route glass to one bin, paper to another, metal to another. The Hopper sorting system is your digital recycling plant. Wheat goes left, seeds go right — automatically, every time, without anyone manually sorting."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 The Four-Stage Pipeline = The "Amazon Warehouse" Analogy</strong><br>
+  <em>"When you order something on Amazon: (1) A sensor detects your order [Observer]. (2) A robot arm picks the item off the shelf [Piston]. (3) A conveyor belt carries it to the packaging station [Hopper]. (4) It goes into a labelled box in the right section of the warehouse [Chest]. Our farm is the same four stages — just with wheat instead of packages."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Nested Loops = The "Printer Analogy" for 2D Grids</strong><br>
+  <em>"When a printer prints a page, it moves across one row of dots (inner loop), then drops one line (outer loop), then prints the next row, then drops again. The Agent planting in rows works identically: inner loop = one row of seeds, outer loop = moving to the next row."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Testing in Isolation — The "Debug One Stage at a Time" Rule</strong><br>
+  For multi-component systems, always test each stage in isolation before integrating. The debugging protocol for Module 4: (1) Test Observer fires on crop growth (use a Lamp). (2) Test Piston extends when powered manually (use a Lever). (3) Test Hopper collects items (throw items above it by hand). (4) Test Hopper routes to correct chest (drop specific items manually). Only when each stage passes individually should students connect the full pipeline.</p>
+</div>
+
+<div id="test-cta" class="anchor-target">
+  <div class="section-head">8 · Module 4 Knowledge Check</div>
+</div>
+
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Ready for the Module 4 Knowledge Check?</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+    6 questions from Module 4 content only. A score of <strong>70% or above</strong> unlocks Module 5. All questions are entirely distinct from all previous module tests and the final DST.
+  </p>
+  <div class="btn-row center">
+    <a href="EnModule4Test.html" class="btn-primary">Start Module 4 Test →</a>
+    <button class="btn-outline" onclick="goHome()">← Dashboard</button>
+  </div>
+</div>
+
+</div><!-- /.cbody -->
+<footer>© 2026 Kodland. Internal tutor training material — not for external distribution.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(4)) { alert('Please complete the previous modules first.'); goHome(); }
+</script>
+</body>
+</html>

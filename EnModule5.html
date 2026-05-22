@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5 — Creator's Castle | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#7E22CE 0%,#A855F7 55%,#EC4899 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:'🏰';font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.85);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:#F0ABFC;color:rgba(255,255,255,.9)}
+  .module-banner .mobj strong{color:#fff}
+  .sec-nav{display:flex;flex-wrap:wrap;gap:8px;padding:14px 28px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90;transition:background .25s}
+  .sec-pill{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:5px 13px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+  .sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+  .script-box{background:var(--ink);color:#F0ABFC;border-radius:var(--rsm);padding:14px 18px;font-family:'JetBrains Mono','Courier New',monospace;font-size:13px;line-height:1.7;margin:10px 0;border-left:4px solid #A855F7}
+  [data-theme="dark"] .script-box{background:#150a1e}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}.fc{color:var(--ok-t)}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #A855F7;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .code-block{background:var(--ink);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .code-block{background:#150a1e}
+  .ck{color:#C792EA}.cf{color:#82AAFF}.cs{color:#C3E88D}.cn{color:#F78C6C}.cm{color:#FCD34D}
+  .anchor-target{scroll-margin-top:130px}
+  code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+  .phase-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:10px;border-left:4px solid var(--pink);box-shadow:var(--shadow)}
+  .phase-label{font-family:'Nunito',sans-serif;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--pink);margin-bottom:4px}
+  .phase-title{font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:var(--text);margin-bottom:6px}
+  .phase-body{font-size:13px;color:var(--text2);line-height:1.65}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dashboard</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="sec-nav">
+  <a href="#overview"    class="sec-pill">1 · Overview</a>
+  <a href="#blueprint"   class="sec-pill">2 · Blueprint Phase</a>
+  <a href="#functions"   class="sec-pill">3 · Custom Functions</a>
+  <a href="#build"       class="sec-pill">4 · Build-Debug-Decorate</a>
+  <a href="#presentation" class="sec-pill">5 · Game Studio Launch</a>
+  <a href="#trouble"     class="sec-pill">6 · Troubleshooting</a>
+  <a href="#protips"     class="sec-pill">7 · Pro-Tips</a>
+  <a href="#test-cta"    class="sec-pill">8 · Knowledge Check</a>
+</div>
+
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Module 5 of 5 — Final Module</div>
+    <div class="mh1">🏰 Creator's Castle</div>
+    <p>End-to-end project creation — students apply every skill from Modules 1–4 to design, build, and publicly present their own Minecraft game or automated world. This is the capstone module and the direct preparation for the DST readiness assessment.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Module 5 Objectives:</strong> Run a structured project brainstorm and Blueprint Phase · Assign clear team roles for collaborative builds · Create and use custom MakeCode Functions to eliminate code repetition · Execute the Build → Debug → Decorate loop · Host a professional-style "Game Studio Launch" presentation for parents and peers.
+    </div>
+  </div>
+</div>
+
+<div class="cbody">
+
+<div id="overview" class="anchor-target">
+  <div class="section-head">1 · Module Overview — The Capstone</div>
+</div>
+
+<div class="card hi">
+  <h4>🎓 Why Module 5 Is Different from All Others</h4>
+  <p>Every previous module taught a specific technical skill set in a guided, tutor-led structure. Module 5 deliberately inverts this: students are now the directors, and the tutor is the production advisor. The technical skills introduced (custom Functions) are deliberately simpler than Module 4's automation systems — because the cognitive challenge is now creative and managerial, not technical.</p>
+  <p style="margin-top:8px">The tutor's primary job in Module 5 is to maintain productive forward momentum: prevent decision paralysis during the brainstorm, enforce the Blueprint Phase discipline, and coach students through the build loop without taking over.</p>
+</div>
+
+<div class="card">
+  <h4>Skills Catalogue — What Students Must Bring Into Module 5</h4>
+  <p>Module 5 assumes mastery of all prior content. Before beginning, do a rapid 5-minute verbal check:</p>
+  <ul style="margin-top:8px">
+    <li><strong>From M1:</strong> Agent control, basic Redstone, coordinate navigation</li>
+    <li><strong>From M2:</strong> Crafting, /clone, cooperative building with defined roles</li>
+    <li><strong>From M3:</strong> Events, variables, conditionals, mini-game logic</li>
+    <li><strong>From M4:</strong> Hopper sorting, automated farming pipeline, nested loops</li>
+  </ul>
+  <p style="margin-top:8px">Students who are missing skills from any prior module must be identified and given targeted support before Module 5 progresses past the Blueprint Phase — a weak foundation will produce a failing final project.</p>
+</div>
+
+<div id="blueprint" class="anchor-target">
+  <div class="section-head">2 · The Blueprint Phase — Plan Before Placing a Single Block</div>
+</div>
+
+<div class="callout cw">
+  <span class="ci">⚠️</span>
+  <div>
+    <strong>The #1 Module 5 Failure Mode: Building Without Planning</strong><br>
+    Teams that skip the Blueprint Phase will argue about what to build for 15–20 minutes of the session. This is a session-destroying failure because once students are mid-build and disagree about direction, there is no recovery within a 60-minute window. <strong>The Blueprint Phase is non-negotiable and must be completed before any block is placed.</strong>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Structured Brainstorm Protocol — 10 Minutes Maximum</h4>
+  <p>Run a timed brainstorm with strict facilitation:</p>
+  <ol style="padding-left:18px;margin-top:8px">
+    <li style="margin-bottom:6px"><strong>Silent ideation (3 min):</strong> Each student types 1–2 project ideas in the chat simultaneously. No verbal discussion yet. Ideas must include: (a) a theme/world type, (b) one interactive or automated feature.</li>
+    <li style="margin-bottom:6px"><strong>Idea summary (2 min):</strong> Tutor reads out all ideas aloud without editorialising.</li>
+    <li style="margin-bottom:6px"><strong>Team vote (2 min):</strong> Students vote in chat using numbers (1, 2, 3…). Majority wins. If tied, tutor breaks the tie. <strong>No re-debates after the vote is closed.</strong></li>
+    <li><strong>Blueprint commitment (3 min):</strong> All students type "I agree with this plan: [project name]" in chat. This creates social accountability and dramatically reduces mid-build direction changes.</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h4>The Blueprint Document — What Must Be Agreed Before Building</h4>
+  <p>After the vote, the team must agree on four items, written in the chat for all to see:</p>
+  <div class="two-col" style="margin-top:10px">
+    <div class="card">
+      <h4>1. Project Theme</h4>
+      <p>What is the world's setting or purpose? (e.g., "A medieval castle with a working drawbridge and treasure room," "A space station with automated resource generation," "A parkour obstacle course that tracks scores using variables.")</p>
+    </div>
+    <div class="card">
+      <h4>2. Signature Feature</h4>
+      <p>The one interactive or automated system the team must build — the technical centrepiece. This must use at least one skill from Modules 1–4. Without a signature feature, the project is just a static build, not a game or automation system.</p>
+    </div>
+    <div class="card">
+      <h4>3. Team Roles</h4>
+      <p>Every student has one primary responsibility: Architect (structural design), Programmer (MakeCode logic), Decorator (visual detail), and Demonstrator (handles the final presentation). In groups of 2–3, roles are combined.</p>
+    </div>
+    <div class="card">
+      <h4>4. Success Criteria</h4>
+      <p>What does the completed project look like? Define a minimum viable version: "The drawbridge opens when a player activates the pressure plate AND the treasure chest is accessible behind it." This prevents scope creep and gives students a clear finishing line.</p>
+    </div>
+  </div>
+</div>
+
+<div id="functions" class="anchor-target">
+  <div class="section-head">3 · Custom MakeCode Functions — Technical Deep-Dive</div>
+</div>
+
+<div class="card">
+  <h4>What Is a Function?</h4>
+  <p>A <strong>Function</strong> is a named, reusable block of code. Once defined, it can be called (executed) from anywhere in the programme with a single command block. Functions eliminate repetition: instead of copying the same 5-block sequence 4 times across different event handlers, write it once as a Function and call it 4 times.</p>
+  <div class="code-block">
+    <span class="cm">// Define the function once:</span><br>
+    <span class="ck">function</span> <span class="cf">celebrate</span>() {<br>
+    &nbsp;&nbsp;<span class="cf">fireworks</span> at position player<br>
+    &nbsp;&nbsp;<span class="cm">say</span> <span class="cs">"Level Complete!"</span><br>
+    &nbsp;&nbsp;<span class="cf">music</span> play victory<br>
+    }<br><br>
+    <span class="cm">// Call it from multiple places without re-writing it:</span><br>
+    <span class="ck">on player</span> walk {<br>
+    &nbsp;&nbsp;<span class="ck">if</span> score <span class="cn">≥ 10</span> <span class="ck">then</span> {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">celebrate</span>()  ← single call replaces 3 blocks<br>
+    &nbsp;&nbsp;}<br>
+    }<br><br>
+    <span class="ck">on block</span> broken {<br>
+    &nbsp;&nbsp;<span class="ck">if</span> blockscore <span class="cn">≥ 5</span> <span class="ck">then</span> {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">celebrate</span>()  ← same 3-block sequence, zero duplication<br>
+    &nbsp;&nbsp;}<br>
+    }
+  </div>
+  <p style="margin-top:10px"><strong>Why Functions matter for 8-year-olds:</strong> When students copy code blocks, they introduce inconsistency — if they change their mind about the celebrate sequence, they must find and update every copy. With a Function, they update one definition and the change applies everywhere instantly. This is their first encounter with the programming principle of <strong>DRY (Don't Repeat Yourself)</strong>.</p>
+</div>
+
+<div class="card">
+  <h4>When to Teach Functions in the Session</h4>
+  <p>Introduce Functions at the point when a student is about to copy a code block sequence for the second time. This is the "teachable moment": the student can feel the problem (repetition) before learning the solution (Function). Never introduce Functions as a theoretical concept before students have experienced the pain of code duplication — the motivation must come from their own frustration.</p>
+  <div class="script-box" style="margin-top:8px">"I see you're about to copy that celebrate sequence again. Before you do — there's a smarter way. What if you could write it once and use it everywhere? That's called a Function. Let me show you."</div>
+</div>
+
+<div id="build" class="anchor-target">
+  <div class="section-head">4 · The Build → Debug → Decorate Loop</div>
+</div>
+
+<div class="card">
+  <h4>The Three-Phase Build Loop</h4>
+  <p>Every project session after the Blueprint Phase should follow this cycle. Teams must complete one full cycle before adding new features.</p>
+  <div style="margin-top:10px">
+    <div class="phase-card">
+      <div class="phase-label">Phase 1</div>
+      <div class="phase-title">🔨 Build — Minimum Viable Version First</div>
+      <div class="phase-body">Build only the success criteria defined in the Blueprint. No decorations, no extra features, no scope additions. The goal of Phase 1 is a working, ugly prototype. Tutors must actively prevent "decoration creep" — students who begin placing decorative blocks before the core feature works are wasting time and may demotivate themselves when the feature later fails to work under the decorative surface.</div>
+    </div>
+    <div class="phase-card" style="border-left-color:var(--amber-d,#D97706)">
+      <div class="phase-label" style="color:var(--amber-d,#D97706)">Phase 2</div>
+      <div class="phase-title">🔍 Debug — Make It Work Before Making It Beautiful</div>
+      <div class="phase-body">Test every interactive and automated feature from the success criteria. Use the isolation testing protocol from Module 4: test each system independently, then test the integrated whole. Every bug must be resolved before Phase 3 begins. This is the tutor's most active phase: circulate continuously, ask "what should happen here?" not "what's wrong?" — students diagnose, tutors guide.</div>
+    </div>
+    <div class="phase-card" style="border-left-color:#A855F7">
+      <div class="phase-label" style="color:#A855F7">Phase 3</div>
+      <div class="phase-title">🎨 Decorate — Make It Reflect the Team's Creative Vision</div>
+      <div class="phase-body">Only after debug confirmation: add banners, custom builds, colour schemes, signage, and atmospheric details. Assign decoration work to students who finished debugging early — never let a student be idle. The Decorator role has ownership of Phase 3, but all team members contribute. Phase 3 is also the time to add any "bonus features" from the Extra Task list.</div>
+    </div>
+  </div>
+</div>
+
+<div id="presentation" class="anchor-target">
+  <div class="section-head">5 · The Game Studio Launch — Professional Presentation</div>
+</div>
+
+<div class="callout ct">
+  <span class="ci">💡</span>
+  <div>
+    <strong>Why Call It a "Game Studio Launch" Not a "Show and Tell"</strong><br>
+    Language shapes behaviour. "Show and tell" is something primary school students do with toys. "Game Studio Launch" is what Mojang, Nintendo, and Valve do. The language upgrade boosts confidence, raises the perceived stakes, and produces better presentations — students explain their work with professional pride rather than playground casualness.
+  </div>
+</div>
+
+<div class="card">
+  <h4>Presentation Structure — Each Team Follows This Exact Format</h4>
+  <p>The Demonstrator student leads; other team members support. Total time: <strong>5 minutes per team</strong>.</p>
+  <ol style="padding-left:18px;margin-top:8px">
+    <li style="margin-bottom:8px"><strong>Project Name &amp; Concept (30 seconds):</strong> "Our project is called [name]. The idea is [concept in one sentence]."</li>
+    <li style="margin-bottom:8px"><strong>Signature Feature Live Demo (2 minutes):</strong> Demonstrate the core interactive or automated system working in real-time. The tutor screen-shares the Demonstrator's view. All other students watch.</li>
+    <li style="margin-bottom:8px"><strong>Technical Explanation (1 minute):</strong> "This works because [technical mechanism]. We used [Module X skill] from our training." Students must name the specific MakeCode or Redstone concept, not just say "we coded it."</li>
+    <li style="margin-bottom:8px"><strong>What We Would Add Next (30 seconds):</strong> "If we had one more session, we would add [feature]." This teaches iterative thinking and prevents perfectionism paralysis.</li>
+    <li><strong>Q&amp;A (1 minute):</strong> Other students and parents ask one question each. The tutor facilitates.</li>
+  </ol>
+  <p style="margin-top:10px"><strong>Optional parent participation:</strong> Invite parents to the final session using a pre-written invitation (available in the Kodland admin panel). Parent presence significantly elevates student motivation and performance quality. Provide a 2-sentence briefing to parents before the session starts so they know what to expect and can ask informed questions.</p>
+</div>
+
+<div class="card">
+  <h4>Evaluation Criteria — What the Tutor Assesses During Presentations</h4>
+  <div class="two-col" style="margin-top:8px">
+    <div class="card" style="background:var(--ok-bg);border-color:var(--ok-b)">
+      <h4 style="color:var(--ok-t)">✅ Strong Presentation Indicators</h4>
+      <p style="color:var(--ok-t);font-size:13px">Student can explain the technical mechanism without prompting · Live demo works without crashing · Team uses at least one skill from two or more previous modules · Student speaks in complete sentences · Student answers a question they didn't prepare for.</p>
+    </div>
+    <div class="card" style="background:var(--no-bg);border-color:var(--no-b)">
+      <h4 style="color:var(--no-t)">❌ Weak Presentation Indicators</h4>
+      <p style="color:var(--no-t);font-size:13px">Live demo crashes mid-way (debug was incomplete) · Student cannot explain how the feature works · Project has no interactive or automated element · Student reads from notes the entire time · Team relied entirely on tutor for all technical decisions.</p>
+    </div>
+  </div>
+</div>
+
+<div id="trouble" class="anchor-target">
+  <div class="section-head">6 · Troubleshooting Catalog — Module 5 (5 Scenarios)</div>
+</div>
+
+<div style="overflow-x:auto">
+  <table class="trouble-table">
+    <thead>
+      <tr><th style="width:22%">Mistake / Symptom</th><th style="width:27%">Root Cause</th><th style="width:31%">Exact Fix</th><th style="width:20%">Prevention Script</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mc">Team spends 20+ minutes arguing about what to build — no consensus by minute 20</td>
+        <td>Blueprint Phase was not started with a structured format; discussion was open-ended and unstructured, allowing indefinite back-and-forth without forcing a decision</td>
+        <td>Immediately switch to the formal structured brainstorm: silent ideation (3 min), read ideas aloud, vote by number in chat, tutor breaks ties. Close the vote at exactly minute 15 — no extensions. Announce: "We've voted. We're building [X]. This decision is final. Blueprint document time."</td>
+        <td class="fc">"If there's no consensus by minute 10 of brainstorming, call an immediate vote and use tutor tie-break authority. Do not allow debate to continue."</td>
+      </tr>
+      <tr>
+        <td class="mc">A student's custom Function is defined but calling it produces no visible result</td>
+        <td>The Function block was created but the "Call Function [name]" block was not placed inside any event handler. A Function definition alone never executes — it must be called.</td>
+        <td>Show the student: "Your Function is defined — it's like a recipe in a cookbook. But no one told the chef to cook it. Add a 'Call Function [name]' block inside the On Chat Command or On Player Walk event." Place the Call block inside the relevant event and test.</td>
+        <td class="fc">"A Function definition is a recipe. A Function call is 'cook this recipe now'. You need both — define AND call."</td>
+      </tr>
+      <tr>
+        <td class="mc">Team began decorating before the core feature was tested — the decoration is now built over a broken circuit, making it impossible to access the Redstone without destroying the build</td>
+        <td>Decoration Phase started before Debug Phase was complete — the Build → Debug → Decorate order was violated</td>
+        <td>Do not try to work around the decorations. Address the root cause immediately: use /clone to back up the decorated build to a spare area, then access and fix the broken circuit in the original location. Reinforce: "We have to pause decorating, fix the circuit, then resume. This is why Debug comes before Decorate."</td>
+        <td class="fc">"No decoration until every feature works. We demo the working prototype first, then we make it beautiful. Beauty on a broken foundation is wasted effort."</td>
+      </tr>
+      <tr>
+        <td class="mc">Project scope expands beyond what's achievable in the remaining session time — team keeps adding features and nothing is finished</td>
+        <td>No minimum viable version was defined in the Blueprint Phase; the success criteria were too vague ("build a really cool castle") rather than specific and testable</td>
+        <td>Hard-stop the scope expansion. Return to the Blueprint: "What was our success criteria? [Read it back.] Is that done? [If yes: stop adding, move to Debug and Decorate.] [If no: stop adding new features, finish the success criteria first.]" Any additional features go onto a "Version 2" list that may or may not be built after the success criteria are met.</td>
+        <td class="fc">"New feature ideas go on the 'Version 2' list. Nothing new gets built until the success criteria are done and debugged."</td>
+      </tr>
+      <tr>
+        <td class="mc">During the Game Studio Launch presentation, the live demo crashes or breaks mid-demonstration, causing student embarrassment in front of parents</td>
+        <td>Debug Phase was not completed before the presentation; the feature was not tested in the exact conditions of the demo (e.g., from the spawn point, with other students also in the world)</td>
+        <td>Run a full dress rehearsal 10 minutes before parents join. Have a backup plan: if the interactive feature fails, the Demonstrator should have a "recorded screenshot walkthrough" as a fallback — pre-taken screenshots showing the feature working correctly. The tutor calmly narrates: "Let me show you what it looked like when it worked perfectly earlier."</td>
+        <td class="fc">"Always run a full dress rehearsal 10 minutes before parents join. Test the demo in exactly the same conditions as the live presentation."</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="protips" class="anchor-target">
+  <div class="section-head">7 · Tutor Pro-Tips &amp; Real-World Analogies</div>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 The "Game Studio Launch" Framing — Why It Produces Better Presentations</strong><br>
+  <em>"You're not showing your homework — you're launching your game to the world. Mojang didn't show Minecraft to players and say 'sorry it's a bit rough.' They launched it, explained why it was special, and showed it working live. That's exactly what you're going to do today."</em> This framing produces presentations that are 2–3× more confident and detailed than "show and tell" framing.</p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Functions = The "Recipe Card" Analogy</strong><br>
+  <em>"A professional chef doesn't write out the full pasta sauce recipe every time they need it — they write it once on a card and just say 'make the pasta sauce.' A MakeCode Function is your personal recipe card. Write the code once, name it, then call it anywhere by name. Change the recipe once and it updates everywhere."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Build → Debug → Decorate = The "Construction Site" Analogy</strong><br>
+  <em>"A real construction company builds the steel skeleton and roof first (Build). Then electrical inspectors test all the wiring while the walls are still open (Debug). Then the interior designers come in to make it beautiful (Decorate). Nobody paints the walls before the electrician checks the wiring — because painting over a fault doesn't fix it, it hides it."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Blueprint Phase = The "No Arguing in the Air" Rule</strong><br>
+  A student architect once said: "Argument in the air is cheap. Argument after construction has started is expensive." Before any block is placed, disagreements cost nothing. After 30 minutes of building, direction changes are enormously costly. Run the Blueprint Phase like a contract: once signed (typed in chat), the plan is firm. Changes require a formal proposal with majority re-vote.</p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Managing Scope Creep With the "Version 2" List</strong><br>
+  Every good idea that comes up after the Blueprint Phase gets written to a "Version 2 list" in the chat. This has two effects: (1) students feel their idea was valued and captured, not dismissed; (2) the production scope stays fixed. Students who see their idea on the Version 2 list are far more likely to stay focused on the current version than students whose idea was simply rejected.</p>
+</div>
+
+<div id="test-cta" class="anchor-target">
+  <div class="section-head">8 · Module 5 Knowledge Check</div>
+</div>
+
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Final Module Knowledge Check</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:520px;margin-left:auto;margin-right:auto">
+    The Module 5 check contains <strong>6 questions</strong> covering project management, Functions, the Build→Debug→Decorate loop, and the Game Studio Launch. A score of <strong>70% or above</strong> unlocks the DST. All questions are entirely distinct from Modules 1–4 and the final DST assessment.
+  </p>
+  <div class="btn-row center">
+    <a href="EnModule5Test.html" class="btn-primary">Start Module 5 Test →</a>
+    <button class="btn-outline" onclick="goHome()">← Dashboard</button>
+  </div>
+</div>
+
+</div><!-- /.cbody -->
+<footer>© 2026 Kodland. Internal tutor training material — not for external distribution.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(5)) { alert('Please complete the previous modules first.'); goHome(); }
+</script>
+</body>
+</html>

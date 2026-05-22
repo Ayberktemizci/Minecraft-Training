@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2 Test — City of Light | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{background:linear-gradient(135deg,#1D4ED8,#3B82F6);padding:24px 32px;color:#fff;text-align:center}
+  .quiz-header h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+  .quiz-header p{color:rgba(255,255,255,.8);font-size:13px}
+  .feedback-box{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:13.5px;line-height:1.6;border:2px solid}
+  .feedback-box.show{display:block}
+  .feedback-box.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+  .feedback-box.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Module 2</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="quiz-header">
+  <h2>📝 Module 2 Knowledge Check</h2>
+  <p>🏙️ City of Light · 6 Questions · 70% to Pass</p>
+</div>
+
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Next Question →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Submit Answers</button>
+  </div>
+</div>
+
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+</div>
+
+<footer>© 2026 Kodland. Internal tutor training material.</footer>
+<script src="shared.js"></script>
+<script>
+/*
+  MODULE 2 — 6 UNIQUE QUESTIONS (zero overlap with Mod1 or DST)
+  Correct answer indices (0=A, 1=B, 2=C, 3=D):
+  Q1→D(3)  Q2→A(0)  Q3→C(2)  Q4→B(1)  Q5→D(3)  Q6→A(0)
+  Pattern: 3,0,2,1,3,0 — varied, no consecutive repeats.
+*/
+const MODULE_ID = 2;
+const PASS_PCT  = 70;
+
+const QUESTIONS = [
+  {
+    q: "A student executes /clone 100 64 200  104 68 204  100 64 200 and nothing happens. What is the cause and the correct fix?",
+    opts: [
+      "The destination is too far — /clone has a maximum range of 10 blocks",
+      "The Y coordinate of the destination must always be 0",
+      "The command was typed correctly — the clone always appears after a 5-second delay",
+      "The source and destination regions overlap — the destination coordinates must be outside the source bounding box"
+    ],
+    correct: 3,  // D
+    feedback: "Correct. The /clone destination [100 64 200] is identical to the source's first corner — the regions completely overlap, causing a silent failure. The destination must be a coordinate pair that lies entirely outside the source bounding box (e.g., /clone 100 64 200  104 68 204  120 64 200)."
+  },
+  {
+    q: "A student types /tp @s ~0 64 ~0. What does this command do differently from both /tp @s ~0 ~0 ~0 and /tp @s 0 64 0?",
+    opts: [
+      "It keeps the student's current X and Z positions but sets their altitude to exactly Y=64, combining one absolute value with two relative offsets",
+      "It teleports the student to the world origin at exactly sea level",
+      "It teleports all players (~0) to floor 64 — @s is the selector for all students",
+      "It is invalid syntax — you cannot mix tilde and absolute values in a single /tp command"
+    ],
+    correct: 0,  // A
+    feedback: "Correct. Minecraft allows mixed coordinate syntax. ~0 keeps the current X unchanged; 64 (no tilde) sets altitude to exactly Y=64; ~0 keeps current Z unchanged. This is useful for 'snap to sea level' commands without changing horizontal position. /tp @s ~0 ~0 ~0 doesn't move the player at all; /tp @s 0 64 0 sends them to the world origin."
+  },
+  {
+    q: "The Crafting Table grid has 9 slots. A student places two Stone blocks side by side in the top row of the Crafting Table and gets nothing. What is the issue?",
+    opts: [
+      "Stone Pressure Plates require three Stone blocks, not two",
+      "The Crafting Table must be placed on the ground before recipes work",
+      "The Stone Pressure Plate recipe requires two Stone blocks placed in a 1×2 horizontal pattern in any row — the student likely placed them in slots 1 and 3 instead of 1 and 2 (adjacent), skipping the middle slot",
+      "Stone cannot be used in the Crafting Table — it requires Cobblestone"
+    ],
+    correct: 2,  // C
+    feedback: "Correct. The Stone Pressure Plate recipe requires two Stone blocks in adjacent slots horizontally (any row). If the student skipped the middle slot — placing Stone in positions 1 and 3 rather than 1 and 2 — the grid pattern doesn't match any recipe and nothing is produced. Crafting recipes are strictly positional."
+  },
+  {
+    q: "During cooperative city building, a student accidentally destroys 10 blocks of another team's bridge. According to the Neighbourhood Rules framework, what is the correct tutor response?",
+    opts: [
+      "Remove the student from the session temporarily as a clear consequence for the violation",
+      "Reference the Neighbourhood Rule by name, guide the student to help rebuild the damaged blocks, and use the moment to reinforce community standards without punitive language",
+      "Ignore it unless the affected student complains, to avoid making the situation worse",
+      "Pause the entire session and reset the world to before the damage occurred"
+    ],
+    correct: 1,  // B
+    feedback: "Correct. Punitive responses (removal, session pause) create resentment and set a fearful classroom tone. The Neighbourhood Rules framework is restorative, not punitive: name the rule ('Remember — Neighbourhood Rule'), guide the student to rebuild what was broken, and use it as a community standards moment. This models the real-world collaborative norms that the city-building activity is designed to practice."
+  },
+  {
+    q: "A Pressure Plate trap is wired to a Dispenser 20 blocks away. A student steps on the plate but the Dispenser fires with a noticeable 1-second delay. What is the technical cause?",
+    opts: [
+      "The Dispenser needs a Redstone Repeater next to it to fire at normal speed",
+      "There is a gap in the Redstone wire that is slowing the signal",
+      "The Pressure Plate only triggers on the second step, not the first",
+      "Redstone signals travel at 1 block per tick (0.05 seconds); across 20 blocks of dust, the signal takes 20 ticks = 1 second to reach the Dispenser — this is expected physics behaviour, not a bug"
+    ],
+    correct: 3,  // D
+    feedback: "Correct. Redstone signal propagation speed is 1 block per tick, and one tick equals 0.05 seconds. A 20-block wire therefore introduces a 20-tick delay = 1 second. This is normal Minecraft physics. If faster response is needed, shorten the wire or use a Redstone Comparator to amplify without delay. Important: this is a teaching opportunity about signal propagation, not an error to 'fix'."
+  },
+  {
+    q: "After today's cooperative session, a tutor wants to give specific, behaviour-linked praise to the Bridge Builders team. Which of the following is the most effective example?",
+    opts: [
+      "\"Outstanding job, Bridge Builders — you used exact coordinates to align your bridge endpoints with both team districts, and your arch design shows you thought about symmetry. That's professional architecture thinking.\"",
+      "\"Great work today, team — you built a really nice bridge!\"",
+      "\"Bridge Builders were the best team today — much better than the others.\"",
+      "\"You did well. I'll give you a bonus task next time as a reward.\""
+    ],
+    correct: 0,  // A
+    feedback: "Correct. Option A is specific and behaviour-linked: it names the exact technical action ('used exact coordinates to align endpoints'), the design principle applied ('symmetry'), and frames it in professional terms ('architecture thinking'). This gives students clear information about what behaviour to repeat. Generic praise ('great bridge!'), comparative praise ('best team'), and deferred rewards do not create the same reinforcement loop."
+  }
+];
+
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('question-area').innerHTML = `
+    <div class="qnum">Question ${current + 1} of ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list" id="opt-list">
+      ${q.opts.map((o, i) => `
+        <div class="opt" id="opt-${i}" onclick="selectOpt(${i})">
+          <span class="opt-letter">${LETTERS[i]}</span><span>${o}</span>
+        </div>`).join('')}
+    </div>`;
+}
+
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i)    el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  document.getElementById('feedback-area').innerHTML = `
+    <div class="feedback-box ${isRight ? 'ok' : 'bad'} show">
+      ${isRight ? '✅ ' : '❌ '} ${q.feedback}
+    </div>`;
+  if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+  else document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+
+function nextQuestion() { current++; renderQuestion(); window.scrollTo(0,0); }
+
+function submitQuiz() {
+  const score  = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+  const pct    = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+  if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+  document.getElementById('quiz-screen').style.display   = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed?'🎉':'😅'}</div>
+    <div class="result-title">${passed?'Module 2 Complete!':'Not Quite There Yet'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-sub">You answered <strong>${score} of ${QUESTIONS.length}</strong> correctly.
+      ${passed?' Great work — you have demonstrated solid understanding of Module 2 content.'
+              :` A score of <strong>${PASS_PCT}%</strong> is required to unlock Module 3. Review the material and try again.`}
+    </div>`;
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="EnModule3.html" class="btn-primary">Continue to Module 3 →</a>
+       <button class="btn-outline" onclick="goHome()">← Dashboard</button>`
+    : `<button class="btn-primary" onclick="retake()">Retake Test</button>
+       <a href="EnModule2.html" class="btn-outline">← Review Module 2</a>`;
+  window.scrollTo(0,0);
+}
+
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display    = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion(); window.scrollTo(0,0);
+}
+
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) { alert('Please complete Module 1 first.'); goHome(); }
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

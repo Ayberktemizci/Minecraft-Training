@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5 Knowledge Check — Creator's Castle | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{
+    background:linear-gradient(135deg,#7E22CE,#EC4899);
+    padding:24px 32px; color:#fff; text-align:center;
+  }
+  .quiz-header h2{
+    font-family:'Nunito',sans-serif; font-size:22px;
+    font-weight:900; color:#fff; margin-bottom:4px;
+  }
+  .quiz-header p{ color:rgba(255,255,255,.85); font-size:13px; }
+
+  .feedback-box{
+    display:none; margin-top:14px; border-radius:var(--rsm);
+    padding:13px 16px; font-size:13.5px; line-height:1.6; border:2px solid;
+  }
+  .feedback-box.show{ display:block; }
+  .feedback-box.ok{ background:var(--ok-bg); border-color:var(--ok-b); color:var(--ok-t); }
+  .feedback-box.bad{ background:var(--no-bg); border-color:var(--no-b); color:var(--no-t); }
+
+  /* ── Pass result — next-step card ── */
+  .next-step-card{
+    margin-top:18px; background:linear-gradient(135deg,#0e1f0a,#2f5a1e);
+    border:2px solid rgba(196,240,70,.3); border-radius:var(--r);
+    padding:22px 24px; text-align:center; position:relative; overflow:hidden;
+  }
+  .next-step-card::before{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(196,240,70,.1) 0%,transparent 75%);
+    pointer-events:none;
+  }
+  .next-step-card h4{
+    font-family:'Nunito',sans-serif; font-size:16px; font-weight:900;
+    color:#fff; margin-bottom:6px; position:relative;
+  }
+  .next-step-card p{
+    font-size:13px; color:rgba(255,255,255,.68); line-height:1.55;
+    margin-bottom:14px; position:relative; max-width:440px;
+    margin-left:auto; margin-right:auto;
+  }
+  .next-step-card .btn-row{ justify-content:center; position:relative; }
+  .btn-library-cta{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 28px; border-radius:var(--rpill);
+    background:var(--lime); color:var(--ink);
+    font-family:'Nunito',sans-serif; font-size:14px; font-weight:900;
+    border:2px solid var(--lime-d); text-decoration:none;
+    transition:all .15s; letter-spacing:.2px;
+  }
+  .btn-library-cta:hover{
+    background:var(--lime-d); transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(196,240,70,.35);
+  }
+  .btn-skip-dst{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:10px 20px; border-radius:var(--rpill);
+    background:rgba(255,255,255,.08); color:rgba(255,255,255,.7);
+    font-family:'Nunito',sans-serif; font-size:12px; font-weight:700;
+    border:2px solid rgba(255,255,255,.18); text-decoration:none;
+    transition:all .15s;
+  }
+  .btn-skip-dst:hover{ background:rgba(255,255,255,.18); color:#fff; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Module 5</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="quiz-header">
+  <h2>📝 Module 5 Knowledge Check</h2>
+  <p>Creator's Castle · 6 Questions · 70% to Pass · Unlocks the Final Stages</p>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Next Question →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Submit Answers</button>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div id="result-actions"></div>
+</div>
+
+<footer>© 2026 Kodland. Internal tutor training material — not for external distribution.</footer>
+
+<script src="shared.js"></script>
+<script>
+const MODULE_ID = 5;
+const PASS_PCT  = 70;
+
+const QUESTIONS = [
+  {
+    q: "A student defines a MakeCode Function called 'openGate' that moves a Piston and plays a sound. After adding the Function definition, the gate does not open when the player walks over a Pressure Plate. The 'On Player Walk' event has no blocks inside it. What is the exact cause and fix?",
+    opts: [
+      "The Function name 'openGate' is reserved — it must be renamed to something not containing 'Gate'",
+      "The Piston block inside the Function must be replaced with a direct Redstone signal block",
+      "The Function definition only works when the player is within 10 blocks of the defined location",
+      "The Function is defined but never called — the 'Call Function openGate' block must be placed inside the 'On Player Walk' event block for the Function to execute when the event fires"
+    ],
+    correct: 3,
+    feedback: "Correct. Defining a Function creates a named, reusable code block — but it will never execute on its own. The Function must be explicitly called from within an event handler. Without 'Call Function openGate' inside the On Player Walk event, the Function definition exists in memory but is never triggered. Fix: open the On Player Walk event block and add a 'Call Function openGate' block inside it."
+  },
+  {
+    q: "Why does the structured Blueprint Phase require students to type their agreement in chat ('I agree with this plan: [name]') rather than simply raising their hands or verbally confirming?",
+    opts: [
+      "Typing is faster than verbal confirmation and saves time in the session",
+      "Typing creates a visible, persistent social commitment in the chat log — if a student later tries to change the direction mid-build, the tutor can reference their own typed agreement, which dramatically reduces mid-build direction changes and scope drift",
+      "The game's in-game chat automatically records typed agreements as a formal binding contract",
+      "Verbal confirmation is not allowed during sessions for audio quality reasons"
+    ],
+    correct: 1,
+    feedback: "Correct. The purpose of the typed commitment is social accountability through a visible, persistent record. Students who typed 'I agree with this plan' in the chat are far more reluctant to argue for a direction change later — their prior commitment is visible to all and creates self-consistency pressure. Verbal agreements are private and ephemeral; chat-typed agreements are public and persistent."
+  },
+  {
+    q: "In the Build → Debug → Decorate loop, a student wants to add coloured banners and custom floor patterns to their drawbridge project before testing whether the drawbridge actually opens. What should the tutor do?",
+    opts: [
+      "Redirect the student back to the Debug phase immediately: explain that decorating before debugging means any found bugs will require breaking decoration to access the circuit — this is why the loop order is strict. The banners go on the 'After Debug' task list.",
+      "Allow it — decoration is a separate system and cannot affect the Redstone circuit below it",
+      "Let the student decide — the loop order is a guideline, not a rule",
+      "Pause the class and have the student demonstrate that the drawbridge works before allowing any other student to continue"
+    ],
+    correct: 0,
+    feedback: "Correct. The Build → Debug → Decorate order is strict precisely because decoration built over an undebugged circuit creates a compounding problem: if a bug is found during decoration phase, accessing the circuit requires breaking the decoration — wasted work and lost time. The tutor must redirect immediately, add the banner idea to the 'After Debug' task list, and explain why the order matters."
+  },
+  {
+    q: "A student's project has met all success criteria from the Blueprint Phase with 15 minutes of the session remaining. The student asks to add 3 new features. What is the correct tutor response?",
+    opts: [
+      "Allow all 3 features — students should always be encouraged to expand their ambition",
+      "Allow 1 feature, selected by the student as the most important",
+      "Write all 3 ideas onto the 'Version 2' list in chat, acknowledge them positively, then redirect the student to the Decoration Phase — new features in the final 15 minutes risk breaking the working prototype before the Game Studio Launch",
+      "Close the session early since the success criteria are met"
+    ],
+    correct: 2,
+    feedback: "Correct. The 'Version 2' list technique achieves two things simultaneously: the student's ideas are valued and captured (not dismissed), and the production scope stays protected. Adding new features in the final 15 minutes carries a real risk of breaking the working prototype before the presentation — the tutor must protect what already works. After writing the ideas to Version 2, redirect to the Decoration Phase, which uses the remaining time productively without touching the working systems."
+  },
+  {
+    q: "What is the primary reason calling the Module 5 final presentation a 'Game Studio Launch' rather than a 'show and tell' produces measurably better student presentations?",
+    opts: [
+      "The longer name gives students more time to prepare their presentation content",
+      "Parents respond more positively to the word 'studio' than 'show and tell'",
+      "It uses industry terminology that aligns with the Kodland brand guidelines",
+      "Language shapes behaviour and expectations — 'Game Studio Launch' sets a professional standard that students internalise as requiring technical explanation, live demonstration, and public ownership of their work, whereas 'show and tell' implies an informal classroom activity"
+    ],
+    correct: 3,
+    feedback: "Correct. The language used to frame an activity directly affects the effort and quality students invest in it. 'Show and tell' is culturally associated with casual, low-stakes childhood activities. 'Game Studio Launch' is associated with professional product releases, requiring explanation, live demonstration, and public accountability. Students who hear 'launch' prepare differently — they rehearse, they think about what to say, they check that their demo works."
+  },
+  {
+    q: "A team has three students and is about to begin Module 5. The Blueprint Phase assigns four roles: Architect, Programmer, Decorator, and Demonstrator. How should the tutor handle this mismatch?",
+    opts: [
+      "Skip the role assignment entirely — roles are optional for groups of 3 or fewer",
+      "Combine the roles logically: Architect + Decorator (structural vision and visual finish), Programmer (all MakeCode and Redstone logic), and Demonstrator who also assists one other role. Each student still has a primary ownership area, and the team discusses which combination makes sense for their specific project type and individual strengths",
+      "Ask the fourth student from another team to join and fill the missing role",
+      "Assign all four roles to three students by giving one student two primary roles — they become both Architect and Programmer simultaneously"
+    ],
+    correct: 1,
+    feedback: "Correct. Role combination is the standard solution when team size doesn't match the role count. The logical combination for a 3-person team is: (1) Architect + Decorator — one student owns both the structural design and the visual finish; (2) Programmer — full ownership of all code and Redstone; (3) Demonstrator who also assists whoever has the most work at any given point. The critical rule is that every student still has a primary ownership area — role combination must not result in one student dominating all decisions."
+  }
+];
+
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width   = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display   = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML  = '';
+  document.getElementById('question-area').innerHTML  = `
+    <div class="qnum">Question ${current + 1} of ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list" id="opt-list">
+      ${q.opts.map((o, i) => `
+        <div class="opt" id="opt-${i}" onclick="selectOpt(${i})">
+          <span class="opt-letter">${LETTERS[i]}</span><span>${o}</span>
+        </div>`).join('')}
+    </div>`;
+}
+
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i)    el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  document.getElementById('feedback-area').innerHTML = `
+    <div class="feedback-box ${isRight ? 'ok' : 'bad'} show">
+      ${isRight ? '✅ ' : '❌ '} ${q.feedback}
+    </div>`;
+  if (current < QUESTIONS.length - 1)
+    document.getElementById('next-btn').style.display   = 'inline-flex';
+  else
+    document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+
+function nextQuestion() {
+  current++;
+  renderQuestion();
+  window.scrollTo(0, 0);
+}
+
+function submitQuiz() {
+  const score  = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+  const pct    = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+
+  if (passed) {
+    const prev = getModuleScore(MODULE_ID);
+    if (!prev || pct > prev) markModulePassed(MODULE_ID, pct);
+  }
+
+  document.getElementById('quiz-screen').style.display    = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed ? '🏆' : '😅'}</div>
+    <div class="result-title">${passed ? 'All 5 Modules Complete!' : 'Not Quite There Yet'}</div>
+    <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+    <div class="result-sub">You answered <strong>${score} of ${QUESTIONS.length}</strong> correctly.
+      ${passed
+        ? ' Outstanding — you have completed all five training modules.'
+        : ` A score of <strong>${PASS_PCT}%</strong> or above is required to progress. Review Module 5 and try again.`}
+    </div>`;
+
+  if (passed) {
+    // Route through the Library before the DST
+    document.getElementById('result-actions').innerHTML = `
+      <div class="next-step-card">
+        <h4>📖 One More Step Before the Final Test</h4>
+        <p>Review the Library of Successful Lessons — a real, rated session with 16 timestamped annotations. Studying it will sharpen your ability to apply everything you have learned before you sit the Digital Skill Test.</p>
+        <div class="btn-row">
+          <a href="EnDST.html#library" class="btn-library-cta">View Successful Lesson Reference →</a>
+          <a href="EnDST.html#dst-section" class="btn-skip-dst">Skip to Digital Skill Test</a>
+        </div>
+      </div>
+      <div class="btn-row center" style="margin-top:14px">
+        <button class="btn-outline" onclick="goHome()">← Dashboard</button>
+      </div>`;
+  } else {
+    document.getElementById('result-actions').innerHTML = `
+      <div class="btn-row center" style="margin-top:0">
+        <button class="btn-primary" onclick="retake()">Retake Test</button>
+        <a href="EnModule5.html" class="btn-outline">← Review Module 5</a>
+      </div>`;
+  }
+
+  window.scrollTo(0, 0);
+}
+
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display    = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion();
+  window.scrollTo(0, 0);
+}
+
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) {
+  alert('Please complete the previous modules first.');
+  goHome();
+}
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 4 Test — Mechanical Forest | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{background:linear-gradient(135deg,#B45309,#F59E0B);padding:24px 32px;color:#fff;text-align:center}
+  .quiz-header h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+  .quiz-header p{color:rgba(255,255,255,.85);font-size:13px}
+  .feedback-box{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:13.5px;line-height:1.6;border:2px solid}
+  .feedback-box.show{display:block}
+  .feedback-box.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+  .feedback-box.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Module 4</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="quiz-header">
+  <h2>📝 Module 4 Knowledge Check</h2>
+  <p>🌲 Mechanical Forest · 6 Questions · 70% to Pass</p>
+</div>
+
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Next Question →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Submit Answers</button>
+  </div>
+</div>
+
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+</div>
+
+<footer>© 2026 Kodland. Internal tutor training material.</footer>
+<script src="shared.js"></script>
+<script>
+/*
+  MODULE 4 — 6 UNIQUE QUESTIONS (zero overlap with Mods 1-3 or DST)
+  Correct answer indices (0=A, 1=B, 2=C, 3=D):
+  Q1→C(2)  Q2→A(0)  Q3→D(3)  Q4→B(1)  Q5→C(2)  Q6→A(0)
+  Pattern: 2,0,3,1,2,0 — varied, no two consecutive identical answers.
+*/
+const MODULE_ID = 4;
+const PASS_PCT  = 70;
+
+const QUESTIONS = [
+  {
+    q: "A student programmes the Agent to plant a 5×5 grid using nested loops, but the result is a diagonal stripe of seeds rather than a grid. After the inner loop completes row 1 and the outer loop code runs 'agent move right 1', the Agent then executes 'agent move back 5'. What is wrong with this sequence?",
+    opts: [
+      "The outer loop should run 5 times to match the inner loop — both must have identical counts",
+      "'Agent move right 1' and 'agent move back 5' should be replaced with a single 'agent tp' command",
+      "After completing row 1 moving forward, the Agent has moved 5 blocks in the forward direction. 'Move back 5' returns it to the original column start. But 'turn around' is also missing — without reversing direction, row 2 starts by re-planting row 1 in the opposite direction, not an adjacent row",
+      "The inner loop count is too high — reducing it to 4 will fix the diagonal pattern"
+    ],
+    correct: 2,  // C
+    feedback: "Correct. After row 1, the Agent is 5 blocks ahead and must return to the start column. 'Move back 5' correctly returns it. But without 'turn around' (two right turns or equivalent), the Agent faces the same direction as row 1 when it begins row 2 — it then plants row 2 starting from the original position in the same direction, creating a diagonal or overlapping pattern. The correct sequence: finish row → move right 1 (shift to next row) → turn around → move back 0 (already at start of row 2) and plant."
+  },
+  {
+    q: "What is the critical pre-condition that must be met before the Agent's 'place on move down' command will successfully plant crops rather than dropping seeds as loose item entities?",
+    opts: [
+      "The ground directly beneath the Agent must be tilled farmland (created by using a Hoe on dirt/grass) that is also hydrated — within 4 blocks of a water source block",
+      "The Agent must have at least 32 seeds in its inventory before the planting loop begins",
+      "The player must be in the same chunk as the Agent for the planting command to execute",
+      "The farmland must be at Y=63 exactly — planting at any other altitude causes seeds to drop"
+    ],
+    correct: 0,  // A
+    feedback: "Correct. Two conditions must both be met: (1) the ground must be tilled farmland — use a Hoe on dirt or grass to convert it. (2) The farmland must be hydrated — there must be a water source block within 4 blocks (horizontally) of the farmland. Dry farmland (light tan colour) will revert to dirt and eject any crops placed on it. Hydrated farmland (dark brown) retains planted crops and allows growth."
+  },
+  {
+    q: "A student's Hopper is positioned directly below the farm's drop zone and is visible in the world, but harvested items accumulate on the ground and are never collected. After 5 minutes the items despawn. What is the most likely cause?",
+    opts: [
+      "The Hopper's 5-slot inventory is completely full with filter items — no empty slots remain for new items",
+      "The Piston that breaks the crops is too high — items must fall exactly 1 block into the Hopper",
+      "The Hopper's output is blocked — it has been connected to a chest that is already full, so the Hopper cannot transfer items and backs up, preventing new item intake",
+      "Hoppers cannot collect items that fall more than 3 blocks — the Hopper must be raised to within 3 blocks of the crop layer"
+    ],
+    correct: 3,  // D
+    feedback: "Correct. When a Hopper's output chest is completely full, the Hopper cannot transfer any more items out of its own 5-slot inventory. Once those 5 slots fill up, the Hopper stops collecting items from above — items land on the Hopper's top face, but the Hopper's intake is blocked because its internal buffer is at capacity. Fix: either expand storage (add more chests in a chain) or separate the crop items from seeds using a sorting stage so the output never fills a single chest completely."
+  },
+  {
+    q: "The 'test in isolation' debugging protocol for Module 4 recommends testing each pipeline stage separately before integration. In what order should the stages be tested?",
+    opts: [
+      "Store first, then Collect, then Trigger, then Detect — test backwards from output to input",
+      "Detect first (Observer fires on crop growth using a Lamp), then Trigger (Piston extends from a Lever), then Collect (Hopper collects hand-dropped items), then Store (Hopper routes to chest) — test each stage independently before connecting",
+      "Build and test all four stages simultaneously — isolation testing wastes time in a 60-minute session",
+      "Trigger first, then Detect, then Store, then Collect — test the most complex stage before simpler ones"
+    ],
+    correct: 1,  // B
+    feedback: "Correct. The isolation protocol goes in data-flow order: (1) Detect — confirm the Observer fires when crops grow (test with a Redstone Lamp as indicator). (2) Trigger — confirm the Piston extends when powered (test with a manual Lever, not the Observer). (3) Collect — confirm the Hopper sucks up items (drop items by hand above it). (4) Store — confirm the Hopper routes to the correct chest (verify with a single item). Once all four pass independently, connect them. This prevents compound failures that are hard to diagnose."
+  },
+  {
+    q: "Which language framework should a tutor use when explaining the automated crop harvesting circuit to 8-year-olds, in order to bridge Module 3's conditional programming concepts with Module 4's Redstone hardware?",
+    opts: [
+      "Circuit diagram notation, using standard electronic symbols for switches, sensors, and actuators",
+      "Mathematical set theory — 'the harvest event is a member of the set of growth-state-change events'",
+      "If–Then language: 'IF the wheat reaches growth stage 7 (fully grown) THEN the Observer fires THEN the Piston breaks the crops THEN items drop' — describing hardware behaviour using the same conditional framing students know from Module 3",
+      "Flowchart language only — draw the pipeline on a whiteboard before building any blocks"
+    ],
+    correct: 2,  // C
+    feedback: "Correct. Using If–Then language is the deliberate pedagogical bridge between Modules 3 and 4. Students already understand 'if condition then action' from MakeCode conditionals. By describing the Redstone harvest circuit in identical language ('IF wheat is fully grown THEN Observer fires THEN Piston extends'), the tutor makes the hardware circuit feel like familiar logic rather than a completely new concept. This dramatically reduces cognitive load and helps students mentally map Module 3 software concepts onto Module 4 hardware."
+  },
+  {
+    q: "A student has successfully built a single-row bamboo farm in Module 1. In Module 4, they want to upgrade it to a multi-row, multi-crop automated farm. Which new Module 4 concept specifically allows the Agent to plant multiple rows without the student manually repositioning it between rows?",
+    opts: [
+      "Nested loops — an outer loop iterates over rows while an inner loop handles the column planting within each row, with repositioning code between the outer loop's iterations",
+      "The /clone command from Module 2 — duplicate the single row circuit to create multiple rows",
+      "The On Block Broken event from Module 3 — trigger replanting automatically when crops are harvested",
+      "Redstone Repeaters — add timing delays between each row's planting sequence"
+    ],
+    correct: 0,  // A
+    feedback: "Correct. Nested loops are the Module 4 concept that enables multi-row automated planting. The outer loop (repeat 5) iterates over rows; the inner loop (repeat 5) plants the seeds within each row. Between outer loop iterations, the repositioning code (move right 1, turn around) shifts the Agent to the start of the next row. This is the student's first encounter with nested iteration — a fundamental programming pattern that directly prefigures 2D array traversal in more advanced programming education."
+  }
+];
+
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('question-area').innerHTML = `
+    <div class="qnum">Question ${current + 1} of ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list" id="opt-list">
+      ${q.opts.map((o, i) => `
+        <div class="opt" id="opt-${i}" onclick="selectOpt(${i})">
+          <span class="opt-letter">${LETTERS[i]}</span><span>${o}</span>
+        </div>`).join('')}
+    </div>`;
+}
+
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i)    el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  document.getElementById('feedback-area').innerHTML = `
+    <div class="feedback-box ${isRight ? 'ok' : 'bad'} show">
+      ${isRight ? '✅ ' : '❌ '} ${q.feedback}
+    </div>`;
+  if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+  else document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+
+function nextQuestion() { current++; renderQuestion(); window.scrollTo(0,0); }
+
+function submitQuiz() {
+  const score  = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+  const pct    = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+  if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+  document.getElementById('quiz-screen').style.display   = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed?'🎉':'😅'}</div>
+    <div class="result-title">${passed?'Module 4 Complete!':'Not Quite There Yet'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-sub">You answered <strong>${score} of ${QUESTIONS.length}</strong> correctly.
+      ${passed?' Outstanding — Module 4 complete! You can now access Module 5.'
+              :` A score of <strong>${PASS_PCT}%</strong> is required. Review Module 4 and try again.`}
+    </div>`;
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="EnModule5.html" class="btn-primary">Continue to Module 5 →</a>
+       <button class="btn-outline" onclick="goHome()">← Dashboard</button>`
+    : `<button class="btn-primary" onclick="retake()">Retake Test</button>
+       <a href="EnModule4.html" class="btn-outline">← Review Module 4</a>`;
+  window.scrollTo(0,0);
+}
+
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display    = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion(); window.scrollTo(0,0);
+}
+
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) { alert('Please complete the previous modules first.'); goHome(); }
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

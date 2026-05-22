@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 — Oasis of Logic | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#6D28D9 0%,#7C3AED 55%,#8B5CF6 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:'🧩';font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.82);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:#DDD6FE;color:rgba(255,255,255,.88)}
+  .module-banner .mobj strong{color:#fff}
+  .sec-nav{display:flex;flex-wrap:wrap;gap:8px;padding:14px 28px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90;transition:background .25s}
+  .sec-pill{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:5px 13px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+  .sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+  .script-box{background:var(--ink);color:#C4B5FD;border-radius:var(--rsm);padding:14px 18px;font-family:'JetBrains Mono','Courier New',monospace;font-size:13px;line-height:1.7;margin:10px 0;border-left:4px solid #7C3AED}
+  [data-theme="dark"] .script-box{background:#0f0a18}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}.fc{color:var(--ok-t)}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #8B5CF6;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .code-block{background:var(--ink);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .code-block{background:#0f0a18}
+  .ck{color:#C792EA}.cf{color:#82AAFF}.cs{color:#C3E88D}.cn{color:#F78C6C}.cm{color:#FCD34D}
+  .anchor-target{scroll-margin-top:130px}
+  code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Training</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dashboard</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="sec-nav">
+  <a href="#overview"  class="sec-pill">1 · Overview</a>
+  <a href="#events"    class="sec-pill">2 · Event-Driven Programming</a>
+  <a href="#variables" class="sec-pill">3 · Variables</a>
+  <a href="#conditionals" class="sec-pill">4 · Conditionals</a>
+  <a href="#minigame"  class="sec-pill">5 · Building the Mini-Game</a>
+  <a href="#trouble"   class="sec-pill">6 · Troubleshooting</a>
+  <a href="#protips"   class="sec-pill">7 · Pro-Tips</a>
+  <a href="#test-cta"  class="sec-pill">8 · Knowledge Check</a>
+</div>
+
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Module 3 of 5</div>
+    <div class="mh1">🧩 Oasis of Logic</div>
+    <p>Games, puzzles, and the true foundations of programming logic — students build their first interactive mini-game using MakeCode event blocks, variables, and conditionals, turning Minecraft into a programmable game engine.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Module 3 Objectives:</strong> Understand event-driven programming (On Player Walk, On Block Broken) · Create and modify variables as "score containers" · Apply If–Then and If–Then–Else conditional logic · Combine Events + Variables + Conditionals to build a functional, playable mini-game.
+    </div>
+  </div>
+</div>
+
+<div class="cbody">
+
+<div id="overview" class="anchor-target">
+  <div class="section-head">1 · Module Overview — The Programming Shift</div>
+</div>
+
+<div class="card">
+  <h4>Why Module 3 Is the Conceptual Turning Point</h4>
+  <p>Modules 1 and 2 used MakeCode to automate physical builds — the program ran once and produced a static result. Module 3 introduces <strong>reactive, interactive programming</strong>: code that waits for something to happen, then responds. This is the foundational paradigm of virtually all real-world software, from mobile apps to game engines. Students are no longer building machines — they are building <em>experiences</em>.</p>
+  <p style="margin-top:8px">The three concepts introduced — events, variables, and conditionals — are sufficient to build any simple game. By the end of this module, students will have written their first complete interactive programme.</p>
+</div>
+
+<div id="events" class="anchor-target">
+  <div class="section-head">2 · Event-Driven Programming</div>
+</div>
+
+<div class="card">
+  <h4>What Is an Event?</h4>
+  <p>An <strong>event</strong> is a signal that something has happened in the game world. An <strong>event block</strong> in MakeCode registers a listener: code inside the block executes <em>only and exactly</em> when that event fires. The code does not run continuously — it waits, then responds.</p>
+  <div class="code-block">
+    <span class="ck">on player</span> walk {                   ← event block: fires on every walk step<br>
+    &nbsp;&nbsp;<span class="cf">change</span> score <span class="cn">by 1</span>          ← this code runs each time the event fires<br>
+    }                                      ← outside this block = NOT triggered by walking
+  </div>
+  <p style="margin-top:8px"><strong>Key Module 3 events tutors must explain:</strong></p>
+  <ul style="margin-top:6px">
+    <li><strong>On Player Walk:</strong> Fires once per step taken by the player. Useful for step counters, distance-based scoring, walking mini-games.</li>
+    <li><strong>On Block Broken:</strong> Fires when the player mines/destroys a specific block type. Useful for resource-gathering mini-games, treasure hunts.</li>
+    <li><strong>On Chat Command [word]:</strong> Fires when the player types the word in chat. Useful for manual game triggers, cheat codes, restart functions.</li>
+    <li><strong>On Player Jumped:</strong> Fires once per jump. Useful for parkour scoring, jumping challenges.</li>
+  </ul>
+</div>
+
+<div class="callout cw">
+  <span class="ci">⚠️</span>
+  <div>
+    <strong>Critical Mistake: Code Placed Outside the Event Block</strong><br>
+    This is the single most common coding error in Module 3. Students place the "change variable by 1" block OUTSIDE the event block's enclosure. When this happens, the variable change executes once at program load (when the /code command runs), not each time the event fires.<br>
+    <div class="code-block" style="margin-top:8px;background:#2a0000;border-color:#B91C1C">
+      <span style="color:#F87171">WRONG — score changes only at program start, not on walk:</span><br>
+      <span class="ck">on player</span> walk { ← empty event block<br>
+      }<br>
+      <span style="color:#F78C6C">change</span> score <span style="color:#F78C6C">by 1</span>  ← OUTSIDE the block — runs ONCE, then never again
+    </div>
+    <div class="code-block" style="margin-top:8px;background:#0a2000;border-color:#16A34A">
+      <span style="color:#4ADE80">CORRECT — score changes on every walk step:</span><br>
+      <span class="ck">on player</span> walk {<br>
+      &nbsp;&nbsp;<span class="cf">change</span> score <span class="cn">by 1</span>  ← INSIDE the block<br>
+      }
+    </div>
+    <strong>Teaching fix:</strong> Before students code, ask them to draw a rectangle on paper and place every instruction either inside or outside it. Physically visualising the block boundary prevents this error.
+  </div>
+</div>
+
+<div id="variables" class="anchor-target">
+  <div class="section-head">3 · Variables — Containers for Changing Data</div>
+</div>
+
+<div class="card">
+  <h4>What Is a Variable?</h4>
+  <p>A <strong>variable</strong> is a named storage location in memory that holds a value (a number, a string of text, or a boolean true/false). The value can be read, written, and updated. For Module 3, all variables will be numeric — they hold scores, counters, and timers.</p>
+  <div class="code-block">
+    <span class="ck">set</span>    score = <span class="cn">0</span>      ← creates the variable and gives it an initial value<br>
+    <span class="ck">change</span> score <span class="cn">by +1</span>   ← adds 1 to whatever value is currently stored<br>
+    <span class="ck">change</span> score <span class="cn">by -5</span>   ← subtracts 5 from the current value<br>
+    <span class="ck">set</span>    score = score + <span class="cn">10</span> ← reads current value, adds 10, writes result back<br>
+    <span class="cm">say</span>    score              ← displays current value in chat (for testing)
+  </div>
+  <p style="margin-top:10px"><strong>Variable scope in MakeCode:</strong> All variables are <em>global</em> in the MakeCode Education environment — any event block can read and write any variable. There are no local variables. This means once a variable is set, every part of the programme has access to it.</p>
+  <p style="margin-top:8px"><strong>Naming convention to teach:</strong> Use descriptive names (<code>score</code>, <code>steps</code>, <code>gems</code>), not single letters (<code>x</code>, <code>a</code>). Descriptive names make debugging possible for 8-year-olds — they can read their own code and understand what it does.</p>
+</div>
+
+<div id="conditionals" class="anchor-target">
+  <div class="section-head">4 · Conditionals — If–Then Logic</div>
+</div>
+
+<div class="card">
+  <h4>If–Then and If–Then–Else Blocks</h4>
+  <p>A <strong>conditional</strong> allows the programme to make a decision: if a condition is true, execute block A; otherwise, execute block B (the "else" branch). Without conditionals, the programme has no decision-making ability — it always does the same thing regardless of the game state.</p>
+  <div class="code-block">
+    <span class="ck">if</span> score <span class="cn">≥ 10</span> <span class="ck">then</span> {<br>
+    &nbsp;&nbsp;<span class="cm">say</span> <span class="cs">"You Win! Final score: "</span> + score<br>
+    &nbsp;&nbsp;<span class="cf">fireworks</span> at position player   ← trigger win animation<br>
+    &nbsp;&nbsp;<span class="ck">set</span> score = <span class="cn">0</span>             ← reset for new game<br>
+    }<br><br>
+    <span class="ck">if</span> score <span class="cn">≥ 10</span> <span class="ck">then</span> {         ← If–Then–Else variant:<br>
+    &nbsp;&nbsp;<span class="cm">say</span> <span class="cs">"You Win!"</span><br>
+    } <span class="ck">else</span> {<br>
+    &nbsp;&nbsp;<span class="cm">say</span> <span class="cs">"Keep going! "</span> + (10 - score) + <span class="cs">" steps to go"</span><br>
+    }
+  </div>
+  <p style="margin-top:10px"><strong>Comparison operators students must know:</strong></p>
+  <div class="two-col" style="margin-top:8px">
+    <div class="card">
+      <h4>Equality &amp; Inequality</h4>
+      <p><code>=</code> equals · <code>≠</code> not equal<br><code>&gt;</code> greater than · <code>&lt;</code> less than<br><code>≥</code> greater or equal · <code>≤</code> less or equal</p>
+    </div>
+    <div class="card">
+      <h4>Boolean Logic</h4>
+      <p><code>AND</code> — both conditions must be true<br><code>OR</code> — either condition is true<br><code>NOT</code> — reverses the condition<br>Example: <code>score ≥ 10 AND lives &gt; 0</code></p>
+    </div>
+  </div>
+</div>
+
+<div id="minigame" class="anchor-target">
+  <div class="section-head">5 · Building the Mini-Game — Complete Example</div>
+</div>
+
+<div class="card">
+  <h4>The "Run to 10" Mini-Game — Full Technical Specification</h4>
+  <p>This is the minimum viable mini-game that applies all three Module 3 concepts in one programme.</p>
+  <div class="code-block">
+    <span class="cm">// Setup block — runs once when programme starts</span><br>
+    on start {<br>
+    &nbsp;&nbsp;<span class="ck">set</span> score = <span class="cn">0</span><br>
+    &nbsp;&nbsp;<span class="cm">say</span> <span class="cs">"Game started! Walk to earn points. Reach 10 to win!"</span><br>
+    }<br><br>
+    <span class="cm">// Event block — fires on every step</span><br>
+    <span class="ck">on player</span> walk {<br>
+    &nbsp;&nbsp;<span class="cf">change</span> score <span class="cn">by 1</span><br>
+    &nbsp;&nbsp;<span class="ck">if</span> score <span class="cn">≥ 10</span> <span class="ck">then</span> {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">say</span> <span class="cs">"YOU WIN! Final score: "</span> + score<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">fireworks</span> at position player<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">set</span> score = <span class="cn">0</span>   <span class="cm">// reset for replay</span><br>
+    &nbsp;&nbsp;}<br>
+    }
+  </div>
+  <p style="margin-top:10px"><strong>Extensions students can add independently (Extra Tasks):</strong></p>
+  <ul style="margin-top:6px">
+    <li><strong>Add a lives system:</strong> Set <code>lives = 3</code> at start. If the player falls below Y=60, deduct 1 life. If lives = 0, game over.</li>
+    <li><strong>Add a timer:</strong> Use a countdown variable. Decrement it via a repeating event. If timer reaches 0 before score reaches 10, display "Time's Up!"</li>
+    <li><strong>Add power-ups:</strong> On Block Broken (Diamond Ore) → change score by +5 as a bonus.</li>
+  </ul>
+</div>
+
+<div id="trouble" class="anchor-target">
+  <div class="section-head">6 · Troubleshooting Catalog — Module 3 (5 Scenarios)</div>
+</div>
+
+<div style="overflow-x:auto">
+  <table class="trouble-table">
+    <thead>
+      <tr><th style="width:22%">Mistake / Symptom</th><th style="width:27%">Root Cause</th><th style="width:31%">Exact Fix</th><th style="width:20%">Prevention Script</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mc">Score starts at 1 immediately when /code is run, before the player walks at all</td>
+        <td>"Set score = 0" block is inside the On Player Walk event instead of in a separate On Start or initialisation block</td>
+        <td>Move the "set score = 0" block out of the On Walk event into an On Start block (or directly onto the coding canvas if no start event is used). The On Walk event should only contain "change score by 1" and the conditional check.</td>
+        <td class="fc">"Setup code goes in On Start. Game code goes in events. Never mix initialisation with response code."</td>
+      </tr>
+      <tr>
+        <td class="mc">Variable score never goes above 1 — it resets every walk step instead of accumulating</td>
+        <td>"Set score = 0" is placed inside the On Walk event block, so score is reset to 0 on every step before being incremented to 1</td>
+        <td>Remove "set score = 0" from inside the On Walk block entirely. Initialisation belongs in On Start only. The On Walk block should only increment: "change score by 1".</td>
+        <td class="fc">"Read your code out loud. 'On every walk step: set score to 0, then add 1.' Does that make sense? What number will score always be?"</td>
+      </tr>
+      <tr>
+        <td class="mc">If–Then condition never triggers, even when score clearly exceeds the target</td>
+        <td>The comparison operator is wrong (using = instead of ≥); OR the variable name in the condition is spelled differently from the variable being incremented (MakeCode is case-sensitive for variable names)</td>
+        <td>Check operator: if the target is score reaching 10 or more, the condition must be score ≥ 10, not score = 10 (which only triggers at exactly 10). Check spelling: "Score" and "score" are different variables in MakeCode.</td>
+        <td class="fc">"Use ≥ (greater or equal) for win conditions, not = (exactly equal) — the player might step past the exact number."</td>
+      </tr>
+      <tr>
+        <td class="mc">Mini-game win condition fires after every step once score reaches 10 — fireworks play repeatedly</td>
+        <td>Score is not being reset to 0 inside the win condition block; after winning, score remains ≥ 10 so every subsequent walk step re-triggers the win</td>
+        <td>Add "set score = 0" as the last line inside the if-then win block. Alternatively, add a boolean "gameActive" variable: set it to false on win, and wrap the entire On Walk event in "if gameActive = true then".</td>
+        <td class="fc">"After winning, what should happen to the score? Either reset it to 0 or turn the game off. If you don't reset it, winning triggers forever."</td>
+      </tr>
+      <tr>
+        <td class="mc">Student cannot understand why "say score" displays a number but they wanted it to display text + number (e.g., "Score: 5")</td>
+        <td>Incorrect block combination: "say" with only the variable block produces the number; to combine text + variable, students must use a "join" block or the string concatenation operator</td>
+        <td>Show students the "text join" block in MakeCode: [say [join ["Score: "] [score]]]. Alternatively, use JavaScript mode to write: say("Score: " + score). Explain: "Say" displays one thing — to show text AND a number, you must join them first into one combined string.</td>
+        <td class="fc">"'Say' can only hold one thing. Use 'join' to stick text and numbers together before handing it to Say."</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="protips" class="anchor-target">
+  <div class="section-head">7 · Tutor Pro-Tips &amp; Real-World Analogies</div>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Variables = The "Video Game Score" Analogy (Module 3 Primary Hook)</strong><br>
+  <em>"Think of every video game you've played. Mario has a coin counter. FIFA has a goal counter. Minecraft has an XP bar. All of those are variables — a box with a name that stores a number, and the number changes as you play. Today, you're going to build the code behind your own score counter."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Events = The "Notification System" Analogy</strong><br>
+  <em>"Your phone doesn't read every message as soon as it's sent. It waits quietly — and when a message arrives, it notifies you. That notification IS an event. MakeCode event blocks work exactly the same way: they sleep until something happens in Minecraft, then they wake up and run their code."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 If–Then = The "Thermostat" Analogy</strong><br>
+  <em>"A thermostat doesn't heat the house all the time — it checks constantly: 'Is the temperature below 20°C?' If yes, the heater turns on. If no, it stays off. That's exactly what an If–Then block does: it checks a condition and acts only when that condition is true."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 The "Block Boundary Visualisation" Trick for Avoiding Outside-Block Errors</strong><br>
+  Before any student writes code for Module 3, ask them to draw a rectangle on paper. Label it "On Player Walk." Then ask: "Which of your instructions goes INSIDE this rectangle, and which goes outside?" Students who physically draw the boundary before coding make this mistake approximately 70% less often than those who code directly without planning.</p>
+</div>
+
+<div id="test-cta" class="anchor-target">
+  <div class="section-head">8 · Module 3 Knowledge Check</div>
+</div>
+
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Ready for the Module 3 Knowledge Check?</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+    6 questions from Module 3 content only. A score of <strong>70% or above</strong> unlocks Module 4. All questions are entirely distinct from Modules 1–2 and the final DST.
+  </p>
+  <div class="btn-row center">
+    <a href="EnModule3Test.html" class="btn-primary">Start Module 3 Test →</a>
+    <button class="btn-outline" onclick="goHome()">← Dashboard</button>
+  </div>
+</div>
+
+</div><!-- /.cbody -->
+<footer>© 2026 Kodland. Internal tutor training material — not for external distribution.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(3)) { alert('Please complete the previous modules first.'); goHome(); }
+</script>
+</body>
+</html>

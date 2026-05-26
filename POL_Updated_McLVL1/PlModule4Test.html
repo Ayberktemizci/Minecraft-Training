@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Modułu 4 — Mechaniczny Las | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .quiz-header {
+            background: linear-gradient(135deg,#B45309,#F59E0B);
+            padding: 24px 32px;
+            color: #fff;
+            text-align: center
+        }
+
+            .quiz-header h2 {
+                font-family: 'Nunito',sans-serif;
+                font-size: 22px;
+                font-weight: 900;
+                color: #fff;
+                margin-bottom: 4px
+            }
+
+            .quiz-header p {
+                color: rgba(255,255,255,.85);
+                font-size: 13px
+            }
+
+        .feedback-box {
+            display: none;
+            margin-top: 14px;
+            border-radius: var(--rsm);
+            padding: 13px 16px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            border: 2px solid
+        }
+
+            .feedback-box.show {
+                display: block
+            }
+
+            .feedback-box.ok {
+                background: var(--ok-bg);
+                border-color: var(--ok-b);
+                color: var(--ok-t)
+            }
+
+            .feedback-box.bad {
+                background: var(--no-bg);
+                border-color: var(--no-b);
+                color: var(--no-t)
+            }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Szkolenie dla Tutorów</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="history.back()">← Moduł 4</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="quiz-header">
+        <h2>📝 Sprawdzian Wiedzy z Modułu 4</h2>
+        <p>🌲 Mechaniczny Las · 6 pytań · 70% do zaliczenia</p>
+    </div>
+
+    <div id="quiz-screen" class="quiz-wrap">
+        <div class="q-progress">
+            <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+            <span class="q-count" id="q-count">0 / 6</span>
+        </div>
+        <div id="question-area"></div>
+        <div id="feedback-area"></div>
+        <div class="btn-row" style="margin-top:16px">
+            <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Następne pytanie →</button>
+            <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Prześlij odpowiedzi</button>
+        </div>
+    </div>
+
+    <div id="results-screen" style="display:none;padding:40px 24px">
+        <div class="result-card" id="result-card"></div>
+        <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+    </div>
+
+    <footer>© 2026 Kodland. Wewnętrzny materiał szkoleniowy dla tutorów.</footer>
+    <script src="shared.js"></script>
+    <script>
+        /*
+          MODUŁ 4 — 6 UNIKALNYCH PYTAŃ (zero nakładania się z Modułami 1-3 lub DST)
+          Indeksy prawidłowych odpowiedzi (0=A, 1=B, 2=C, 3=D):
+          Q1→C(2)  Q2→A(0)  Q3→D(3)  Q4→B(1)  Q5→C(2)  Q6→A(0)
+          Wzór: 2,0,3,1,2,0 — zróżnicowany, brak dwóch identycznych odpowiedzi pod rząd.
+        */
+        const MODULE_ID = 4;
+        const PASS_PCT = 70;
+
+        const QUESTIONS = [
+            {
+                q: "Uczeń programuje Agenta do obsiania siatki 5×5 za pomocą pętli zagnieżdżonych, ale rezultatem jest ukośny pas nasion zamiast siatki. Po tym, jak pętla wewnętrzna kończy rząd 1, a kod pętli zewnętrznej wykonuje 'agent przesuń w prawo o 1', Agent wykonuje następnie 'agent przesuń do tyłu o 5'. Co jest nie tak z tą sekwencją?",
+                opts: [
+                    "Pętla zewnętrzna powinna uruchomić się 5 razy, aby pasować do pętli wewnętrznej — obie muszą mieć identyczną liczbę powtórzeń",
+                    "Polecenia 'agent przesuń w prawo o 1' i 'agent przesuń do tyłu o 5' powinny zostać zastąpione pojedynczym poleceniem 'agent tp'",
+                    "Po ukończeniu rzędu 1 w ruchu do przodu, Agent przesunął się o 5 bloków w przód. 'Przesuń do tyłu o 5' cofa go na początek oryginalnej kolumny. Brakuje jednak również polecenia 'obróć się' — bez odwrócenia kierunku rząd 2 rozpocznie się od ponownego obsiania rzędu 1 w przeciwnym kierunku, a no sąsiedniego rzędu",
+                    "Liczba powtórzeń pętli wewnętrznej jest zbyt wysoka — zmniejszenie jej do 4 naprawi ukośny wzór"
+                ],
+                correct: 2,  // C
+                feedback: "Poprawnie. Po rzędzie 1 Agent znajduje się 5 bloków z przodu i musi wrócić do kolumny startowej. Polecenie 'idź do tyłu o 5' prawidłowo go cofa. Jednak bez komendy 'obróć się' (dwa skręty w prawo lub odpowiednik), Agent patrzy w tym samym kierunku co w rzędzie 1, gdy zaczyna rząd 2 — sieje wtedy rząd 2 zaczynając od pozycji oryginalnej w tym samym kierunku, tworząc ukośny lub nakładający się wzór. Prawidłowa sekwencja: ukończ rząd → przesuń w prawo o 1 (zmiana rzędu) → obróć się → przesuń do tyłu o 0 (jest już na początku rzędu 2) i siej."
+            },
+            {
+                q: "Jaki jest krytyczny warunek wstępny, który musi zostać spełniony, aby polecenie Agenta 'umieść przy ruchu w dół' pomyślnie zasiało rośliny, zamiast upuszczać nasiona jako luźne encje przedmiotów?",
+                opts: [
+                    "Ziemia bezpośrednio pod Agentem musi być zaoraną ziemią uprawną (utworzoną przez użycie Zmotyki na ziemi/trawie), która jest również nawodniona — w odległości do 4 bloków od bloku źródła wody",
+                    "Agent musi mieć co najmniej 32 nasiona w swoim ekwipunku przed rozpoczęciem pętli sadzenia",
+                    "Gracz musi znajdować się w tym samym chunk-u co Agent, aby polecenie sadzenia zostało wykonane",
+                    "Ziemia uprawna musi znajdować się dokładnie na wysokości Y=63 — sadzenie na jakiejkolwiek innej wysokości powoduje upuszczanie nasion"
+                ],
+                correct: 0,  // A
+                feedback: "Poprawnie. Muszą zostać spełnione oba warunki: (1) podłoże musi być zaoraną ziemią uprawną — użyj Zmotyki na ziemi lub trawie, aby ją przekształcić. (2) Ziemia uprawna musi być nawodniona — w odległości do 4 bloków (w poziomie) musi znajdować się blok źródła wody. Sucha ziemia uprawna (jasnobrązowy kolor) powróci do stanu zwykłej ziemi i wyrzuci umieszczone na niej rośliny. Nawodniona ziemia uprawna (ciemnobrązowa) zatrzymuje posadzone rośliny i umożliwia ich wzrost."
+            },
+            {
+                q: "Lej (Hopper) ucznia jest umieszczony bezpośrednio pod strefą zrzutu farmy i jest widoczny w świecie, ale zebrane przedmioty gromadzą się na ziemi i nigdy nie są zbierane. Po 5 minutach przedmioty znikają (despawn). Co jest najbardziej prawdopodobną przyczyną?",
+                opts: [
+                    "5-slotowy ekwipunek leja jest całkowicie zapełniony przedmiotami filtrującymi — nie pozostały wolne sloty na nowe przedmioty",
+                    "Tłok niszczący rośliny znajduje się za wysoko — przedmioty muszą spadać dokładnie o 1 blok do leja",
+                    "Wylot leja jest zablokowany — został podłączony do skrzyni, która jest już pełna, więc lej nie może przenosić przedmiotów i się przepełnia, co uniemożliwia przyjmowanie nowych rzeczy",
+                    "Leje nie potrafią zbierać przedmiotów, które spadają o więcej niż 3 bloki — lej musi zostać podniesiony na odległość do 3 bloków od warstwy upraw"
+                ],
+                correct: 2,  // C
+                feedback: "Poprawnie. Gdy skrzynia wyjściowa leja jest całkowicie pełna, lej nie może przenieść więcej przedmiotów ze swojego własnego 5-slotowego ekwipunku. Gdy te 5 slotów się zapełni, lej przestaje zbierać przedmioty od góry — przedmioty lądują na górnej powierzchni leja, ale wlot leja jest zablokowany, ponieważ jego wewnętrzny bufor jest przepełniony. Rozwiązanie: rozbuduj pamięć masową (dodaj więcej skrzyń w łańcuchu) lub oddziel plony od nasion za pomocą etapu sortowania, aby wynik nigdy nie zapełnił całkowicie pojedynczej skrzyni."
+            },
+            {
+                q: "Protokół debugowania 'testowanie w izolacji' dla Modułu 4 zaleca testowanie każdego etapu rurociągu osobno przed integracją. W jakiej kolejności należy testować etapy?",
+                opts: [
+                    "Najpierw Przechowaj, potem Zbierz, potem Aktywuj, na końcu Wykryj — testuj od końca, od wyjścia do wejścia",
+                    "Najpierw Wykryj (Obserwator aktywuje się przy wzroście rośliny z użyciem Lampy), potem Aktywuj (Tłok wysuwa się z użyciem Dźwigni), potem Zbierz (Lej zbiera przedmioty rzucane ręcznie), na końcu Przechowaj (Lej kieruje przedmioty do skrzyni) — testuj każdy etap niezależnie przed połączeniem",
+                    "Zbuduj i przetestuj wszystkie cztery etapy jednocześnie — testowanie w izolacji marnuje czas podczas 60-minutowej sesji",
+                    "Najpierw Aktywuj, potem Wykryj, potem Przechowaj, na końcu Zbierz — przetestuj najbardziej złożony etap przed prostszymi"
+                ],
+                correct: 1,  // B
+                feedback: "Poprawnie. Protokół izolacji przebiega zgodnie z kolejnością przepływu danych: (1) Wykryj — potwierdź, że Obserwator aktywuje się przy wzroście roślin (testuj z użyciem Lampy Redstone jako wskaźnika). (2) Aktywuj — potwierdź, że Tłok wysuwa się po zasileniu (testuj z użyciem ręcznej Dźwigni, a no Obserwatora). (3) Zbierz — potwierdź, że Lej zasysa przedmioty (rzuć przedmioty ręcznie nad nim). (4) Przechowaj — potwierdź, że Lej kieruje przedmioty do właściwej skrzyni (zweryfikuj za pomocą jednego przedmiotu). Gdy wszystkie cztery etapy przejdą testy pomyślnie, połącz je. Zapobiega to złożonym awariom, które są trudne do zdiagnozowania."
+            },
+            {
+                q: "Których ram językowych powinien użyć tutor, wyjaśniając 8-latkom obwód automatycznego zbierania plonów, aby połączyć koncepcje programowania warunkowego z Modułu 3 ze sprzętem Redstone z Modułu 4?",
+                opts: [
+                    "Notacji schematów obwodów, używając standardowych symboli elektronicznych dla przełączników, czujników i siłowników",
+                    "Matematycznej teorii mnogości — 'zdarzenie zbioru jest członkiem zbioru zdarzeń zmiany stanu wzrostu'",
+                    "Języka Jeśli–To: 'JEŚLI pszenica osiągnie fazę wzrostu 7 (pełny wzrost) TO Obserwator wysyła sygnał TO Tłok niszczy rośliny TO przedmioty spadają' — opisując zachowanie sprzętu przy użyciu tych samych ram warunkowych, które uczniowie znają z Modułu 3",
+                    "Wyłącznie języka schematów blokowych — narysuj rurociąg na tablicy przed zbudowaniem jakichkolwiek bloków"
+                ],
+                correct: 2,  // C
+                feedback: "Poprawnie. Używanie języka Jeśli–To to celowy most pedagogiczny między Modułami 3 i 4. Uczniowie rozumieją już strukturę 'jeśli warunek to akcja' z instrukcji warunkowych MakeCode. Opisując obwód zbiorów Redstone w tym samym języku ('JEŚLI pszenica jest w pełni wyrośnięta TO Obserwator wysyła sygnał TO Tłok się wysuwa'), tutor sprawia, że obwód sprzętowy wydaje się znajomą logiką, a no zupełnie nową koncepcją. Drastycznie zmniejsza to obciążenie poznawcze i pomaga uczniom mentalnie rzutować pojęcia oprogramowania z Modułu 3 na sprzęt z Modułu 4."
+            },
+            {
+                q: "Uczeń z powodzeniem zbudował jednorzędową farmę bambusa w Module 1. W Module 4 chce ją ulepszyć do wielorzędowej, wielouproszczonej zautomatyzowanej farmy. Która nowa koncepcja z Modułu 4 pozwala Agentowi na sadzenie wielu rzędów bez konieczności ręcznego przestawiania go przez ucznia pomiędzy rzędami?",
+                opts: [
+                    "Pętle zagnieżdżone — pętla zewnętrzna iteruje po rzędach, podczas gdy pętla wewnętrzna obsługuje sadzenie w kolumnach w obrębie każdego rzędu, z kodem zmieniającym pozycję pomiędzy iteracjami pętli zewnętrznej",
+                    "Komenda /clone z Modułu 2 — zduplikowanie obwodu jednorzędowego w celu stworzenia wielu rzędów",
+                    "Zdarzenie Przy zniszczeniu bloku z Modułu 3 — automatyczne wyzwalanie ponownego sadzenia po zebraniu plonów",
+                    "Przekaźniki (Repeaters) Redstone — dodanie opóźnień czasowych pomiędzy sekwencją sadzenia każdego rzędu"
+                ],
+                correct: 0,  // A
+                feedback: "Poprawnie. Pętle zagnieżdżone to koncepcja z Modułu 4, która umożliwia automatyczne sadzenie wielorzędowe. Pętla zewnętrzna (powtórz 5) iteruje po rzędach; pętla wewnętrzna (powtórz 5) sadzi nasiona w każdym rzędzie. Pomiędzy iteracjami pętli zewnętrznej kod zmieniający pozycję (przesuń w prawo o 1, obróć się) przenosi Agenta na początek następnego rzędu. To pierwsze spotkanie ucznia z iteracją zagnieżdżoną — fundamentalnym wzorcem programistycznym, który bezpośrednio zapowiada iterację po tablicach dwuwymiarowych w bardziej zaawansowanej edukacji programistycznej."
+            }
+        ];
+
+        let current = 0, answers = [], answered = false;
+        const LETTERS = ['A', 'B', 'C', 'D'];
+
+        function renderQuestion() {
+            const q = QUESTIONS[current];
+            answered = false;
+            document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+            document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('feedback-area').innerHTML = '';
+            document.getElementById('question-area').innerHTML = `
+        <div class="qnum">Pytanie ${current + 1} z ${QUESTIONS.length}</div>
+        <div class="qtext">${q.q}</div>
+        <div class="opt-list" id="opt-list">
+          ${q.opts.map((o, i) => `
+            <div class="opt" id="opt-${i}" onclick="selectOpt(${i})">
+              <span class="opt-letter">${LETTERS[i]}</span><span>${o}</span>
+            </div>`).join('')}
+        </div>`;
+        }
+
+        function selectOpt(i) {
+            if (answered) return;
+            answered = true;
+            const q = QUESTIONS[current];
+            answers[current] = i;
+            for (let j = 0; j < q.opts.length; j++) {
+                const el = document.getElementById(`opt-${j}`);
+                el.classList.add('disabled');
+                if (j === q.correct) el.classList.add('correct');
+                else if (j === i) el.classList.add('wrong');
+            }
+            const isRight = i === q.correct;
+            document.getElementById('feedback-area').innerHTML = `
+        <div class="feedback-box ${isRight ? 'ok' : 'bad'} show">
+          ${isRight ? '✅ ' : '❌ '} ${q.feedback}
+        </div>`;
+            if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+            else document.getElementById('submit-btn').style.display = 'inline-flex';
+        }
+
+        function nextQuestion() { current++; renderQuestion(); window.scrollTo(0, 0); }
+
+        function submitQuiz() {
+            const score = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+            const pct = Math.round(score / QUESTIONS.length * 100);
+            const passed = pct >= PASS_PCT;
+            if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('results-screen').style.display = 'block';
+            document.getElementById('result-card').innerHTML = `
+        <div class="result-emoji">${passed ? '🎉' : '😅'}</div>
+        <div class="result-title">${passed ? 'Moduł 4 Ukończony!' : 'To jeszcze nie to'}</div>
+        <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+        <div class="result-sub">Odpowiedziałeś poprawnie na <strong>${score} z ${QUESTIONS.length}</strong> pytań.
+          ${passed ? ' Doskonale — Moduł 4 ukończony! Masz teraz dostęp do Modułu 5.'
+                    : ` Wymagany jest wynik na poziomie <strong>${PASS_PCT}%</strong>. Przejrzyj Moduł 4 i spróbuj ponownie.`}
+        </div>`;
+            document.getElementById('result-actions').innerHTML = passed
+                ? `<a href="PlModule5.html" class="btn-primary">Przejdź do Modułu 5 →</a>
+           <button class="btn-outline" onclick="goHome()">← Pulpit</button>`
+                : `<button class="btn-primary" onclick="retake()">Powtórz test</button>
+           <a href="PlModule4.html" class="btn-outline">← Przejrzyj Moduł 4</a>`;
+            window.scrollTo(0, 0);
+        }
+
+        function retake() {
+            current = 0; answers = [];
+            document.getElementById('quiz-screen').style.display = 'block';
+            document.getElementById('results-screen').style.display = 'none';
+            renderQuestion(); window.scrollTo(0, 0);
+        }
+
+        initShared();
+        if (!isModuleUnlocked(MODULE_ID)) { alert('Najpierw ukończ poprzednie moduły.'); goHome(); }
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        renderQuestion();
+    </script>
+</body>
+</html>

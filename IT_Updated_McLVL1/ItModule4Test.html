@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Modulo 4 — Foresta Meccanica | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .quiz-header {
+            background: linear-gradient(135deg,#B45309,#F59E0B);
+            padding: 24px 32px;
+            color: #fff;
+            text-align: center
+        }
+
+            .quiz-header h2 {
+                font-family: 'Nunito',sans-serif;
+                font-size: 22px;
+                font-weight: 900;
+                color: #fff;
+                margin-bottom: 4px
+            }
+
+            .quiz-header p {
+                color: rgba(255,255,255,.85);
+                font-size: 13px
+            }
+
+        .feedback-box {
+            display: none;
+            margin-top: 14px;
+            border-radius: var(--rsm);
+            padding: 13px 16px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            border: 2px solid
+        }
+
+            .feedback-box.show {
+                display: block
+            }
+
+            .feedback-box.ok {
+                background: var(--ok-bg);
+                border-color: var(--ok-b);
+                color: var(--ok-t)
+            }
+
+            .feedback-box.bad {
+                background: var(--no-bg);
+                border-color: var(--no-b);
+                color: var(--no-t)
+            }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Formazione Tutor</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="history.back()">← Modulo 4</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="quiz-header">
+        <h2>📝 Verifica delle Conoscenze Modulo 4</h2>
+        <p>🌲 Foresta Meccanica · 6 Domande · 70% per Superare</p>
+    </div>
+
+    <div id="quiz-screen" class="quiz-wrap">
+        <div class="q-progress">
+            <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+            <span class="q-count" id="q-count">0 / 6</span>
+        </div>
+        <div id="question-area"></div>
+        <div id="feedback-area"></div>
+        <div class="btn-row" style="margin-top:16px">
+            <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Prossima Domanda →</button>
+            <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Invia le Risposte</button>
+        </div>
+    </div>
+
+    <div id="results-screen" style="display:none;padding:40px 24px">
+        <div class="result-card" id="result-card"></div>
+        <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+    </div>
+
+    <footer>© 2026 Kodland. Materiale di formazione interna per i tutor.</footer>
+    <script src="shared.js"></script>
+    <script>
+        /*
+          MODULO 4 — 6 DOMANDE UNICHE (nessuna sovrapposizione con i Moduli 1-3 o il DST)
+          Indici delle risposte corrette (0=A, 1=B, 2=C, 3=D):
+          Q1→C(2)  Q2→A(0)  Q3→D(3)  Q4→B(1)  Q5→C(2)  Q6→A(0)
+          Pattern: 2,0,3,1,2,0 — variato, nessuna coppia di risposte identiche consecutive.
+        */
+        const MODULE_ID = 4;
+        const PASS_PCT = 70;
+
+        const QUESTIONS = [
+            {
+                q: "Uno studente programma l'Agente per seminare una griglia 5×5 utilizzando cicli annidati, ma il risultato è una striscia diagonale di semi anziché una griglia. Dopo che il ciclo interno ha completato la fila 1 e il codice del ciclo esterno esegue 'sposta agente a destra di 1', l'Agente esegue quindi 'sposta agente indietro di 5'. Cosa c'è di errato in questa sequenza?",
+                opts: [
+                    "Il ciclo esterno dovrebbe essere eseguito 5 volte per corrispondere al ciclo interno — entrambi devono avere conteggi identici",
+                    "'Sposta agente a destra di 1' e 'sposta agente indietro di 5' dovrebbero essere sostituiti da un unico comando 'agent tp'",
+                    "Dopo aver completato la fila 1 muovendosi in avanti, l'Agente si è spostato di 5 blocchi in avanti. 'Sposta indietro 5' lo riporta all'inizio della colonna originale. Manca però anche il comando 'girati' — senza invertire la direzione, la fila 2 inizierà riseminando la fila 1 nella direzione opposta, anziché una fila adiacente",
+                    "Il conteggio del ciclo interno è troppo alto — ridurlo a 4 risolverà il pattern diagonale"
+                ],
+                correct: 2,  // C
+                feedback: "Corretto. Dopo la fila 1, l'Agente si trova 5 blocchi più avanti e deve tornare alla colonna iniziale. 'Sposta indietro 5' lo riporta indietro correttamente. Ma senza 'girati' (due svolte a destra o equivalente), l'Agente si troverà rivolto nella stessa direzione della fila 1 quando inizia la fila 2 — seminerà quindi la fila 2 partendo dalla posizione originale nella stessa direzione, creando uno schema diagonale o sovrapposto. La sequenza corretta: termina la fila → sposta a destra di 1 (cambio riga) → girati → sposta indietro di 0 (si trova già all'inizio della fila 2) e semina."
+            },
+            {
+                q: "Qual è la pre-condizione critica che deve essere soddisfatta prima che il comando dell'Agente 'piazza al movimento giù' riesca a seminare le colture anziché far cadere i semi come entità oggetto sciolte?",
+                opts: [
+                    "Il terreno direttamente sotto l'Agente deve essere terra zappata da coltivazione (creata usando una Zappa su terra/erba) e anche idratata — entro 4 blocchi da un blocco sorgente d'acqua",
+                    "L'Agente deve avere almeno 32 semi nel suo inventario prima dell'inizio del ciclo di semina",
+                    "Il giocatore deve trovarsi nello stesso chunk dell'Agente affinché il comando di semina venga eseguito",
+                    "Il terreno da coltivazione deve trovarsi esattamente a Y=63 — seminare a qualsiasi altra altitudine fa cadere i semi"
+                ],
+                correct: 0,  // A
+                feedback: "Corretto. Entrambe le condizioni devono essere soddisfatte: (1) il terreno deve essere terra zappata da coltivazione — usa una Zappa su terra o erba per convertirlo. (2) Il terreno deve essere idratato — deve esserci una sorgente d'acqua entro 4 blocchi (in orizzontale) dal terreno da coltivazione. Il terreno da coltivazione secco (colore ocre chiaro) tornerà a essere terra normale ed espellerà qualsiasi coltura posizionata su di esso. Il terreno idratato (marrone scuro) trattiene le colture piantate e ne consente la crescita."
+            },
+            {
+                q: "La Tramoggia di uno studente è posizionata direttamente sotto la zona di caduta della fattoria ed è visibile nel mondo, ma gli oggetti raccolti si accumulano a terra e non vengono mai raccolti. Dopo 5 minuti gli oggetti spariscono (despawn). Qual è la causa più probabile?",
+                opts: [
+                    "L'inventario a 5 slot della Tramoggia è completamente pieno di oggetti filtro — non rimangono slot vuoti per i nuovi oggetti",
+                    "Il Pistone che rompe le colture è troppo alto — gli oggetti devono cadere esattamente di 1 blocco nella Tramoggia",
+                    "L'uscita della Tramoggia è bloccata — è stata collegata a una cassa che è già piena, quindi la Tramoggia non può trasferire gli oggetti e si intasa, impedendo l'afflusso di nuovi oggetti",
+                    "Le Tramogge non possono raccogliere oggetti che cadono per più di 3 blocchi — la Tramoggia deve essere sollevata entro 3 blocchi dallo strato della coltura"
+                ],
+                correct: 3,  // D
+                feedback: "Corretto. Quando la cassa di uscita di una Tramoggia è completamente piena, la Tramoggia non può più trasferire oggetti fuori dal proprio inventario a 5 slot. Una vez che questi 5 slot si riempiono, la Tramoggia smette di raccogliere gli oggetti dall'alto — gli oggetti atterrano sulla faccia superiore della Tramoggia, ma l'aspirazione è bloccata perché il suo buffer interno è al massimo della capacità. Soluzione: espandere lo stoccaggio (aggiungere più casse in catena) o separare le colture dai semi usando una fase di smistamento in modo che la produzione non riempia mai completamente una singola cassa."
+            },
+            {
+                q: "Il protocollo di debugging 'test in isolamento' per il Modulo 4 raccomanda di testare ciascuna fase della pipeline separatamente prima dell'integrazione. In quale ordine dovrebbero essere testate le fasi?",
+                opts: [
+                    "Prima Archivia, poi Raccogli, poi Attiva, infine Rileva — testa al contrario dall'uscita all'ingresso",
+                    "Prima Rileva (l'Osservatore si attiva alla crescita della coltura usando una Lampada), poi Attiva (il Pistone si estende tramite una Leva), poi Raccogli (la Tramoggia raccoglie gli oggetti fatti cadere a mano), infine Archivia (la Tramoggia li indirizza alla cassa) — testa ciascuna fase indipendentemente prima di collegarle",
+                    "Costruisci e testa tutte e quattro le fasi simultaneamente — i test in isolamento fanno perdere tempo in una sessione di 60 minuti",
+                    "Prima Attiva, poi Rileva, poi Archivia, infine Raccogli — testa la fase più complessa prima di quelle più semplici"
+                ],
+                correct: 1,  // B
+                feedback: "Corretto. Il protocollo di isolamento segue l'ordine del flusso dei dati: (1) Rileva — conferma che l'Osservatore si attivi quando le colture crescono (testa con una Lampada di Redstone come indicatore). (2) Attiva — conferma che il Pistone si estenda quando riceve energia (testa con una Leva manuale, non con l'Osservatore). (3) Raccogli — conferma che la Tramoggia aspiri gli oggetti (fai cadere gli oggetti a mano sopra di essa). (4) Archivia — conferma che la Tramoggia li indirizzi alla cassa corretta (verifica con un singolo oggetto). Una volta che tutte e quattro superano il test in modo indipendente, collegale. Questo previene guasti composti difficili da diagnosticare."
+            },
+            {
+                q: "Quale framework linguistico dovrebbe utilizzare un tutor nello spiegare il circuito di raccolta automatizzata delle colture ai bambini di 8 anni, al fine di collegare i concetti di programmazione condizionale del Modulo 3 con l'hardware di Redstone del Modulo 4?",
+                opts: [
+                    "La notazione dei diagrammi di circuito, utilizzando simboli elettronici standard per interruttori, sensori e attuatori",
+                    "La teoria matematica degli insiemi — 'l'evento di raccolta è un membro dell'insieme degli eventi di cambio di stato di crescita'",
+                    "Il linguaggio If–Then: 'SE il grano raggiunge la fase di crescita 7 (completamente cresciuto) ALLORA l'Osservatore si attiva ALLORA il Pistone rompe le colture ALLORA gli oggetti cadono' — descrivendo il comportamento dell'hardware utilizzando lo stesso inquadramento condizionale che gli studenti conoscono dal Modulo 3",
+                    "Solo il linguaggio dei diagrammi di flusso — disegna la pipeline su una lavagna prima di costruire qualsiasi blocco"
+                ],
+                correct: 2,  // C
+                feedback: "Corretto. L'uso del linguaggio If–Then è il ponte pedagogico intenzionale tra i Moduli 3 e 4. Gli studenti comprendono già 'se condizione allora azione' dai condizionali di MakeCode. Descrivendo il circuito di raccolta di Redstone con lo stesso linguaggio ('SE il grano è completamente cresciuto ALLORA l'Osservatore si attiva ALLORA l'Agente si estende'), il tutor fa sì che il circuito hardware sembri una logica familiare piuttosto che un concetto completamente nuovo. Ciò riduce drasticamente il carico cognitivo e aiuta gli studenti a mappare mentalmente i concetti software del Modulo 3 sull'hardware del Modulo 4."
+            },
+            {
+                q: "Uno studente ha costruito con successo una fattoria di bambù a riga singola nel Modulo 1. Nel Modulo 4, desidera potenziarla per farla diventare una fattoria automatizzata multi-fila e multi-coltura. Quale nuovo concetto del Modulo 4 consente specificamente all'Agente di seminare più file senza che lo studente debba riposizionarlo manualmente tra le file?",
+                opts: [
+                    "Cicli annidati — un ciclo esterno itera sulle file mentre un ciclo interno gestisce la semina delle colonne all'interno di ciascuna fila, con codice di riposizionamento tra le iterazioni del ciclo esterno",
+                    "Il comando /clone del Modulo 2 — duplicare il circuito a riga singola per creare più file",
+                    "L'evento 'Al rompere di un blocco' del Modulo 3 — attivare la risemina automaticamente quando le colture vengono raccolte",
+                    "Ripetitori di Redstone — aggiungere ritardi temporali tra la sequenza di semina di ciascuna fila"
+                ],
+                correct: 0,  // A
+                feedback: "Corretto. I cicli annidati sono il concetto del Modulo 4 che abilita la semina automatizzata su più file. Il ciclo esterno (ripeti 5) itera sulle file; il ciclo interno (ripeti 5) semina i semi all'interno di ciascuna fila. Tra le iterazioni del ciclo esterno, il codice di riposizionamento (sposta a destra 1, girati) sposta l'Agente all'inizio della fila successiva. Questo è il primo incontro dello studente con l'iterazione annidata — un pattern di programmazione fondamentale che prefigura direttamente l'attraversamento di array bidimensionali in un'istruzione informatica più avanzata."
+            }
+        ];
+
+        let current = 0, answers = [], answered = false;
+        const LETTERS = ['A', 'B', 'C', 'D'];
+
+        function renderQuestion() {
+            const q = QUESTIONS[current];
+            answered = false;
+            document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+            document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('feedback-area').innerHTML = '';
+            document.getElementById('question-area').innerHTML = `
+        <div class="qnum">Domanda ${current + 1} di ${QUESTIONS.length}</div>
+        <div class="qtext">${q.q}</div>
+        <div class="opt-list" id="opt-list">
+          ${q.opts.map((o, i) => `
+            <div class="opt" id="opt-${i}" onclick="selectOpt(${i})">
+              <span class="opt-letter">${LETTERS[i]}</span><span>${o}</span>
+            </div>`).join('')}
+        </div>`;
+        }
+
+        function selectOpt(i) {
+            if (answered) return;
+            answered = true;
+            const q = QUESTIONS[current];
+            answers[current] = i;
+            for (let j = 0; j < q.opts.length; j++) {
+                const el = document.getElementById(`opt-${j}`);
+                el.classList.add('disabled');
+                if (j === q.correct) el.classList.add('correct');
+                else if (j === i) el.classList.add('wrong');
+            }
+            const isRight = i === q.correct;
+            document.getElementById('feedback-area').innerHTML = `
+        <div class="feedback-box ${isRight ? 'ok' : 'bad'} show">
+          ${isRight ? '✅ ' : '❌ '} ${q.feedback}
+        </div>`;
+            if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+            else document.getElementById('submit-btn').style.display = 'inline-flex';
+        }
+
+        function nextQuestion() { current++; renderQuestion(); window.scrollTo(0, 0); }
+
+        function submitQuiz() {
+            const score = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+            const pct = Math.round(score / QUESTIONS.length * 100);
+            const passed = pct >= PASS_PCT;
+            if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('results-screen').style.display = 'block';
+            document.getElementById('result-card').innerHTML = `
+        <div class="result-emoji">${passed ? '🎉' : '😅'}</div>
+        <div class="result-title">${passed ? 'Modulo 4 Completato!' : 'Non ci sei ancora'}</div>
+        <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+        <div class="result-sub">Hai risposto correttamente a <strong>${score} su ${QUESTIONS.length}</strong> domande.
+          ${passed ? ' Eccellente — Modulo 4 completato! Ora puoi accedere al Modulo 5.'
+                    : ` È richiesto un punteggio del <strong>${PASS_PCT}%</strong>. Rivedi il Modulo 4 e riprova.`}
+        </div>`;
+            document.getElementById('result-actions').innerHTML = passed
+                ? `<a href="ItModule5.html" class="btn-primary">Continua al Modulo 5 →</a>
+           <button class="btn-outline" onclick="goHome()">← Dashboard</button>`
+                : `<button class="btn-primary" onclick="retake()">Ripeti il Test</button>
+           <a href="ItModule4.html" class="btn-outline">← Rivedi il Modulo 4</a>`;
+            window.scrollTo(0, 0);
+        }
+
+        function retake() {
+            current = 0; answers = [];
+            document.getElementById('quiz-screen').style.display = 'block';
+            document.getElementById('results-screen').style.display = 'none';
+            renderQuestion(); window.scrollTo(0, 0);
+        }
+
+        initShared();
+        if (!isModuleUnlocked(MODULE_ID)) { alert('Per favore, completa prima i moduli precedenti.'); goHome(); }
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        renderQuestion();
+    </script>
+</body>
+</html>

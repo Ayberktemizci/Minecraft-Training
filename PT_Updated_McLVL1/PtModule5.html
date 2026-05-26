@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 5 — Castelo do Criador | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .module-banner {
+            background: linear-gradient(135deg,#7E22CE 0%,#A855F7 55%,#EC4899 100%);
+            padding: 36px 32px 28px;
+            position: relative;
+            overflow: hidden
+        }
+
+            .module-banner::before {
+                content: '🏰';
+                font-size: 180px;
+                position: absolute;
+                right: -20px;
+                top: -40px;
+                opacity: .09;
+                line-height: 1;
+                pointer-events: none
+            }
+
+            .module-banner .meyebrow {
+                color: rgba(255,255,255,.72)
+            }
+
+            .module-banner .mh1 {
+                color: #fff
+            }
+
+            .module-banner p {
+                color: rgba(255,255,255,.85);
+                font-size: 14px;
+                line-height: 1.65;
+                max-width: 640px;
+                margin-top: 6px
+            }
+
+            .module-banner .mobj {
+                background: rgba(255,255,255,.13);
+                border-color: rgba(255,255,255,.28);
+                border-left-color: #F0ABFC;
+                color: rgba(255,255,255,.9)
+            }
+
+                .module-banner .mobj strong {
+                    color: #fff
+                }
+
+        .sec-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--surface2);
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 62px;
+            z-index: 90;
+            transition: background .25s
+        }
+
+        .sec-pill {
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 5px 13px;
+            border-radius: var(--rpill);
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text2);
+            text-decoration: none;
+            transition: all .15s;
+            white-space: nowrap
+        }
+
+            .sec-pill:hover, .sec-pill.active {
+                background: var(--lime);
+                border-color: var(--lime-d);
+                color: var(--ink)
+            }
+
+        .script-box {
+            background: var(--ink);
+            color: #F0ABFC;
+            border-radius: var(--rsm);
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono','Courier New',monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 10px 0;
+            border-left: 4px solid #A855F7
+        }
+
+        [data-theme="dark"] .script-box {
+            background: #150a1e
+        }
+
+        .trouble-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 13px
+        }
+
+            .trouble-table th {
+                background: var(--surface2);
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                text-align: left;
+                font-family: 'Nunito',sans-serif;
+                font-weight: 900;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: .6px;
+                color: var(--text)
+            }
+
+            .trouble-table td {
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                line-height: 1.55;
+                vertical-align: top;
+                color: var(--text2);
+                word-break: break-word;
+                overflow-wrap: break-word
+            }
+
+            .trouble-table tr:nth-child(even) td {
+                background: var(--surface2)
+            }
+
+        .mc {
+            color: var(--no-t);
+            font-weight: 600
+        }
+
+        .fc {
+            color: var(--ok-t)
+        }
+
+        .tip-card {
+            background: var(--callout-tip-bg);
+            border: 1.5px solid var(--callout-tip-b);
+            border-left: 4px solid #A855F7;
+            border-radius: var(--rsm);
+            padding: 14px 16px;
+            margin-bottom: 10px
+        }
+
+            .tip-card p {
+                font-size: 13.5px;
+                color: var(--callout-tip-t);
+                line-height: 1.65
+            }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        @media(max-width:580px) {
+            .two-col {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .code-block {
+            background: var(--ink);
+            border-radius: var(--r);
+            padding: 18px;
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12.5px;
+            line-height: 1.85;
+            color: #e0e0e0;
+            margin: 10px 0;
+            border: 2px solid var(--border)
+        }
+
+        [data-theme="dark"] .code-block {
+            background: #150a1e
+        }
+
+        .ck {
+            color: #C792EA
+        }
+
+        .cf {
+            color: #82AAFF
+        }
+
+        .cs {
+            color: #C3E88D
+        }
+
+        .cn {
+            color: #F78C6C
+        }
+
+        .cm {
+            color: #FCD34D
+        }
+
+        .anchor-target {
+            scroll-margin-top: 130px
+        }
+
+        code {
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 7px;
+            color: var(--pink)
+        }
+
+        [data-theme="dark"] code {
+            color: var(--lime)
+        }
+
+        .phase-card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--r);
+            padding: 16px 18px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--pink);
+            box-shadow: var(--shadow)
+        }
+
+        .phase-label {
+            font-family: 'Nunito',sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: var(--pink);
+            margin-bottom: 4px
+        }
+
+        .phase-title {
+            font-family: 'Nunito',sans-serif;
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 6px
+        }
+
+        .phase-body {
+            font-size: 13px;
+            color: var(--text2);
+            line-height: 1.65
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Treinamento de Tutores</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="goHome()">← Painel</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="sec-nav">
+        <a href="#overview" class="sec-pill">1 · Visão Geral</a>
+        <a href="#blueprint" class="sec-pill">2 · Fase de Projeto</a>
+        <a href="#functions" class="sec-pill">3 · Funções Customizadas</a>
+        <a href="#build" class="sec-pill">4 · Construir-Depurar-Decorar</a>
+        <a href="#presentation" class="sec-pill">5 · Lançamento do Estúdio</a>
+        <a href="#trouble" class="sec-pill">6 · Resolução de Problemas</a>
+        <a href="#protips" class="sec-pill">7 · Dicas Pro</a>
+        <a href="#test-cta" class="sec-pill">8 · Verificação de Conhecimento</a>
+    </div>
+
+    <div class="module-banner">
+        <div style="max-width:860px;margin:0 auto;position:relative">
+            <div class="meyebrow">Módulo 5 de 5 — Módulo Finał</div>
+            <div class="mh1">🏰 Castelo do Criador</div>
+            <p>Criação de projetos de ponta a ponta — os alunos aplicam todas as habilidades dos Módulos 1 a 4 para projetar, construir e apresentar publicamente seu próprio jogo ou mundo automatizado no Minecraft. Este é o módulo conclusivo e a preparação direta para a avaliação de prontidão do DST.</p>
+            <div class="mobj" style="margin-top:14px;margin-bottom:0">
+                <strong>Objetivos do Módulo 5:</strong> Conduzir um brainstorm estruturado de projeto e a Fase de Projeto (Blueprint) · Atribuir papéis claros na equipe para construções colaborativas · Criar e usar Funções customizadas do MakeCode para eliminar a repetição de código · Executar o loop Construir → Depurar → Decorar · Organizar uma apresentação no formato profissional de "Lançamento do Estúdio de Games" para pais e colegas.
+            </div>
+        </div>
+    </div>
+
+    <div class="cbody">
+
+        <div id="overview" class="anchor-target">
+            <div class="section-head">1 · Visão Geral do Módulo — O Projeto Finał</div>
+        </div>
+
+        <div class="card hi">
+            <h4>🎓 Por que o Módulo 5 é Diferente de Todos os Outros</h4>
+            <p>Cada módulo anterior ensinou um conjunto específico de habilidades técnicas em uma estrutura guiada e liderada pelo tutor. O Módulo 5 inverte deliberadamente essa dinâmica: os alunos agora são os diretores, e o tutor atua como orientador de produção. As habilidades técnicas introduzidas (Funções customizadas) são intencionalmente mais simples do que os sistemas de automação do Módulo 4 — porque o desafio cognitivo agora é criativo e de gestão, não técnico.</p>
+            <p style="margin-top:8px">O principal trabalho do tutor no Módulo 5 é manter o ritmo produtivo de avanço: evitar a paralisia de decisão durante o brainstorm, impor a disciplina da Fase de Projeto (Blueprint) e orientar os alunos através do loop de construção sem assumir o controle do projeto.</p>
+        </div>
+
+        <div class="card">
+            <h4>Catálogo de Habilidades — O que os Alunos Devem Trazer para o Módulo 5</h4>
+            <p>O Módulo 5 pressupõe o domínio de todo o conteúdo anterior. Antes de começar, faça uma checagem verbal rápida de 5 minutos:</p>
+            <ul style="margin-top:8px">
+                <li><strong>Do M1:</strong> Controle do Agente, Redstone básico, navegação por coordenadas</li>
+                <li><strong>Do M2:</strong> Fabricação (crafting), /clone, construção cooperativa com papéis definidos</li>
+                <li><strong>Do M3:</strong> Eventos, variáveis, condicionais, lógica de minijogos</li>
+                <li><strong>Do M4:</strong> Ordenação por funil, fluxo de cultivo automatizado, loops aninhados</li>
+            </ul>
+            <p style="margin-top:8px">Os alunos que apresentarem lacunas de habilidades de qualquer módulo anterior devem ser identificados e receber suporte direcionado antes que o Módulo 5 avance além da Fase de Projeto (Blueprint) — uma base fraca produzirá um projeto final fracassado.</p>
+        </div>
+
+        <div id="blueprint" class="anchor-target">
+            <div class="section-head">2 · A Fase de Projeto (Blueprint) — Planeje Antes de Colocar um Único Bloco</div>
+        </div>
+
+        <div class="callout cw">
+            <span class="ci">⚠️</span>
+            <div>
+                <strong>O Modo de Falha Nº 1 do Módulo 5: Construir Sem Planejar</strong><br>
+                As equipes que pulam a Fase de Projeto (Blueprint) passarão de 15 a 20 minutos da sessão discutindo sobre o que construir. Esse é um erro que destrói a sessão, pois uma vez que os alunos estão no meio da construção e divergem sobre a direção, não há tempo para recuperação dentro de uma janela de 60 minutos. <strong>A Fase de Projeto (Blueprint) é inegociável e deve ser concluída antes que qualquer bloco seja colocado.</strong>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Protocolo de Brainstorm Estruturado — 10 Minutos no Máximo</h4>
+            <p>Execute um brainstorm cronometrado com mediação rígida:</p>
+            <ol style="padding-left:18px;margin-top:8px">
+                <li style="margin-bottom:6px"><strong>Ideação silenciosa (3 min):</strong> Cada aluno digita de 1 a 2 ideias de projeto no chat simultaneamente. Nenhuma discussão verbal ainda. As ideias devem incluir: (a) um tema/tipo de mundo, (b) um recurso interativo ou automatizado.</li>
+                <li style="margin-bottom:6px"><strong>Resumo das ideias (2 min):</strong> O tutor lê todas as ideias em voz alta, sem emitir opiniões.</li>
+                <li style="margin-bottom:6px"><strong>Votação da equipe (2 min):</strong> Os alunos votam no chat usando números (1, 2, 3…). A maioria vence. Em caso de empate, o tutor desempata. <strong>Não são permitidos novos debates após o encerramento da votação.</strong></li>
+                <li><strong>Compromisso com o projeto (3 min):</strong> Todos os alunos digitam "Eu concordo com este plano: [nome do projeto]" no chat. Isso cria responsabilidade social e reduz drasticamente mudanças de direção no meio da construção.</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h4>O Documento do Projeto (Blueprint) — O que Deve Ser Acordado Antes de Construir</h4>
+            <p>Após a votação, a equipe deve concordar em quatro itens, que devem ser escritos no chat para que todos vejam:</p>
+            <div class="two-col" style="margin-top:10px">
+                <div class="card">
+                    <h4>1. Tema do Projeto</h4>
+                    <p>Qual é o cenário ou propósito do mundo? (por exemplo, "Um castelo medieval com uma ponte levadiça funcional e sala do tesouro", "Uma estação espacial com geração automatizada de recursos", "Uma pista de obstáculos de parkour que rastreia as pontuações usando variáveis").</p>
+                </div>
+                <div class="card">
+                    <h4>2. Recurso de Assinatura</h4>
+                    <p>O único sistema interativo ou automatizado que a equipe deve construir — o núcleo técnico do projeto. Isso deve usar pelo menos uma habilidade dos Módulos 1 a 4. Sem um recurso de assinatura, o projeto é apenas uma construção estática, não um jogo ou sistema de automação.</p>
+                </div>
+                <div class="card">
+                    <h4>3. Papéis na Equipe</h4>
+                    <p>Cada aluno tem uma responsabilidade principal: Arquiteto (design estrutural), Programador (lógica do MakeCode), Decorador (detalhes visuais) e Apresentador (cuida da apresentação final). Em grupos de 2 a 3 alunos, os papéis são combinados.</p>
+                </div>
+                <div class="card">
+                    <h4>4. Critérios de Sucesso</h4>
+                    <p>Qual é a aparência do projeto concluído? Defina uma versão mínima viável: "A ponte levadiça se abre quando um jogador ativa a placa de pressão E o baú do tesouro fica acessível atrás dela." Isso evita o aumento descontrolado do escopo (scope creep) e dá aos alunos uma linha de chegada clara.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="functions" class="anchor-target">
+            <div class="section-head">3 · Funções Customizadas do MakeCode — Imersão Técnica</div>
+        </div>
+
+        <div class="card">
+            <h4>O que é uma Função?</h4>
+            <p>Uma <strong>Função</strong> é um bloco de código nomeado e reutilizável. Uma vez definida, ela pode ser chamada (executada) de qualquer lugar do programa com um único bloco de comando. As funções eliminam a repetição: em vez de copiar a mesma sequência de 5 blocos 4 vezes em diferentes manipuladores de eventos, escreva-a uma vez como uma Função e chame-a 4 vezes.</p>
+            <div class="code-block">
+                <span class="com">// Defina a função uma vez:</span><br>
+                <span class="ck">function</span> <span class="cf">celebrate</span>() {<br>
+                &nbsp;&nbsp;<span class="cf">fireworks</span> na posição do jogador<br>
+                &nbsp;&nbsp;<span class="cm">say</span> <span class="cs">"Nível Concluído!"</span><br>
+                &nbsp;&nbsp;<span class="cf">music</span> tocar vitória<br>
+                }<br><br>
+                <span class="com">// Chame-a de vários lugares sem reescrevê-la:</span><br>
+                <span class="ck">ao caminhar do jogador</span> {<br>
+                &nbsp;&nbsp;<span class="ck">se</span> score <span class="cn">≥ 10</span> <span class="ck">então</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">celebrate</span>()  <span class="com">// uma única chamada substitui 3 blocos</span><br>
+                &nbsp;&nbsp;}<br>
+                }<br><br>
+                <span class="ck">ao quebrar bloco</span> {<br>
+                &nbsp;&nbsp;<span class="ck">se</span> blockscore <span class="cn">≥ 5</span> <span class="ck">então</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">celebrate</span>()  <span class="com">// mesma sequência de 3 blocos, zero duplicação</span><br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+            <p style="margin-top:10px"><strong>Por que as Funções importam para crianças de 8 anos:</strong> Quando os alunos copiam blocos de código, eles introduzem inconsistências — se mudarem de ideia sobre a sequência de comemoração, precisarão encontrar e atualizar cada cópia. Com uma Função, eles atualizam uma única definição e a alteração se aplica a todos os lugares instantaneamente. Este é o primeiro encontro deles com o princípio de programação <strong>DRY (Don't Repeat Yourself — Não Se Repita)</strong>.</p>
+        </div>
+
+        <div class="card">
+            <h4>Quando Ensinar Funções Durante a Sessão</h4>
+            <p>Introduza as Funções no exato momento em que um aluno estiver prestes a copiar uma sequência de blocos de código pela segunda vez. Este é o "momento pedagógico ideal": o aluno consegue sentir o problema (repetição) antes de aprender a solução (Função). Nunca introduza as Funções como um conceito teórico antes que os alunos tenham vivenciado a dor da duplicação de código — a motivação deve vir da própria frustração deles.</p>
+            <div class="script-box" style="margin-top:8px">"Estou vendo que você está prestes a copiar essa sequência de comemoração de novo. Antes de fazer isso — existe um jeito mais inteligente. E se você pudesse escrevê-la uma vez e usar em qualquer lugar? Isso se chama Função. Deixe-me te mostrar."</div>
+        </div>
+
+        <div id="build" class="anchor-target">
+            <div class="section-head">4 · O Loop Construir → Depurar → Decorar</div>
+        </div>
+
+        <div class="card">
+            <h4>O Loop de Construção em Três Fases</h4>
+            <p>Cada sessão de projeto após a Fase de Projeto (Blueprint) deve seguir este ciclo. As equipes devem concluir um ciclo completo da versão mínima viável antes de adicionar novos recursos.</p>
+            <div style="margin-top:10px">
+                <div class="phase-card">
+                    <div class="phase-label">Fase 1</div>
+                    <div class="phase-title">🔨 Construir — Versão Mínima Viável (MVP) Primeiro</div>
+                    <div class="phase-body">Construa apenas os critérios de sucesso definidos no Blueprint. Sem decorações, sem recursos extras, sem acréscimos ao escopo. O objetivo da Fase 1 é um protótipo funcional e simples. Os tutores devem impedir ativamente o "excesso de decoração" — alunos que começam a colocar blocos decorativos antes que o recurso principal funcione estão desperdiçando tempo e podem se desmotivar se o recurso falhar posteriormente sob a superfície decorativa.</div>
+                </div>
+                <div class="phase-card" style="border-left-color:var(--amber-d,#D97706)">
+                    <div class="phase-label" style="color:var(--amber-d,#D97706)">Fase 2</div>
+                    <div class="phase-title">🔍 Depurar — Faça Funcionar Antes de Fazer Ficar Bonito</div>
+                    <div class="phase-body">Teste cada recurso interativo e automatizado dos critérios de sucesso. Use o protocolo de teste em isolamento do Módulo 4: teste cada sistema de forma independente e, em seguida, teste o conjunto integrado. Todos os bugs devem ser resolvidos antes do início da Fase 3. Esta é a fase mais ativa do tutor: circule continuamente, pergunte "o que deveria acontecer aqui?" e não "o que está errado?" — os alunos diagnosticam, os tutores guiam.</div>
+                </div>
+                <div class="phase-card" style="border-left-color:#A855F7">
+                    <div class="phase-label" style="color:#A855F7">Fase 3</div>
+                    <div class="phase-title">🎨 Decorar — Faça Refletir a Visão Criativa da Equipe</div>
+                    <div class="phase-body">Apenas após a confirmação da depuração: adicione estandartes, construções personalizadas, esquemas de cores, sinalizações e detalhes de atmosfera. Atribua o trabalho de decoração aos alunos que terminaram a depuração mais cedo — nunca deixe um aluno ocioso. O papel do Decorador tem a propriedade da Fase 3, mas todos os membros da equipe contribuem. A Fase 3 também é o momento de adicionar quaisquer "recursos extras" da lista de Tarefas Extras.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="presentation" class="anchor-target">
+            <div class="section-head">5 · O Lançamento do Estúdio de Games — Apresentação Profissional</div>
+        </div>
+
+        <div class="callout ct">
+            <span class="ci">💡</span>
+            <div>
+                <strong>Por que Chamar de "Lançamento do Estúdio de Games" e Não de "Mostre e Conte"</strong><br>
+                A linguagem molda o comportamento. "Mostre e conte" (show and tell) é algo que os alunos do ensino fundamental fazem com brinquedos. "Lançamento do Estúdio de Games" é o que a Mojang, Nintendo e Valve fazem. A elevação da linguagem aumenta a confiança, eleva as expectativas percebidas e produz apresentações melhores — os alunos explicam seu trabalho com orgulho profissional em vez de uma informalidade de parquinho.
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Estrutura da Apresentação — Cada Equipe Segue este Formato Exato</h4>
+            <p>O aluno Apresentador lidera; os outros membros da equipe dão suporte. Tempo total: <strong>5 minutos por equipe</strong>.</p>
+            <ol style="padding-left:18px;margin-top:8px">
+                <li style="margin-bottom:8px"><strong>Nome e Conceito do Projeto (30 segundos):</strong> "Nosso projeto se chama [nome]. A ideia principal é [conceito em uma frase]."</li>
+                <li style="margin-bottom:8px"><strong>Demonstração ao Vivo do Recurso de Assinatura (2 minutos):</strong> Demonstre o funcionamento do sistema interativo ou automatizado central em tempo real no jogo. O tutor compartilha a tela com a visão do Apresentador. Todos os outros alunos assistem.</li>
+                <li style="margin-bottom:8px"><strong>Explicação Técnica (1 minuto):</strong> "Isso funciona porque [mecanismo técnico]. Usamos a habilidade do [Módulo X] do nosso treinamento." Os alunos devem nomear o conceito específico de MakeCode ou Redstone, e não apenas dizer "nós programamos isso".</li>
+                <li style="margin-bottom:8px"><strong>O que Adicionaríamos a Seguir (30 segundos):</strong> "Se tivéssemos mais uma sessão, adicionaríamos [recurso]." Isso ensina o pensamento iterativo e previne a paralisia pelo perfeccionismo.</li>
+                <li><strong>Perguntas e Respostas / Q&amp;A (1 minuto):</strong> Outros alunos e pais fazem uma pergunta cada. O tutor media o momento.</li>
+            </ol>
+            <p style="margin-top:10px"><strong>Participação opcional dos pais:</strong> Convide oficialmente os pais para a sessão final usando um convite pré-escrito (disponível no painel administrativo da Kodland). A presença dos pais eleva significativamente a motivação dos alunos e a qualidade do desempenho. Forneça uma breve introdução de 2 frases aos pais antes do início da sessão para que eles saibam o que esperar e possam fazer perguntas embasadas.</p>
+        </div>
+
+        <div class="card">
+            <h4>Critérios de Avaliação — O que o Tutor Avalia Durante as Apresentações</h4>
+            <div class="two-col" style="margin-top:8px">
+                <div class="card" style="background:var(--ok-bg);border-color:var(--ok-b)">
+                    <h4 style="color:var(--ok-t)">✅ Indicadores de Apresentação Forte</h4>
+                    <p style="color:var(--ok-t);font-size:13px">O aluno consegue explicar o mecanismo técnico sem precisar de ajuda · A demonstração ao vivo funciona sem travar · A equipe usa pelo menos uma habilidade de dois ou mais módulos anteriores · O aluno fala em frases completas · O aluno responde com segurança a uma pergunta para a qual não se preparou.</p>
+                </div>
+                <div class="card" style="background:var(--no-bg);border-color:var(--no-b)">
+                    <h4 style="color:var(--no-t)">❌ Indicadores de Apresentação Fraca</h4>
+                    <p style="color:var(--no-t);font-size:13px">A demonstração ao vivo trava no meio do caminho (a depuração estava incompleta) · O aluno não sabe explicar como o recurso funciona · O projeto não possui nenhum elemento interativo ou automatizado · O aluno lê as notas o tempo todo · A equipe dependeu inteiramente do tutor para todas as decisões técnicas.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="trouble" class="anchor-target">
+            <div class="section-head">6 · Catálogo de Resolução de Problemas — Módulo 5 (5 Cenários)</div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="trouble-table">
+                <thead>
+                    <tr><th style="width:22%">Erro / Sintoma</th><th style="width:27%">Causa Raiz</th><th style="width:31%">Solução Exata</th><th style="width:20%">Roteiro de Prevenção</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mc">A equipe passa mais de 20 minutos discutindo sobre o que construir — sem consenso até o minuto 20</td>
+                        <td>A Fase de Projeto (Blueprint) não foi iniciada com um formato estruturado; a discussão foi aberta e sem limites, permitindo conversas intermináveis sem forçar uma decisão</td>
+                        <td>Mude imediatamente para o brainstorm estruturado formal: ideação silenciosa (3 min), leia as ideias em voz alta, vote por número no chat e o tutor desempata. Encerre a votação exatamente no minuto 15 — sem prorrogações. Anuncie: "Votamos. Vamos construir [X]. Essa decisão é final. Hora do documento do Blueprint."</td>
+                        <td class="fc">"Se não houver consenso até o minuto 10 do brainstorm, chame uma votação imediata e use a autoridade de desempate do tutor. Não permita que o debate se estenda."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">A Função customizada criada por um aluno está definida, mas chamá-la não produz nenhum resultado visível</td>
+                        <td>O bloco da Função foi criado, mas o bloco "Chamar Função [nome]" não foi colocado dentro de nenhum manipulador de eventos. Uma definição de Função por si só nunca é executada — ela precisa ser chamada.</td>
+                        <td>Mostre ao aluno: "Sua Função está definida — é como uma receita em um livro de receitas. Mas ninguém mandou o chef cozinhar. Adicione um bloco 'Chamar Função [nome]' dentro do evento Ao Comando de Chat ou Ao Caminhar do Jogador." Coloque o bloco de chamada dentro do evento relevante e teste.</td>
+                        <td class="fc">"Uma definição de Função é uma receita. Uma chamada de Função é 'cozinhe esta receita agora'. Você precisa de ambos — definir E chamar."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">A equipe começou a decorar antes de testar o recurso principal — a decoração agora está construída sobre um circuito quebrado, impossibilitando o acesso à Redstone sem destruir a construção</td>
+                        <td>A Fase de Decoração começou antes que a Fase de Depuração estivesse concluída — a ordem Construir → Depurar → Decorar foi violada</td>
+                        <td>Não tente contornar as decorações. Aborde a causa raiz imediatamente: use o comando /clone para fazer o backup da estrutura decorada em uma área livre, depois acesse e conserte o circuito quebrado no local original. Reforce a regra: "Temos que pausar a decoração, consertar o circuito e depois retomar. É por isso que a Depuração vem antes da Decoração."</td>
+                        <td class="fc">"Nada de decoração até que todos os recursos funcionem. Demonstramos o protótipo funcional primeiro, depois o deixamos bonito. Beleza sobre uma base quebrada é esforço desperdiçado."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">O escopo do projeto se expande além do que é alcançável no tempo restante da sessão — a equipe continua adicionando recursos e nada fica pronto</td>
+                        <td>Nenhuma versão mínima viável foi definida na Fase de Projeto (Blueprint); os critérios de sucesso eram muito vagos ("construir um castelo muito legal") em vez de específicos e testáveis</td>
+                        <td>Interrompa firmemente a expansão do escopo. Retorne ao Blueprint: "Quais eram os nossos critérios de sucesso? [Leia de volta]. Isso está pronto? [Se sim: pare de adicionar, vá para Depurar e Decorar]. [Se não: pare de adicionar novos recursos, termine os critérios de sucesso primeiro]." Quaisquer recursos adicionais vão para uma lista de "Versão 2", que pode ou não ser construída se sobrar tempo.</td>
+                        <td class="fc">"Novas ideias de recursos vão para a lista da 'Versão 2'. Nada novo é construído até que os critérios de sucesso estejam prontos e depurados."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">Durante a apresentação de Lançamento do Estúdio de Games, a demonstração ao vivo quebra ou falha no meio do caminho, causando constrangimento ao aluno diante dos pais</td>
+                        <td>A Fase de Depuração não foi concluída antes da apresentação; o recurso não foi testado nas condições exatas da demonstração (por exemplo, a partir do ponto de spawn, com outros alunos também no mundo)</td>
+                        <td>Faça um ensaio geral completo 10 minutos antes de os pais entrarem. Tenha um plano de backup: se o recurso interativo falhar, o Apresentador deve ter um "passo a passo em prints" como alternativa — capturas de tela tiradas previamente mostrando o recurso funcionando corretamente. O tutor narra calmamente: "Deixe-me mostrar como ficou quando funcionou perfeitamente mais cedo."</td>
+                        <td class="fc">"Sempre faça um ensaio geral completo 10 minutos antes de os pais entrarem. Teste a demonstração exatamente nas mesmas condições da apresentação ao vivo."</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="protips" class="anchor-target">
+            <div class="section-head">7 · Dicas Pro do Tutor &amp; Analogias do Mundo Real</div>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 O Enquadramento de "Lançamento do Estúdio de Games" — Por que Produz Apresentações Melhores</strong><br>
+                *“Vocês não estão mostrando a lição de casa — estão lançando o jogo de vocês para o mundo. A Mojang não mostrou o Minecraft para os jogadores e disse 'desculpa, está um pouco inacabado'. Eles lançaram, explicaram por que era especial e mostraram funcionando ao vivo. É exatamente isso que vocês vão fazer hoje.”* Esse enquadramento gera apresentações de 2 a 3 vezes mais confiantes e detalhadas do que o formato clássico de "mostre e conte".
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Funções = A Analogia da "Cartela de Receitas"</strong><br>
+                *“Um chef profissional não escreve a receita completa do molho de macarrão toda vez que precisa dele — ele escreve uma vez em um cartão e apenas diz 'faça o molho de macarrão'. Uma Função do MakeCode é a sua cartela de receitas pessoal. Escreva o código uma vez, dê um nome a ele e chame-o em qualquer lugar pelo nome. Mude a receita uma vez e ela se atualiza em todos os lugares”.*
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Construir → Depurar → Decorar = A Analogia do "Canteiro de Obras"</strong><br>
+                *“Uma empresa de construção real ergue a estrutura de aço e o telhado primeiro (Construir). Depois, os inspetores elétricos testam toda a fiação enquanto as paredes ainda estão abertas (Depurar). Por fim, os designers de interiores entram para deixar tudo bonito (Decorar). Ninguém pinta as paredes antes de o eletricista checar a fiação — porque pintar por cima de um erro não o conserta, apenas o esconde”.*
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Fase de Projeto = A Regra de "Não Discutir no Ar"</strong><br>
+                Um estudante de arquitetura disse uma vez: *“Discussão no ar é barata. Discussão depois que a construção começou é cara.”* Antes de colocar qualquer bloco, os desentendimentos não custam nada. Após 30 minutos de construção, as mudanças de direção são extremamente caras. Trate a Fase de Projeto (Blueprint) como um contrato: uma vez assinado (digitado no chat), o plano é firme. Alterações exigem uma proposta formal com nova votação da maioria.
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Gerenciando o Aumento do Escopo com a Lista "Versão 2"</strong><br>
+                Toda boa ideia que surge após a Fase de Projeto (Blueprint) é anotada em uma "lista da Versão 2" no chat. Isso gera dois efeitos: (1) os alunos sentem que sua ideia foi valorizada e registrada, e não descartada; (2) o escopo da produção permanece fixo. Os alunos que veem sua ideia na lista da Versão 2 têm muito mais probabilidade de manter o foco na versão atual do que os alunos cuja ideia foi simplesmente rejeitada.
+            </p>
+        </div>
+
+        <div id="test-cta" class="anchor-target">
+            <div class="section-head">8 · Verificação de Conhecimento do Módulo 5</div>
+        </div>
+
+        <div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+            <div style="font-size:40px;margin-bottom:12px">📝</div>
+            <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Pronto para a Verificação de Conhecimento do Módulo 5?</div>
+            <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:520px;margin-left:auto;margin-right:auto">
+                O teste do Módulo 5 contém <strong>6 questões</strong> cobrindo gerenciamento de projetos, Funções, o loop Construir→Depurar→Decorar e o Lançamento do Estúdio de Games. Uma pontuação de <strong>70% ou mais</strong> desbloqueia o DST. Todas as questões são inteiramente distintas dos Módulos 1 a 4 e da avaliação final do DST.
+            </p>
+            <div class="btn-row center">
+                <a href="PtModule5Test.html" class="btn-primary">Iniciar Teste do Módulo 5 →</a>
+                <button class="btn-outline" onclick="goHome()">← Painel</button>
+            </div>
+        </div>
+
+    </div><footer>© 2026 Kodland. Material de treinamento interno de tutores — proibida a distribuição externa.</footer>
+    <script src="shared.js"></script>
+    <script>
+        initShared();
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        if (!isModuleUnlocked(5)) { alert('Por favor, conclua os módulos anteriores primeiro.'); goHome(); }
+    </script>
+</body>
+</html>

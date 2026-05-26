@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 3 — Oasis de la Lógica | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .module-banner {
+            background: linear-gradient(135deg,#6D28D9 0%,#7C3AED 55%,#8B5CF6 100%);
+            padding: 36px 32px 28px;
+            position: relative;
+            overflow: hidden
+        }
+
+            .module-banner::before {
+                content: '🧩';
+                font-size: 180px;
+                position: absolute;
+                right: -20px;
+                top: -40px;
+                opacity: .09;
+                line-height: 1;
+                pointer-events: none
+            }
+
+            .module-banner .meyebrow {
+                color: rgba(255,255,255,.72)
+            }
+
+            .module-banner .mh1 {
+                color: #fff
+            }
+
+            .module-banner p {
+                color: rgba(255,255,255,.82);
+                font-size: 14px;
+                line-height: 1.65;
+                max-width: 640px;
+                margin-top: 6px
+            }
+
+            .module-banner .mobj {
+                background: rgba(255,255,255,.13);
+                border-color: rgba(255,255,255,.28);
+                border-left-color: #DDD6FE;
+                color: rgba(255,255,255,.88)
+            }
+
+                .module-banner .mobj strong {
+                    color: #fff
+                }
+
+        .sec-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--surface2);
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 62px;
+            z-index: 90;
+            transition: background .25s
+        }
+
+        .sec-pill {
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 5px 13px;
+            border-radius: var(--rpill);
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text2);
+            text-decoration: none;
+            transition: all .15s;
+            white-space: nowrap
+        }
+
+            .sec-pill:hover {
+                background: var(--lime);
+                border-color: var(--lime-d);
+                color: var(--ink)
+            }
+
+        .script-box {
+            background: var(--ink);
+            color: #C4B5FD;
+            border-radius: var(--rsm);
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono','Courier New',monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 10px 0;
+            border-left: 4px solid #7C3AED
+        }
+
+        [data-theme="dark"] .script-box {
+            background: #0f0a18
+        }
+
+        .trouble-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 13px
+        }
+
+            .trouble-table th {
+                background: var(--surface2);
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                text-align: left;
+                font-family: 'Nunito',sans-serif;
+                font-weight: 900;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: .6px;
+                color: var(--text)
+            }
+
+            .trouble-table td {
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                line-height: 1.55;
+                vertical-align: top;
+                color: var(--text2)
+            }
+
+            .trouble-table tr:nth-child(even) td {
+                background: var(--surface2)
+            }
+
+        .mc {
+            color: var(--no-t);
+            font-weight: 600
+        }
+
+        .fc {
+            color: var(--ok-t)
+        }
+
+        .tip-card {
+            background: var(--callout-tip-bg);
+            border: 1.5px solid var(--callout-tip-b);
+            border-left: 4px solid #8B5CF6;
+            border-radius: var(--rsm);
+            padding: 14px 16px;
+            margin-bottom: 10px
+        }
+
+            .tip-card p {
+                font-size: 13.5px;
+                color: var(--callout-tip-t);
+                line-height: 1.65
+            }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        @media(max-width:580px) {
+            .two-col {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .code-block {
+            background: var(--ink);
+            border-radius: var(--r);
+            padding: 18px;
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12.5px;
+            line-height: 1.85;
+            color: #e0e0e0;
+            margin: 10px 0;
+            border: 2px solid var(--border)
+        }
+
+        [data-theme="dark"] .code-block {
+            background: #0f0a18
+        }
+
+        .ck {
+            color: #C792EA
+        }
+
+        .cf {
+            color: #82AAFF
+        }
+
+        .cs {
+            color: #C3E88D Ram
+        }
+
+        .cn {
+            color: #F78C6C
+        }
+
+        .cm {
+            color: #FCD34D
+        }
+
+        .anchor-target {
+            scroll-margin-top: 130px
+        }
+
+        code {
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 7px;
+            color: var(--pink)
+        }
+
+        [data-theme="dark"] code {
+            color: var(--lime)
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Formación de Tutores</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="goHome()">← Panel Principal</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="sec-nav">
+        <a href="#overview" class="sec-pill">1 · Resumen</a>
+        <a href="#events" class="sec-pill">2 · Programación por Eventos</a>
+        <a href="#variables" class="sec-pill">3 · Variables</a>
+        <a href="#conditionals" class="sec-pill">4 · Condicionales</a>
+        <a href="#minigame" class="sec-pill">5 · Creación del Mini-Juego</a>
+        <a href="#trouble" class="sec-pill">6 · Resolución de Problemas</a>
+        <a href="#protips" class="sec-pill">7 · Consejos Pro</a>
+        <a href="#test-cta" class="sec-pill">8 · Verificación de Conocimientos</a>
+    </div>
+
+    <div class="module-banner">
+        <div style="max-width:860px;margin:0 auto;position:relative">
+            <div class="meyebrow">Módulo 3 de 5</div>
+            <div class="mh1">🧩 Oasis de la Lógica</div>
+            <p>Juegos, acertijos y los verdaderos fundamentos de la lógica de programación: los estudiantes crean su primer mini-juego interactivo utilizando bloques de eventos, variables y condicionales en MakeCode, transformando a Minecraft en un motor de juego programable.</p>
+            <div class="mobj" style="margin-top:14px;margin-bottom:0">
+                <strong>Objetivos del Módulo 3:</strong> Comprender la programación orientada a eventos (Al caminar el jugador, Al romper un bloque) · Crear y modificar variables como "contenedores de puntuación" · Aplicar la lógica condicional Si–Entonces y Si–Entonces–Sino · Combinar Eventos + Variables + Condicionales para programar un mini-juego completamente jugable y funcional.
+            </div>
+        </div>
+    </div>
+
+    <div class="cbody">
+
+        <div id="overview" class="anchor-target">
+            <div class="section-head">1 · Resumen del Módulo — El Giro hacia la Programación</div>
+        </div>
+
+        <div class="card">
+            <h4>Por qué el Módulo 3 es el punto de inflexión conceptual</h4>
+            <p>Los Módulos 1 y 2 utilizaron MakeCode para automatizar construcciones físicas: el programa se ejecutaba una vez y producía un resultado estático. El Módulo 3 introduce la <strong>programación reactiva e interactiva</strong>: código que espera a que ocurra un suceso en el mundo para responder. Este es el paradigma fundamental de casi todo el software del mundo real, desde aplicaciones móviles hasta motores de videojuegos. Los estudiantes ya no solo construyen estructuras; ahora diseñan <em>experiencias</em>.</p>
+            <p style="margin-top:8px">Los tres conceptos introducidos (eventos, variables y condicionales) son suficientes para desarrollar cualquier juego simple. Al finalizar este módulo, los estudiantes habrán escrito su primer programa interactivo completo.</p>
+        </div>
+
+        <div id="events" class="anchor-target">
+            <div class="section-head">2 · Programación Orientada a Eventos</div>
+        </div>
+
+        <div class="card">
+            <h4>¿Qué es un evento?</h4>
+            <p>Un <strong>evento</strong> es una señal que indica que algo ha sucedido en el mundo del juego. Un <strong>bloque de evento</strong> en MakeCode registra un receptor o listener: el código dentro del bloque se ejecuta *única y exactamente* cuando ese evento se dispara. El código no corre continuamente, sino que espera y responde.</p>
+            <div class="code-block">
+                <span class="ck">al caminar el jugador</span> {                   ← bloque de evento: se activa con cada paso del jugador<br>
+                &nbsp;&nbsp;<span class="cf">cambiar</span> score <span class="cn">por 1</span>          ← este código se ejecuta cada vez que el evento se dispara<br>
+                }                                      ← fuera de este bloque = NO se activa al caminar
+            </div>
+            <p style="margin-top:8px"><strong>Eventos clave del Módulo 3 que el tutor debe explicar:</strong></p>
+            <ul style="margin-top:6px">
+                <li><strong>Al caminar el jugador:</strong> Se dispara una vez por cada paso que da el jugador. Útil para contadores de pasos, puntuación basada en distancia y mini-juegos de caminata.</li>
+                <li><strong>Al romper un bloque:</strong> Se dispara cuando el jugador mina o destruye un tipo de bloque específico. Útil para mini-juegos de recolección de recursos y búsquedas del tesoro.</li>
+                <li><strong>Al comando de chat [palabra]:</strong> Se dispara cuando el jugador escribe la palabra clave en el chat. Útil para activadores manuales del juego, códigos de trampa o funciones de reinicio.</li>
+                <li><strong>Al saltar el jugador:</strong> Se dispara una vez por cada salto. Útil para puntuación en parkour y desafíos de salto.</li>
+            </ul>
+        </div>
+
+        <div class="callout cw">
+            <span class="ci">⚠️</span>
+            <div>
+                <strong>Error Crítico: Código posicionado fuera del bloque de evento</strong><br>
+                Este es el error de codificación más común en el Módulo 3. Los estudiantes colocan el bloque "cambiar variable por 1" FUERA del contenedor del bloque de evento. Cuando esto ocurre, la modificación de la variable se ejecuta una sola vez al cargar el programa (cuando se ejecuta el comando /code), y no cada vez que se dispara el evento.<br>
+                <div class="code-block" style="margin-top:8px;background:#2a0000;border-color:#B91C1C">
+                    <span style="color:#F87171">INCORRECTO — la puntuación cambia solo al inicio del programa, no al caminar:</span><br>
+                    <span class="ck">al caminar el jugador</span> { ← bloque de evento vacío<br>
+                    }<br>
+                    <span style="color:#F78C6C">cambiar</span> score <span style="color:#F78C6C">por 1</span>  ← FUERA del bloque — se ejecuta UNA VEZ y nunca más
+                </div>
+                <div class="code-block" style="margin-top:8px;background:#0a2000;border-color:#16A34A">
+                    <span style="color:#4ADE80">CORRECTO — la puntuación cambia en cada paso:</span><br>
+                    <span class="ck">al caminar el jugador</span> {<br>
+                    &nbsp;&nbsp;<span class="cf">cambiar</span> score <span class="cn">por 1</span>  ← DENTRO del bloque<br>
+                    }
+                </div>
+                <strong>Solución pedagógica:</strong> Antes de que los estudiantes comiencen a programar, pídeles que dibujen un rectángulo en papel y ubiquen físicamente cada instrucción dentro o fuera de él. Visualizar el límite del bloque previene este error de manera drástica.
+            </div>
+        </div>
+
+        <div id="variables" class="anchor-target">
+            <div class="section-head">3 · Variables — Contenedores para Datos Dinámicos</div>
+        </div>
+
+        <div class="card">
+            <h4>¿Qué es una variable?</h4>
+            <p>Una <strong>variable</strong> es un espacio de almacenamiento nombrado en la memoria que guarda un valor (un número, una cadena de texto o un valor booleano verdadero/falso). Este valor puede ser leído, escrito y actualizado. Para el Módulo 3, todas las variables serán numéricas: guardarán puntuaciones, contadores y temporizadores.</p>
+            <div class="code-block">
+                <span class="ck">asignar</span> score = <span class="cn">0</span>      ← crea la variable y le asigna un valor inicial<br>
+                <span class="ck">cambiar</span> score <span class="cn">por +1</span>   ← suma 1 al valor que se encuentra almacenado actualmente<br>
+                <span class="ck">cambiar</span> score <span class="cn">por -5</span>   ← resta 5 al valor actual<br>
+                <span class="ck">asignar</span> score = score + <span class="cn">10</span> ← lee el valor actual, le suma 10 y guarda el resultado<br>
+                <span class="cm">mostrar</span> score              ← muestra el valor actual en el chat (para pruebas)
+            </div>
+            <p style="margin-top:10px"><strong>Alcance de las variables en MakeCode:</strong> Todas las variables son <em>globales</em> en el entorno de Minecraft Education de MakeCode: cualquier bloque de evento puede leer y modificar cualquier variable. No existen las variables locales. Esto significa que una vez definida una variable, todo el programa tiene acceso a ella.</p>
+            <p style="margin-top:8px"><strong>Convención de nomenclatura para enseñar:</strong> Utiliza nombres descriptivos (<code>score</code>, <code>pasos</code>, <code>gemas</code>), no letras sueltas (<code>x</code>, <code>a</code>). Los nombres descriptivos permiten que los niños de 8 años depuren sus programas eficazmente, ya que pueden leer su propio código e interpretar qué hace.</p>
+        </div>
+
+        <div id="conditionals" class="anchor-target">
+            <div class="section-head">4 · Condicionales — Lógica Si–Entonces</div>
+        </div>
+
+        <div class="card">
+            <h4>Bloques Si–Entonces y Si–Entonces–Sino</h4>
+            <p>Un <strong>condicional</strong> permite que el programa tome decisiones: si una condición es verdadera, ejecuta el bloque A; de lo contrario, ejecuta el bloque B (la rama "sino"). Sin condicionales, el programa carece de capacidad de decisión y siempre hará lo mismo sin importar el estado del juego.</p>
+            <div class="code-block">
+                <span class="ck">si</span> score <span class="cn">≥ 10</span> <span class="ck">entonces</span> {<br>
+                &nbsp;&nbsp;<span class="cm">mostrar</span> <span class="cs">"¡Ganaste! Puntuación final: "</span> + score<br>
+                &nbsp;&nbsp;<span class="cf">fuegos artificiales</span> en la posición del jugador   ← activa animación de victoria<br>
+                &nbsp;&nbsp;<span class="ck">asignar</span> score = <span class="cn">0</span>             ← reinicia para una nueva partida<br>
+                }<br><br>
+                <span class="ck">si</span> score <span class="cn">≥ 10</span> <span class="ck">entonces</span> {         ← Variante Si–Entonces–Sino:<br>
+                &nbsp;&nbsp;<span class="cm">mostrar</span> <span class="cs">"¡Ganaste!"</span><br>
+                } <span class="ck">sino</span> {<br>
+                &nbsp;&nbsp;<span class="cm">mostrar</span> <span class="cs">"¡Sigue adelante! Te faltan "</span> + (10 - score) + <span class="cs">" pasos"</span><br>
+                }
+            </div>
+            <p style="margin-top:10px"><strong>Operadores de comparación que los estudiantes deben dominar:</strong></p>
+            <div class="two-col" style="margin-top:8px">
+                <div class="card">
+                    <h4>Igualdad y Desigualdad</h4>
+                    <p><code>=</code> igual a · <code>≠</code> diferente de<br><code>&gt;</code> mayor que · <code>&lt;</code> menor que<br><code>≥</code> mayor o igual que · <code>≤</code> menor o igual que</p>
+                </div>
+                <div class="card">
+                    <h4>Lógica Booleana</h4>
+                    <p><code>Y (AND)</code> — ambas condiciones deben ser verdaderas<br><code>O (OR)</code> — al menos una condición es verdadera<br><code>NO (NOT)</code> — invierte el valor de la condición<br>Ejemplo: <code>score ≥ 10 Y lives &gt; 0</code></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="minigame" class="anchor-target">
+            <div class="section-head">5 · Creación del Mini-Juego — Ejemplo Completo</div>
+        </div>
+
+        <div class="card">
+            <h4>El Mini-Juego "Carrera hasta 10" — Especificación Técnica Completa</h4>
+            <p>Este es el mini-juego mínimo viable que integra los tres conceptos del Módulo 3 en un solo programa.</p>
+            <div class="code-block">
+                <span class="com">// Bloque de configuración — se ejecuta una vez al iniciar el programa</span><br>
+                al iniciar {<br>
+                &nbsp;&nbsp;<span class="ck">asignar</span> score = <span class="cn">0</span><br>
+                &nbsp;&nbsp;<span class="cm">mostrar</span> <span class="cs">"¡Juego iniciado! Camina para ganar puntos. ¡Llega a 10 para ganar!"</span><br>
+                }<br><br>
+                <span class="com">// Bloque de evento — se activa con cada paso</span><br>
+                <span class="ck">al caminar el jugador</span> {<br>
+                &nbsp;&nbsp;<span class="cf">cambiar</span> score <span class="cn">por 1</span><br>
+                &nbsp;&nbsp;<span class="ck">si</span> score <span class="cn">≥ 10</span> <span class="ck">entonces</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">mostrar</span> <span class="cs">"¡GANASTE! Puntuación final: "</span> + score<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">fuegos artificiales</span> en la posición del jugador<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">asignar</span> score = <span class="cn">0</span>   <span class="com">// reinicia para volver a jugar</span><br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+            <p style="margin-top:10px"><strong>Extensiones que los estudiantes pueden agregar de forma independiente (Tareas Extra):</strong></p>
+            <ul style="margin-top:6px">
+                <li><strong>Añadir un sistema de vidas:</strong> Define <code>lives = 3</code> al iniciar. Si el jugador cae por debajo de Y=60, resta 1 vida. Si las vidas llegan a 0, termina el juego.</li>
+                <li><strong>Añadir un temporizador:</strong> Utiliza una variable de cuenta regresiva. Disminúyela mediante un evento repetitivo. Si el temporizador llega a 0 antes de que la puntuación llegue a 10, muestra el mensaje "¡Tiempo agotado!".</li>
+                <li><strong>Añadir potenciadores (Power-ups):</strong> Al romper un bloque (como Diamante) → cambia la puntuación por +5 como bonificación.</li>
+            </ul>
+        </div>
+
+        <div id="trouble" class="anchor-target">
+            <div class="section-head">6 · Catálogo de Resolución de Problemas — Módulo 3 (5 Escenarios)</div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="trouble-table">
+                <thead>
+                    <tr><th style="width:22%">Error / Síntoma</th><th style="width:27%">Causa Raíz</th><th style="width:31%">Solución Exacta</th><th style="width:20%">Guión de Prevención</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mc">La puntuación empieza en 1 inmediatamente al ejecutar /code, antes de que el jugador camine</td>
+                        <td>El bloque "asignar score = 0" está colocado dentro del evento "Al caminar el jugador" en lugar de un bloque "Al iniciar" o de configuración independiente.</td>
+                        <td>Mueve el bloque "asignar score = 0" fuera del evento de caminar hacia un bloque "Al iniciar" (o directamente al lienzo si no se usa evento de inicio). El evento de caminar solo debe contener el incremento y la condición.</td>
+                        <td class="fc">"El código de configuración va en 'Al iniciar'. El código de juego va en los eventos. Nunca mezcles la inicialización con las respuestas."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">La variable score nunca pasa de 1; se reinicia en cada paso en lugar de acumularse</td>
+                        <td>El bloque "asignar score = 0" se encuentra dentro del evento "Al caminar el jugador", por lo que la puntuación vuelve a 0 en cada paso antes de incrementarse a 1.</td>
+                        <td>Elimina el bloque "asignar score = 0" de adentro del bloque de caminar. La inicialización pertenece únicamente a 'Al iniciar'. El bloque de caminar solo debe incluir el incremento: "cambiar score por 1".</td>
+                        <td class="fc">"Lee tu código en voz alta. 'En cada paso: asigno score a 0, luego sumo 1.' ¿Tiene sentido? ¿Qué número tendrá siempre la puntuación?"</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">La condición Si–Entonces nunca se activa, incluso cuando la puntuación supera claramente el objetivo</td>
+                        <td>El operador de comparación es incorrecto (se usa = en lugar de ≥); O el nombre de la variable en la condición está escrito de forma distinta a la variable incrementada (MakeCode distingue entre mayúsculas y minúsculas).</td>
+                        <td>Verifica el operador: si el objetivo es alcanzar 10 o más, la condición debe ser score ≥ 10, no score = 10 (que solo se activa exactamente a los 10). Revisa la escritura: "Score" y "score" son variables totalmente distintas.</td>
+                        <td class="fc">"Usa ≥ (mayor o igual) para las condiciones de victoria, no = (igual a); el jugador podría saltarse el número exacto al dar un paso."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">La condición de victoria se activa en cada paso tras alcanzar los 10 puntos; los fuegos artificiales suenan repetidamente</td>
+                        <td>La variable score no se está reiniciando a 0 dentro del bloque condicional de victoria; al ganar, la puntuación sigue siendo ≥ 10, por lo que cada paso posterior vuelve a disparar la condición.</td>
+                        <td>Agrega el bloque "asignar score = 0" como la última línea dentro del condicional de victoria. Alternativamente, define una variable booleana "gameActive": cámbiala a falso al ganar y envuelve el evento de caminar en un "si gameActive = verdadero entonces".</td>
+                        <td class="fc">"Tras ganar, ¿qué debería pasar con la puntuación? O se reinicia a 0 o se apaga el juego. Si no la reinicias, la victoria se activará para siempre."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">El estudiante no entiende por qué "mostrar score" enseña solo un número cuando quería mostrar texto + número (ej. "Puntuación: 5")</td>
+                        <td>Combinación incorrecta de bloques: usar "mostrar" solo con la variable genera el número; para combinar texto y variable se requiere un bloque de unión ("join") o el operador de concatenación.</td>
+                        <td>Muestra a los alumnos el bloque de unir texto en MakeCode: [mostrar [unir ["Puntuación: "] [score]]]. Explica: "Mostrar sirve para enseñar un elemento; para combinar texto y números, debes unirlos primero en una sola cadena de texto".</td>
+                        <td class="fc">"'Mostrar' solo puede contener un elemento. Usa el bloque de unir para juntar el texto y el número antes de entregárselo a Mostrar."</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="protips" class="anchor-target">
+            <div class="section-head">7 · Consejos Pro del Tutor y Analogías del Mundo Real</div>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Variables = "La Puntuación de los Videojuegos" (Gancho Principal del Módulo 3)</strong><br>
+                <em>"Piensa en cada videojuego que has jugado. Mario tiene un contador de monedas. El FIFA tiene un marcador de goles. Minecraft tiene una barra de experiencia. Todos esos elementos son variables: una caja con un nombre que guarda un número, y ese número cambia mientras juegas. Hoy vas a programar el código detrás de tu propio contador de puntos".</em>
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Eventos = "El Sistema de Notificaciones"</strong><br>
+                <em>"Tu teléfono no lee todos los mensajes en el instante en que se escriben. Espera en silencio, y cuando llega un mensaje, te avisa. Esa notificación ES un evento. Los bloques de eventos en MakeCode funcionan exactamente igual: duermen hasta que algo pasa en Minecraft, y en ese momento se despiertan para ejecutar su código".</em>
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Si–Entonces = "El Termostato"</strong><br>
+                <em>"Un termostato no enciende la calefacción todo el tiempo; revisa constantemente: '¿La temperatura es menor a 20°C?' Si es verdadero, enciende el calentador. Si es falso, se queda apagado. Eso es exactamente lo que hace un bloque Si–Entonces: evalúa una condición y actúa únicamente cuando esa condición es verdadera".</em>
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 El truco de la "Visualización de Límites de Bloques" para evitar errores externos</strong><br>
+                Antes de que los estudiantes programen en el Módulo 3, pídeles que dibujen un rectángulo en una hoja de papel. Rotúlenlo como "Al caminar el jugador". Luego pregunta: "¿Cuál de tus instrucciones se coloca DENTRO de este rectángulo y cuál se queda afuera?". Los alumnos que dibujan físicamente el límite antes de programar cometen este error un 70% menos en comparación con quienes codifican directamente sin planificar.
+            </p>
+        </div>
+
+        <div id="test-cta" class="anchor-target">
+            <div class="section-head">8 · Verificación de Conocimientos del Módulo 3</div>
+        </div>
+
+        <div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+            <div style="font-size:40px;margin-bottom:12px">📝</div>
+            <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">¿Listo para la Verificación de Conocimientos del Módulo 3?</div>
+            <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+                6 preguntas extraídas exclusivamente del contenido del Módulo 3. Una puntuación del <strong>70% o más</strong> desbloquea el Módulo 4. Todas las preguntas son completamente distintas de las de los Módulos 1–2 y del DST final.
+            </p>
+            <div class="btn-row center">
+                <a href="EsModule3Test.html" class="btn-primary">Iniciar Examen del Módulo 3 →</a>
+                <button class="btn-outline" onclick="goHome()">← Panel Principal</button>
+            </div>
+        </div>
+
+    </div><footer>© 2026 Kodland. Material de capacitación interna para tutores — prohibida su distribución externa.</footer>
+    <script src="shared.js"></script>
+    <script>
+        initShared();
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        if (!isModuleUnlocked(3)) { alert('Por favor, completa los módulos anteriores primero.'); goHome(); }
+    </script>
+</body>
+</html>

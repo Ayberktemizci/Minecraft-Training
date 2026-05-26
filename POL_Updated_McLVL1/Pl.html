@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Education — Szkolenie dla Tutorów | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .hero-icon {
+            font-size: 56px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        /* ── Baner ukończenia ── */
+        .all-done-banner {
+            background: linear-gradient(135deg,#0e1f0a,#2f5a1e);
+            border: 2px solid rgba(196,240,70,.35);
+            border-radius: var(--r);
+            padding: 24px 28px;
+            text-align: center;
+            margin-bottom: 16px;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .all-done-banner::before {
+                content Tramogge;
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(ellipse 70% 55% at 50% 0%,rgba(196,240,70,.12) 0%,transparent 70%);
+                pointer-events: none;
+            }
+
+            .all-done-banner.show {
+                display: block;
+            }
+
+            .all-done-banner h3 {
+                font-family: 'Nunito',sans-serif;
+                font-size: 20px;
+                font-weight: 900;
+                color: #fff;
+                margin-bottom: 6px;
+                position: relative;
+            }
+
+            .all-done-banner p {
+                font-size: 13px;
+                color: rgba(255,255,255,.72);
+                line-height: 1.6;
+                position: relative;
+                max-width: 520px;
+                margin: 0 auto 16px;
+            }
+
+            .all-done-banner .btn-row {
+                justify-content: center;
+                position: relative;
+            }
+
+            .all-done-banner .btn-library {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 28px;
+                border-radius: var(--rpill);
+                background: var(--lime);
+                color: var(--ink);
+                font-family: 'Nunito',sans-serif;
+                font-size: 14px;
+                font-weight: 900;
+                border: 2px solid var(--lime-d);
+                text-decoration: none;
+                transition: all .15s;
+                letter-spacing: .2px;
+            }
+
+                .all-done-banner .btn-library:hover {
+                    background: var(--lime-d);
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(196,240,70,.4);
+                }
+
+            .all-done-banner .btn-dst {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 22px;
+                border-radius: var(--rpill);
+                background: rgba(255,255,255,.1);
+                color: rgba(255,255,255,.8);
+                font-family: 'Nunito',sans-serif;
+                font-size: 13px;
+                font-weight: 700;
+                border: 2px solid rgba(255,255,255,.2);
+                text-decoration: none;
+                transition: all .15s;
+            }
+
+                .all-done-banner .btn-dst:hover {
+                    background: rgba(255,255,255,.2);
+                    color: #fff;
+                }
+
+        /* ── Siatka etapów pod modułami ── */
+        .phase-strip {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border);
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        @media(max-width:560px) {
+            .phase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .phase-card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--r);
+            padding: 16px 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: var(--shadow);
+            transition: all .2s;
+            cursor: pointer;
+        }
+
+            .phase-card:hover {
+                transform: translateY(-3px);
+                box-shadow: var(--shadow-h);
+                border-color: var(--lime-d);
+            }
+
+            .phase-card.locked-card {
+                opacity: .45;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+
+        .phase-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .phase-body {
+            flex: 1;
+        }
+
+        .phase-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+
+        .phase-title {
+            font-family: 'Nunito',sans-serif;
+            font-size: 15px;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+
+        .phase-desc {
+            font-size: 12px;
+            color: var(--text2);
+            line-height: 1.5;
+        }
+
+        .phase-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 8px;
+            padding: 3px 10px;
+            border-radius: var(--rpill);
+            font-family: 'Nunito',sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+        }
+
+        .ps-locked {
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .ps-ready {
+            background: rgba(196,240,70,.2);
+            border: 1.5px solid var(--lime-d);
+            color: var(--ink);
+        }
+
+        [data-theme="dark"] .ps-ready {
+            color: var(--lime);
+        }
+
+        .ps-done {
+            background: var(--ok-bg);
+            border: 1.5px solid var(--ok-b);
+            color: var(--ok-t);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-logo" onclick="location.reload()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span>
+            <div class="logo-div"></div>
+            <span class="logo-sub">Szkolenie dla Tutorów</span>
+        </div>
+        <div class="nav-r">
+            <button class="icon-btn" id="theme-toggle" title="Przełącz tryb ciemny">🌙</button>
+        </div>
+    </nav>
+
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <section class="hero">
+        <div class="hero-inner">
+            <span class="hero-icon">⛏️</span>
+            <div class="eyebrow">🎓 Program Szkolenia Tutorów</div>
+            <h1>Minecraft <span class="h-pill">Education</span><br>Poziom 1 — Gotowość Tutora</h1>
+            <p>Ukończ wszystkie pięć modułów szkoleniowych, aby przygotować się do programu Poziomu 1. Każdy moduł kończy się krótkim sprawdzianem wiedzy — do przejścia do kolejnego modułu wymagany jest wynik <strong>70% lub wyższy</strong>.</p>
+            <div class="prog-widget">
+                <span class="prog-num" id="prog-num">0/5</span>
+                <div class="prog-track"><div class="prog-fill-bar" id="prog-bar" style="width:0%"></div></div>
+                <span class="prog-label" id="prog-label">Moduły ukończone</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="module-section">
+
+        <div id="all-done-banner" class="all-done-banner">
+            <h3>🏆 Wszystkie pięć modułów ukończone!</h3>
+            <p>
+                Zanim przystąpisz do końcowego testu Digital Skill Test, zapoznaj się z opatrzoną komentarzami lekcją referencyjną w Bibliotece Udanych Lekcji. Przeanalizowanie prawdziwej, ocenionej sesji pomoże Ci skutecznie zastosować wszystko, czego się nauczyłeś.
+            </p>
+            <div class="btn-row">
+                <a href="PlDST.html#library" class="btn-library">📖 Zobacz lekcję referencyjną →</a>
+                <a href="PlDST.html#dst-section" class="btn-dst">Przejdź do Digital Skill Test</a>
+            </div>
+        </div>
+
+        <div class="section-label">Moduły Szkoleniowe</div>
+        <div class="module-grid" id="module-grid"></div>
+
+        <div class="phase-strip">
+            <div class="section-label">Etapy Końcowe</div>
+            <div class="phase-grid" id="phase-grid"></div>
+        </div>
+
+    </section>
+
+    <footer>© 2026 Kodland. Zaprojektowano do wewnętrznych celów szkoleniowych tutorów. Materiał ten stanowi wyłączną własność firmy Kodland i nie może być rozpowszechniany na zewnątrz.</footer>
+
+    <script src="shared.js"></script>
+    <script>
+        const MODULES = [
+            {
+                id: 1, emoji: '🌿', title: 'Nowy wspaniały świat zielonego kamienia',
+                desc: 'Nawigacja 3D, interfejs MakeCode, Agent oraz Twoja pierwsza automatyzacja z Redstone.',
+                color: '#5C8731', mins: 15
+            },
+            {
+                id: 2, emoji: '🏙️', title: 'Miasto Światła',
+                desc: 'Zaawansowane mechaniki — współrzędne, komendy clone, pułapki Redstone oraz wspólne budowanie w trybie multiplayer.',
+                color: '#3B82F6', mins: 15
+            },
+            {
+                id: 3, emoji: '🧩', title: 'Oaza Logiki',
+                desc: 'Programowanie sterowane zdarzeniami, instrukcje warunkowe i zmienne — budowa Twojej pierwszej minigry w MakeCode.',
+                color: '#8B5CF6', mins: 12
+            },
+            {
+                id: 4, emoji: '🌲', title: 'Mechaniczny Las',
+                desc: 'Żywa automatyzacja — agenci rolnicy, systemy sortowania z lejami (Hopper) i warunkowe obwody logiczne.',
+                color: '#F59E0B', mins: 14
+            },
+            {
+                id: 5, emoji: '🏰', title: "Zamek Twórcy",
+                desc: 'Kompleksowe projekty końcowe — funkcje, role w zespole, debugowanie oraz umiejętności prezentacji.',
+                color: '#F03D9E', mins: 13
+            },
+        ];
+
+        function renderModules() {
+            const passed = getOverallProgress();
+            const grid = document.getElementById('module-grid');
+            const allDone = passed >= 5 || isDevMode();
+
+            grid.innerHTML = MODULES.map(m => {
+                const done = isModulePassed(m.id);
+                const unlocked = isModuleUnlocked(m.id);
+                const score = getModuleScore(m.id);
+                let badgeHtml = '';
+                if (done) badgeHtml = `<span class="badge bd">✓ Zaliczono</span>`;
+                else if (!unlocked) badgeHtml = `<span class="badge bl">🔒 Zablokowane</span>`;
+                else badgeHtml = `<span class="badge bs">▶ Start</span>`;
+                const scoreStr = score !== null
+                    ? `<span class="score-tag">Najlepszy: <b>${score}%</b></span>`
+                    : `<span class="score-tag"><b>${m.mins} min czytania</b></span>`;
+                return `<a href="PlModule${m.id}.html"
+                  class="mc${done ? ' done' : ''}${!unlocked ? ' locked' : ''}"
+                  style="text-decoration:none">
+          <div class="mc-stripe" style="background:${m.color}"></div>
+          <div class="mc-body">
+            <div class="mc-top"><span class="mc-num">Moduł ${m.id}</span><span class="mc-em">${m.emoji}</span></div>
+            <div class="mc-title">${m.title}</div>
+            <div class="mc-desc">${m.desc}</div>
+            <div class="mc-foot">${badgeHtml}${scoreStr}</div>
+          </div>
+        </a>`;
+            }).join('');
+
+            // Widget postępu
+            document.getElementById('prog-num').textContent = `${passed}/5`;
+            document.getElementById('prog-bar').style.width = `${passed / 5 * 100}%`;
+            document.getElementById('prog-label').textContent = passed === 5 ? 'Wszystko ukończone!' : 'Moduły ukończone';
+            document.getElementById('top-progress').style.width = `${passed / 5 * 100}%`;
+
+            // Baner ukończenia
+            if (allDone) document.getElementById('all-done-banner').classList.add('show');
+
+            // Etapy końcowe — Biblioteka Udanych Lekcji + DST
+            const libraryReady = allDone;
+            const dstReady = allDone;
+
+            document.getElementById('phase-grid').innerHTML = `
+        <a href="PlDST.html#library" class="phase-card${libraryReady ? '' : ' locked-card'}">
+          <div class="phase-icon">📖</div>
+          <div class="phase-body">
+            <div class="phase-label">Etap 6 — Nauka</div>
+            <div class="phase-title">Biblioteka Udanych Lekcji</div>
+            <div class="phase-desc">Obejrzyj i przeanalizuj prawdziwą, ocenioną sesję, zawierającą 16 adnotacji ze znacznikami czasu oraz szczegółową analizę dydaktyczną.</div>
+            <div class="phase-status ${libraryReady ? 'ps-ready' : 'ps-locked'}">
+              ${libraryReady ? '▶ Zobacz sesję referencyjną' : '🔒 Najpierw ukończ wszystkie moduły'}
+            </div>
+          </div>
+        </a>
+        <a href="PlDST.html#dst-section" class="phase-card${dstReady ? '' : ' locked-card'}">
+          <div class="phase-icon">🎯</div>
+          <div class="phase-body">
+            <div class="phase-label">Etap 7 — Ocena Końcowa</div>
+            <div class="phase-title">Digital Skill Test</div>
+            <div class="phase-desc">Egzamin gotowości składający się z 20 pytań, obejmujący umiejętności twarde oraz pedagogikę. Do samodzielnego prowadzenia zajęć wymagany jest wynik 80% lub wyższy.</div>
+            <div class="phase-status ${dstReady ? 'ps-ready' : 'ps-locked'}">
+              ${dstReady ? '▶ Przystąp do testu' : '🔒 Najpierw ukończ wszystkie moduły'}
+            </div>
+          </div>
+        </a>`;
+        }
+
+        function onDevModeToggle() { renderModules(); }
+
+        initShared();
+        renderModules();
+    </script>
+</body>
+</html>

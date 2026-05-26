@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modulo 4 — Foresta Meccanica | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .module-banner {
+            background: linear-gradient(135deg,#B45309 0%,#D97706 55%,#F59E0B 100%);
+            padding: 36px 32px 28px;
+            position: relative;
+            overflow: hidden
+        }
+
+            .module-banner::before {
+                content: '🌲';
+                font-size: 180px;
+                position: absolute;
+                right: -20px;
+                top: -40px;
+                opacity: .09;
+                line-height: 1;
+                pointer-events: none
+            }
+
+            .module-banner .meyebrow {
+                color: rgba(255,255,255,.72)
+            }
+
+            .module-banner .mh1 {
+                color: #fff
+            }
+
+            .module-banner p {
+                color: rgba(255,255,255,.85);
+                font-size: 14px;
+                line-height: 1.65;
+                max-width: 640px;
+                margin-top: 6px
+            }
+
+            .module-banner .mobj {
+                background: rgba(255,255,255,.13);
+                border-color: rgba(255,255,255,.28);
+                border-left-color: #FDE68A;
+                color: rgba(255,255,255,.9)
+            }
+
+                .module-banner .mobj strong {
+                    color: #fff
+                }
+
+        .sec-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--surface2);
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 62px;
+            z-index: 90;
+            transition: background .25s
+        }
+
+        .sec-pill {
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 5px 13px;
+            border-radius: var(--rpill);
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text2);
+            text-decoration: none;
+            transition: all .15s;
+            white-space: nowrap
+        }
+
+            .sec-pill:hover {
+                background: var(--lime);
+                border-color: var(--lime-d);
+                color: var(--ink)
+            }
+
+        .script-box {
+            background: var(--ink);
+            color: #FDE68A;
+            border-radius: var(--rsm);
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono','Courier New',monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 10px 0;
+            border-left: 4px solid #D97706
+        }
+
+        [data-theme="dark"] .script-box {
+            background: #180e00
+        }
+
+        .trouble-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 13px
+        }
+
+            .trouble-table th {
+                background: var(--surface2);
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                text-align: left;
+                font-family: 'Nunito',sans-serif;
+                font-weight: 900;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: .6px;
+                color: var(--text)
+            }
+
+            .trouble-table td {
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                line-height: 1.55;
+                vertical-align: top;
+                color: var(--text2)
+            }
+
+            .trouble-table tr:nth-child(even) td {
+                background: var(--surface2)
+            }
+
+        .mc {
+            color: var(--no-t);
+            font-weight: 600
+        }
+
+        .fc {
+            color: var(--ok-t)
+        }
+
+        .tip-card {
+            background: var(--callout-tip-bg);
+            border: 1.5px solid var(--callout-tip-b);
+            border-left: 4px solid #D97706;
+            border-radius: var(--rsm);
+            padding: 14px 16px;
+            margin-bottom: 10px
+        }
+
+            .tip-card p {
+                font-size: 13.5px;
+                color: var(--callout-tip-t);
+                line-height: 1.65
+            }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        @media(max-width:580px) {
+            .two-col {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .code-block {
+            background: var(--ink);
+            border-radius: var(--r);
+            padding: 18px;
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12.5px;
+            line-height: 1.85;
+            color: #e0e0e0;
+            margin: 10px 0;
+            border: 2px solid var(--border)
+        }
+
+        [data-theme="dark"] .code-block {
+            background: #180e00
+        }
+
+        .ck {
+            color: #C792EA
+        }
+
+        .cf {
+            color: #82AAFF
+        }
+
+        .cs {
+            color: #C3E88D
+        }
+
+        .cn {
+            color: #F78C6C
+        }
+
+        .cm {
+            color: #FCD34D
+        }
+
+        .anchor-target {
+            scroll-margin-top: 130px
+        }
+
+        code {
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 7px;
+            color: var(--pink)
+        }
+
+        [data-theme="dark"] code {
+            color: var(--lime)
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Formazione Tutor</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="goHome()">← Dashboard</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="sec-nav">
+        <a href="#overview" class="sec-pill">1 · Panoramica</a>
+        <a href="#agent" class="sec-pill">2 · Agente come Giardiniere</a>
+        <a href="#circuits" class="sec-pill">3 · Circuiti Condizionali</a>
+        <a href="#hoppers" class="sec-pill">4 · Smistamento Tramogge</a>
+        <a href="#pipeline" class="sec-pill">5 · Pipeline Completa</a>
+        <a href="#trouble" class="sec-pill">6 · Risoluzione Problemi</a>
+        <a href="#protips" class="sec-pill">7 · Consigli Pro</a>
+        <a href="#test-cta" class="sec-pill">8 · Verifica</a>
+    </div>
+
+    <div class="module-banner">
+        <div style="max-width:860px;margin:0 auto;position:relative">
+            <div class="meyebrow">Modulo 4 di 5</div>
+            <div class="mh1">🌲 Foresta Meccanica</div>
+            <p>Automazione vivente — gli studenti applicano ogni competenza dei Moduli 1–3 per costruire una fattoria automatizzata completa end-to-end: l'Agente pianta i semi, i circuiti di Redstone raccolgono quando le colture sono pronte e le Tramogge smistano e conservano il raccolto.</p>
+            <div class="mobj" style="margin-top:14px;margin-bottom:0">
+                <strong>Obiettivi del Modulo 4:</strong> Programmare l'Agente come un Giardiniere automatizzato (ciclo + comandi piazza) · Costruire circuiti di raccolta condizionali con la Redstone (Osservatore → Pistone) · Implementare lo smistamento e l'archiviazione degli oggetti tramite Tramogge · Comprendere la pipeline di automazione completa: Rileva → Attiva → Raccogli → Archivia.
+            </div>
+        </div>
+    </div>
+
+    <div class="cbody">
+
+        <div id="overview" class="anchor-target">
+            <div class="section-head">1 · Panoramica del Modulo — Integrazione e Avanzamento</div>
+        </div>
+
+        <div class="card">
+            <h4>Perché il Modulo 4 è il "Modulo di Integrazione"</h4>
+            <p>Ogni modulo precedente ha introdotto concetti isolati. Il Modulo 4 è il primo modulo che richiede esplicitamente agli studenti di <strong>combinare tutte le competenze precedenti</strong> in un unico sistema strutturato:</p>
+            <ul style="margin-top:8px">
+                <li><strong>Dal Modulo 1:</strong> Controllo dell'Agente + circuito Redstone Osservatore–Pistone</li>
+                <li><strong>Dal Modulo 2:</strong> Posizionamento tramite coordinate per il layout della griglia della fattoria</li>
+                <li><strong>Dal Modulo 3:</strong> Logica condizionale ("se la pianta è cresciuta, allora raccoglila")</li>
+            </ul>
+            <p style="margin-top:8px">Il risultato è un <strong>sistema agricolo completamente autonomo</strong> che funziona senza l'intervento del giocatore — la costruzione più complessa del Livello 1. Gli studenti che completano con successo il Modulo 4 dimostrano la capacità di progettare, costruire ed eseguire il debug di un sistema automatizzato a componenti multipli.</p>
+        </div>
+
+        <div id="agent" class="anchor-target">
+            <div class="section-head">2 · L'Agente come Giardiniere — Semina Automatizzata</div>
+        </div>
+
+        <div class="card">
+            <h4>Programmare l'Agente per Seminare in Fila</h4>
+            <p>Nel Modulo 1, gli studenti hanno spostato l'Agente manualmente usando comandi di movimento base. Il Modulo 4 utilizza l'Agente per <strong>seminare automaticamente in una griglia strutturata</strong> — il primo vero utilizzo dell'Agente come strumento automatizzato produttivo piuttosto che come giocattolo dimostrativo.</p>
+            <div class="code-block">
+                <span class="com">// Carica prima i semi nell'inventario dell'Agente (tasto destro sull'Agente, aggiungi i Semi nello slot 1)</span><br>
+                al comando di chat <span class="cs">"plant"</span> {<br>
+                &nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> volte {                 ← semina 5 semi in fila<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent place on move</span> down      ← posiziona l'oggetto sotto di sé mentre l'Agente avanza<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> forward <span class="cn">1</span>          ← avanza di un blocco<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+            <p style="margin-top:10px"><strong>Pre-condizioni critiche affinché questo funzioni:</strong></p>
+            <ol style="padding-left:18px;margin-top:6px">
+                <li style="margin-bottom:6px">I semi devono essere caricati nell'inventario dell'Agente prima che il comando di chat venga attivato.</li>
+                <li style="margin-bottom:6px">L'Agente deve essere posizionato nel primo punto di semina, rivolto nella direzione corretta per la fila.</li>
+                <li style="margin-bottom:6px">Il terreno deve essere terra zappata da coltivazione (usa una Zappa su terra/erba, poi idratala con acqua entro un raggio di 4 blocchi).</li>
+                <li>La semina dell'Agente utilizza il comando "piazza al movimento giù" che posiziona l'oggetto nel blocco direttamente sotto l'Agente mentre avanza.</li>
+            </ol>
+            <div class="callout cw" style="margin-top:10px">
+                <span class="ci">⚠️</span>
+                <div><strong>Il fallimento più comune nella semina dell'Agente:</strong> L'Agente fa cadere i semi a terra invece di piantarli. Ciò accade quando il terreno non è terra zappata da coltivazione — i semi posizionati sui normali blocchi di terra vengono trattati come oggetti caduti, non come colture piantate. Conferma sempre che il terreno sia zappato e idratato entro 4 blocchi da una sorgente d'acqua prima di eseguire il comando di semina.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Semina su Più File — Cicli Annidati</h4>
+            <p>Per una fattoria 5×5, gli studenti hanno bisogno di cicli annidati: un ciclo esterno per le file e un ciclo interno per la lunghezza di ciascuna fila. Questa è l'introduzione del Modulo 4 all'iterazione annidata — un concetto che prefigura direttamente l'attraversamento di array bidimensionali in fasi di programmazione successive.</p>
+            <div class="code-block">
+                al comando di chat <span class="cs">"farm"</span> {<br>
+                &nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> volte {             ← ciclo esterno: 5 file<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> volte {           ← ciclo interno: 5 colonne<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent place on move</span> down<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> forward <span class="cn">1</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> right <span class="cn">1</span>         ← spostati di una fila a destra<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent turn</span> around              ← girati nella direzione opposta per la fila successiva<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> back <span class="cn">5</span>           ← ritorna all'inizio della fila<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </div>
+
+        <div id="circuits" class="anchor-target">
+            <div class="section-head">3 · Circuiti di Raccolta Condizionali</div>
+        </div>
+
+        <div class="card">
+            <h4>Il Circuito di Raccolta Osservatore–Pistone — Applicato alle Colture</h4>
+            <p>Gli studenti hanno già costruito una catena Osservatore–Pistone per il bambù nel Modulo 1. Il Modulo 4 applica lo stesso principio a grano, carote, patate e altre colture agricole. La differenza chiave sta nel <strong>rilevamento della fase di crescita</strong>:</p>
+            <ul style="margin-top:8px">
+                <li>Bambù: cresce in incrementi di blocchi interi distinti — facile da rilevare.</li>
+                <li>Grano/Carote/Patate: attraversano 8 fasi di crescita (0–7). <strong>La fase 7 indica la maturazione completa</strong>. L'Osservatore rileva la transizione dalla fase 6 → 7 come un cambio di stato del blocco e si attiva.</li>
+                <li>Ripeti il circuito del Modulo 1: Faccia dell'Osservatore → fila di colture. Retro dell'Osservatore → ingresso del Pistone (o polvere di Redstone). Il Pistone si estende orizzontalmente per rompere la fila di colture mature.</li>
+            </ul>
+            <div class="callout ct" style="margin-top:10px">
+                <span class="ci">💡</span>
+                <div><strong>Insegnare il condizionale "cresci per raccogliere":</strong> Inquadralo come un costrutto if-then anche se implementato tramite hardware: <em>"SE il grano raggiunge la fase 7 (completamente cresciuto) ALLORA l'Osservatore si attiva ALLORA il Pistone rompe le colture ALLORA i semi e il cibo cadono a terra."</em> Questo linguaggio unisce la logica condizionale di MakeCode del Modulo 3 alla logica condizionale hardware della Redstone del Modulo 4.</div>
+            </div>
+        </div>
+
+        <div id="hoppers" class="anchor-target">
+            <div class="section-head">4 · Meccaniche della Tramoggia e Sistemi di Smistamento Oggetti</div>
+        </div>
+
+        <div class="card">
+            <h4>Cos'è una Tramoggia?</h4>
+            <p>Una <strong>Tramoggia</strong> (Hopper) è un blocco a forma di imbuto con due funzioni principali: (1) raccoglie gli oggetti che cadono al suo interno dall'alto, e (2) trasferisce gli oggetti dal proprio inventario a un contenitore adiacente (cassa, fornace, un'altra Tramoggia) o li deposita verso il basso attraverso il suo tubo di uscita.</p>
+            <div class="two-col" style="margin-top:10px">
+                <div class="card">
+                    <h4>Regole di Posizionamento della Tramoggia</h4>
+                    <ul>
+                        <li><strong>Direzione di uscita:</strong> determinata dal blocco verso cui è rivolta la Tramoggia — il suo tubo punta verso il blocco su cui è stata posizionata.</li>
+                        <li><strong>Per collegarla a una cassa:</strong> tieni premuto Shift + clic destro sulla cassa. Senza Shift, si aprirà l'inventario della cassa invece di posizionare la Tramoggia.</li>
+                        <li><strong>Per concatenare le Tramogge:</strong> posizionale una di seguito all'altra; gli oggetti si trasferiscono lungo la catena a una velocità costante di 2.5 oggetti al secondo per Tramoggia.</li>
+                        <li><strong>Capacità:</strong> ogni Tramoggia contiene 5 slot di oggetti (fino a ×64 per stack).</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Sistema di Smistamento Base</h4>
+                    <p>Un semplice sistema di smistamento a due casse: una Tramoggia sopra ogni cassa, ciascuna caricata con un oggetto filtro (l'oggetto che desideri indirizzare a quella cassa specifica). Quando gli oggetti transitano, quelli corrispondenti al filtro si accumulano nella cassa di quella Tramoggia, mentre quelli non corrispondenti passano alla Tramoggia successiva.</p>
+                    <p style="margin-top:8px"><strong>Obiettivo del Modulo 4:</strong> Indirizzare il grano a una cassa e i semi a un'altra — separando automaticamente il cibo raccolto dal materiale di semina.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Tempistiche di Trasferimento della Tramoggia — Numeri Pratici</h4>
+            <p>Velocità di trasferimento tecnica: una Tramoggia elabora un oggetto ogni <strong>4 tick di gioco</strong> (0.2 secondi). A un ritmo standard di 20 tick al secondo, equivale a <strong>2.5 oggetti al secondo</strong>. Per una fattoria su larga scala che produce grandi volumi, una singola catena di Tramogge può diventare un collo di bottiglia. Soluzioni:</p>
+            <ul style="margin-top:8px">
+                <li>Utilizzare <strong>catene di Tramogge in parallelo</strong> — più punti di raccolta ciascuno collegato alla propria cassa indipendente.</li>
+                <li>Utilizzare una <strong>Vagoneta con tramoggia</strong> su una rotaia di raccolta — i vagonetti con tramoggia trasferiscono gli oggetti a una velocità doppia rispetto alle Tramogge fisse.</li>
+            </ul>
+        </div>
+
+        <div id="pipeline" class="anchor-target">
+            <div class="section-head">5 · La Pipeline di Automazione Completa</div>
+        </div>
+
+        <div class="card">
+            <h4>La Pipeline a Quattro Fasi — Rileva → Attiva → Raccogli → Archivia</h4>
+            <p>Il framework didattico fondamentale del Modulo 4 di Kodland. Ogni sistema di fattoria completamente automatizzato può essere descritto tramite quattro fasi sequenziali e interconnesse:</p>
+            <div class="two-col" style="margin-top:10px">
+                <div class="card" style="border-left:4px solid var(--lime)">
+                    <h4 style="color:var(--lime-d)">Fase 1: Rileva</h4>
+                    <p>Il <strong>blocco Osservatore</strong> monitora il blocco della coltura rilevando un cambio di stato (fase di crescita 6 → 7). Una volta rilevata la maturazione, emette un impulso Redstone istantaneo di 1 tick.</p>
+                </div>
+                <div class="card" style="border-left:4px solid var(--amber)">
+                    <h4 style="color:var(--amber-d,#D97706)">Fase 2: Attiva</h4>
+                    <p>L'impulso dell'Osservatore alimenta il <strong>Pistone</strong> attraverso il cavo di Redstone. Il Pistone si estende, rompendo il blocco della coltura completamente cresciuto. La coltura cade al suolo sotto forma di oggetti entità.</p>
+                </div>
+                <div class="card" style="border-left:4px solid var(--pink)">
+                    <h4 style="color:var(--pink-d)">Fase 3: Raccogli</h4>
+                    <p>La <strong>Tramoggia</strong> posizionata sotto la fila di colture raccoglie gli oggetti caduti. Gli oggetti entrano nell'inventario a 5 slot della Tramoggia automaticamente entro 0.5 secondi dal momento in cui si trovano nel raggio d'azione.</p>
+                </div>
+                <div class="card" style="border-left:4px solid #3B82F6">
+                    <h4 style="color:#1D4ED8">Fase 4: Archivia</h4>
+                    <p>La Tramoggia trasferisce gli oggetti raccolti nella <strong>Cassa</strong> collegata alla velocità di 2.5 oggetti al secondo. Il sistema di smistamento instrada i diversi tipi di oggetti a casse differenti in base ai filtri della Tramoggia.</p>
+                </div>
+            </div>
+            <div class="callout cg" style="margin-top:14px">
+                <span class="ci">✅</span>
+                <div><strong>Momento didattico importante:</strong> Una prima volta che tutte e quattro le fasi sono costruite e testate, chiedi agli studenti di descrivere la pipeline con parole proprie senza guardare il codice: "Cosa rileva? Cosa attiva? Cosa raccoglie? Cosa archivia?" Questa rielaborazione verbale consolida il framework concettuale e li prepara per il lavoro di progettazione del Modulo 5.</div>
+            </div>
+        </div>
+
+        <div id="trouble" class="anchor-target">
+            <div class="section-head">6 · Catalogo Risoluzione Problemi — Modulo 4 (5 Scenari)</div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="trouble-table">
+                <thead>
+                    <tr><th style="width:22%">Errore / Sintomo</th><th style="width:27%">Causa Radice</th><th style="width:31%">Soluzione Esatta</th><th style="width:20%">Script di Prevenzione</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mc">L'Agente fa cadere i semi a terra invece di piantarli</td>
+                        <td>Il terreno sotto l'Agente è terra normale o erba non zappata, non un terreno da coltivazione. I semi posizionati su blocchi di terra non adatti vengono espulsi come oggetti entità sciolti.</td>
+                        <td>Prima di eseguire il comando di semina: (1) Usa una Zappa su ciascun blocco di terra per trasformarlo in terreno da coltivazione. (2) Posiziona una sorgente d'acqua entro 4 blocchi dal terreno per idratarlo (marrone scuro = idratato, ocre chiaro = secco). (3) Verifica eseguendo un test iniziale dell'Agente su un'area già zappata.</td>
+                        <td class="fc">"Prima che l'Agente possa seminare, il terreno deve essere zappato e idratato. Controlla il colore del suolo — marrone scuro = pronto per la semina."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">La Tramoggia si riempie di oggetti ma non li trasferisce alla cassa</td>
+                        <td>Il tubo di uscita della Tramoggia non è collegato alla cassa — è stata posizionata senza tenere premuto Shift, aprendo l'inventario della cassa anziché formare una connessione. La Tramoggia punta verso il basso nel vuoto.</td>
+                        <td>Rompi la Tramoggia e riposizionala: tieni premuto Shift, quindi fai clic con il tasto destro direttamente sul blocco della cassa. Conferma visivamente che il tubo della Tramoggia si colleghi al lato della cassa. In alternativa, riposizionala in orientamento orizzontale se la cassa si trova di lato.</td>
+                        <td class="fc">"Tieni sempre premuto Shift quando posizioni una Tramoggia su una cassa. Senza Shift = la cassa si apre = la Tramoggia viene posizionata male."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">L'Osservatore si attiva quando le colture crescono ma il Pistone non si estende — la raccolta si interrompe</td>
+                        <td>La faccia di uscita dell'Osservatore non è allineata o collegata al Pistone, oppure c'è un'interruzione fisica nel cavo di polvere di Redstone. È lo stesso problema di orientamento del Modulo 1, ma spesso più complesso a causa del layout della fattoria.</td>
+                        <td>Esegui il test in isolamento: scollega l'Osservatore dal circuito della fattoria. Posiziona una Lampada di Redstone temporanea direttamente dietro la faccia di uscita dell'Osservatore. Se la Lampada si accende alla crescita della coltura, l'Osservatore funziona e il problema è a valle (spazio vuoto nel cavo o orientamento del Pistone). Correggi l'interruzione o riposiziona il Pistone rivolto verso la coltura.</td>
+                        <td class="fc">"Metti alla prova ogni fase separatamente. L'Osservatore funziona? Allora controlla il cavo. Il cavo funziona? Allora verifica l'orientamento del Pistone."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">Il ciclo di semina annidato dell'Agente pianta le colture secondo uno schema a spirale o casuale anziché a griglia</td>
+                        <td>La direzione dell'Agente dopo il comando "girati" non è orientata correttamente; lo studente ha usato "gira a sinistra" due volte ma ha dimenticato che dopo un numero dispari di svolte, due girate a sinistra non equivalgono sempre a una rotazione di 180°, o il conteggio dei blocchi di ritorno è errato.</td>
+                        <td>Disegna il percorso dell'Agente su carta prima di programmare la sequenza. Segna ogni svolta in modo esplicito. Verifica: dopo aver completato la fila 1, l'Agente è rivolto nella direzione opposta? Il comando "muovi indietro 5" lo riporta esattamente all'inizio della fila? Esegui test con 1 sola fila prima di estendere il ciclo a 5.</td>
+                        <td class="fc">"Disegna il percorso prima di programmarlo. In quale direzione guarda dopo la prima svolta? E dopo la seconda? L'Agente esegue solo le istruzioni esatte del codice, non indovina la strada."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">Il sistema di smistamento indirizza TUTTI gli oggetti alla prima cassa indipendentemente dal tipo di oggetto</td>
+                        <td>Gli slot dell'inventario della Tramoggia di filtraggio non sono configurati correttamente — gli oggetti filtro devono occupare parzialmente gli slot in modo da trattenere solo gli elementi corrispondenti. Oppure non è stato impostato alcun filtro e la prima Tramoggia assorbe tutto indiscriminatamente.</td>
+                        <td>Lo smistamento richiede il posizionamento di un oggetto filtro in ciascuno slot della Tramoggia di filtraggio, senza lasciare spazi vuoti. Gli oggetti corrispondenti si accumulano negli slot, mentre quelli diversi passano oltre. Metodo semplificato per il Livello 1: usa Tramogge con filtri visivi diretti e fai test manuali con due oggetti distinti (grano vs semi) per confermare i percorsi di archiviazione.</td>
+                        <td class="fc">"La Tramoggia di filtraggio ha bisogno di un 'modello': inserisci un elemento dell'oggetto target nei suoi slot. In questo modo terrà gli oggetti corrispondenti e lascerà passare gli altri."</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="protips" class="anchor-target">
+            <div class="section-head">7 · Consigli Pro del Tutor e Analogie del Mondo Reale</div>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Smistamento Tramogge = L'Analogia dell' "Impianto di Riciclaggio"</strong><br>
+                *“Pensate a un impianto di riciclaggio automatizzato: diversi nastri trasportatori indirizzano le bottiglie di vetro in un contenitore, la carta in un altro e il metallo in un altro ancora. Il sistema di Tramogge della vostra fattoria è il vostro impianto di riciclaggio digitale. Il grano si sposta a sinistra e i semi a destra, automaticamente, ogni volta, senza che nessuno debba separarli a mano”.*
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 La Pipeline a Quattro Fasi = L'Analogia del "Centro di Distribuzione Amazon"</strong><br>
+                *“Quando ordinate qualcosa su Amazon: (1) Un sensore digitale rileva il vostro ordine [Osservatore]. (2) Un braccio robotico preleva l'oggetto dallo scaffale [Pistone]. (3) Un nastro trasportatore lo trasporta alla stazione di imballaggio [Tramoggia]. (4) Il pacco viene riposto in un contenitore etichettato nella sezione corretta del magazzino [Cassa]. La nostra fattoria funziona con le stesse quattro fasi, ma elaborando grano al posto dei pacchi”.*
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Cicli Annidati = L'Analogia della "Stampante da Scrivania" per Griglie 2D</strong><br>
+                *“Quando una stampante stampa una pagina di testo, la testina si sposta in orizzontale stampando una riga di punti (ciclo interno), poi scende di una riga (ciclo esterno) e avanza stampando la riga successiva, ripetendo il processo fino a completare il foglio. La semina a file dell'Agente funziona allo stesso modo: il ciclo interno semina una fila e il ciclo esterno esegue il cambio di fila”.*
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Test in Isolamento — La Regola di "Eseguire il Debug di una Fase alla Volta"</strong><br>
+                Per i sistemi integrati a componenti multipli, esegui sempre test isolati su ciascuna fase prima di unirle nel circuito finale. Il protocollo di debugging per il Modulo 4 stabilisce: (1) Verificare che l'Osservatore emetta l'impulso alla crescita della coltura (usa una lampada). (2) Verificare che il Pistone si estenda se alimentato manualmente (usa una Leva). (3) Verificare che la Tramoggia raccolga gli oggetti (lancia elementi a mano sopra di essa). (4) Verificare che la Tramoggia invii gli elementi alla cassa corretta (inserisci oggetti di prova nel filtro). Solo quando ogni fase supera il test individuale, gli studenti devono collegare l'intera pipeline.
+            </p>
+        </div>
+
+        <div id="test-cta" class="anchor-target">
+            <div class="section-head">8 · Verifica delle Conoscenze del Modulo 4</div>
+        </div>
+
+        <div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+            <div style="font-size:40px;margin-bottom:12px">📝</div>
+            <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Sei pronto per la Verifica delle Conoscenze del Modulo 4?</div>
+            <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+                6 domande estratte esclusivamente dal contenuto del Modulo 4. Un punteggio del <strong>70% o superiore</strong> sblocca l'accesso al Modulo 5. I quesiti sono del tutto indipendenti dai test dei moduli precedenti e dal DST finale.
+            </p>
+            <div class="btn-row center">
+                <a href="ItModule4Test.html" class="btn-primary">Inizia il Test del Modulo 4 →</a>
+                <button class="btn-outline" onclick="goHome()">← Dashboard</button>
+            </div>
+        </div>
+
+    </div><footer>© 2026 Kodland. Materiale di formazione interna per i tutor — vietata la distribuzione esterna.</footer>
+    <script src="shared.js"></script>
+    <script>
+        initShared();
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        if (!isModuleUnlocked(4)) { alert('Per favore, completa prima i moduli precedenti.'); goHome(); }
+    </script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Modułu 2 — Miasto Światła | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .quiz-header {
+            background: linear-gradient(135deg,#1D4ED8,#3B82F6);
+            padding: 24px 32px;
+            color: #fff;
+            text-align: center
+        }
+
+            .quiz-header h2 {
+                font-family: 'Nunito',sans-serif;
+                font-size: 22px;
+                font-weight: 900;
+                color: #fff;
+                margin-bottom: 4px
+            }
+
+            .quiz-header p {
+                color: rgba(255,255,255,.8);
+                font-size: 13px
+            }
+
+        .feedback-box {
+            display: none;
+            margin-top: 14px;
+            border-radius: var(--rsm);
+            padding: 13px 16px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            border: 2px solid
+        }
+
+            .feedback-box.show {
+                display: block
+            }
+
+            .feedback-box.ok {
+                background: var(--ok-bg);
+                border-color: var(--ok-b);
+                color: var(--ok-t)
+            }
+
+            .feedback-box.bad {
+                background: var(--no-bg);
+                border-color: var(--no-b);
+                color: var(--no-t)
+            }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Szkolenie dla Tutorów</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="history.back()">← Moduł 2</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="quiz-header">
+        <h2>📝 Sprawdzian Wiedzy z Modułu 2</h2>
+        <p>🏙️ Miasto Światła · 6 pytań · 70% do zaliczenia</p>
+    </div>
+
+    <div id="quiz-screen" class="quiz-wrap">
+        <div class="q-progress">
+            <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+            <span class="q-count" id="q-count">0 / 6</span>
+        </div>
+        <div id="question-area"></div>
+        <div id="feedback-area"></div>
+        <div class="btn-row" style="margin-top:16px">
+            <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Następne pytanie →</button>
+            <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Prześlij odpowiedzi</button>
+        </div>
+    </div>
+
+    <div id="results-screen" style="display:none;padding:40px 24px">
+        <div class="result-card" id="result-card"></div>
+        <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+    </div>
+
+    <footer>© 2026 Kodland. Wewnętrzny materiał szkoleniowy dla tutorów.</footer>
+    <script src="shared.js"></script>
+    <script>
+        /*
+          MODUŁ 2 — 6 UNIKALNYCH PYTAŃ (zero nakładania się z Modułem 1 lub DST)
+          Indeksy prawidłowych odpowiedzi (0=A, 1=B, 2=C, 3=D):
+          Q1→D(3)  Q2→A(0)  Q3→C(2)  Q4→B(1)  Q5→D(3)  Q6→A(0)
+          Wzór: 3,0,2,1,3,0 — zróżnicowany, brak powtórzeń obok siebie.
+        */
+        const MODULE_ID = 2;
+        const PASS_PCT = 70;
+
+        const QUESTIONS = [
+            {
+                q: "Uczeń wykonuje polecenie /clone 100 64 200  104 68 204  100 64 200 i nic się nie dzieje. Jaka jest tego przyczyna i jak to naprawić?",
+                opts: [
+                    "Miejsce docelowe jest za daleko — maksymalny zasięg /clone wynosi 10 bloków",
+                    "Współrzędna Y miejsca docelowego musi zawsze wynosić 0",
+                    "Polecenie zostało wpisane poprawnie — klon pojawia się zawsze z 5-sekundowym opóźnieniem",
+                    "Obszar źródłowy i docelowy nakładają się na siebie — współrzędne docelowe muszą znajdować się poza ramką ograniczającą region źródłowy"
+                ],
+                correct: 3,  // D
+                feedback: "Poprawnie. Miejsce docelowe polecenia /clone [100 64 200] jest identyczne z pierwszym narożnikiem regionu źródłowego — obszary całkowicie się nakładają, co powoduje błąd bez żadnego komunikatu. Miejsce docelowe musi być parą współrzędnych leżącą całkowicie poza ramką ograniczającą źródło (np. /clone 100 64 200  104 68 204  120 64 200)."
+            },
+            {
+                q: "Uczeń wpisuje komendę /tp @s ~0 64 ~0. Co to polecenie robi inaczej zarówno od /tp @s ~0 ~0 ~0, jak i od /tp @s 0 64 0?",
+                opts: [
+                    "Zachowuje bieżące pozycje X i Z ucznia, ale ustawia jego wysokość dokładnie na Y=64, łącząc jedną wartość bezwzględną z dwoma względnymi przesunięciami",
+                    "Teleportuje ucznia do początku świata, dokładnie na poziom morza",
+                    "Teleportuje wszystkich graczy (~0) na poziom 64 — @s to selektor dla wszystkich uczniów",
+                    "To niepoprawna składnia — nie można mieszać tildy i wartości bezwzględnych w jednym poleceniu /tp"
+                ],
+                correct: 0,  // A
+                feedback: "Poprawnie. Minecraft pozwala na stosowanie mieszanej składni współrzędnych. ~0 pozostawia obecne X bez zmian; 64 (bez tildy) ustawia wysokość dokładnie na Y=64; ~0 pozostawia obecne Z bez zmian. Jest to przydatne do komend typu „wyrównaj do poziomu morza” bez zmiany pozycji poziomej. Polecenie /tp @s ~0 ~0 ~0 w ogóle nie przesuwa gracza; /tp @s 0 64 0 wysyła go do początku świata."
+            },
+            {
+                q: "Siatka stołu rzemieślniczego ma 9 slotów. Uczeń umieszcza dwa bloki kamienia (Stone) obok siebie w górnym rzędzie stołu rzemieślniczego i nic nie otrzymuje. Na czym polega problem?",
+                opts: [
+                    "Kamienne płytki naciskowe wymagają trzech bloków kamienia, a nie dwóch",
+                    "Stół rzemieślniczy musi zostać postawiony na ziemi, zanim przepisy zaczną działać",
+                    "Przepis na kamienną płytkę naciskową wymaga dwóch bloków kamienia umieszczonych w poziomym układzie 1×2 w dowolnym rzędzie — uczeń najprawdopodobniej umieścił je w slotach 1 i 3 zamiast 1 i 2 (sąsiadujących), pomijając środkowy slot",
+                    "Kamień nie może być używany w stole rzemieślniczym — wymaga to bruku (Cobblestone)"
+                ],
+                correct: 2,  // C
+                feedback: "Poprawnie. Przepis na kamienną płytkę naciskową wymaga dwóch bloków kamienia w sąsiadujących slotach w poziomie (w dowolnym rzędzie). Jeśli uczeń pominął środkowy slot — umieszczając kamień na pozycjach 1 i 3 zamiast 1 i 2 — wzorzec siatki nie pasuje do żadnego przepisu i nic nie powstaje. Przepisy rzemieślnicze zależą bezwzględnie od pozycji komponentów."
+            },
+            {
+                q: "Podczas wspólnego budowania miasta uczeń przypadkowo niszczy 10 bloków mostu innego zespołu. Zgodnie z zasadami sąsiedztwa (Neighbourhood Rules), jaka jest prawidłowa reakcja tutora?",
+                opts: [
+                    "Tymczasowo usuń ucznia z sesji jako wyraźną konsekwencję naruszenia zasad",
+                    "Odwołaj się do Zasady Sąsiedztwa po imieniu, pokieruj uczniem, aby pomógł odbudować uszkodzone bloki, i wykorzystaj ten moment do wzmocnienia standardów społeczności bez stosowania karzącego języka",
+                    "Ignoruj incydent, chyba że poszkodowany uczeń złoży skargę, aby uniknąć pogorszenia sytuacji",
+                    "Wstrzymaj całą sesję i zresetuj świat do stanu sprzed wystąpienia uszkodzeń"
+                ],
+                correct: 1,  // B
+                feedback: "Poprawnie. Reakcje karne (usuwanie, wstrzymywanie sesji) budzą urazę i wprowadzają atmosferę strachu w klasie. Zasady Sąsiedztwa mają charakter naprawczy, a nie karny: nazwij regułę („Pamiętaj — Zasada Sąsiedztwa”), pokieruj uczniem, aby odbudował to, co zostało zniszczone, i potraktuj to jako moment na wzmocnienie standardów społeczności. To modeluje rzeczywiste normy współpracy, do ćwiczenia których zaprojektowano zadanie budowy miasta."
+            },
+            {
+                q: "Pułapki z płytką naciskową jest podłączona do Dozownika znajdującego się w odległości 20 bloków. Uczeń staje na płytce, ale Dozownik uruchamia się z wyraźnym, 1-sekundowym opóźnieniem. Jaka jest tego przyczyna techniczna?",
+                opts: [
+                    "Dozownik potrzebuje przekaźnika (Redstone Repeater) obok siebie, aby strzelać z normalną prędkością",
+                    "W przewodzie Redstone występuje przerwa, która spowalnia sygnał",
+                    "Płytka naciskowa aktywuje się dopiero przy drugim kroku, a nie przy pierwszym",
+                    "Sygnały Redstone przemieszczają się z prędkością 1 bloku na tick (0,05 sekundy); na dystansie 20 bloków proszku sygnał potrzebuje 20 ticków = 1 sekundy, aby dotrzeć do Dozownika — jest to oczekiwane zachowanie fizyki gry, a nie błąd"
+                ],
+                correct: 3,  // D
+                feedback: "Poprawnie. Prędkość propagacji sygnału Redstone wynosi 1 blok na tick, a jeden tick to 0,05 sekundy. Przewód o długości 20 bloków wprowadza zatem opóźnienie 20 ticków = 1 sekundę. To normalna fizyka Minecrafta. Jeśli wymagana jest szybsza reakcja, skróć przewód lub użyj Komparatora (Redstone Comparator) do wzmocnienia sygnału bez opóźnień. Ważne: to doskonała okazja dydaktyczna do omówienia propagacji sygnału, a nie błąd do „naprawienia”."
+            },
+            {
+                q: "Po dzisiejszej wspólnej sesji tutor chce przekazać konkretną pochwałę powiązaną z zachowaniem dla zespołu Budowniczych Mostów. Który z poniżsщих przykładów jest najbardziej skuteczny?",
+                opts: [
+                    "„Niesamowita robota, Budowniczowie Mostów — użyliście dokładnych współrzędnych, aby wyrównać punkty końcowe mostu z dzielnicami obu zespołów, a projekt łuku pokazuje, że pomyśleliście o symetrii. To jest profesjonalne myślenie architektoniczne”.",
+                    "„Świetna robota dzisiaj, zespół — zbudowaliście naprawdę ładny most!”",
+                    "„Budowniczowie Mostów byli dzisiaj najlepszym zespołem — znacznie lepszym niż inni”.",
+                    "„Dobrze sobie poradziliście. Następnym razem w ramach nagrody dam wam zadanie bonusowe”."
+                ],
+                correct: 0,  // A
+                feedback: "Poprawnie. Opcja A jest konkretna i powiązana z zachowaniem: nazywa dokładne działanie techniczne („użyliście dokładnych współrzędnych, aby wyrównać punkty końcowe”), zastosowaną zasadę projektowania („symetria”) i ujmuje to w profesjonalne ramy („myślenie architektoniczne”). Daje to uczniom jasną informację, jakie zachowanie należy powtórzyć. Ogólne pochwały („świetny most!”), pochwały porównawcze („najlepszy zespół”) i odłożone w czasie nagrody nie tworzą tej samej pętli wzmocnienia."
+            }
+        ];
+
+        let current = 0, answers = [], answered = false;
+        const LETTERS = ['A', 'B', 'C', 'D'];
+
+        function renderQuestion() {
+            const q = QUESTIONS[current];
+            answered = false;
+            document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+            document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('feedback-area').innerHTML = '';
+            document.getElementById('question-area').innerHTML = `
+        <div class="qnum">Pytanie ${current + 1} z ${QUESTIONS.length}</div>
+        <div class="qtext">${q.q}</div>
+        <div class="opt-list" id="opt-list">
+          ${q.opts.map((o, i) => `
+            <div class="opt" id="opt-${i}" onclick="selectOpt(${i})">
+              <span class="opt-letter">${LETTERS[i]}</span><span>${o}</span>
+            </div>`).join('')}
+        </div>`;
+        }
+
+        function selectOpt(i) {
+            if (answered) return;
+            answered = true;
+            const q = QUESTIONS[current];
+            answers[current] = i;
+            for (let j = 0; j < q.opts.length; j++) {
+                const el = document.getElementById(`opt-${j}`);
+                el.classList.add('disabled');
+                if (j === q.correct) el.classList.add('correct');
+                else if (j === i) el.classList.add('wrong');
+            }
+            const isRight = i === q.correct;
+            document.getElementById('feedback-area').innerHTML = `
+        <div class="feedback-box ${isRight ? 'ok' : 'bad'} show">
+          ${isRight ? '✅ ' : '❌ '} ${q.feedback}
+        </div>`;
+            if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+            else document.getElementById('submit-btn').style.display = 'inline-flex';
+        }
+
+        function nextQuestion() { current++; renderQuestion(); window.scrollTo(0, 0); }
+
+        function submitQuiz() {
+            const score = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+            const pct = Math.round(score / QUESTIONS.length * 100);
+            const passed = pct >= PASS_PCT;
+            if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('results-screen').style.display = 'block';
+            document.getElementById('result-card').innerHTML = `
+        <div class="result-emoji">${passed ? '🎉' : '😅'}</div>
+        <div class="result-title">${passed ? 'Moduł 2 Ukończony!' : 'To jeszcze nie to'}</div>
+        <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+        <div class="result-sub">Odpowiedziałeś poprawnie na <strong>${score} z ${QUESTIONS.length}</strong> pytań.
+          ${passed ? ' Świetna robota — wykazałeś się solidnym zrozumieniem zawartości Modułu 2.'
+                    : ` Do odblokowania Modułu 3 wymagany jest wynik <strong>${PASS_PCT}%</strong>. Przejrzyj materiał i spróbuj ponownie.`}
+        </div>`;
+            document.getElementById('result-actions').innerHTML = passed
+                ? `<a href="PlModule3.html" class="btn-primary">Przejdź do Modułu 3 →</a>
+           <button class="btn-outline" onclick="goHome()">← Pulpit</button>`
+                : `<button class="btn-primary" onclick="retake()">Powtórz test</button>
+           <a href="PlModule2.html" class="btn-outline">← Przejrzyj Moduł 2</a>`;
+            window.scrollTo(0, 0);
+        }
+
+        function retake() {
+            current = 0; answers = [];
+            document.getElementById('quiz-screen').style.display = 'block';
+            document.getElementById('results-screen').style.display = 'none';
+            renderQuestion(); window.scrollTo(0, 0);
+        }
+
+        initShared();
+        if (!isModuleUnlocked(MODULE_ID)) { alert('Najpierw ukończ Moduł 1.'); goHome(); }
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        renderQuestion();
+    </script>
+</body>
+</html>

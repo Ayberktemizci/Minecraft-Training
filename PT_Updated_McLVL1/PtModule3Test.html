@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste do Módulo 3 — Oásis da Lógica | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .quiz-header {
+            background: linear-gradient(135deg,#6D28D9,#8B5CF6);
+            padding: 24px 32px;
+            color: #fff;
+            text-align: center
+        }
+
+            .quiz-header h2 {
+                font-family: 'Nunito',sans-serif;
+                font-size: 22px;
+                font-weight: 900;
+                color: #fff;
+                margin-bottom: 4px
+            }
+
+            .quiz-header p {
+                color: rgba(255,255,255,.8);
+                font-size: 13px
+            }
+
+        .feedback-box {
+            display: none;
+            margin-top: 14px;
+            border-radius: var(--rsm);
+            padding: 13px 16px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            border: 2px solid
+        }
+
+            .feedback-box.show {
+                display: block
+            }
+
+            .feedback-box.ok {
+                background: var(--ok-bg);
+                border-color: var(--ok-b);
+                color: var(--ok-t)
+            }
+
+            .feedback-box.bad {
+                background: var(--no-bg);
+                border-color: var(--no-b);
+                color: var(--no-t)
+            }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Treinamento de Tutores</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="history.back()">← Módulo 3</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="quiz-header">
+        <h2>📝 Verificação de Conhecimento do Módulo 3</h2>
+        <p>🧩 Oásis da Lógica · 6 Perguntas · 70% para Aprovação</p>
+    </div>
+
+    <div id="quiz-screen" class="quiz-wrap">
+        <div class="q-progress">
+            <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+            <span class="q-count" id="q-count">0 / 6</span>
+        </div>
+        <div id="question-area"></div>
+        <div id="feedback-area"></div>
+        <div class="btn-row" style="margin-top:16px">
+            <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Próxima Questão →</button>
+            <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Enviar Respostas</button>
+        </div>
+    </div>
+
+    <div id="results-screen" style="display:none;padding:40px 24px">
+        <div class="result-card" id="result-card"></div>
+        <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+    </div>
+
+    <footer>© 2026 Kodland. Material de treinamento interno de tutores.</footer>
+    <script src="shared.js"></script>
+    <script>
+        /*
+          MÓDULO 3 — 6 QUESTÕES ÚNICAS (zero sobreposição com os Módulos 1-2 ou DST)
+          Índices de respostas corretas (0=A, 1=B, 2=C, 3=D):
+          Q1→B(1)  Q2→C(2)  Q3→A(0)  Q4→D(3)  Q5→B(1)  Q6→C(2)
+          Padrão: 1,2,0,3,1,2 — variado, sem repetições idênticas consecutivas.
+        */
+        const MODULE_ID = 3;
+        const PASS_PCT = 70;
+
+        const QUESTIONS = [
+            {
+                q: "A variável 'score' de um aluno sempre exibe o valor 1 imediatamente quando o programa inicia, antes mesmo de o jogador caminhar. Qual é a causa precisa?",
+                opts: [
+                    "O evento Ao Caminhar do Jogador dispara automaticamente uma vez durante a inicialização do programa",
+                    "O bloco de inicialização 'definir score = 0' está dentro do evento Ao Caminhar do Jogador, então cada passo de caminhada redefine o score para 0 antes do incremento — fazendo com que a pontuação seja sempre 1",
+                    "As variáveis do MakeCode sempre começam em 1, a menos que sejam explicitamente definidas em um bloco Ao Iniciar",
+                    "O bloco 'alterar score por 1' está sendo executado em um loop infinito em segundo plano"
+                ],
+                correct: 1,  // B
+                feedback: "Correto. Se o bloco 'definir score = 0' for colocado dentro do evento Ao Caminhar, a sequência a cada passo será: (1) definir score para 0, (2) alterar score por 1 — a pontuação sempre será igual a 1. A solução: mova o bloco 'definir score = 0' para um bloco Ao Iniciar para que ele rode apenas uma vez no lançamento do programa."
+            },
+            {
+                q: "Um aluno quer que a condição de vitória seja acionada quando o jogador coletar 10 ou mais gemas, mas a condição nunca dispara, mesmo quando gems = 12. O código diz: se gems = 10 então { say 'Você Ganhou!' }. Qual é o problema e a solução?",
+                opts: [
+                    "A variável precisa obrigatoriamente se chamar 'score' e não 'gems' — o MakeCode só reconhece nomes padrão de variáveis",
+                    "O bloco 'say' deve ser substituído por um bloco 'print' dentro de estruturas condicionais",
+                    "A condição usa o operador = (exatamente igual a 10) em vez de ≥ (maior ou igual a 10) — se o jogador coletar 12, gems nunca será exatamente igual a 10, fazendo com que a condição nunca seja verdadeira",
+                    "As estruturas condicionais não conseguem ler variáveis diretamente — um bloco separado de 'leitura' deve ser adicionado antes"
+                ],
+                correct: 2,  // C
+                feedback: "Correto. Com a condição 'gems = 10', o programa verifica se gems é exatamente igual a 10. Se o jogador coletar gemas em blocos (ex: +3 por vez), gems pula de 9 para 12 — ignorando o 10 completamente. A condição nunca será verdadeira. Solução: altere o operador para ≥ (maior ou igual a), que dispara quando gems atinge 10 ou qualquer valor acima dele."
+            },
+            {
+                q: "Qual das alternativas a seguir descreve corretamente o escopo das variáveis no MakeCode Education?",
+                opts: [
+                    "Todas as variáveis são globais — qualquer bloco de evento em qualquer lugar do programa pode ler e modificar qualquer variável",
+                    "As variáveis são locais ao bloco de evento no qual foram criadas — outros blocos não conseguem acessá-las",
+                    "As variáveis só existem enquanto o seu bloco de evento criador estiver ativamente rodando",
+                    "As variáveis do MakeCode precisam ser declaradas com um tipo (número, texto ou booleano) antes de serem usadas"
+                ],
+                correct: 0,  // A
+                feedback: "Correto. No MakeCode Education, todas as variáveis são globais por padrão. Uma variável criada em um bloco Ao Iniciar é totalmente acessível e modificável dentro de Ao Caminhar do Jogador, Ao Quebrar Bloco e todos os outros blocos de eventos. Não há escopos de variáveis locais. Isso simplifica a programação para os alunos mais jovens, mas significa que eles precisam ter cuidado — qualquer evento pode reescrever uma variável acidentalmente."
+            },
+            {
+                q: "Após atingir a condição de vitória (score ≥ 10), a animação de fogos de artifício de um aluno é acionada a cada passo de caminhada, e não apenas uma vez. Qual é a causa técnica mais precisa?",
+                opts: [
+                    "O bloco de fogos de artifício possui uma configuração interna de repetição definida como 'infinita'",
+                    "O evento Ao Caminhar do Jogador tem um bug integrado de duplo disparo que ativa duas vezes por passo",
+                    "O operador de comparação ≥ deveria ser alterado para = para evitar que a condição seja reativada",
+                    "A pontuação não está sendo resetada para 0 (ou o estado do jogo não está sendo alterado) dentro do bloco da condição de vitória — o score permanece ≥ 10 após a primeira vitória, fazendo com que cada passo subsequente reative a condição"
+                ],
+                correct: 3,  // D
+                feedback: "Correto. Após a vitória ser acionada, se a pontuação continuar em 10 (ou acima), cada passo subsequente de caminhada avaliará 'se score ≥ 10' → verdadeiro → fogos de artifício novamente. Solução: adicione o bloco 'definir score = 0' como a última linha dentro do bloco de vitória (reseta para reiniciar a partida), ou introduza uma variável booleana 'gameActive' definida como falso ao vencer, envolvendo depois todo o bloco Ao Caminhar em um teste 'se gameActive = verdadeiro'."
+            },
+            {
+                q: "Um tutor quer ajudar um aluno a evitar posicionar códigos fora do bloco de evento. Qual técnica pedagógica é mais eficaz antes de o aluno começar a programar?",
+                opts: [
+                    "Pedir para o aluno observar a tela do tutor enquanto este monta o programa, para depois copiá-lo",
+                    "Pedir para o aluno desenhar um retângulo no papel, identificá-lo com o nome do bloco de evento e decidir fisicamente quais instruções pertencem dentro e fora dele antes de mexer no MakeCode",
+                    "Fornecer ao aluno um programa pré-construído para ele modificar, em vez de criar um do zero",
+                    "Orientar o aluno a verificar a página de documentação do MakeCode caso ele tenha dúvidas sobre o posicionamento dos blocos"
+                ],
+                correct: 1,  // B
+                feedback: "Correto. A técnica de 'desenhar os limites do bloco' externaliza fisicamente a tarefa cognitiva de inclusão dos blocos. Os alunos que desenham o retângulo antes de programar cometem o erro de dentro/fora com muito menos frequência, porque o limite se torna um conceito espacial tangível, em vez de uma regra estrutural abstrata. Isso também exige que o aluno planeje antes de codificar — um hábito profissional fundamental na programação."
+            },
+            {
+                q: "Um aluno quer que seu programa exiba o texto 'Pontuação Atual: 7' quando o jogador caminhar. Ele coloca um bloco 'say' contendo apenas a variável 'score'. A saída na tela mostra '7', mas sem o texto da etiqueta. Como isso deve ser corrigido?",
+                opts: [
+                    "Adicionar um segundo bloco 'say' separado que exiba apenas o texto da etiqueta; o MakeCode os mostrará juntos",
+                    "Usar um bloco 'print' em vez de 'say' — o print suporta textos combinados",
+                    "Usar o bloco 'unir texto' (join) para concatenar a string \"Pontuação Atual: \" com a variável score, passando o resultado combinado para um único bloco 'say'",
+                    "As variáveis não podem ser exibidas no jogo usando o 'say' — elas devem ser mostradas apenas no console do MakeCode"
+                ],
+                correct: 2,  // C
+                feedback: "Correto. O bloco 'say' aceita um único valor. Para combinar texto e uma variável, os alunos devem usar o bloco 'unir texto': [unir [\"Pontuação Atual: \"] [score]] → isso produz uma única string combinada \"Pontuação Atual: 7\", que é então passada para o 'say'. Dois blocos 'say' separados fariam a exibição em linhas diferentes, e não combinadas."
+            }
+        ];
+
+        let current = 0, answers = [], answered = false;
+        const LETTERS = ['A', 'B', 'C', 'D'];
+
+        function renderQuestion() {
+            const q = QUESTIONS[current];
+            answered = false;
+            document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+            document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('feedback-area').innerHTML = '';
+            document.getElementById('question-area').innerHTML = `
+            <div class="qnum">Pergunta ${current + 1} de ${QUESTIONS.length}</div>
+            <div class="qtext">${q.q}</div>
+            <div class="opt-list" id="opt-list">
+              ${q.opts.map((o, i) => `
+                <div class="opt" id="opt-${i}" onclick="selectOpt(${i})">
+                  <span class="opt-letter">${LETTERS[i]}</span><span>${o}</span>
+                </div>`).join('')}
+            </div>`;
+        }
+
+        function selectOpt(i) {
+            if (answered) return;
+            answered = true;
+            const q = QUESTIONS[current];
+            answers[current] = i;
+            for (let j = 0; j < q.opts.length; j++) {
+                const el = document.getElementById(`opt-${j}`);
+                el.classList.add('disabled');
+                if (j === q.correct) el.classList.add('correct');
+                else if (j === i) el.classList.add('wrong');
+            }
+            const isRight = i === q.correct;
+            document.getElementById('feedback-area').innerHTML = `
+            <div class="feedback-box ${isRight ? 'ok' : 'bad'} show">
+              ${isRight ? '✅ ' : '❌ '} ${q.feedback}
+            </div>`;
+            if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+            else document.getElementById('submit-btn').style.display = 'inline-flex';
+        }
+
+        function nextQuestion() { current++; renderQuestion(); window.scrollTo(0, 0); }
+
+        function submitQuiz() {
+            const score = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+            const pct = Math.round(score / QUESTIONS.length * 100);
+            const passed = pct >= PASS_PCT;
+            if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('results-screen').style.display = 'block';
+            document.getElementById('result-card').innerHTML = `
+            <div class="result-emoji">${passed ? '🎉' : '😅'}</div>
+            <div class="result-title">${passed ? 'Módulo 3 Concluído!' : 'Não Foi Dessa Vez'}</div>
+            <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+            <div class="result-sub">Você respondeu corretamente a <strong>${score} de ${QUESTIONS.length}</strong> questões.
+              ${passed ? ' Excelente trabalho — Módulo 3 concluído!'
+                    : ` Uma pontuação de <strong>${PASS_PCT}%</strong> é necessária. Revise o material e tente novamente.`}
+            </div>`;
+            document.getElementById('result-actions').innerHTML = passed
+                ? `<a href="PtModule4.html" class="btn-primary">Continuar para o Módulo 4 →</a>
+               <button class="btn-outline" onclick="goHome()">← Painel</button>`
+                : `<button class="btn-primary" onclick="retake()">Refazer Teste</button>
+               <a href="PtModule3.html" class="btn-outline">← Revisar Módulo 3</a>`;
+            window.scrollTo(0, 0);
+        }
+
+        function retake() {
+            current = 0; answers = [];
+            document.getElementById('quiz-screen').style.display = 'block';
+            document.getElementById('results-screen').style.display = 'none';
+            renderQuestion(); window.scrollTo(0, 0);
+        }
+
+        initShared();
+        if (!isModuleUnlocked(MODULE_ID)) { alert('Por favor, conclua os módulos anteriores primeiro.'); goHome(); }
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        renderQuestion();
+    </script>
+</body>
+</html>

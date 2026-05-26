@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Verifica delle Conoscenze Modulo 1 | Formazione Tutor Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        /* ── Extra della pagina del test ─────────────────────────────────────────── */
+        .test-header {
+            background: linear-gradient(135deg,#1a2e0a 0%,#2f5222 55%,#4a7830 100%);
+            padding: 36px 32px 28px;
+            border-bottom: 3px solid var(--lime);
+            text-align: center;
+        }
+
+            .test-header h2 {
+                font-family: 'Nunito',sans-serif;
+                font-size: clamp(20px,3.5vw,28px);
+                font-weight: 900;
+                color: #fff;
+                margin-bottom: 6px;
+            }
+
+            .test-header p {
+                color: rgba(255,255,255,.72);
+                font-size: 13px;
+            }
+
+            .test-header .badges {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                flex-wrap: wrap;
+                margin-top: 12px;
+            }
+
+        .tbadge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 13px;
+            border-radius: var(--rpill);
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+
+            .tbadge.lime {
+                background: rgba(196,240,70,.2);
+                border: 2px solid rgba(196,240,70,.4);
+                color: var(--lime);
+            }
+
+            .tbadge.pink {
+                background: rgba(240,61,158,.2);
+                border: 2px solid rgba(240,61,158,.4);
+                color: #F472B6;
+            }
+
+        /* Casella di feedback per domanda */
+        .q-feedback {
+            display: none;
+            margin-top: 12px;
+            border-radius: var(--rsm);
+            padding: 13px 16px;
+            font-size: 13px;
+            line-height: 1.6;
+            border: 2px solid;
+        }
+
+            .q-feedback.show {
+                display: block;
+            }
+
+            .q-feedback.ok {
+                background: var(--ok-bg);
+                border-color: var(--ok-b);
+                color: var(--ok-t);
+            }
+
+            .q-feedback.bad {
+                background: var(--no-bg);
+                border-color: var(--no-b);
+                color: var(--no-t);
+            }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span>
+            <div class="logo-div"></div>
+            <span class="logo-sub">Formazione Tutor</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="window.location.href='ItModule1Tech.html'">← Tecnologia M1</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-bar" style="width:0%"></div></div>
+
+    <div class="test-header">
+        <h2>📝 Verifica delle Conoscenze Modulo 1</h2>
+        <p>Un nuovo mondo di pietra verde — Valutazione Tecnica</p>
+        <div class="badges">
+            <span class="tbadge lime">6 Domande</span>
+            <span class="tbadge lime">≥ 70% per Superare</span>
+            <span class="tbadge pink">Nessuna Sovrapposizione DST</span>
+            <span class="tbadge lime">Feedback per Domanda</span>
+        </div>
+    </div>
+
+    <div id="quiz-screen">
+        <div class="quiz-wrap">
+            <div class="q-progress">
+                <div class="q-prog-track"><div class="q-prog-fill" id="q-fill" style="width:0%"></div></div>
+                <span class="q-count" id="q-count">Domanda 1 di 6</span>
+            </div>
+
+            <div id="q-num" class="qnum"></div>
+            <div id="q-text" class="qtext"></div>
+            <div id="q-opts" class="opt-list"></div>
+            <div id="q-feedback" class="q-feedback"></div>
+
+            <div class="btn-row" style="margin-top:20px">
+                <button class="btn-primary" id="btn-next" onclick="nextQ()" style="display:none">Prossima Domanda →</button>
+                <button class="btn-primary" id="btn-submit" onclick="submitQuiz()" style="display:none">Invia e Vedi i Risultati</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="results-screen" style="display:none;padding:40px 24px">
+        <div class="result-card" id="result-card"></div>
+        <div class="btn-row center" id="result-actions" style="margin-top:20px"></div>
+    </div>
+
+    <footer>© 2026 Kodland · Materiale di formazione interna per i tutor — vietata la distribuzione esterna.</footer>
+
+    <script src="shared.js"></script>
+    <script>
+        /*
+         * ─── VERIFICA DELLE CONOSCENZE MODULO 1 ──────────────────────────────────────
+         *
+         * DISTRIBUZIONE DELLE RISPOSTE CORRETTE:
+         * Q1 → C (index 2)   Q2 → A (index 0)   Q3 → D (index 3)
+         * Q4 → B (index 1)   Q5 → A (index 0)   Q6 → D (index 3)
+         * Pattern:  2, 0, 3, 1, 0, 3
+         * Conteggio A: 2  |  Conteggio B: 1  |  Conteggio C: 1  |  Conteggio D: 2
+         * Nessun indice duplicato consecutivo. Tutte e quattro le lettere rappresentate.
+         *
+         * VERIFICA SOVRAPPOSIZIONE DST — Queste 6 domande coprono argomenti NON testati nel DST:
+         * Q1 → Sintassi delle coordinate miste con tilde
+         * Q2 → Scopo del blocco MakeCode "Al comando de chat"
+         * Q3 → Tracking dell'orientamento dell'Agente dopo le svolte
+         * Q4 → Orientamento dell'Osservatore (faccia vs retro)
+         * Q5 → Condizioni di produzione di Pietrisco vs Ossidiana
+         * Q6 → Prerequisito dell'opzione Code Builder nelle impostazioni del mondo
+         * RISULTATO: ZERO sovrapposizione di contenuto con le domande del DST.
+         */
+
+        const MODULE_ID = 1;
+        const PASS_SCORE = 70;
+
+        const QUESTIONS = [
+            // ── Q1 — Corretta: C (index 2) ──
+            {
+                text: "Un tutor deve teletrasportare tutti gli studenti a X=200, mantenendo le loro posizioni Z attuali e allineandoli precisamente a Y=64 (livello del mare). Quale sintassi di comando ottiene questo risultato?",
+                opts: [
+                    "A) /tp @a 200 64 200",
+                    "B) /tp @a ~200 ~64 ~0",
+                    "C) /tp @a 200 64 ~0",
+                    "D) /tp @a ~0 64 ~0"
+                ],
+                correct: 2,
+                feedback: "✅ Corretto. L'opzione C utilizza la sintassi mista: 200 è un valore X assoluto (sempre X=200), 64 è un valore Y assoluto (sempre il livello del mare) e ~0 è un dislocamento Z relativo pari a zero (ogni giocatore mantiene la propria posizione Z attuale). L'opzione A sposterebbe tutti anche a Z=200. L'opzione B applica tutti i valori come dislocamenti relativi, il che aggiungerebbe 200 alla X attuale di ciascun giocatore. L'opzione D mantiene sia X che Z relativi, allineando solo Y."
+            },
+
+            // ── Q2 — Corretta: A (index 0) ──
+            {
+                text: "In MakeCode, qual è la funzione precisa del blocco 'Al comando di chat [parola]' e quando viene effettivamente eseguito il codice inserito al suo interno?",
+                opts: [
+                    "A) È un gestore di eventi: il codice interno viene eseguito esattamente una volta ogni volta che il giocatore digita quella parola specifica nella chat di gioco di Minecraft.",
+                    "B) Esegue automaticamente il codice interno ogni 0.5 secondi come un ciclo in background.",
+                    "C) Esegue il codice interno una volta quando l'editor di MakeCode viene aperto per la prima volta.",
+                    "D) Invia un messaggio a tutti i giocatori nel server ogni volta che viene attivato."
+                ],
+                correct: 0,
+                feedback: "✅ Corretto. 'Al comando di chat' è un gestore di eventi — registra un ascoltatore che attende passivamente finché la condizione di attivazione (il giocatore che digita la parola esatta nella chat di Minecraft) non si attiva. Il codice all'interno viene eseguito solo quando l'evento si attiva; il codice al di fuori di questo blocco viene eseguito solo una volta al caricamento del programma. Questa distinzione è critica: il codice dello studente posizionato al di fuori del blocco non risponderà all'input della chat."
+            },
+
+            // ── Q3 — Corretta: D (index 3) ──
+            {
+                text: "Uno studente scrive questo programma per l'Agente: [gira a destra] → [gira a destra] → [muovi in avanti 3]. L'Agente inizia rivolto a Nord. Dopo aver eseguito l'intera sequenza, in quale direzione si è mosso l'Agente e di quanti blocchi?",
+                opts: [
+                    "A) Nord di 3 blocchi — due svolte a destra si annullano a vicenda",
+                    "B) Est di 3 blocchi — una svolta netta a destra rispetto a Nord equivale a Est",
+                    "C) Ovest di 3 blocchi — due svolte a destra rispetto a Nord passano da Est a Sud e poi a Ovest",
+                    "D) Sud di 3 blocchi — la prima svolta a destra lo rivolge a Est; la seconda svolta a destra da Est lo rivolge a Sud; muovi in avanti 3 sposta l'Agente a Sud di 3 blocchi"
+                ],
+                correct: 3,
+                feedback: "✅ Corretto. Partendo rivolto a Nord: Gira a destra → ora è rivolto a Est. Gira di nuovo a destra → ora è rivolto a Sud. 'Muovi in avanti 3' da un orientamento rivolto a Sud sposta l'Agente di 3 blocchi a Sud (direzione +Z). Due svolte a destra consecutive = rotazione di 180° = ora è rivolto nella direzione cardinale esattamente opposta rispetto all'inizio. Questa domanda mette alla prova la competenza principale di tracking dell'orientamento dell'Agente que previene i bug dei percorsi diagonali."
+            },
+
+            // ── Q4 — Corretta: B (index 1) ──
+            {
+                text: "Durante il posizionamento di un blocco Osservatore per costruire la fattoria di bambù automatizzata, uno studente lo posiziona in modo che la texture scolpita (faccia) punti lontano dal bambù e verso il Pistone. L'Osservatore si attiva visibilmente ma el Pistone non si estende mai. Qual è la causa esatta?",
+                opts: [
+                    "A) Il Pistone deve essere un Pistone Appiccicoso, non un Pistone normale, affinché il circuito funzioni.",
+                    "B) La faccia dell'Osservatore (texture scolpita) è il lato di rilevamento — deve puntare VERSO il bambù. Il lato posteriore liscio è l'uscita/trasmettitore che deve essere rivolto verso il Pistone. Lo studente ha invertito i due lati.",
+                    "C) La pianta di bambù è del tipo di blocco errato — il bambù deve essere sostituito con un Germoglio di Bambù.",
+                    "D) Il segnale di Redstone richiede una Leva sul Pistone per amplificare l'impulso dell'Osservatore."
+                ],
+                correct: 1,
+                feedback: "✅ Corretto. L'Osservatore ha due lati funzionali distinti: la faccia (texture scolpita/occhi) è il sensore che controlla i cambiamenti di stato nel blocco che guarda direttamente — deve puntare VERSO il bambù. Il retro (lato di uscita liscio) è il punto in cui viene emesso l'impulso de Redstone — deve puntare verso il Pistone o il cavo di collegamento. Con i lati invertiti, l'Osservatore sta controllando il Pistone (porzione che non cambia stato) anziché il bambù, quindi non si attiva mai o lo fa per il motivo errato."
+            },
+
+            // ── Q5 — Corretta: A (index 0) ──
+            {
+                text: "Uno studente costruisce una fabbrica di pietrisco ma posiziona il blocco sorgente d'Acqua e il blocco sorgente di Lava direttamente l'uno accanto all'altro, senza alcuno spazio. La fabbrica produce Ossidiana invece di Pietrisco. Qual è la causa precisa e qual è la configurazione corretta?",
+                opts: [
+                    "A) Due blocchi sorgente adiacenti producono Ossidiana perché entrambi sono stazionari — non c'è collisione tra fluidi in movimento. La soluzione: garantire esattamente uno spazio di un blocco vuoto tra i due blocchi sorgente in modo che entrambi i fluidi debbano fluire prima di incontrarsi nello spazio centrale, producendo Pietrisco.",
+                    "B) Lo studente ha utilizzato il tipo di Lava errato — la Lava normale deve essere sostituita con la Lava del Nether proveniente dalla dimensione del Nether.",
+                    "C) La sorgente di Lava deve essere posizionata sopra la sorgente d'Acqua, non accanto ad essa, per la generazione del Pietrisco.",
+                    "D) L'Ossidiana e il Pietrisco vengono prodotti in modo identico — lo studente deve utilizzare un Piccone di Pietra per minare l'Ossidiana, che poi si converte in Pietrisco."
+                ],
+                correct: 0,
+                feedback: "✅ Corretto. Quando un blocco sorgente di Lava viene posizionato direttamente adiacente a un blocco sorgente d'Acqua, sono entrambi stazionari — nessuno dei due è in movimento. La regola di collisione è: Acqua in movimento + Lava in movimento = Pietrisco; sorgente di Lava stazionaria + sorgente d'Acqua adiacente = Ossidiana. Lo spazio di 1 blocco costringe entrambi i fluidi a fluire verso il centro prima di incontrarsi, producendo Pietrisco. L'Ossidiana richiede un Piccone di Diamante per essere minata e si rigenera se le sorgenti rimangono adiacenti — un guasto che blocca la sessione se non rilevato in tempo."
+            },
+
+            // ── Q6 — Corretta: D (index 3) ──
+            {
+                text: "Durante una sessione dal vivo, uno studente digita '/code' nella chat di Minecraft e non succede nulla — non appare alcun pannello di MakeCode e non viene mostrato alcun messaggio di errore. Viene confermato che la connessione Internet dello studente funziona correttamente. Qual è la causa più probabile e la soluzione precisa?",
+                opts: [
+                    "A) Lo studente sta utilizzando un browser incompatibile — MakeCode richiede Chrome versione 90 o superiore.",
+                    "B) Il comando /code distingue tra maiuscole e minuscole — lo studente deve digitare '/Code' con la C maiuscola.",
+                    "C) Lo studente deve trovarsi in Modalità Creativa; /code non funziona in Modalità Sopravvivenza.",
+                    "D) L'opzione 'Abilita Code Builder' non è stata attivata nelle impostazioni del mondo prima dell'inizio della sessione. La soluzione: chiudi il mondo, apri le impostazioni del mondo (icona della matita sulla miniatura del mondo), abilita l'opzione Code Builder, rientra nel mondo e riprova /code."
+                ],
+                correct: 3,
+                feedback: "✅ Corretto. 'Abilita Code Builder' è un'impostazione specifica di ogni mondo in Minecraft Education Edition che deve essere attivata esplicitamente prima che qualsiasi studente entri nel mondo. Quando è su OFF, il comando /code viene eseguito silenziosamente senza alcun feedback — nessun messaggio di errore, nessuna risposta — il che genera confusione sia negli studenti che nei tutor. Questa è la causa più comune di fallimento di /code quando la connettività Internet è confermata. Deve essere verificata come parte della preparazione Pre-Volo prima di ogni sessione."
+            }
+        ];
+
+        /* ─── Motore del Quiz ────────────────────────────────────────────── */
+        const LETTERS = ['A', 'B', 'C', 'D'];
+        let current = 0;
+        let answers = new Array(QUESTIONS.length).fill(null);
+        let answered = false;
+
+        function renderQuestion() {
+            const q = QUESTIONS[current];
+            answered = false;
+
+            document.getElementById('q-fill').style.width = `${(current / QUESTIONS.length) * 100}%`;
+            document.getElementById('q-count').textContent = `Domanda ${current + 1} di ${QUESTIONS.length}`;
+            document.getElementById('q-num').textContent = `Q${current + 1} di ${QUESTIONS.length}`;
+            document.getElementById('q-text').textContent = q.text;
+            document.getElementById('btn-next').style.display = 'none';
+            document.getElementById('btn-submit').style.display = 'none';
+
+            const fb = document.getElementById('q-feedback');
+            fb.className = 'q-feedback';
+            fb.textContent = '';
+
+            // Renderizza le opzioni
+            const container = document.getElementById('q-opts');
+            container.innerHTML = '';
+            q.opts.forEach((opt, i) => {
+                const btn = document.createElement('div');
+                btn.className = 'opt';
+                btn.id = `opt-${i}`;
+                btn.innerHTML = `<span class="opt-letter">${LETTERS[i]}</span><span>${opt.slice(3)}</span>`;
+                btn.addEventListener('click', () => pickAnswer(i));
+                container.appendChild(btn);
+            });
+        }
+
+        function pickAnswer(i) {
+            if (answered) return;
+            answered = true;
+            answers[current] = i;
+
+            const q = QUESTIONS[current];
+            const isRight = i === q.correct;
+
+            // Applica gli stili a tutte le opzioni
+            for (let j = 0; j < q.opts.length; j++) {
+                const el = document.getElementById(`opt-${j}`);
+                el.classList.add('disabled');
+                if (j === q.correct) el.classList.add('correct');
+                else if (j === i) el.classList.add('wrong');
+            }
+
+            // Mostra il feedback
+            const fb = document.getElementById('q-feedback');
+            fb.className = `q-feedback show ${isRight ? 'ok' : 'bad'}`;
+            fb.innerHTML = `<strong>${isRight ? '✅ Corretto!' : '❌ Incorretto.'}</strong><br>${q.feedback.replace(/^[✅❌]\s*\w+[!\.]?\s*/, '')}`;
+
+            // Mostra il controllo successivo appropriato
+            if (current < QUESTIONS.length - 1) {
+                document.getElementById('btn-next').style.display = 'inline-flex';
+            } else {
+                document.getElementById('btn-submit').style.display = 'inline-flex';
+            }
+        }
+
+        function nextQ() {
+            current++;
+            renderQuestion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function submitQuiz() {
+            const score = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+            const pct = Math.round((score / QUESTIONS.length) * 100);
+            const passed = pct >= PASS_SCORE;
+
+            if (passed) {
+                const prev = getModuleScore(MODULE_ID);
+                if (!prev || pct > prev) markModulePassed(MODULE_ID, pct);
+            }
+
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('results-screen').style.display = 'block';
+
+            // Costruisce la revisione per ciascuna domanda
+            let reviewHtml = '<div style="margin-top:14px;text-align:left">';
+            QUESTIONS.forEach((q, i) => {
+                const correct = answers[i] === q.correct;
+                reviewHtml += `
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--text2)">
+            <span style="font-size:14px">${correct ? '✅' : '❌'}</span>
+            <span>Q${i + 1}: ${correct ? 'Corretto' : `Incorretto — la risposta corretta era <strong style="color:var(--text)">${LETTERS[q.correct]}</strong>`}</span>
+          </div>`;
+            });
+            reviewHtml += '</div>';
+
+            document.getElementById('result-card').innerHTML = `
+        <div class="result-emoji">${passed ? '🎉' : '📚'}</div>
+        <div class="result-title">${passed ? 'Modulo 1 Superato!' : 'Continua a Studiare'}</div>
+        <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+        <div class="result-sub">
+          Hai risposto correttamente a <strong>${score} su ${QUESTIONS.length}</strong> domande.
+          ${passed
+                    ? ' Eccellente — hai dimostrato una solida comprensione dei contenuti tecnici del Modulo 1. Il Modulo 2 è ora sbloccato.'
+                    : ` È richiesto un punteggio di <strong>${PASS_SCORE}%</strong> o superiore per progredire. Rivedi l\'Approfondimento Tecnico del Modulo 1 e riprova.`}
+        </div>
+        ${reviewHtml}
+      `;
+
+            document.getElementById('result-actions').innerHTML = passed
+                ? `<a href="ItModule2.html"     class="btn-primary">Continua al Modulo 2 →</a>
+           <button class="btn-outline"  onclick="goHome()">← Dashboard</button>`
+                : `<button class="btn-primary"  onclick="retake()">Ripeti il Test</button>
+           <a href="ItModule1Tech.html" class="btn-outline">← Rivedi il Modulo 1</a>`;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retake() {
+            current = 0;
+            answers = new Array(QUESTIONS.length).fill(null);
+            answered = false;
+            document.getElementById('results-screen').style.display = 'none';
+            document.getElementById('quiz-screen').style.display = 'block';
+            renderQuestion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ─── Inizializzazione ───────────────────────────────────────────── */
+        initShared();
+        document.getElementById('top-bar').style.width = `${getOverallProgress() / 5 * 100}%`;
+        renderQuestion();
+    </script>
+</body>
+</html>

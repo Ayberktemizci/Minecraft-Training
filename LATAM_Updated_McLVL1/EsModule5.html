@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 5 — Castillo del Creador | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .module-banner {
+            background: linear-gradient(135deg,#7E22CE 0%,#A855F7 55%,#EC4899 100%);
+            padding: 36px 32px 28px;
+            position: relative;
+            overflow: hidden
+        }
+
+            .module-banner::before {
+                content: '🏰';
+                font-size: 180px;
+                position: absolute;
+                right: -20px;
+                top: -40px;
+                opacity: .09;
+                line-height: 1;
+                pointer-events: none
+            }
+
+            .module-banner .meyebrow {
+                color: rgba(255,255,255,.72)
+            }
+
+            .module-banner .mh1 {
+                color: #fff
+            }
+
+            .module-banner p {
+                color: rgba(255,255,255,.85);
+                font-size: 14px;
+                line-height: 1.65;
+                max-width: 640px;
+                margin-top: 6px
+            }
+
+            .module-banner .mobj {
+                background: rgba(255,255,255,.13);
+                border-color: rgba(255,255,255,.28);
+                border-left-color: #F0ABFC;
+                color: rgba(255,255,255,.9)
+            }
+
+                .module-banner .mobj strong {
+                    color: #fff
+                }
+
+        .sec-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--surface2);
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 62px;
+            z-index: 90;
+            transition: background .25s
+        }
+
+        .sec-pill {
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 5px 13px;
+            border-radius: var(--rpill);
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text2);
+            text-decoration: none;
+            transition: all .15s;
+            white-space: nowrap
+        }
+
+            .sec-pill:hover {
+                background: var(--lime);
+                border-color: var(--lime-d);
+                color: var(--ink)
+            }
+
+        .script-box {
+            background: var(--ink);
+            color: #F0ABFC;
+            border-radius: var(--rsm);
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono','Courier New',monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 10px 0;
+            border-left: 4px solid #A855F7
+        }
+
+        [data-theme="dark"] .script-box {
+            background: #150a1e
+        }
+
+        .trouble-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 13px
+        }
+
+            .trouble-table th {
+                background: var(--surface2);
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                text-align: left;
+                font-family: 'Nunito',sans-serif;
+                font-weight: 900;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: .6px;
+                color: var(--text)
+            }
+
+            .trouble-table td {
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                line-height: 1.55;
+                vertical-align: top;
+                color: var(--text2)
+            }
+
+            .trouble-table tr:nth-child(even) td {
+                background: var(--surface2)
+            }
+
+        .mc {
+            color: var(--no-t);
+            font-weight: 600
+        }
+
+        .fc {
+            color: var(--ok-t)
+        }
+
+        .tip-card {
+            background: var(--callout-tip-bg);
+            border: 1.5px solid var(--callout-tip-b);
+            border-left: 4px solid #A855F7;
+            border-radius: var(--rsm);
+            padding: 14px 16px;
+            margin-bottom: 10px
+        }
+
+            .tip-card p {
+                font-size: 13.5px;
+                color: var(--callout-tip-t);
+                line-height: 1.65
+            }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        @media(max-width:580px) {
+            .two-col {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .code-block {
+            background: var(--ink);
+            border-radius: var(--r);
+            padding: 18px;
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12.5px;
+            line-height: 1.85;
+            color: #e0e0e0;
+            margin: 10px 0;
+            border: 2px solid var(--border)
+        }
+
+        [data-theme="dark"] .code-block {
+            background: #150a1e
+        }
+
+        .ck {
+            color: #C792EA
+        }
+
+        .cf {
+            color: #82AAFF
+        }
+
+        .cs {
+            color: #C3E88D
+        }
+
+        .cn {
+            color: #F78C6C
+        }
+
+        .cm {
+            color: #FCD34D
+        }
+
+        .anchor-target {
+            scroll-margin-top: 130px
+        }
+
+        code {
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 7px;
+            color: var(--pink)
+        }
+
+        [data-theme="dark"] code {
+            color: var(--lime)
+        }
+
+        .phase-card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--r);
+            padding: 16px 18px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--pink);
+            box-shadow: var(--shadow)
+        }
+
+        .phase-label {
+            font-family: 'Nunito',sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: var(--pink);
+            margin-bottom: 4px
+        }
+
+        .phase-title {
+            font-family: 'Nunito',sans-serif;
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 6px
+        }
+
+        .phase-body {
+            font-size: 13px;
+            color: var(--text2);
+            line-height: 1.65
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Formación de Tutores</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="goHome()">← Panel de Control</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="sec-nav">
+        <a href="#overview" class="sec-pill">1 · Resumen</a>
+        <a href="#blueprint" class="sec-pill">2 · Fase de Diseño</a>
+        <a href="#functions" class="sec-pill">3 · Funciones</a>
+        <a href="#build" class="sec-pill">4 · Construir-Depurar-Decorar</a>
+        <a href="#presentation" class="sec-pill">5 · Lanzamiento de Estudio</a>
+        <a href="#trouble" class="sec-pill">6 · Resolución de Problemas</a>
+        <a href="#protips" class="sec-pill">7 · Consejos Pro</a>
+        <a href="#test-cta" class="sec-pill">8 · Examen Modular</a>
+    </div>
+
+    <div class="module-banner">
+        <div style="max-width:860px;margin:0 auto;position:relative">
+            <div class="meyebrow">Módulo 5 de 5 — Módulo Final</div>
+            <div class="mh1">🏰 Castillo del Creador</div>
+            <p>Desarrollo de proyectos de extremo a extremo: los estudiantes integran todas las habilidades adquiridas de los Módulos 1 a 4 para diseñar, programar y presentar públicamente su propio juego o mundo automatizado en Minecraft. Este es el módulo integrador y la preparación directa para la evaluación práctica del Digital Skill Test.</p>
+            <div class="mobj" style="margin-top:14px;margin-bottom:0">
+                <strong>Objetivos del Módulo 5:</strong> Guiar una sesión estructurada de lluvia de ideas y la Fase de Diseño de Planos · Asignar roles de equipo claros para el trabajo colaborativo en el servidor · Crear y aplicar Funciones personalizadas en MakeCode para eliminar la redundancia de código · Ejecutar el bucle iterativo Construir → Depurar → Decorar · Coordinar una presentación de formato profesional estilo "Lanzamiento del Estudio de Juegos" para padres y compañeros.
+            </div>
+        </div>
+    </div>
+
+    <div class="cbody">
+
+        <div id="overview" class="anchor-target">
+            <div class="section-head">1 · Resumen del Módulo — El Proyecto Integrador</div>
+        </div>
+
+        <div class="card hi">
+            <h4>🎓 Por qué el Módulo 5 difiere fundamentalmente de los anteriores</h4>
+            <p>Cada módulo previo presentaba un conjunto de habilidades técnicas específicas bajo una estructura guiada y dirigida por el tutor. El Módulo 5 invierte deliberadamente esta dinámica: los estudiantes asumen la dirección del software y el tutor actúa exclusivamente como un asesor de producción. Las mecánicas técnicas nuevas (Funciones personalizadas) son intencionalmente más sencillas que los sistemas industriales del Módulo 4, debido a que el reto cognitivo se desplaza hacia la gestión de proyectos, la creatividad y la colaboración.</p>
+            <p style="margin-top:8px">La función principal del tutor en este módulo es mantener un ritmo constante de avance: disipar la parálisis por análisis durante la lluvia de ideas, hacer cumplir estrictamente la Fase de Diseño de Planos y guiar a los alumnos en las fases de desarrollo sin intervenir directamente en su código.</p>
+        </div>
+
+        <div class="card">
+            <h4>Catálogo de Habilidades Requeridas — Prerrequisitos del Módulo 5</h4>
+            <p>El Módulo 5 asume que el alumno domina todo el contenido previo. Antes de iniciar la sesión de planos, realiza una validación conceptual rápida de 5 minutos:</p>
+            <ul style="margin-top:8px">
+                <li><strong>Del Módulo 1:</strong> Invocación del Agente, física de Redstone y orientación espacial en el mapa.</li>
+                <li><strong>Del Módulo 2:</strong> Mesa de crafteo, comando /clone y dinámicas de servidores colaborativos con asignación de roles.</li>
+                <li><strong>Del Módulo 3:</strong> Manejadores de eventos, definición de variables, operadores condicionales y lógica de juegos.</li>
+                <li><strong>Del Módulo 4:</strong> Mecánica de Tolvas, bucles anidados y la tubería autónoma Detectar → Activar → Recolectar → Almacenar.</li>
+            </ul>
+            <p style="margin-top:8px">Identifica de forma oportuna a los estudiantes que presenten debilidades en estos pilares para suministrarles soporte específico antes de que la Fase de Diseño concluya; una base lógica inestable comprometerá la viabilidad del proyecto final.</p>
+        </div>
+
+        <div id="blueprint" class="anchor-target">
+            <div class="section-head">2 · La Fase de Diseño de Planos — Planificar antes de colocar un solo bloque</div>
+        </div>
+
+        <div class="callout cw">
+            <span class="ci">⚠️</span>
+            <div>
+                <strong>El mayor patrón de falla del Módulo 5: Construir sin planificar</strong><br>
+                Los equipos que omiten la Fase de Diseño pasarán de 15 a 20 minutos discutiendo sobre el rumbo del proyecto dentro del servidor. Esta situación fragmenta el tiempo útil de la clase, ya que una vez iniciada la edificación sin un acuerdo firme, no hay margen de recuperación dentro de la ventana de 60 minutos. <strong>La Fase de Diseño de Planos es estrictamente obligatoria y debe cerrarse antes de colocar bloques.</strong>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Protocolo de Lluvia de Ideas Estructurada — 10 Minutos Como Máximo</h4>
+            <p>Dirige un ejercicio de lluvia de ideas con tiempos estrictamente controlados:</p>
+            <ol style="padding-left:18px;margin-top:8px">
+                <li style="margin-bottom:6px"><strong>Ideación silenciosa (3 min):</strong> Cada estudiante escribe de 1 a 2 propuestas en el chat de forma simultánea. No se permite debate verbal todavía. Cada propuesta debe contemplar: (a) una temática de mundo y (b) un mecanismo interactivo o automatizado.</li>
+                <li style="margin-bottom:6px"><strong>Resumen de propuestas (2 min):</strong> El tutor lee todas las ideas en voz alta de manera neutral, garantizando visibilidad para todos.</li>
+                <li style="margin-bottom:6px"><strong>Votación del equipo (2 min):</strong> Los estudiantes votan en el chat utilizando números enteros (1, 2, 3...). Gana la opción con mayoría simple; en caso de empate, el tutor ejerce el voto de calidad. <strong>No se reabren debates tras cerrar la votación.</strong></li>
+                <li><strong>Compromiso con el plano (3 min):</strong> Todos los estudiantes escriben en el chat la frase literal: "Estoy de acuerdo con este plan: [Nombre del Proyecto]". Esto consolida la responsabilidad social y mitiga drásticamente los cambios imprevistos de rumbo a mitad de la construcción.</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h4>El Documento del Plano — Acuerdos obligatorios antes de la producción</h4>
+            <p>Tras la votación, el equipo debe definir cuatro puntos específicos que el tutor fijará en el historial del chat:</p>
+            <div class="two-col" style="margin-top:10px">
+                <div class="card">
+                    <h4>1. Temática del Proyecto</h4>
+                    <p>¿Cuál es el entorno o el propósito del mundo de juego? (Por ejemplo: "Un castillo medieval con un puente levadizo funcional y una sala de tesoros protegida", "Una estación espacial con generación automática de recursos", o "Un circuito de parkour interactivo que registra las puntuaciones con variables").</p>
+                </div>
+                <div class="card">
+                    <h4>2. Característica Insignia</h4>
+                    <p>El sistema lógico centralizado o automatizado que el equipo se compromete a programar; representa el núcleo técnico del proyecto. Debe incorporar de forma obligatoria al menos una habilidad avanzada desarrollada en los Módulos 1 a 4. Sin este componente, el proyecto se reduce a una construcción estática, invalidando los objetivos del curso.</p>
+                </div>
+                <div class="card">
+                    <h4>3. Roles de Equipo</h4>
+                    <p>Cada estudiante asume una responsabilidad principal: Arquitecto (diseño de estructuras), Programador (lógica en MakeCode), Decorador (acabado visual y detalles de atmósfera), y Demostrador (líder de la presentación final). En grupos reducidos de 2 o 3 integrantes, los roles se combinan de manera lógica.</p>
+                </div>
+                <div class="card">
+                    <h4>4. Criterios de Éxito</h4>
+                    <p>Define las especificaciones técnicas del Producto Mínimo Viable (MVP): "El puente levadizo se abre cuando un jugador pisa la placa de presión Y el cofre del tesoro se vuelve accesible detrás de los muros". Esto blinda el alcance del proyecto y ofrece a los alumnos una línea de meta clara.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="functions" class="anchor-target">
+            <div class="section-head">3 · Funciones Personalizadas en MakeCode — Inmersión Técnica</div>
+        </div>
+
+        <div class="card">
+            <h4>¿Qué es una Función?</h4>
+            <p>Una <strong>Función</strong> es un bloque de código nombrado y reutilizable. Una vez declarada su definición, puede ser invocada (ejecutada) desde cualquier sección del programa mediante un único bloque de comando. Las funciones erradican la redundancia: en lugar de duplicar una secuencia de 5 bloques en tres manejadores de eventos distintos, se define la lógica una vez y se la llama tres veces.</p>
+            <div class="code-block">
+                <span class="com">// Definición de la función (se programa una sola vez):</span><br>
+                <span class="ck">function</span> <span class="cf">celebrate</span>() {<br>
+                &nbsp;&nbsp;<span class="cf">fireworks</span> at position player          <span class="com">// lanza fuegos artificiales</span><br>
+                &nbsp;&nbsp;<span class="cm">mostrar</span> <span class="cs">"¡Nivel completado!"</span>          <span class="com">// muestra mensaje en chat</span><br>
+                &nbsp;&nbsp;<span class="cf">music</span> play victory                    <span class="com">// reproduce audio de victoria</span><br>
+                }<br><br>
+                <span class="com">// Invocación desde diferentes manejadores de eventos sin duplicar los bloques:</span><br>
+                <span class="ck">on player</span> walk {<br>
+                &nbsp;&nbsp;<span class="ck">if</span> score <span class="cn">≥ 10</span> <span class="ck">then</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">celebrate</span>()  <span class="com">// la llamada ejecuta toda la secuencia resumida en una sola línea</span><br>
+                &nbsp;&nbsp;}<br>
+                }<br><br>
+                <span class="ck">on block</span> broken {<br>
+                &nbsp;&nbsp;<span class="ck">if</span> blockscore <span class="cn">≥ 5</span> <span class="ck">then</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">celebrate</span>()  <span class="com">// ejecuta la misma secuencia lógica, manteniendo el código limpio y libre de duplicaciones</span><br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+            <p style="margin-top:10px"><strong>Importancia de las funciones en el desarrollo cognitivo:</strong> Al copiar bloques de código de forma repetida, los alumnos introducen errores sintácticos e inconsistencias estructurales. Si deciden modificar la secuencia de celebración, tendrían que buscar y actualizar manualmente cada copia. Al estructurar una Función, actualizan únicamente la definición central y el cambio se propaga de manera inmediata en todas las llamadas. Este es el primer encuentro formal de los estudiantes con el principio de ingeniería de software <strong>DRY (Don't Repeat Yourself / No te repitas)</strong>.</p>
+        </div>
+
+        <div class="card">
+            <h4>El momento óptimo para introducir las Funciones</h4>
+            <p>Introduce el concepto de Función exactamente en el instante en que detectes que un estudiante se dispone a clonar una secuencia de bloques por segunda vez. Este representa el "momento de enseñanza oportuno": el alumno experimenta la fricción del problema (redundancia mecánica) antes de recibir la solución algorítmica (Funciones). Evita explicar las funciones de forma teórica pura antes de que surja la necesidad en la práctica; la motivación técnica debe nacer de su propia experiencia en el lienzo.</p>
+            <div class="script-box" style="margin-top:8px">"Veo que estás a punto de duplicar esa misma secuencia de bloques para la celebración. Antes de que lo hagas, déjame enseñarte una estrategia de ingeniería más eficiente. ¿Qué te parecería escribir esa lógica una sola vez y poder llamarla desde cualquier rincón de tu programa? Eso se conoce como una Función. Déjame mostrarte cómo se estructura".</div>
+        </div>
+
+        <div id="build" class="anchor-target">
+            <div class="section-head">4 · El Bucle Operacional: Construir → Depurar → Decorar</div>
+        </div>
+
+        <div class="card">
+            <h4>Las tres fases del desarrollo de software en Minecraft</h4>
+            <p>Toda sesión de programación tras la firma del plano debe avanzar siguiendo de forma estricta este ciclo iterativo. Los equipos tienen prohibido saltar etapas o incorporar funciones secundarias sin haber consolidado un ciclo completo del Producto Mínimo Viable.</p>
+            <div style="margin-top:10px">
+                <div class="phase-card">
+                    <div class="phase-label">Fase 1</div>
+                    <div class="phase-title">🔨 Construir — Enfocarse primero en el Producto Mínimo Viable (MVP)</div>
+                    <div class="phase-body">Despliega de forma exclusiva la infraestructura elemental para cumplir con los criterios de éxito definidos en el plano. En esta etapa quedan prohibidos los acabados estéticos, detalles visuales o agregados fuera del alcance inicial. El objetivo de la Fase 1 es materializar un prototipo funcional básico, aunque sea estéticamente rústico. El tutor debe contener activamente la dispersión estética: los estudiantes que colocan bloques decorativos antes de validar la Redstone o el código pierden tiempo valioso y se frustran si el sistema lógico falla posteriormente debajo de las estructuras decorativas.</div>
+                </div>
+                <div class="phase-card" style="border-left-color:var(--amber-d,#D97706)">
+                    <div class="phase-label" style="color:var(--amber-d,#D97706)">Fase 2</div>
+                    <div class="phase-title">🔍 Depurar — Validar la funcionalidad antes de los acabados estéticos</div>
+                    <div class="phase-body">Somete a prueba cada mecanismo interactivo y automatizado fijado en los criterios de éxito. Emplea la metodología de depuración por aislamiento desarrollada en el Módulo 4: evalúa cada componente de forma independiente y luego valida el comportamiento holístico del sistema integrado. Todos los bugs lógicos deben resolverse por completo antes de autorizar el paso a la Fase 3. Esta es la fase de mayor actividad para el tutor: circula constantemente por los canales de pantalla compartida y plantea interrogantes socráticos como "¿qué debería suceder aquí?" en lugar de dar directrices punitivas; los estudiantes diagnostican y el tutor guía el análisis.</div>
+                </div>
+                <div class="phase-card" style="border-left-color:#A855F7">
+                    <div class="phase-label" style="color:#A855F7">Fase 3</div>
+                    <div class="phase-title">🎨 Decorate — Personalización y Pulido Estético</div>
+                    <div class="phase-body">Se accede a esta etapa únicamente tras recibir la confirmación de depuración exitosa de la Fase 2. Es el momento de incorporar estandartes, paletas de colores complejas, señalizaciones con carteles y detalles de ambientación para enriquecer la experiencia visual del proyecto. Asigna subtareas de diseño estético a los estudiantes que concluyan la depuración antes de tiempo; ningún alumno debe permanecer inactivo en el servidor. El rol del Decorador asume el liderazgo en esta etapa, pero todo el equipo colabora de manera integrada. Es también el espacio idóneo para implementar características de bonificación de la lista de tareas extra.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="presentation" class="anchor-target">
+            <div class="section-head">5 · El Lanzamiento del Estudio de Juegos — Presentación Profesional</div>
+        </div>
+
+        <div class="callout ct">
+            <span class="ci">💡</span>
+            <div>
+                <strong>La trascendencia del marco lingüístico: "Lanzamiento del Estudio" frente a "Mostrar y Contar"</strong><br>
+                El vocabulario enmarca las expectativas de comportamiento. Las dinámicas de "mostrar y contar" remiten a actividades escolares informales con juguetes. El término "Lanzamiento del Estudio de Juegos" evoca los procesos profesionales de corporaciones de ingeniería de software como Mojang, Nintendo o Valve. Elevar la terminología incrementa el compromiso del alumno, promueve el sentido de responsabilidad y resulta en presentaciones de calidad superior: los estudiantes exponen sus algoritmos con orgullo de ingeniería, dejando de lado las actitudes informales.
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Estructura Oficial de la Presentación — Formato Obligatorio</h4>
+            <p>El estudiante en el rol de Demostrador lidera la exposición, mientras sus compañeros proveen soporte operativo en el servidor. El tiempo asignado es de **5 minutos por proyecto** de manera estricta.</p>
+            <ol style="padding-left:18px;margin-top:8px">
+                <li style="margin-bottom:8px"><strong>Nombre del Proyecto y Concepto General (30 segundos):</strong> "Nuestro proyecto se titula [Nombre]. El concepto central de nuestro software consiste en [Explicación de la experiencia en una frase]".</li>
+                <li style="margin-bottom:8px"><strong>Demostración en Vivo de la Característica Insignia (2 minutos):</strong> Muestra el funcionamiento del sistema lógico o automatizado en tiempo real dentro del juego. El tutor comparte en la pantalla principal la transmisión del Demostrador mientras el grupo observa la ejecución.</li>
+                <li style="margin-bottom:8px"><strong>Sustento Técnico Computacional (1 minuto):</strong> "Este mecanismo opera gracias a [Explicación de la lógica subyacente]. Aplicamos el concepto de [Habilidad del plan de estudios] aprendido en las sesiones de formación". Es obligatorio que el alumno nombre con precisión el concepto técnico de MakeCode o Redstone, evitando descripciones vagas como "solo lo programamos".</li>
+                <li style="margin-bottom:8px"><strong>Visión de Escalabilidad / Versión Futura (30 segundos):</strong> "Si dispusiéramos de una sesión de ingeniería adicional, incorporaríamos la característica de [Mejora]". Esto fomenta el pensamiento de desarrollo iterativo y previene la frustración frente a proyectos inconclusos.</li>
+                <li><strong>Sesión de Preguntas y Respuestas / Q&amp;A (1 minuto):</strong> Los compañeros de clase y los padres presentes formulan preguntas técnicas directas sobre la ingeniería del proyecto. El tutor actúa como moderador del panel.</li>
+            </ol>
+            <p style="margin-top:10px"><strong>Integración de la familia en la sesión de cierre:</strong> Invita formalmente a los padres de familia a presenciar la última sección de la clase utilizando los canales de invitación institucionales provistos en el panel de Kodland. La presencia de los padres incrementa la motivación intrínseca del alumno y valida sus logros académicos. Suministra una breve contextualización de dos frases a los padres antes del inicio de las presentaciones para que conozcan los parámetros de evaluación técnica y puedan formular preguntas enriquecedoras.</p>
+        </div>
+
+        <div class="card">
+            <h4>Rúbrica de Evaluación de QA — Criterios de Calidad Observables durante la Exposición</h4>
+            <div class="two-col" style="margin-top:8px">
+                <div class="card" style="background:var(--ok-bg);border-color:var(--ok-b)">
+                    <h4 style="color:var(--ok-t)">✅ Indicadores de Desempeño Sobresaliente</h4>
+                    <p style="color:var(--ok-t);font-size:13px">El estudiante explica de forma autónoma las interacciones lógicas de su código sin asistencia del tutor · El mecanismo automatizado funciona en vivo sin colapsar · El proyecto integra de forma explícita habilidades técnicas de al menos dos módulos previos · El expositor utiliza un lenguaje técnico formal y responde con solvencia ante preguntas imprevistas de la audiencia.</p>
+                </div>
+                <div class="card" style="background:var(--no-bg);border-color:var(--no-b)">
+                    <h4 style="color:var(--no-t)">❌ Indicadores de Alerta / Desempeño Insuficiente</h4>
+                    <p style="color:var(--no-t);font-size:13px">La demostración técnica falla o produce un crash debido a una depuración incompleta · El alumno es incapaz de explicar el funcionamiento del código de su autoría · El mapa carece de cualquier elemento interactivo o automatizado con Redstone o MakeCode · El expositor se limita a leer texto de apoyo de forma pasiva o el tutor debe intervenir para rescatar la explicación técnica.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="trouble" class="anchor-target">
+            <div class="section-head">6 · Catálogo de Resolución de Problemas — Módulo 5 (5 Escenarios de Aula)</div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="trouble-table">
+                <thead>
+                    <tr><th style="width:22%">Falla / Síntoma</th><th style="width:27%">Causa Raíz</th><th style="width:31%">Solución Exacta</th><th style="width:20%">Guión de Prevención</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mc">El equipo consume más de 20 minutos debatiendo propuestas sin alcanzar un consenso de diseño</td>
+                        <td>La lluvia de ideas se inició de forma abierta y desestructurada, facilitando discusiones circulares indefinidas sin un mecanismo de cierre formal.</td>
+                        <td>Interrumpa el debate de inmediato y aplique el protocolo estructurado: otorga 3 minutos para ideas en silencio en el chat, lee las opciones en voz alta, ejecuta la votación por números y ejerce tu voto de calidad si hay empate. Cierra la Fase de Diseño al minuto 15 de forma estricta anunciando: "La votación ha concluido; el proyecto elegido es [X]. Esta decisión es firme. Iniciamos el registro del plano en el chat".</td>
+                        <td class="fc">"Si no se alcanza un consenso unánime al minuto 10 del diseño del plano, abre la votación formal de inmediato y ejerce tu voto de calidad si es necesario. No extiendas el debate de forma indefinida."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">La Función personalizada creada por el estudiante no genera ninguna acción visible dentro del mundo</td>
+                        <td>Se estructuró el bloque de definición de la Función en el lienzo de MakeCode, pero se omitió colocar el bloque de llamada 'Llamar Función [Nombre]' dentro de un manejador de eventos. Una definición de función en memoria nunca se ejecuta por sí misma.</td>
+                        <td>Guía al estudiante mediante el análisis lógico: "Tu Función está definida de forma correcta en el lienzo, lo cual equivale a tener una receta escrita en un libro de cocina. Sin embargo, no le has dado la orden al chef de cocinarla. Inserta el bloque 'Llamar Función [Nombre]' dentro del evento 'Al comando de chat' o 'Al caminar' para que se ejecute la acción". Realiza la conexión y verifiquen el funcionamiento.</td>
+                        <td class="fc">"Una definición de función es la receta escrita. Una llamada a la función es la orden de ejecutar la receta. El software requiere ambas partes: definir Y llamar."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">El equipo inició la fase de decoración antes de testear los mecanismos, construyendo estructuras sobre un circuito con bugs; ahora es imposible reparar el código sin destruir el diseño visual</td>
+                        <td>Se autorizó la Fase de Decoración de forma prematura, violando la secuencia estricta del bucle Construir → Depurar → Decorar.</td>
+                        <td>No intentes reparar el circuito modificando las decoraciones terminadas. Aplica ingeniería de reversa de inmediato: emplea el comando <code>/clone</code> para realizar un respaldo de la estructura decorada en un sector despejado del mapa. Luego, destruye de forma segura la sección necesaria en el área original para reparar y validar el circuito de Redstone. Concluye reforzando la norma: "Debemos pausar el diseño visual, reparar la Redstone y luego restaurar la zona. Por esto la Depuración precede obligatoriamente a la Decoración".</td>
+                        <td class="fc">"Queda estrictamente prohibido decorar antes de que el circuito apruebe sus pruebas lógicas. Validamos el prototipo funcional primero; luego nos enfocamos en el pulido estético. Diseñar decoraciones sobre una base rota es trabajo perdido."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">El alcance del proyecto se desborda y el equipo sigue añadiendo ideas complejas; se agota el tiempo de la sesión y no tienen ningún entregable terminado</td>
+                        <td>No se definieron las especificaciones del Producto Mínimo Viable (MVP) en el plano; los criterios de éxito eran ambiguos ("hacer un castillo genial") en lugar de objetivos específicos y testeables.</td>
+                        <td>Aplica un freno estricto al crecimiento del alcance. Apóyate en el plano original: "Revisemos nuestros criterios de éxito firmados en el chat: [Lee la frase guardada]. ¿Este mecanismo base está terminado? [Si la respuesta es sí: prohíbe añadir funciones nuevas y redirige a Depurar y Decorar]. [Si la respuesta es no: detén las ideas nuevas y ordénales enfocarse exclusivamente en terminar la meta del plano]". Cualquier propuesta nueva se registra en la lista de la 'Versión 2' para desarrollarse solo si sobra tiempo al final.</td>
+                        <td class="fc">"Las propuestas imprevistas se registran exclusivamente en la lista de la 'Versión 2' en el chat. No se programa ninguna mecánica nueva hasta que los criterios de éxito del plano estén concluidos y depurados."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">Durante el Lanzamiento del Estudio de Juegos, el mecanismo lógico falla o produce un crash en vivo, generando frustración y vergüenza en el alumno ante las familias</td>
+                        <td>La Fase de Depuración se omitió o fue insuficiente; no se verificó el comportamiento del código bajo las condiciones de carga reales de la presentación (por ejemplo, con múltiples jugadores activos en el servidor ingresando desde el punto de generación).</td>
+                        <td>Ejecuta un ensayo general riguroso 10 minutos antes del ingreso de los padres de familia. Dispón siempre de un protocolo de contingencia: si el script falla en vivo, el Demostrador debe guiar la presentación apoyándose en capturas de pantalla de respaldo tomadas previamente durante la fase de pruebas exitosas. El tutor interviene con un tono sereno y profesional para contener la situación: "Permítanme mostrarles las capturas de ingeniería que registramos hace unos minutos, donde podemos apreciar el circuito operando en su estado óptimo".</td>
+                        <td class="fc">"Es obligatorio realizar un ensayo general técnico completo 10 minutos antes de dar acceso a los padres de familia. La simulación debe replicar exactamente las condiciones de la presentación en vivo."</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="protips" class="anchor-target">
+            <div class="section-head">7 · Consejos Pro del Tutor y Analogías del Mundo Real</div>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 El encuadre del "Lanzamiento del Estudio de Juegos" — Por qué eleva el rendimiento</strong><br>
+                <em>"Hoy no venimos a entregar una tarea escolar pasiva; hoy vamos a lanzar formalmente un videojuego al mercado global. Cuando los ingenieros de Mojang presentan una actualización de Minecraft, no se paran ante el público a disculparse o improvisar; exponen la arquitectura del software, explican el valor de su código y demuestran su funcionamiento en tiempo real. Eso es exactamente lo que vamos a lograr hoy en esta sesión".</em> Utilizar este encuadre eleva la confianza y el nivel de detalle de las exposiciones en un 200% en comparación con los enfoques escolares tradicionales.
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Funciones = La Analogía de la "Tarjeta de Receta de Cocina"</strong><br>
+                <em>"Un chef profesional en un restaurante no escribe detalladamente la receta completa de la salsa de tomate cada vez que un cliente pide un plato de pasta; escribe la receta una sola vez en una tarjeta, le pone el nombre 'salsa de tomate' y simplemente le ordena al equipo de cocina: 'preparen la salsa de tomate'. Una Función de MakeCode es tu tarjeta de receta personalizada. Programas los bloques una vez, le asignas un nombre y la invocas en cualquier sección del lienzo llamándola por su nombre. Si deseas modificar los ingredientes de la receta, la cambias una vez en la definición y se actualiza en todo el restaurante de forma inmediata".</em>
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Construir → Depurar → Decorar = La Analogía de la "Obra en Construcción"</strong><br>
+                <em>"Una empresa de ingeniería civil real levanta primero las columnas de soporte y la estructura del techo (Construir). Luego, los inspectores de seguridad entran a revisar y probar las tuberías y el cableado eléctrico mientras las paredes siguen abiertas para poder reparar fallas con facilidad (Depurar). Finalmente, los diseñadores de interiores entran a pintar las superficies y colocar los acabados estéticos (Decorar). Ningún ingeniero pinta las paredes antes de que el electricista valide el cableado; porque pintar sobre un cortocircuito no soluciona la falla, solo la oculta de forma peligrosa".</em>
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Fase de Diseño = La regla de "No discutir en el aire"</strong><br>
+                Un tutor experto solía explicar: "Discutir ideas en el aire antes de edificar es sumamente barato; cambiar la dirección del proyecto cuando los bloques ya están colocados es sumamente costoso". Antes de edificar el primer bloque, las diferencias de opinión tienen costo cero. Tras 30 minutos de construcción, un cambio de rumbo destruye el proyecto. Maneja el plano con el rigor de un contrato vinculante: una vez firmado (escribiendo el acuerdo en el chat), el rumbo queda sellado. Cualquier modificación posterior demandará una propuesta formal por escrito y una votación por mayoría simple.
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Controlar el desborde del alcance mediante la lista de la "Versión 2"</strong><br>
+                Cada idea innovadora o compleja que surja de forma imprevista después de firmar el plano se registra de manera explícita en una lista denominada 'Versión 2' dentro del chat. Esta estrategia genera dos efectos pedagógicos inmediatos: (1) los estudiantes sienten que sus aportes creativos son valorados y registrados formalmente, evitando la sensación de rechazo; (2) el alcance técnico de la producción actual permanece fijo y protegido contra retrasos. Los alumnos que visualizan sus ideas guardadas en la lista de la Versión 2 mantienen el enfoque en los objetivos del plano actual con un nivel de compromiso significativamente mayor.
+            </p>
+        </div>
+
+        <div id="test-cta" class="anchor-target">
+            <div class="section-head">8 · Verificación de Conocimientos del Módulo 5</div>
+        </div>
+
+        <div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+            <div style="font-size:40px;margin-bottom:12px">📝</div>
+            <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Examen Modular Final de Conocimientos</div>
+            <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:520px;margin-left:auto;margin-right:auto">
+                La verificación del Módulo 5 consta de <strong>6 preguntas técnicas y pedagógicas avanzadas</strong> que evalúan la gestión de proyectos sincrónicos, la abstracción de Funciones, el bucle iterativo de desarrollo y el protocolo del Lanzamiento del Estudio de Juegos. Obtener una calificación del <strong>70% o más</strong> desbloquea de forma definitiva el acceso al Digital Skill Test final. Todos los reactivos son completamente independientes de los módulos previos y del examen de certificación prácito.
+            </p>
+            <div class="btn-row center">
+                <a href="EsModule5Test.html" class="btn-primary">Iniciar Examen del Módulo 5 →</a>
+                <button class="btn-outline" onclick="goHome()">← Panel Principal</button>
+            </div>
+        </div>
+
+    </div><footer>© 2026 Kodland. Material técnico confidencial para la capacitación interna de tutores — Prohibida su distribución o copia externa.</footer>
+    <script src="shared.js"></script>
+    <script>
+        initShared();
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        if (!isModuleUnlocked(5)) { alert('Por favor, completa los módulos anteriores primero.'); goHome(); }
+    </script>
+</body>
+</html>

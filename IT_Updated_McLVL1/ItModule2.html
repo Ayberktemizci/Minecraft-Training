@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modulo 2 — Città della Luce | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .module-banner {
+            background: linear-gradient(135deg,#1D4ED8 0%,#2563EB 55%,#3B82F6 100%);
+            padding: 36px 32px 28px;
+            position: relative;
+            overflow: hidden
+        }
+
+            .module-banner::before {
+                content: '🏙️';
+                font-size: 180px;
+                position: absolute;
+                right: -20px;
+                top: -40px;
+                opacity: .09;
+                line-height: 1;
+                pointer-events: none
+            }
+
+            .module-banner .meyebrow {
+                color: rgba(255,255,255,.72)
+            }
+
+            .module-banner .mh1 {
+                color: #fff
+            }
+
+            .module-banner p {
+                color: rgba(255,255,255,.82);
+                font-size: 14px;
+                line-height: 1.65;
+                max-width: 640px;
+                margin-top: 6px
+            }
+
+            .module-banner .mobj {
+                background: rgba(255,255,255,.13);
+                border-color: rgba(255,255,255,.28);
+                border-left-color: #93C5FD;
+                color: rgba(255,255,255,.88)
+            }
+
+                .module-banner .mobj strong {
+                    color: #fff
+                }
+
+        .sec-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--surface2);
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 62px;
+            z-index: 90;
+            transition: background .25s
+        }
+
+        .sec-pill {
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 5px 13px;
+            border-radius: var(--rpill);
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text2);
+            text-decoration: none;
+            transition: all .15s;
+            white-space: nowrap
+        }
+
+            .sec-pill:hover {
+                background: var(--lime);
+                border-color: var(--lime-d);
+                color: var(--ink)
+            }
+
+        .script-box {
+            background: var(--ink);
+            color: #93C5FD;
+            border-radius: var(--rsm);
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono','Courier New',monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 10px 0;
+            border-left: 4px solid #3B82F6
+        }
+
+        [data-theme="dark"] .script-box {
+            background: #0a0e18
+        }
+
+        .trouble-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 13px
+        }
+
+            .trouble-table th {
+                background: var(--surface2);
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                text-align: left;
+                font-family: 'Nunito',sans-serif;
+                font-weight: 900;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: .6px;
+                color: var(--text)
+            }
+
+            .trouble-table td {
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                line-height: 1.55;
+                vertical-align: top;
+                color: var(--text2)
+            }
+
+            .trouble-table tr:nth-child(even) td {
+                background: var(--surface2)
+            }
+
+        .mc {
+            color: var(--no-t);
+            font-weight: 600
+        }
+
+        .fc {
+            color: var(--ok-t)
+        }
+
+        .tip-card {
+            background: var(--callout-tip-bg);
+            border: 1.5px solid var(--callout-tip-b);
+            border-left: 4px solid #3B82F6;
+            border-radius: var(--rsm);
+            padding: 14px 16px;
+            margin-bottom: 10px
+        }
+
+            .tip-card p {
+                font-size: 13.5px;
+                color: var(--callout-tip-t);
+                line-height: 1.65
+            }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        @media(max-width:580px) {
+            .two-col {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .coord-box {
+            background: var(--ink);
+            border-radius: var(--r);
+            padding: 18px;
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12.5px;
+            line-height: 1.85;
+            color: #e0e0e0;
+            margin: 10px 0;
+            border: 2px solid var(--border)
+        }
+
+        [data-theme="dark"] .coord-box {
+            background: #0a0e18
+        }
+
+        .cx {
+            color: #F87171
+        }
+
+        .cy {
+            color: #4ADE80
+        }
+
+        .cz {
+            color: #60A5FA
+        }
+
+        .cm {
+            color: #FCD34D
+        }
+
+        .anchor-target {
+            scroll-margin-top: 130px
+        }
+
+        code {
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 7px;
+            color: var(--pink)
+        }
+
+        [data-theme="dark"] code {
+            color: var(--lime)
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Formazione Tutor</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="goHome()">← Dashboard</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="sec-nav">
+        <a href="#overview" class="sec-pill">1 · Panoramica</a>
+        <a href="#flow" class="sec-pill">2 · Flusso Didattico</a>
+        <a href="#tech" class="sec-pill">3 · Approfondimento Tecnico</a>
+        <a href="#multi" class="sec-pill">4 · Multiplayer</a>
+        <a href="#trouble" class="sec-pill">5 · Risoluzione Problemi</a>
+        <a href="#protips" class="sec-pill">6 · Consigli Pro</a>
+        <a href="#test-cta" class="sec-pill">7 · Verifica</a>
+    </div>
+
+    <div class="module-banner">
+        <div style="max-width:860px;margin:0 auto;position:relative">
+            <div class="meyebrow">Modulo 2 di 5</div>
+            <div class="mh1">🏙️ Città della Luce</div>
+            <p>Meccaniche avanzate, costruzione cooperativa del mondo e pensiero architettonico: gli studenti passano dalla sopravvivenza individuale alla costruzione di una città condivisa utilizzando coordinate, comandi clone e trappole di Redstone.</p>
+            <div class="mobj" style="margin-top:14px;margin-bottom:0">
+                <strong>Obiettivi del Modulo 2:</strong> Padroneggiare le coordinate esatte rispetto a quelle relative · Utilizzare il comando <code>/clone</code> per la simmetria strutturale · Costruire trappole interattive di Redstone (Pedane a pressione, Distributori, TNT) · Introdurre le meccaniche del Banco da lavoro · Svolgere la pianificazione urbana cooperativa in multiplayer con ruoli di squadra definiti.
+            </div>
+        </div>
+    </div>
+
+    <div class="cbody">
+
+        <div id="overview" class="anchor-target">
+            <div class="section-head">1 · Panoramica del Modulo e Personalizzazione Regionale</div>
+        </div>
+
+        <div class="card">
+            <h4>Aumento della Complessità rispetto al Modulo 1</h4>
+            <p>Il Modulo 2 introduce tre grandi evoluzioni: (1) I comandi richiedono ora argomenti di coordinate precisi — gli studenti non possono più affidarsi unicamente a posizioni relative. (2) Il contesto sociale passa dall'individuale al cooperativo — gli studenti devono negoziare, pianificare e comunicare. (3) La complessità costruttiva aumenta dall'automazione di un singolo meccanismo a interi distretti urbani con elementi multipli che richiedono una pianificazione architettonica.</p>
+        </div>
+
+        <div class="card">
+            <h4>Nota sulla Personalizzazione Regionale</h4>
+            <p>La logica di MakeCode e le meccaniche di Minecraft sono universali. Tuttavia, i ganci narrativi e i rompighiaccio possono essere adattati alla cultura locale — usa come analogie punti di riferimento locali familiari, cartoni animati o esempi di città reali. **Gli obiettivi tecnici fondamentali non devono mai essere modificati**. Un tutor a Milano può fare riferimento alla struttura di quella città; un tutor a Roma può fare riferimento alla disposizione delle strade romane. La lezione sulle coordinate rimane identica indipendentemente dalla città presa come riferimento.</p>
+        </div>
+
+        <div id="flow" class="anchor-target">
+            <div class="section-head">2 · Flusso Didattico</div>
+        </div>
+
+        <div class="card">
+            <h4>Guida alla Sessione Passo dopo Passo</h4>
+            <ol style="padding-left:18px;margin-top:8px">
+                <li style="margin-bottom:8px"><strong>Rompighiaccio (00:00–00:05):</strong> "Nomina un edificio della tua città che vorresti ridisegnare da zero." Questo attiva il pensiero architettonico e crea una connessione personale con il tema odierno della costruzione della città.</li>
+                <li style="margin-bottom:8px"><strong>Ripasso delle Coordinate (00:05–00:12):</strong> Rapido riepilogo delle coordinate del Modulo 1. Chiedi agli studenti di spiegare il significato degli assi X/Y/Z senza consultare appunti. Successivamente, introduci le coordinate esatte: "Oggi useremo indirizzi di coordinate reali, non scostamenti relativi."</li>
+                <li style="margin-bottom:8px"><strong>Introduzione al Banco da lavoro (00:12–00:20):</strong> Dimostra come aprire il Banco da lavoro (griglia 3×3) e posizionare i materiali secondo lo schema esatto per fabbricare un piccone di pietra. Ogni studente fabbrica uno strumento come riscaldamento. Conferma che tutti abbiano completato l'oggetto prima di procedere.</li>
+                <li style="margin-bottom:8px"><strong>Costruzione della Trappola di Redstone (00:20–00:30):</strong> Passo dopo passo: (a) Scava una buca 2×2 per le pedane a pressione. (b) Posiziona le Pedane a pressione sul pavimento. (c) Collega tramite polvere di Redstone a un Distributore caricato con frecce o Pozioni da lancio. (d) Esegui il test camminando sopra le pedane. Gli studenti testano le trappole a vicenda.</li>
+                <li style="margin-bottom:8px"><strong>Pausa Cognitiva (00:30–00:35):</strong> Obbligatoria. Attività fisica o quiz fuori dallo schermo.</li>
+                <li style="margin-bottom:8px"><strong>Comando Clone + Pianificazione Urbana (00:35–00:55):</strong> Insegna l'uso di <code>/clone</code> per duplicare una struttura. Assegna i ruoli di squadra (Costruttori di Ponti, Guardiani del Faro, Pianificatori della Città). Gli studenti costruiscono il proprio distretto urbano usando coordinate esatte per allineare le strutture.</li>
+                <li><strong>Riflessione (00:55–01:00):</strong> Ogni squadra presenta il proprio distretto. Una frase ciascuno: "Abbiamo costruito [X] e utilizzato la tecnica [Y]."</li>
+            </ol>
+        </div>
+
+        <div id="tech" class="anchor-target">
+            <div class="section-head">3 · Approfondimento Tecnico — Modulo 2</div>
+        </div>
+
+        <div class="card">
+            <h4>3.1 · Meccaniche del Banco da lavoro</h4>
+            <p>Il Banco da lavoro offre una <strong>griglia 3×3</strong> (9 slot totali) rispetto alla griglia 2×2 dell'inventario del giocatore (4 slot). Più slot permettono ricette più complesse e potenti. Ricette chiave del Modulo 2:</p>
+            <div class="coord-box">
+                Piccone di Pietra:   [Pietra][Pietra][Pietra] / [  ][Bastone][  ] / [  ][Bastone][  ]<br>
+                Distributore:        [Pietrisco][Pietrisco][Pietrisco] / [Pietrisco][Arco][Pietrisco] / [Pietrisco][Redstone][Pietrisco]<br>
+                Pedana a pressione (Pietra): [Pietra][Pietra] / (Griglia 2×1 — su qualsiasi riga)
+            </div>
+            <p style="margin-top:8px"><strong>Punto chiave per l'insegnamento:</strong> Le ricette dipendono dalla posizione — la disposizione dei materiali nella griglia definisce l'oggetto prodotto. Posizionare i materiali nelle posizioni relative errate non produrrà nulla. Questo è il primo incontro degli studenti con le strutture dati posizionali, un concetto informatico fondamentale.</p>
+        </div>
+
+        <div class="card">
+            <h4>3.2 · Coordinate Esatte rispetto a Coordinate Relative</h4>
+            <div class="coord-box">
+                <span class="cm">Coordinate ESATTE (Assolute)</span> — posizioni fisse nella griglia del mondo:<br>
+                <span class="cy">/tp @s 100 64 200</span>  →  teletrasporta sempre a X=100, Y=64, Z=200, indipendentemente dalla posizione attuale<br><br>
+                <span class="cm">Coordinate RELATIVE</span> — scostamento dalla posizione attuale:<br>
+                <span class="cy">/tp @s ~5 ~0 ~0</span>   →  teletrasporta 5 blocchi a Est rispetto a dove ti trovi in questo momento<br><br>
+                <span class="cm">Sintassi mista (valida):</span><br>
+                <span class="cy">/tp @s ~0 64 ~0</span>   →  mantiene X e Z correnti, ma imposta l'altitudine esattamente a Y=64<br><br>
+                <span style="color:#F87171">Test critico:</span> <code>/tp @a 0 64 0</code> (senza tilde) invia sempre TUTTI i giocatori all'origine del mondo.<br>
+                <span style="color:#F87171">Confronto:</span> <code>/tp @a ~0 ~0 ~0</code> (tutte tilde) NON sposta nessuno — gli scostamenti sono tutti zero.
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>3.3 · Il Comando `/clone` — Duplicazione Strutturale</h4>
+            <p>Il comando <code>/clone</code> copia una regione 3D definita in una nuova posizione:</p>
+            <div class="coord-box">
+                Sintassi:  /clone [x1 y1 z1] [x2 y2 z2] [dest-x dest-y dest-z]<br><br>
+                [x1 y1 z1] = un angolo della regione sorgente<br>
+                [x2 y2 z2] = l'angolo opposto della regione sorgente (definisce l'intero volume 3D)<br>
+                [dest-x dest-y dest-z] = l'angolo di destinazione (dove apparirà la copia)<br><br>
+                Esempio — copia una casa 5×5×5 che inizia a 100,64,200 verso 120,64,200:<br>
+                <span class="cy">/clone 100 64 200  104 68 204  120 64 200</span>
+            </div>
+            <p style="margin-top:10px"><strong>Applicazione architettonica:</strong> Costruire la sezione de una torre, quindi clonarla tramite <code>/clone</code> per creare un duplicato perfettamente simmetrico sul lato opposto di una strada. Questo è il principio alla base dell'architettura modulare: progettare bene un elemento e poi replicarlo.</p>
+            <div class="callout cw" style="margin-top:8px">
+                <span class="ci">⚠️</span>
+                <div><strong>Errore di sovrapposizione:</strong> Le regioni di sorgente e destinazione non possono sovrapporsi. Se si sovrappongono, il comando fallisce in modo silenzioso. Assicurati sempre che le coordinate di destinazione siano a una distanza sufficiente dai confini della regione sorgente.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>3.4 · Trappole di Redstone — Componenti e Progettazione del Circuito</h4>
+            <div class="two-col" style="margin-top:8px">
+                <div class="card">
+                    <h4>Pedana a pressione</h4>
+                    <p>Emette un segnale continuo di Redstone mentre un giocatore, un mob o un gruppo di oggetti si trova sopra di essa. Il segnale si interrompe nell'istante in cui l'entità si allontana. Due varianti: <strong>Pietra</strong> (attivata solo da mob/giocatori) e <strong>Legno</strong> (attivata anche dagli oggetti). Per le trappole del Modulo 2 è preferibile la Pietra per evitare attivazioni accidentali dovute a oggetti caduti.</p>
+                </div>
+                <div class="card">
+                    <h4>Distributore</h4>
+                    <p>Quando riceve un impulso di Redstone, espelle un oggetto dal suo inventario nella direzione in cui è rivolto. Se caricato con frecce, funziona come una trappola a dardi. Se caricato con Pozioni da lancio, funziona come una trappola a effetto ad area. Se caricato con TNT, funziona come innesco esplosivo (usa con cautela nelle sessioni di gruppo per evitare di distruggere le costruzioni vicine). Fai clic con il tasto destro per aprire il suo inventario 3×3 e caricare gli oggetti.</p>
+                </div>
+                <div class="card">
+                    <h4>TNT</h4>
+                    <p>Attivata da un segnale di Redstone o dal fuoco, la TNT ha una miccia di 4 tick (0.2 secondi) prima di esplodere. Raggio di esplosione: ~4 blocchi. Nelle trappole del Modulo 2, si può concatenare la TNT all'uscita di un distributore: il Distributore espelle un blocco di TNT, che il circuito della pedana a pressione attiva immediatamente tramite un cavo secondario, facendo esplodere la trappola in sequenza.</p>
+                </div>
+                <div class="card">
+                    <h4>Logica del Circuito della Trappola</h4>
+                    <p><strong>Cablaggio standard della trappola:</strong> Pedana a pressione → polvere di Redstone (1–15 blocchi) → Distributore. Quando un giocatore si trova sulla pedana, il segnale percorre il cavo e attiva il Distributore. <strong>Nota sulla temporizzazione:</strong> I segnali di Redstone viaggiano a un ritmo di 1 blocco per tick — 15 blocchi di cavo aggiungono 15 tick (0.75 secondi) di ritardo effettivo prima che il Distributore si attivi.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="multi" class="anchor-target">
+            <div class="section-head">4 · Pianificazione Cooperativa della Città in Multiplayer</div>
+        </div>
+
+        <div class="card">
+            <h4>Assegnazione dei Ruoli all'interno del Team</h4>
+            <p>Dividi la classe in 2–3 squadre con responsabilità distinte e non sovrapposte. Ciascuna squadra dispone di una zona di coordinate specifica per evitare interferenze:</p>
+            <ul style="margin-top:8px">
+                <li><strong>Costruttori di Ponti:</strong> Costruiscono i collegamenti che uniscono le diverse zone distrettuali. Devono usare coordinate esatte per garantire che i loro ponti si allineino perfettamente con i punti finali nelle zone delle altre squadre.</li>
+                <li><strong>Guardiani del Faro:</strong> Costruiscono una struttura monumentale molto alta (più di 15 blocchi) con illuminazione di Redstone funzionante sulla cima — una Lampada di Redstone collegata a un Sensore di Luce Diurna per l'accensione e lo spegnimento automatico.</li>
+                <li><strong>Pianificatori della Città:</strong> Tracciano le strade e gli spazi pubblici. Devono definire una griglia di coordinate (ad esempio, la strada principale a Z=200, e ogni isolato urbano di 20×20 blocchi) e comunicarla chiaramente alle altre squadre.</li>
+            </ul>
+        </div>
+
+        <div class="callout cw">
+            <span class="ci">⚠️</span>
+            <div>
+                <strong>Il rischio N.° 1 in multiplayer: Gli studenti che distruggono le costruzioni altrui</strong><br>
+                Questo problema deve essere prevenuto, no affrontato a posteriori. Stabilisci le "Reglas del Vicinato" nei primi 5 minuti di ogni sessione multiplayer, prima che gli studenti facciano ingresso nel mondo condiviso.
+                <div class="script-box" style="margin-top:8px">"Prima di entrare in città, quali sono le regole che ogni buon vicino segue? Non rompere le case dei vicini! Non prendere oggetti dalle casse altrui! Se rompi qualcosa per errore, devi ricostruirlo — questa è la Regola del Vicinato."</div>
+                <strong>Quando si verifica una violazione:</strong> Non rimuovere lo studente dalla sessione. Fai riferimento alla Regola del Vicinato per nome ("Ricordi la Regola del Vicinato che abbiamo concordato?") e guidalo ad aiutare nella ricostruzione. Le risposte punitive generano risentimento; le risposte ristorative consolidano gli standard della comunità.
+            </div>
+        </div>
+
+        <div id="trouble" class="anchor-target">
+            <div class="section-head">5 · Catalogo Risoluzione Problemi — Modulo 2 (5 Scenari)</div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="trouble-table">
+                <thead>
+                    <tr>
+                        <th style="width:22%">Errore / Sintomo</th>
+                        <th style="width:27%">Causa Radice</th>
+                        <th style="width:31%">Soluzione Esatta</th>
+                        <th style="width:20%">Guida di Prevenzione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mc">Il comando /clone restituisce un errore in modo silenzioso — non appare nulla a destinazione</td>
+                        <td>Le regioni sorgente e destinazione si sovrappongono; OPPURE le coordinate di destinazione sono state inserite nell'ordine errato (la destinazione deve essere l'angolo inferiore-sinistro-frontale)</td>
+                        <td>Verifica: (1) Che la destinazione sia al di fuori del box di collisione di origine. (2) Che il primo angolo [x1,y1,z1] e il secondo angolo [x2,y2,z2] siano angoli opposti della sorgente — cammina verso ciascun angolo e leggi le coordinate. (3) Che la destinazione [dest-x, dest-y, dest-z] sia l'equivalente del primo angolo ma nella nuova posizione.</td>
+                        <td class="fc">"Annota le coordinate di tutti e tre gli angoli prima di digitare il comando. Un solo numero errato causerà un fallimento silenzioso."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">La pedana a pressione si attiva ma il Distributore non spara</td>
+                        <td>Il cavo di polvere di Redstone è interrotto (c'è uno spazio vuoto nella linea); OPPURE il Distributore è rivolto nella direzione errata; OPPURE l'inventario del Distributore è vuoto</td>
+                        <td>Traccia il cavo: posiziona una torcia temporanea su ogni blocco di polvere di Redstone per verificare quale segmento è privo di energia. Correggi gli spazi vuoti. Conferma la direzione del Distributore (fai clic con il tasto destro per verificare l'inventario: è caricato?). Esegui una prova attivando il Distributore direttamente con una Leva.</td>
+                        <td class="fc">"Verifica della trappola in tre passaggi: cavo continuo? Distributore rifornito? Distributore orientato nel modo giusto? Controllali tutti e tre prima di testare con un alunno."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">Lo studente fatica ad allineare la sua destinazione di /clone con le strutture di un'altra squadra (i ponti non si collegano)</td>
+                        <td>Le squadre non hanno concordato una griglia di coordinate condivisa prima di iniziare a costruire; ogni squadra ha usato punti di partenza differenti</td>
+                        <td>Metti in pausa tutte le squadre. Fai annunciare la griglia condivisa dai Pianificatori della Città: "La strada principale si trova a Z=200. Ogni distretto inizia a un multiplo di 20 blocchi a Est (X = 100, 120, 140...)". Tutte le squadre modificano i propri punti di partenza per allinearsi alla griglia. Usa /tp per verificare l'allineamento prima che la costruzione continui.</td>
+                        <td class="fc">"Prima che qualsiasi squadra posizioni un singolo blocco, i Pianificatori della Città devono annunciare la griglia di coordinate in chat. Fate tutti uno screenshot."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">Lo studente rompe accidentalmente il cavo di Redstone mentre costruisce attorno ad esso, distruggendo il circuito della trappola</td>
+                        <td>La polvere di Redstone viene distrutta quando si posiziona un blocco solido direttamente sopra di essa; gli studenti non sanno che la Redstone è sensibile ai cambiamenti dei blocchi adiacenti</td>
+                        <td>Insegna che la polvere di Redstone viene distrutta se viene posizionato un blocco solido direttamente sopra di essa. Costruite sempre prima le pareti e i pavimenti, e poi posizionate la Redstone sulla superficie completata. Per i circuiti esistenti, ricostruisci il segmento di cavo danneggiato. Incoraggia gli studenti a fotografare il proprio circuito funzionante prima di decorare l'area circostante.</td>
+                        <td class="fc">"Costruisci prima la struttura, esegui il cablaggio alla fine. La Redstone va posizionata solo su superfici completate."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">La ricetta del Banco da lavoro produce l'oggetto errato o non genera nulla</td>
+                        <td>I materiali sono stati posizionati in uno schema posizionale errato — le ricette del Banco da lavoro dipendono dalla posizione esatta; un rispecchiamento o uno sfasamento di un solo slot altera il risultato o non produce nulla</td>
+                        <td>Chiedi allo studente di scattare uno screenshot della sua disposizione fallita, quindi confrontala affiancata con la ricetta corretta nel ricettario (icona della bussola, in basso a destra dell'interfaccia del Banco da lavoro). Identifica quale slot è errato. Sottolinea: "Fabbricare è come programmare — la posizione esatta di ogni elemento fa parte della formula".</td>
+                        <td class="fc">"Mostrami lo screenshot della tua griglia e quello della ricetta fianco a fianco. Uno dei due è leggermente diverso, riesci a trovare l'errore?"</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="protips" class="anchor-target">
+            <div class="section-head">6 · Consigli Pro del Tutor e Analogie del Mondo Reale</div>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Coordinate = L'Analogia della "Rete Stradale della Città" (Estesa per il Modulo 2)</strong><br>
+                <em>"In una città reale, gli architetti non dicono 'costruisci il grattacielo da qualche parte laggiù'. Dicono 'Costruisci in Via dell'Est 100, incrocio Quinta Strada, dal piano terra fino al 20° piano'. Questo è esattamente ciò che ti offrono le coordinate esatte: un indirizzo di costruzione preciso. Il tuo distretto urbano ha un indirizzo di coordinate, e ogni edificio al suo interno è definito dal proprio sotto-indirizzo".</em>
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 /clone = L'Analogia della "Fotocopiatrice di Progetti Architettonici"</strong><br>
+                <em>"Gli architetti nella vita reale non progettano ogni piano di un grattacielo separatamente; progettano un piano tipo alla perfezione e poi lo copiano 40 volte. Il comando <code>/clone</code> è la tua fotocopiatrice di progetti. Progetta un isolato della città perfettamente e poi clonalo lungo la mappa".</em>
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Simmetria rispetto al Caos — Il gioco "Trova l'Errore di Progettazione"</strong><br>
+                Prima che gli studenti inizino a costruire, mostra loro uno screenshot di un edificio campione progettato in modo deliberatamente caotico e asimmetrico. Chiedi: "Cosa sembra strano qui?". Gli alunni identificheranno lo squilibrio, le finestre irregolari e le scelte casuali dei blocchi. Poi mostra una versione simmetrica: "Cosa è cambiato?". Questo attiva l'istinto architettonico prima che posizionino il primo blocco, dando loro un chiaro obiettivo di qualità in mente.
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 La Ricetta del Banco da Lavoro = L'Analogia della "Ricetta di Cucina Esatta"</strong><br>
+                <em>"Immagina di preparare una torta. Se la ricetta dice 'due tazze di farina a sinistra, un uovo a destra', invertirli non migliorerà la torta: otterrai un dolce diverso o non uscirà nulla dal forno. Le ricette del Banco da lavoro funzionano allo stesso modo: la posizione di ogni slot fa parte della formula".</em>
+            </p>
+        </div>
+
+        <div id="test-cta" class="anchor-target">
+            <div class="section-head">7 · Verifica delle Conoscenze del Modulo 2</div>
+        </div>
+
+        <div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+            <div style="font-size:40px;margin-bottom:12px">📝</div>
+            <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Sei pronto per la Verifica delle Conoscenze del Modulo 2?</div>
+            <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+                6 domande estratte esclusivamente dal contenuto del Modulo 2. Un punteggio del <strong>70% (5/6) o superiore</strong> sblocca il Modulo 3. Tutti i quesiti sono completamente distinti sia da quelli del Modulo 1 sia dal DST finale.
+            </p>
+            <div class="btn-row center">
+                <a href="ItModule2Test.html" class="btn-primary">Inizia il Test del Modulo 2 →</a>
+                <button class="btn-outline" onclick="goHome()">← Dashboard</button>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>© 2026 Kodland. Materiale di formazione interna per i tutor — vietata la distribuzione esterna.</footer>
+    <script src="shared.js"></script>
+    <script>
+        initShared();
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        if (!isModuleUnlocked(2)) { alert('Per favore, completa prima il Modulo 1.'); goHome(); }
+    </script>
+</body>
+</html>

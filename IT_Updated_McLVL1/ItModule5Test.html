@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifica delle Conoscenze Modulo 5 — Castello del Creatore | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .quiz-header {
+            background: linear-gradient(135deg,#7E22CE,#EC4899);
+            padding: 24px 32px;
+            color: #fff;
+            text-align: center;
+        }
+
+            .quiz-header h2 {
+                font-family: 'Nunito',sans-serif;
+                font-size: 22px;
+                font-weight: 900;
+                color: #fff;
+                margin-bottom: 4px;
+            }
+
+            .quiz-header p {
+                color: rgba(255,255,255,.85);
+                font-size: 13px;
+            }
+
+        .feedback-box {
+            display: none;
+            margin-top: 14px;
+            border-radius: var(--rsm);
+            padding: 13px 16px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            border: 2px solid;
+        }
+
+            .feedback-box.show {
+                display: block;
+            }
+
+            .feedback-box.ok {
+                background: var(--ok-bg);
+                border-color: var(--ok-b);
+                color: var(--ok-t);
+            }
+
+            .feedback-box.bad {
+                background: var(--no-bg);
+                border-color: var(--no-b);
+                color: var(--no-t);
+            }
+
+        /* ── Risultato positivo — scheda passaggio successivo ── */
+        .next-step-card {
+            margin-top: 18px;
+            background: linear-gradient(135deg,#0e1f0a,#2f5a1e);
+            border: 2px solid rgba(196,240,70,.3);
+            border-radius: var(--r);
+            padding: 22px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .next-step-card::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(ellipse 60% 50% at 50% 0%,rgba(196,240,70,.1) 0%,transparent 75%);
+                pointer-events: none;
+            }
+
+            .next-step-card h4 {
+                font-family: 'Nunito',sans-serif;
+                font-size: 16px;
+                font-weight: 900;
+                color: #fff;
+                margin-bottom: 6px;
+                position: relative;
+            }
+
+            .next-step-card p {
+                font-size: 13px;
+                color: rgba(255,255,255,.68);
+                line-height: 1.55;
+                margin-bottom: 14px;
+                position: relative;
+                max-width: 440px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .next-step-card .btn-row {
+                justify-content: center;
+                position: relative;
+            }
+
+        .btn-library-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: var(--rpill);
+            background: var(--lime);
+            color: var(--ink);
+            font-family: 'Nunito',sans-serif;
+            font-size: 14px;
+            font-weight: 900;
+            border: 2px solid var(--lime-d);
+            text-decoration: none;
+            transition: all .15s;
+            letter-spacing: .2px;
+        }
+
+            .btn-library-cta:hover {
+                background: var(--lime-d);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(196,240,70,.35);
+            }
+
+        .btn-skip-dst {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: var(--rpill);
+            background: rgba(255,255,255,.08);
+            color: rgba(255,255,255,.7);
+            font-family: 'Nunito',sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            border: 2px solid rgba(255,255,255,.18);
+            text-decoration: none;
+            transition: all .15s;
+        }
+
+            .btn-skip-dst:hover {
+                background: rgba(255,255,255,.18);
+                color: #fff;
+            }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Formazione Tutor</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="history.back()">← Modulo 5</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="quiz-header">
+        <h2>📝 Verifica delle Conoscenze Modulo 5</h2>
+        <p>Castello del Creatore · 6 Domande · 70% per Superare · Sblocca le Fasi Finali</p>
+    </div>
+
+    <div id="quiz-screen" class="quiz-wrap">
+        <div class="q-progress">
+            <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+            <span class="q-count" id="q-count">0 / 6</span>
+        </div>
+        <div id="question-area"></div>
+        <div id="feedback-area"></div>
+        <div class="btn-row" style="margin-top:16px">
+            <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Prossima Domanda →</button>
+            <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Invia le Risposte</button>
+        </div>
+    </div>
+
+    <div id="results-screen" style="display:none;padding:40px 24px">
+        <div class="result-card" id="result-card"></div>
+        <div id="result-actions"></div>
+    </div>
+
+    <footer>© 2026 Kodland. Materiale di formazione interna per i tutor — vietata la distribuzione esterna.</footer>
+
+    <script src="shared.js"></script>
+    <script>
+        const MODULE_ID = 5;
+        const PASS_PCT = 70;
+
+        const QUESTIONS = [
+            {
+                q: "Uno studente definisce una Funzione MakeCode chiamata 'openGate' que sposta un Pistone e riproduce un suono. Dopo aver aggiunto la definizione della Funzione, il cancello non si apre quando il giocatore cammina su una Pedana a pressione. L'evento 'Al camminare del giocatore' non contiene blocchi al suo interno. Qual è la causa esatta e come risolvere?",
+                opts: [
+                    "Il nome della Funzione 'openGate' è riservato — deve essere rinominato in qualcosa che non contenga la parola 'Gate'",
+                    "Il blocco del Pistone all'interno della Funzione deve essere sostituito con un blocco di segnale Redstone diretto",
+                    "La definizione della Funzione funziona solo quando il giocatore si trova entro 10 blocchi dalla posizione definita",
+                    "La Funzione è definita ma non viene mai chiamata — il blocco 'Chiama Funzione openGate' deve essere posizionato all'interno del blocco evento 'Al camminare del giocatore' affinché la Funzione venga eseguita all'attivazione dell'evento"
+                ],
+                correct: 3,
+                feedback: "Corretto. La definizione di una Funzione crea un blocco di codice nominato e riutilizzabile — ma non si eseguirà mai da sola. La Funzione deve essere chiamata esplicitamente all'interno di un gestore di eventi. Senza il blocco 'Chiama Funzione openGate' all'interno dell'evento del camminare, la definizione della Funzione esiste in memoria ma non viene mai attivata. Soluzione: apri el blocco evento 'Al camminare del giocatore' e aggiungi un blocco 'Chiama Funzione openGate' al suo interno."
+            },
+            {
+                q: "Perché la Fase Blueprint strutturata richiede che gli studenti digitino il proprio accordo in chat ('Sono d'accordo con questo piano: [nome]') invece di alzare semplicemente la mano o confermare verbalmente?",
+                opts: [
+                    "Digitare è più veloce della conferma verbale e fa risparmiare tempo durante la sessione",
+                    "La digitazione crea un impegno sociale visibile e persistente nel registro della chat — se uno studente tenta in seguito di cambiare direzione a metà costruzione, il tutor può fare riferimento al suo accordo scritto, riducendo drasticamente i cambi di direzione e la dispersione dell'ambito a metà sessione",
+                    "La chat di gioco registra automaticamente gli accordi digitati come un contratto formale vincolante",
+                    "La conferma verbale non è consentita durante le sessioni per motivi di qualità dell'audio"
+                ],
+                correct: 1,
+                feedback: "Corretto. Lo scopo dell'impegno scritto è la responsabilità sociale attraverso un registro visibile e persistente. Gli studenti che hanno digitato 'Sono d'accordo con questo piano' in chat sono molto più riluttanti a richiedere un cambio di direzione in seguito — il loro impegno precedente è visibile a tutti e crea una pressione di coerenza interna. Gli accordi verbali sono privati ed effimeri; gli accordi scritti in chat sono pubblici e persistent."
+            },
+            {
+                q: "Nel ciclo Costruisci → Depura → Decora, uno studente vuole aggiungere stendardi colorati e motivi personalizzati per il pavimento al progetto del ponte levatoio prima di testare se il ponte si apre effettivamente. Cosa dovrebbe fare il tutor?",
+                opts: [
+                    "Reindirizzare immediatamente lo studente alla fase di Depurazione: spiegare che decorare prima del debugging significa che eventuali bug rilevati richiederanno la distruzione delle decorazioni per accedere al circuito — ecco perché l'ordine del ciclo è rigoroso. Gli stendardi vanno inseriti nella lista dei compiti 'Dopo il Debug'.",
+                    "Permetterlo — la decorazione è un sistema separato e non può influenzare il circuito di Redstone sottostante",
+                    "Lasciare decidere allo studente — l'ordine del ciclo è una linea guida, non una regola",
+                    "Mettere in pausa la classe e fare in modo che lo studente dimostri che il ponte levatoio funzioni prima di consentire a qualsiasi altro studente di continuare"
+                ],
+                correct: 0,
+                feedback: "Corretto. L'ordine Costruisci → Depura → Decora è rigoroso proprio perché la decorazione costruita sopra un circuito non depurato crea un problema composto: se viene trovato un bug durante la fase di decorazione, l'accesso al circuito richiederà la rottura della decorazione stessa — con conseguente spreco di lavoro e perdita di tempo. Il tutor deve reindirizzare immediatamente lo studente, inserire l'idea degli stendardi nella lista dei compiti 'Dopo il Debug' e spiegare perché l'ordine è fondamentale."
+            },
+            {
+                q: "Il progetto di uno studente ha soddisfatto tutti i criteri di successo della Fase Blueprint con 15 minuti di sessione rimasti. Lo studente chiede di aggiungere 3 nuove funzionalità. Qual è la risposta corretta del tutor?",
+                opts: [
+                    "Consentire tutte e 3 le funzionalità — gli studenti dovrebbero essere sempre incoraggiati a espandere le proprie ambizioni",
+                    "Consentire 1 sola funzionalità, selezionata dallo studente come la più importante",
+                    "Scrivere tutte e 3 le idee nella lista 'Versione 2' in chat, accoglierle positivamente e poi reindirizzare lo studente alla Fase di Decorazione — l'aggiunta di nuove funzionalità negli ultimi 15 minuti rischia di rompere il prototipo funzionante prima del Lancio del Game Studio",
+                    "Chiudere la sessione in anticipo dato che i criteri di successo sono stati soddisfatti"
+                ],
+                correct: 2,
+                feedback: "Corretto. La tecnica della lista 'Versione 2' ottiene due cose simultaneamente: le idee dello studente vengono valorizzate e registrate (not scartate) e l'ambito della produzione rimane protetto. L'aggiunta di nuove funzionalità negli ultimi 15 minuti comporta il rischio reale di rompere il prototipo funzionante prima della presentazione — il tutor deve proteggere ciò che già funziona. Dopo aver scritto le idee nella Versione 2, reindirizza alla Fase di Decorazione, che utilizza il tempo rimanente in modo produttivo senza toccare i sistemi funzionanti."
+            },
+            {
+                q: "Qual è la ragione principale per cui definire la presentazione finale del Modulo 5 un 'Lancio del Game Studio' piuttosto che un 'mostra e racconta' produce presentazioni nettamente migliori da parte degli studenti?",
+                opts: [
+                    "Il nome più lungo offre agli studenti più tempo per preparare i contenuti della presentazione",
+                    "I genitori rispondono in modo più positivo alla parola 'studio' rispetto a 'mostra e racconta'",
+                    "Utilizza una terminologia di settore che si allinea alle linee guida del brand Kodland",
+                    "Il linguaggio modella il comportamento e le aspettative — 'Lancio del Game Studio' stabilisce uno standard professionale che gli studenti interiorizzano come richiesta di spiegazioni tecniche, dimostrazioni dal vivo e titolarità pubblica del proprio lavoro, mentre 'mostra e racconta' implica un'attività scolastica informale"
+                ],
+                correct: 3,
+                feedback: "Corretto. Il linguaggio utilizzato per inquadrare un'attività influenza direttamente l'impegno e la qualità che gli studenti vi investono. Il 'mostra e racconta' è culturalmente associato ad attività d'infanzia informali e a bassa posta in gioco. Il 'Lancio del Game Studio' è associato a rilasci di prodotti professionali, che richiedono spiegazioni tecniche, dimostrazioni dal vivo e responsabilità pubblica. Gli studenti che sentono la parola 'lancio' si preparano in modo diverso — provano l'esposizione, pensano a cosa dire e verificano che la demo funzioni."
+            },
+            {
+                q: "Una squadra è composta da tre studenti e sta per iniziare il Modulo 5. La Fase Blueprint assegna quattro ruoli: Architetto, Programmatore, Decoratore e Dimostratore. Come dovrebbe gestire il tutor questo sbilanciamento?",
+                opts: [
+                    "Saltare completamente l'assegnazione dei ruoli — i ruoli sono opzionali per i gruppi di 3 o meno persone",
+                    "Combinare i ruoli in modo logico: Architetto + Decoratore (visione strutturale e finitura visiva), Programmatore (tutta la logica MakeCode e Redstone) e Dimostratore che assiste anche un altro ruolo. Ogni studente mantiene un'area di titolarità primaria e il team discute quale combinazione sia più sensata in base al tipo specifico di progetto e ai punti di forza individuali",
+                    "Chiedere a un quarto studente di un altro team di unirsi e coprire il ruolo mancante",
+                    "Assegnare tutti e quattro i ruoli a tre studenti assegnando a uno studente due ruoli primari — diventa contemporaneamente sia Architetto che Programmatore"
+                ],
+                correct: 1,
+                feedback: "Corretto. La combinazione dei ruoli è la soluzione standard quando la dimensione del team non corrisponde al numero di ruoli. La combinazione logica per un team di 3 persone è: (1) Architetto + Decoratore — uno studente possiede sia il design strutturale che la finitura visiva; (2) Programmatore — piena titolarità di tutto il codice e della Redstone; (3) Dimostratore — che assiste chiunque abbia più carico di lavoro in quel momento. La regola fondamentale è che ogni studente mantenga un'area di titolarità primaria — la combinazione dei ruoli non deve far sì che un singolo studente domini tutte le decisioni."
+            }
+        ];
+
+        let current = 0, answers = [], answered = false;
+        const LETTERS = ['A', 'B', 'C', 'D'];
+
+        function renderQuestion() {
+            const q = QUESTIONS[current];
+            answered = false;
+            document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+            document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('feedback-area').innerHTML = '';
+            document.getElementById('question-area').innerHTML = `
+        <div class="qnum">Domanda ${current + 1} di ${QUESTIONS.length}</div>
+        <div class="qtext">${q.q}</div>
+        <div class="opt-list" id="opt-list">
+          ${q.opts.map((o, i) => `
+            <div class="opt" id="opt-${i}" onclick="selectOpt(${i})">
+              <span class="opt-letter">${LETTERS[i]}</span><span>${o}</span>
+            </div>`).join('')}
+        </div>`;
+        }
+
+        function selectOpt(i) {
+            if (answered) return;
+            answered = true;
+            const q = QUESTIONS[current];
+            answers[current] = i;
+            for (let j = 0; j < q.opts.length; j++) {
+                const el = document.getElementById(`opt-${j}`);
+                el.classList.add('disabled');
+                if (j === q.correct) el.classList.add('correct');
+                else if (j === i) el.classList.add('wrong');
+            }
+            const isRight = i === q.correct;
+            document.getElementById('feedback-area').innerHTML = `
+        <div class="feedback-box ${isRight ? 'ok' : 'bad'} show">
+          ${isRight ? '✅ ' : '❌ '} ${q.feedback}
+        </div>`;
+            if (current < QUESTIONS.length - 1)
+                document.getElementById('next-btn').style.display = 'inline-flex';
+            else
+                document.getElementById('submit-btn').style.display = 'inline-flex';
+        }
+
+        function nextQuestion() {
+            current++;
+            renderQuestion();
+            window.scrollTo(0, 0);
+        }
+
+        function submitQuiz() {
+            const score = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+            const pct = Math.round(score / QUESTIONS.length * 100);
+            const passed = pct >= PASS_PCT;
+
+            if (passed) {
+                const prev = getModuleScore(MODULE_ID);
+                if (!prev || pct > prev) markModulePassed(MODULE_ID, pct);
+            }
+
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('results-screen').style.display = 'block';
+
+            document.getElementById('result-card').innerHTML = `
+        <div class="result-emoji">${passed ? '🏆' : '😅'}</div>
+        <div class="result-title">${passed ? 'Tutti e 5 i moduli completati!' : 'Non ci siamo ancora'}</div>
+        <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+        <div class="result-sub">Hai risposto correttamente a <strong>${score} su ${QUESTIONS.length}</strong> domande.
+          ${passed
+                    ? ' Eccellente — hai completato con successo tutti e cinque i moduli di formazione.'
+                    : ` È richiesto un punteggio del <strong>${PASS_PCT}%</strong> o superiore per progredire. Rivedi il Modulo 5 e riprova.`}
+        </div>`;
+
+            if (passed) {
+                // Reindirizza alla Libreria prima del DST final
+                document.getElementById('result-actions').innerHTML = `
+          <div class="next-step-card">
+            <h4>📖 Un Ultimo Passo Prima del Test Finale</h4>
+            <p>Esamina la Libreria delle Lezioni di Successo — una sessione reale valutata con 16 annotazioni temporali. Studiarla affinerà la tua capacità di applicare tutto ciò che hai imparato prima di sostenere il Digital Skill Test.</p>
+            <div class="btn-row">
+              <a href="ItDST.html#library" class="btn-library-cta">Vedi la Lezione di Riferimento di Successo →</a>
+              <a href="ItDST.html#dst-section" class="btn-skip-dst">Salta al Digital Skill Test</a>
+            </div>
+          </div>
+          <div class="btn-row center" style="margin-top:14px">
+            <button class="btn-outline" onclick="goHome()">← Dashboard</button>
+          </div>`;
+            } else {
+                document.getElementById('result-actions').innerHTML = `
+          <div class="btn-row center" style="margin-top:0">
+            <button class="btn-primary" onclick="retake()">Ripeti il Test</button>
+            <a href="ItModule5.html" class="btn-outline">← Rivedi il Modulo 5</a>
+          </div>`;
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        function retake() {
+            current = 0; answers = [];
+            document.getElementById('quiz-screen').style.display = 'block';
+            document.getElementById('results-screen').style.display = 'none';
+            renderQuestion();
+            window.scrollTo(0, 0);
+        }
+
+        initShared();
+        if (!isModuleUnlocked(MODULE_ID)) {
+            alert('Per favore, completa prima i moduli precedenti.');
+            goHome();
+        }
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        renderQuestion();
+    </script>
+</body>
+</html>

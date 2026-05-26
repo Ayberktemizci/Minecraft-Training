@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minecraft Education — Tutor Training | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Minecraft Education palette — deep forest greens, creeper lime, stone */
+  --lime:#7EC845;--lime-d:#68A836;--lime-glow:rgba(126,200,69,.25);
+  --accent:#4CAF50;--accent-d:#388E3C;
+  --stone:#8B9B7A;--stone-d:#6B7A5A;
+  --dirt:#6B4F2A;--dirt-d:#5A3E1F;
+  --sky:#2A4A3A;
+  --ink:#0D1F0A;--ink2:#2A3D1F;--muted:#6B8A5A;
+  --bg:#E8F5D8;--surface:#FFFFFF;--surface2:#F0F9E4;--border:#C8E8A0;
+  --text:var(--ink);--text2:var(--ink2);--text-muted:var(--muted);
+  --nav-bg:rgba(255,255,255,0.94);--nav-b:#C8E8A0;
+  --shadow:0 2px 12px rgba(0,0,0,.07);--shadow-h:0 8px 28px rgba(0,0,0,.14);
+  --r:14px;--rsm:8px;--rpill:999px;
+}
+[data-theme="dark"]{
+  --bg:#0A140A;--surface:#111A0F;--surface2:#162010;--border:#223018;
+  --text:#D8F0B8;--text2:#9DC878;--text-muted:#5A7A48;
+  --nav-bg:rgba(10,20,10,0.95);--nav-b:#223018;
+  --shadow:0 2px 16px rgba(0,0,0,.5);--shadow-h:0 8px 28px rgba(0,0,0,.55);
+  --lime:#7EC845;--lime-d:#68A836;--lime-glow:rgba(126,200,69,.15);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  min-height:100vh;overflow-x:hidden;
+  transition:background .25s,color .25s;
+  display:flex;flex-direction:column;
+}
+
+/* ── PIXEL GRID TEXTURE ───────────────────────────────── */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(126,200,69,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(126,200,69,.04) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+
+/* ── NAV ──────────────────────────────────────────────── */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;height:62px;
+  background:var(--nav-bg);backdrop-filter:blur(14px);
+  border-bottom:2px solid var(--nav-b);
+  position:sticky;top:0;z-index:100;
+  transition:background .25s,border-color .25s;
+}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.logo-mark{font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;letter-spacing:-.5px;color:var(--ink);line-height:1}
+[data-theme="dark"] .logo-mark{color:var(--lime)}
+.logo-sub{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--lime-d)}
+[data-theme="dark"] .logo-sub{color:var(--lime)}
+.logo-div{width:1px;height:16px;background:var(--border);margin:0 4px}
+.tbtn{
+  width:38px;height:38px;border-radius:var(--rpill);
+  background:var(--surface);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer;transition:all .15s;
+}
+.tbtn:hover{background:var(--lime);border-color:var(--lime-d)}
+
+/* ── HERO ─────────────────────────────────────────────── */
+.hero{
+  padding:72px 40px 56px;text-align:center;
+  position:relative;flex:1;
+  display:flex;flex-direction:column;align-items:center;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;bottom:40%;
+  background:radial-gradient(ellipse 80% 60% at 50% -10%,var(--lime-glow) 0%,transparent 70%);
+  pointer-events:none;
+}
+/* Minecraft grass block accent bars */
+.hero::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--lime-d),var(--lime),var(--lime-d));
+  opacity:.6;
+}
+.hero-inner{position:relative;max-width:680px;margin:0 auto;width:100%;}
+
+/* Minecraft pickaxe + creeper icon */
+.hero-icon{
+  font-size:64px;display:block;margin-bottom:16px;
+  filter:drop-shadow(0 4px 12px rgba(126,200,69,.3));
+  animation:float 3s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--surface);border:2px solid var(--border);
+  border-radius:var(--rpill);padding:5px 14px;
+  font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;
+  color:var(--text2);margin-bottom:20px;
+  text-transform:uppercase;letter-spacing:.8px;
+}
+.hero h1{
+  font-family:'Nunito',sans-serif;
+  font-size:clamp(28px,5vw,48px);
+  font-weight:900;line-height:1.1;letter-spacing:-1.5px;
+  color:var(--text);margin-bottom:16px;
+}
+.h-pill{
+  display:inline-block;background:var(--lime);color:var(--ink);
+  border-radius:var(--rpill);padding:1px 18px;margin:0 2px;
+  font-size:.93em;border:2px solid var(--lime-d);
+}
+[data-theme="dark"] .h-pill{background:var(--lime);color:var(--ink)}
+
+.hero-notice{
+  font-size:13px;color:var(--text2);
+  margin-top:20px;margin-bottom:0;
+  line-height:1.6;max-width:520px;margin-left:auto;margin-right:auto;
+}
+
+/* ── VIDEO TOGGLE ─────────────────────────────────────── */
+.video-wrap{width:100%;max-width:680px;margin:28px auto 0;}
+.video-toggle-btn{
+  display:flex;align-items:center;gap:8px;margin:0 auto;
+  background:var(--surface);border:2px solid var(--border);
+  border-radius:40px;padding:10px 22px;
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:14px;
+  color:var(--text);cursor:pointer;transition:all .2s;
+  box-shadow:var(--shadow);
+}
+.video-toggle-btn:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+.video-frame{
+  display:none;margin-top:14px;border-radius:14px;overflow:hidden;
+  box-shadow:0 6px 32px rgba(0,0,0,.18);border:2px solid var(--border);background:#000;
+}
+
+/* ── REGION GRID ──────────────────────────────────────── */
+.region-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:16px;max-width:720px;margin:32px auto 0;width:100%;
+}
+.region-card{
+  background:var(--surface);border:2px solid var(--border);
+  border-radius:var(--r);padding:28px 24px;cursor:pointer;
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+  box-shadow:var(--shadow),inset 0 2px 8px rgba(0,0,0,.06);
+  text-decoration:none;display:flex;flex-direction:column;
+  gap:8px;text-align:center;align-items:center;
+  outline:1.5px solid var(--border);outline-offset:-5px;
+  position:relative;overflow:hidden;
+}
+/* Minecraft dirt/grass stripe at bottom */
+.region-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--lime-d),var(--lime),var(--lime-d));
+  opacity:0;transition:opacity .2s;
+}
+.region-card:hover::after{opacity:1}
+.region-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 28px rgba(0,0,0,.18),inset 0 2px 8px rgba(0,0,0,.06);
+  border-color:var(--lime-d);
+}
+[data-theme="dark"] .region-card:hover{border-color:var(--lime)}
+
+.region-flag{
+  font-size:40px;line-height:1;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,.15));
+}
+.region-name{
+  font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;
+  color:var(--text);text-align:center;
+  text-shadow:0 1px 3px rgba(0,0,0,.08);
+}
+.region-desc{
+  font-size:13px;color:var(--text2);line-height:1.5;text-align:center;
+  text-shadow:0 1px 2px rgba(0,0,0,.06);
+}
+[data-theme="dark"] .region-flag{filter:none}
+[data-theme="dark"] .region-name,.region-desc{text-shadow:none}
+
+.region-cta{
+  font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;
+  color:var(--lime-d);display:flex;align-items:center;gap:4px;margin-top:4px;
+}
+[data-theme="dark"] .region-cta{color:var(--lime)}
+
+/* ── MODAL ────────────────────────────────────────────── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.50);backdrop-filter:blur(4px);
+  z-index:200;align-items:center;justify-content:center;
+}
+.modal-overlay.show{display:flex}
+.modal{
+  background:var(--surface);border:2px solid var(--border);
+  border-radius:20px;padding:32px 28px;max-width:460px;
+  width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+.modal-icon{font-size:40px;margin-bottom:12px}
+.modal h3{
+  font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;
+  color:var(--text);margin-bottom:10px;
+}
+.modal p{font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:24px}
+.modal-btns{display:flex;gap:10px}
+.modal-yes{
+  flex:1;padding:13px;background:var(--lime);color:var(--ink);
+  border:none;border-radius:var(--rpill);
+  font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;
+  cursor:pointer;transition:all .15s;
+}
+.modal-yes:hover{background:var(--lime-d);transform:translateY(-1px)}
+.modal-no{
+  flex:1;padding:13px;background:var(--surface2);color:var(--text2);
+  border:2px solid var(--border);border-radius:var(--rpill);
+  font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;transition:all .15s;
+}
+.modal-no:hover{background:var(--border);color:var(--text)}
+
+/* ── FOOTER ───────────────────────────────────────────── */
+footer{
+  text-align:center;padding:20px 24px;font-size:11px;
+  color:var(--text2);border-top:1px solid var(--border);
+  margin-top:auto;line-height:1.7;opacity:0.7;
+}
+
+@media(max-width:640px){
+  .hero{padding-left:18px;padding-right:18px}
+  .region-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="logo" href="#">
+    <span class="logo-mark">kodland</span>
+    <div class="logo-div"></div>
+    <span class="logo-sub">Minecraft Education Training</span>
+  </a>
+  <button class="tbtn" id="theme-btn" title="Toggle dark mode" onclick="toggleTheme()">🌙</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-icon">⛏️</span>
+    <div class="eyebrow">🎓 Tutor Training Programme</div>
+    <h1>Choose Your<br><span class="h-pill">Region</span><br>To Get Started</h1>
+
+    <!-- Intro video (optional) -->
+    <div class="video-wrap">
+      <button class="video-toggle-btn" onclick="toggleIntroVideo(this)">
+        <span>▶</span>
+        <span class="intro-btn-label">Watch Before Starting</span>
+      </button>
+      <div id="intro-video-wrap" class="video-frame">
+        <video id="intro-video" controls preload="none" style="width:100%;display:block;">
+          <source src="intro.mp4" type="video/mp4">
+          <track src="intro.vtt" kind="subtitles" srclang="en" label="English" default>
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <p class="hero-notice">⚠️ Each region has its own training track, Digital Skill Test, and class schedule. Make sure you select the region you applied for — your progress is saved per browser.</p>
+
+    <!-- REGION CARDS -->
+    <div class="region-grid" style="margin-top:32px;">
+
+      <a class="region-card" onclick="confirmNav('ENG_Updated_McLVL1/En.html')" href="#">
+        <div class="region-flag">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="5"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="13"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="8"/></svg>
+        </div>
+        <div class="region-name">English</div>
+        <div class="region-desc">For tutors in the <strong>English-speaking regions</strong> — includes the English DST and class schedule.</div>
+        <div class="region-cta">Open English training →</div>
+      </a>
+
+      <a class="region-card" onclick="confirmNav('IT_Updated_McLVL1/it.html')" href="#">
+        <div class="region-flag">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg>
+        </div>
+        <div class="region-name">Italiano</div>
+        <div class="region-desc">Per i tutor nella <strong>regione italiana</strong> — include il DST italiano e il programma delle lezioni.</div>
+        <div class="region-cta">Apri formazione italiana →</div>
+      </a>
+
+      <a class="region-card" onclick="confirmNav('LATAM_Updated_McLVL1/es.html')" href="#">
+        <div class="region-flag">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg>
+        </div>
+        <div class="region-name">Español</div>
+        <div class="region-desc">Para tutores en la <strong>región de habla hispana</strong> — incluye el DST en español y el programa de clases.</div>
+        <div class="region-cta">Abrir formación en español →</div>
+      </a>
+
+      <a class="region-card" onclick="confirmNav('POL_Updated_McLVL1/pol.html')" href="#">
+        <div class="region-flag">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="60" height="20" fill="#fff"/><rect y="20" width="60" height="20" fill="#DC143C"/></svg>
+        </div>
+        <div class="region-name">Polski</div>
+        <div class="region-desc">Dla korepetytorów w <strong>regionie polskim</strong> — zawiera polski DST i harmonogram zajęć.</div>
+        <div class="region-cta">Otwórz szkolenie polskie →</div>
+      </a>
+
+      <a class="region-card" onclick="confirmNav('PT_Updated_McLVL1/pt.html')" href="#" style="grid-column:1/-1;max-width:340px;margin:0 auto;width:100%;">
+        <div class="region-flag">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="60" height="40" fill="#009C3B"/><polygon points="30,4 56,20 30,36 4,20" fill="#FFDF00"/><circle cx="30" cy="20" r="9" fill="#002776"/></svg>
+        </div>
+        <div class="region-name">Português</div>
+        <div class="region-desc">Para tutores na <strong>região de língua portuguesa</strong> — inclui o DST em português e o programa de aulas.</div>
+        <div class="region-cta">Abrir formação em português →</div>
+      </a>
+
+    </div><!-- /region-grid -->
+
+  </div><!-- /hero-inner -->
+</section>
+
+<!-- CONFIRMATION MODAL -->
+<div class="modal-overlay" id="nav-modal">
+  <div class="modal">
+    <div class="modal-icon" id="modal-flag">⛏️</div>
+    <h3 id="modal-title">Open Training</h3>
+    <p id="modal-body">This will open the training for your region. Make sure you applied for this region before proceeding.</p>
+    <div class="modal-btns">
+      <button class="modal-no" onclick="document.getElementById('nav-modal').classList.remove('show')">Cancel</button>
+      <button class="modal-yes" id="modal-confirm-btn">Open →</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 Kodland. Designed and developed by Ayberk Temizci for internal tutor training purposes.<br>
+  This material is the exclusive property of Kodland. Unauthorized duplication, distribution, or use outside of Kodland's internal training program is strictly prohibited.
+</footer>
+
+<script>
+// ── Theme ────────────────────────────────────────────────
+const saved = localStorage.getItem('kl-mc-theme');
+if(saved) document.documentElement.setAttribute('data-theme', saved);
+function toggleTheme(){
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const next = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('kl-mc-theme', next);
+  document.getElementById('theme-btn').textContent = next === 'dark' ? '☀️' : '🌙';
+}
+if(saved === 'dark') document.getElementById('theme-btn').textContent = '☀️';
+
+// ── Video toggle ─────────────────────────────────────────
+function toggleIntroVideo(btn){
+  const wrap = document.getElementById('intro-video-wrap');
+  const video = document.getElementById('intro-video');
+  const label = btn.querySelector('.intro-btn-label');
+  const icon = btn.querySelector('span:first-child');
+  const open = wrap.style.display === 'none' || wrap.style.display === '';
+  wrap.style.display = open ? 'block' : 'none';
+  label.textContent = open ? 'Hide Intro Video' : 'Watch Before Starting';
+  icon.textContent = open ? '✕' : '▶';
+  if(!open) video.pause();
+}
+
+// ── Region navigation modal ──────────────────────────────
+const regionData = {
+  'ENG_Updated_McLVL1/En.html': { flag:'[GB]', title:'Open English Training',
+    body:'This will open the English-region training track with its own DST and schedule. Make sure you applied for the English region before proceeding.' },
+  'IT_Updated_McLVL1/it.html': { flag:'[IT]', title:'Apri Formazione Italiana',
+    body:'Questo aprirà il percorso di formazione per la regione italiana con il proprio DST e programma. Assicurati di aver fatto domanda per la regione italiana prima di procedere.' },
+  'LATAM_Updated_McLVL1/es.html': { flag:'[ES]', title:'Abrir Formación en Español',
+    body:'Esto abrirá la ruta de formación para la región de habla hispana con su propio DST y programa. Asegúrate de haber solicitado la región en español antes de continuar.' },
+  'POL_Updated_McLVL1/pol.html': { flag:'[PL]', title:'Otwórz Szkolenie Polskie',
+    body:'To otworzy ścieżkę szkoleniową dla regionu polskiego z własnym DST i harmonogramem. Upewnij się, że złożyłeś aplikację do regionu polskiego przed kontynuowaniem.' },
+  'PT_Updated_McLVL1/pt.html': { flag:'[PT]', title:'Abrir Formação em Português',
+    body:'Isso abrirá a trilha de formação para a região de língua portuguesa com seu próprio DST e cronograma. Certifique-se de ter se inscrito para a região em português antes de prosseguir.' },
+};
+
+let pendingUrl = '';
+function confirmNav(url){
+  event.preventDefault();
+  pendingUrl = url;
+  const d = regionData[url] || { flag:'⛏️', title:'Open Training', body:'Open this region\'s training?' };
+  document.getElementById('modal-flag').textContent = d.flag;
+  document.getElementById('modal-title').textContent = d.title;
+  document.getElementById('modal-body').textContent = d.body;
+  document.getElementById('modal-confirm-btn').onclick = () => window.location.href = pendingUrl;
+  document.getElementById('nav-modal').classList.add('show');
+}
+document.addEventListener('click', function(e){
+  const m = document.getElementById('nav-modal');
+  if(m.classList.contains('show') && e.target === m) m.classList.remove('show');
+});
+</script>
+</body>
+</html>

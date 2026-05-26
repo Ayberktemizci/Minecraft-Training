@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moduł 4 — Mechaniczny Las | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .module-banner {
+            background: linear-gradient(135deg,#B45309 0%,#D97706 55%,#F59E0B 100%);
+            padding: 36px 32px 28px;
+            position: relative;
+            overflow: hidden
+        }
+
+            .module-banner::before {
+                content: '🌲';
+                font-size: 180px;
+                position: absolute;
+                right: -20px;
+                top: -40px;
+                opacity: .09;
+                line-height: 1;
+                pointer-events: none
+            }
+
+            .module-banner .meyebrow {
+                color: rgba(255,255,255,.72)
+            }
+
+            .module-banner .mh1 {
+                color: #fff
+            }
+
+            .module-banner p {
+                color: rgba(255,255,255,.85);
+                font-size: 14px;
+                line-height: 1.65;
+                max-width: 640px;
+                margin-top: 6px
+            }
+
+            .module-banner .mobj {
+                background: rgba(255,255,255,.13);
+                border-color: rgba(255,255,255,.28);
+                border-left-color: #FDE68A;
+                color: rgba(255,255,255,.9)
+            }
+
+                .module-banner .mobj strong {
+                    color: #fff
+                }
+
+        .sec-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--surface2);
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 62px;
+            z-index: 90;
+            transition: background .25s
+        }
+
+        .sec-pill {
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 5px 13px;
+            border-radius: var(--rpill);
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text2);
+            text-decoration: none;
+            transition: all .15s;
+            white-space: nowrap
+        }
+
+            .sec-pill:hover {
+                background: var(--lime);
+                border-color: var(--lime-d);
+                color: var(--ink)
+            }
+
+        .script-box {
+            background: var(--ink);
+            color: #FDE68A;
+            border-radius: var(--rsm);
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono','Courier New',monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 10px 0;
+            border-left: 4px solid #D97706
+        }
+
+        [data-theme="dark"] .script-box {
+            background: #180e00
+        }
+
+        .trouble-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 13px
+        }
+
+            .trouble-table th {
+                background: var(--surface2);
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                text-align: left;
+                font-family: 'Nunito',sans-serif;
+                font-weight: 900;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: .6px;
+                color: var(--text)
+            }
+
+            .trouble-table td {
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                line-height: 1.55;
+                vertical-align: top;
+                color: var(--text2);
+                word-break: break-word;
+                overflow-wrap: break-word
+            }
+
+            .trouble-table tr:nth-child(even) td {
+                background: var(--surface2)
+            }
+
+        .mc {
+            color: var(--no-t);
+            font-weight: 600
+        }
+
+        .fc {
+            color: var(--ok-t)
+        }
+
+        .tip-card {
+            background: var(--callout-tip-bg);
+            border: 1.5px solid var(--callout-tip-b);
+            border-left: 4px solid #D97706;
+            border-radius: var(--rsm);
+            padding: 14px 16px;
+            margin-bottom: 10px
+        }
+
+            .tip-card p {
+                font-size: 13.5px;
+                color: var(--callout-tip-t);
+                line-height: 1.65
+            }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        @media(max-width:580px) {
+            .two-col {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .code-block {
+            background: var(--ink);
+            border-radius: var(--r);
+            padding: 18px;
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12.5px;
+            line-height: 1.85;
+            color: #e0e0e0;
+            margin: 10px 0;
+            border: 2px solid var(--border)
+        }
+
+        [data-theme="dark"] .code-block {
+            background: #180e00
+        }
+
+        .ck {
+            color: #C792EA
+        }
+
+        .cf {
+            color: #82AAFF
+        }
+
+        .cs {
+            color: #C3E88D
+        }
+
+        .cn {
+            color: #F78C6C
+        }
+
+        .cm {
+            color: #FCD34D
+        }
+
+        .anchor-target {
+            scroll-margin-top: 130px
+        }
+
+        code {
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 7px;
+            color: var(--pink)
+        }
+
+        [data-theme="dark"] code {
+            color: var(--lime)
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Szkolenie dla Tutorów</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="goHome()">← Pulpit</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="sec-nav">
+        <a href="#overview" class="sec-pill">1 · Przegląd</a>
+        <a href="#agent" class="sec-pill">2 · Agent jako Ogrodnik</a>
+        <a href="#circuits" class="sec-pill">3 · Obwody Warunkowe</a>
+        <a href="#hoppers" class="sec-pill">4 · Sortowanie Lejami</a>
+        <a href="#pipeline" class="sec-pill">5 · Pełny Rurociąg</a>
+        <a href="#trouble" class="sec-pill">6 · Rozwiązywanie Problemów</a>
+        <a href="#protips" class="sec-pill">7 · Wskazówki Pro</a>
+        <a href="#test-cta" class="sec-pill">8 · Sprawdzian</a>
+    </div>
+
+    <div class="module-banner">
+        <div style="max-width:860px;margin:0 auto;position:relative">
+            <div class="meyebrow">Moduł 4 z 5</div>
+            <div class="mh1">🌲 Mechaniczny Las</div>
+            <p>Żywa automatyzacja — uczniowie stosują każdą umiejętność z Modułów 1–3, aby zbudować kompletny, zintegrowany system zautomatyzowanej farmy: Agent sadzi nasiona, obwody Redstone zbierają plony, gdy są dojrzałe, a Leje sortują i przechowują produkty.</p>
+            <div class="mobj" style="margin-top:14px;margin-bottom:0">
+                <strong>Cele Modułu 4:</strong> Zaprogramowanie Agenta jako zautomatyzowanego Ogrodnika (pętla + polecenia sadzenia) · Budowanie warunkowych obwodów zbierających Redstone (Obserwator → Tłok) · Wdrożenie systemu sortowania i przechowywania przedmiotów opartego na Lejach · Zrozumienie pełnego procesu automatyzacji: Wykryj → Aktywuj → Zbierz → Przechowaj.
+            </div>
+        </div>
+    </div>
+
+    <div class="cbody">
+
+        <div id="overview" class="anchor-target">
+            <div class="section-head">1 · Przegląd Modułu — Integracja i Rozwinięcie</div>
+        </div>
+
+        <div class="card">
+            <h4>Dlaczego Moduł 4 to „Moduł Integracyjny”</h4>
+            <p>Każdy poprzedni moduł wprowadzał odizolowane koncepcje. Moduł 4 to pierwszy moduł, który wyraźnie wymaga od uczniów <strong>połączenia wszystkich wcześniejszych umiejętności</strong> w jeden spójny system:</p>
+            <ul style="margin-top:8px">
+                <li><strong>Z Modułu 1:</strong> Sterowanie Agentem + obwód Redstone Obserwator-Tłok</li>
+                <li><strong>Z Modułu 2:</strong> Pozycjonowanie za pomocą współrzędnych dla układu siatki farmy</li>
+                <li><strong>Z Modułu 3:</strong> Logika warunkowa („jeśli roślina urosła, to zbierz plony”)</li>
+            </ul>
+            <p style="margin-top:8px">Rezultatem jest <strong>w pełni autonomiczny system rolniczy</strong>, który działa bez interwencji gracza — najbardziej złożona struktura na Poziomie 1. Uczniowie, którzy pomyślnie ukończą Moduł 4, demonstrują zdolność do projektowania, budowania i debugowania wielokomponentowego systemu automatyzacji.</p>
+        </div>
+
+        <div id="agent" class="anchor-target">
+            <div class="section-head">2 · Agent jako Ogrodnik — Automatyczne Sadzenie</div>
+        </div>
+
+        <div class="card">
+            <h4>Programowanie Agenta do Sadzenia w Rzędach</h4>
+            <p>W Module 1 uczniowie poruszali Agentem ręcznie za pomocą podstawowych poleceń ruchu. Moduł 4 wykorzystuje Agenta do <strong>automatycznego sadzenia nasion w ustrukturyzowanej siatce</strong> — to pierwsze użycie Agenta jako produktywnego narzędzia automatyzacji, a nie zabawki demonstracyjnej.</p>
+            <div class="code-block">
+                <span class="cm">// Najpierw załaduj nasiona do ekwipunku Agenta (kliknij prawym przyciskiem myszy na Agenta, dodaj nasiona do slotu 1)</span><br>
+                on chat command <span class="cs">"plant"</span> {<br>
+                &nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> times {                 ← posadź 5 nasion w rzędzie<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent place on move</span> down      ← umieszcza przedmiot pod sobą, gdy Agent się przemieszcza<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> forward <span class="cn">1</span>          ← przejdź o jeden blok do przodu<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+            <p style="margin-top:10px"><strong>Krytyczne warunki wstępne, aby to zadziałało:</strong></p>
+            <ol style="padding-left:18px;margin-top:6px">
+                <li style="margin-bottom:6px">Nasiona muszą być załadowane do ekwipunku Agenta, zanim komenda czatu zostanie wywołana.</li>
+                <li style="margin-bottom:6px">Agent musi być ustawiony w pierwszym punkcie sadzenia, zwrócony we właściwym kierunku dla danego rzędu.</li>
+                <li style="margin-bottom:6px">Ziemia musi być zaorana zaimplementowaną ziemią uprawną (użyj Zmotyki na ziemi/trawie, a następnie nawodnij ją w promieniu 4 bloków).</li>
+                <li>Sadzenie przez Agenta wykorzystuje opcję „umieść przy ruchu w dół”, co kładzie przedmiot w bloku bezpośrednio pod Agentem w trakcie jego ruchu naprzód.</li>
+            </ol>
+            <div class="callout cw" style="margin-top:10px">
+                <span class="ci">⚠️</span>
+                <div><strong>Najczęstszy błąd przy sadzeniu Agenta:</strong> Agent upuszcza nasiona na ziemię zamiast ich siać. Dzieje się tak, gdy podłoże nie jest zaoraną ziemią uprawną — nasiona umieszczone na zwykłych blokach ziemi są traktowane jako upuszczone przedmioty, a nie posadzone rośliny. Zawsze potwierdź, że ziemia jest zaorana i znajduje się w odległości do 4 bloków od źródła wody przed uruchomieniem polecenia sadzenia.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Sadzenie w Wielu Rzędach — Pętle Zagnieżdżone</h4>
+            <p>Dla farmy 5×5 uczniowie potrzebują pętli zagnieżdżonych: pętli zewnętrznej dla rzędów i pętli wewnętrznej dla długości każdego rzędu. To wprowadzenie w Module 4 do iteracji zagnieżdżonej — pojęcia, które bezpośrednio prefiguruje iterację po tablicach dwuwymiarowych w późniejszej edukacji programistycznej.</p>
+            <div class="code-block">
+                on chat command <span class="cs">"farm"</span> {<br>
+                &nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> times {             ← pętla zewnętrzna: 5 rzędów<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> times {           ← pętla wewnętrzna: 5 kolumn<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent place on move</span> down<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> forward <span class="cn">1</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> right <span class="cn">1</span>         ← przesuń się o jeden rząd w prawo<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent turn</span> around              ← obróć się w przeciwnym kierunku dla następnego rzędu<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> back <span class="cn">5</span>           ← wróć na początek rzędu<br>
+                &nbsp;&nbsp;} <br>
+                }
+            </div>
+        </div>
+
+        <div id="circuits" class="anchor-target">
+            <div class="section-head">3 · Warunkowe Obwody Zbiorów</div>
+        </div>
+
+        <div class="card">
+            <h4>Obwód Zbiorów Obserwator–Tłok — Zastosowanie do Upraw</h4>
+            <p>Uczniowie zbudowali już łańcuch Obserwator–Tłok dla bambusa w Module 1. Moduł 4 stosuje tę samą zasadę do pszenicy, marchwi, ziemniaków i innych upraw rolniczych. Kluczową różnicą jest <strong>wykrywanie fazy wzrostu</strong>:</p>
+            <ul style="margin-top:8px">
+                <li>Bambus: rośnie w wyraźnych przyrostach całych bloków — łatwy do wykrycia.</li>
+                <li>Pszenica/Marchew/Ziemniaki: przechodzą przez 8 faz wzrostu (0–7). <strong>Faza 7 oznacza pełny wzrost</strong>. Obserwator wykrywa przejście z fazy 6 → 7 jako zmianę stanu bloku i wysyła sygnał.</li>
+                <li>Powtórzenie obwodu z Modułu 1: Twarz Obserwatora → rząd upraw. Tył Obserwatora → wejście Tłoka (lub przewód z proszku Redstone). Tłok wysuwa się poziomo, aby złamać dojrzały rząd roślin.</li>
+            </ul>
+            <div class="callout ct" style="margin-top:10px">
+                <span class="ci">💡</span>
+                <div><strong>Nauka warunku „urośnij, aby zebrać”:</strong> Przedstaw to jako strukturę jeśli-to, nawet jeśli jest realizowana sprzętowo: <em>„JEŚLI pszenica osiągnie fazę wzrostu 7 (pełny wzrost) TO Obserwator wysyła sygnał TO Tłok niszczy rośliny TO nasiona i żywność spadają na ziemię”.</em> Taki język łączy logikę warunkową MakeCode z Modułu 3 ze sprzętową logiką warunkową Redstone z Modułu 4.</div>
+            </div>
+        </div>
+
+        <div id="hoppers" class="anchor-target">
+            <div class="section-head">4 · Mechanika Leja i Systemy Sortowania Przedmiotów</div>
+        </div>
+
+        <div class="card">
+            <h4>Czym Jest Lej (Hopper)?</h4>
+            <p><strong>Lej</strong> to blok w kształcie lejka o dwóch funkcjach: (1) zbiera przedmioty, które wpadają do niego od góry, oraz (2) przenosi przedmioty z własnego ekwipunku do sąsiedniego kontenera (skrzyni, pieca, innego leja) lub deponuje je w dół przez swój otwór wylotowy.</p>
+            <div class="two-col" style="margin-top:10px">
+                <div class="card">
+                    <h4>Zasady Umieszczania Leja</h4>
+                    <ul>
+                        <li><strong>Kierunek wylotu:</strong> określany przez to, w stronę którego bloku Lej jest skierowany — jego rura wylotowa wskazuje na blok, na którym został umieszczony.</li>
+                        <li><strong>Aby połączyć go ze skrzynią:</strong> przytrzymaj Shift + kliknij prawym przyciskiem myszy na skrzynię. Bez klawisza Shift otworzy się interfejs skrzyni zamiast umieszczenia leja.</li>
+                        <li><strong>Aby łączyć Leje w łańcuchy:</strong> umieszczaj je jeden za drugim; przedmioty przemieszczają się przez łańcuch ze stałą prędkością 2.5 przedmiotu na sekundę na jeden Lej.</li>
+                        <li><strong>Pojemność:</strong> każdy Lej mieści 5 stosów przedmiotów (do ×64 sztuk na stos).</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Podstawowy System Sortowania</h4>
+                    <p>Proste sortowanie na dwie skrzynie: jeden Lej nad każdą skrzynią, każdy załadowany przedmiotem filtrującym (przedmiotem, który chcesz skierować do tej konkretnej skrzyni). Gdy przedmioty przepływają, te pasujące do filtra trafiają do skrzyni tego leja; przedmioty niepasujące przechodzą do następnego leja.</p>
+                    <p style="margin-top:8px"><strong>Cel Modułu 4:</strong> Skierowanie pszenicy do jednej skrzyni, a nasion do drugiej — automatyczne oddzielenie plonów żywnościowych od materiału do ponownego zasiewu.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Czas Przenoszenia Leja — Liczby Praktyczne</h4>
+            <p>Prędkość transferu: Lej przetwarza jeden przedmiot co <strong>4 ticki gry</strong> (0.2 sekundy). Przy 20 tickach na sekundę daje to <strong>2.5 przedmiotu na sekundę</strong>. Dla dużej farmy produkującej duże ilości towaru pojedynczy łańcuch lejków może stać się wąskim gardłem. Rozwiązania:</p>
+            <ul style="margin-top:8px">
+                <li>Używanie <strong>równoległych łańcuchów Lejów</strong> — wiele punktów zbiorczych, z których każdy zasila własną skrzynię.</li>
+                <li>Używanie <strong>Wagonika z lejem</strong> (Hopper Minecart) nad torami zbiorczymi — wagoniki z lejem przenoszą przedmioty z prędkością dwukrotnie wyższą niż stacjonarne Leje.</li>
+            </ul>
+        </div>
+
+        <div id="pipeline" class="anchor-target">
+            <div class="section-head">5 · Pełny Rurociąg Automatyzacji</div>
+        </div>
+
+        <div class="card">
+            <h4>Czteroetapowy Proces — Wykryj → Aktywuj → Zbierz → Przechowaj</h4>
+            <p>Podstawowa struktura dydaktyczna Modułu 4 w Kodland. Każdy w pełni zautomatyzowany system farmy można opisać jako cztery sekwencyjne etapy:</p>
+            <div class="two-col" style="margin-top:10px">
+                <div class="card" style="border-left:4px solid var(--lime)">
+                    <h4 style="color:var(--lime-d)">Etap 1: Wykryj</h4>
+                    <p><strong>Blok Obserwatora</strong> monitoruje blok rośliny pod kątem zmiany stanu (faza wzrostu 6 → 7). Po wykryciu dojrzałości emituje natychmiastowy impuls Redstone o długości 1 ticka.</p>
+                </div>
+                <div class="card" style="border-left:4px solid var(--amber)">
+                    <h4 style="color:var(--amber-d,#D97706)">Etap 2: Aktywuj</h4>
+                    <p>Impuls Obserwatora zasila <strong>Tłok</strong> poprzez przewód Redstone. Tłok wysuwa się, niszcząc w pełni wyrośnięty blok rośliny. Plony spadają na ziemię jako encje przedmiotów.</p>
+                </div>
+                <div class="card" style="border-left:4px solid var(--pink)">
+                    <h4 style="color:var(--pink-d)">Etap 3: Zbierz</h4>
+                    <p><strong>Lej</strong> umieszczony pod rzędem upraw zasysa upadłe encje przedmiotów. Przedmioty trafiają do 5-slotowego ekwipunku leja automatycznie w ciągu 0.5 sekundy od znalezienia się w jego zasięgu.</p>
+                </div>
+                <div class="card" style="border-left:4px solid #3B82F6">
+                    <h4 style="color:#1D4ED8">Etap 4: Przechowaj</h4>
+                    <p>Lej przenosi zebrane przedmioty do podłączonej <strong>Skrzyni</strong> z prędkością 2.5 przedmiotu na sekundę. System sortowania kieruje różne rodzaje przedmiotów do różnych skrzyń na podstawie filtrów leja.</p>
+                </div>
+            </div>
+            <div class="callout cg" style="margin-top:14px">
+                <span class="ci">✅</span>
+                <div><strong>Moment edukacyjny:</strong> Gdy wszystkie cztery etapy zostaną zbudowane i przetestowane, poproś uczniów o opisanie tego rurociągu własnymi słowami bez patrzenia na kod: „Co wykrywa? Co aktywuje? Co zbiera? Co przechowuje?” Takie słowne zakodowanie utrwala ramy koncepcyjne i przygotowuje ich do pracy nad projektowaniem w Module 5.</div>
+            </div>
+        </div>
+
+        <div id="trouble" class="anchor-target">
+            <div class="section-head">6 · Katalog Rozwiązywania Problemów — Moduł 4 (5 Scenariuszy)</div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="trouble-table">
+                <thead>
+                    <tr><th style="width:22%">Błąd / Symptom</th><th style="width:27%">Główna Przyczyna</th><th style="width:31%">Dokładne Rozwiązanie</th><th style="width:20%">Skrypt Prewencyjny</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mc">Agent upuszcza nasiona na ziemię zamiast ich siać</td>
+                        <td>Podłoże pod Agentem to niezaorana ziemia lub trawa, a nie ziemia uprawna. Nasiona umieszczane na nieodpowiednich blokach ziemi pojawiają się jako luźne, upuszczone encje przedmiotów.</td>
+                        <td>Przed uruchomieniem polecenia sadzenia: (1) Użyj Zmotyki na każdym bloku ziemi, aby przekształcić go w ziemię uprawną. (2) Umieść źródło wody w odległości do 4 bloków od ziemi uprawnej, aby ją nawodnić (ciemnobrązowy = nawodniony, jasny brąz = suchy). (3) Potwierdź poprawność uruchamiając najpierw Agenta nad obszarem już zaoranym.</td>
+                        <td class="fc">"Zanim Agent zacznie sadzić, ziemia musi być zaorana i nawodniona. Sprawdź kolor gleby — ciemnobrązowy = gotowa do sadzenia."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">Lej napełnia się przedmiotami, ale nie przenosi ich do skrzyni</td>
+                        <td>Rura wylotowa leja nie jest skierowana na skrzynię — został umieszczony bez przytrzymania klawisza Shift, przez co otworzył się interfejs skrzyni zamiast utworzenia połączenia. Lej jest teraz skierowany w dół w powietrze.</td>
+                        <td>Rozbij Lej i umieść go ponownie: przytrzymaj Shift, a następnie kliknij prawym przyciskiem myszy bezpośrednio na blok skrzyni. Potwierdź wizualnie, że rura leja łączy się z bokiem skrzyni. Alternatywnie, umieść go w orientacji poziomej, jeśli skrzynia znajduje się z boku.</td>
+                        <td class="fc">"Zawsze trzymaj Shift podczas umieszczania Leja na skrzyni. Bez Shift = skrzynia się otwiera = Lej ląduje źle."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">Obserwator aktywuje się przy wzroście roślin, ale Tłok się nie wysuwa — zbiory się zatrzymują</td>
+                        <td>Twarz wyjściowa Obserwatora nie jest połączona z Tłokiem lub występuje fizyczna przerwa w przewodzie z proszku Redstone. To ten sam problem z orientacją co w Module 1, ale często bardziej skomplikowany ze względu na układ farmy.</td>
+                        <td>Przetestuj w izolacji: odłącz Obserwator od obwodu farmy. Umieść tymczasową Lampę Redstone bezpośrednio za twarzą wyjściową Obserwatora. Jeśli Lampa zapala się przy wzroście rośliny, Obserwator działa poprawnie, a problem leży dalej (przerwa w przewodzie lub orientacja Tłoka). Napraw przerwę lub umieść Tłok skierowany we właściwą stronę.</td>
+                        <td class="fc">"Przetestuj każdy etap osobno. Obserwator działa? Wtedy sprawdź przewód. Przewód działa? Wtedy sprawdź orientację Tłoka."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">Zagnieżdżona pętla sadzenia w rzędach powoduje, że Agent sadzi rośliny w spiralę lub losowy wzór zamiast w siatkę</td>
+                        <td>Kierunek zwrotu Agenta po komendzie „obróć się” nie jest prawidłowo zorientowany; uczeń użył komendy „skręć w lewo” dwa razy, ale zapomniał, że po nieparzystej liczbie zwrotów, dwukrotny skręt w lewo ≠ obrót o 180° we wszystkich przypadkach, lub liczba kroków powrotnych jest błędna.</td>
+                        <td>Narysuj ścieżkę Agenta na papierze przed zakodowaniem sekwencji. Zaznacz wyraźnie każdy zwrot. Zweryfikuj: czy po ukończeniu rzędu 1 Agent jest zwrócony w przeciwnym kierunku? Czy komenda „idź do tyłu o 5” zwraca go dokładnie na początek rzędu? Przetestuj z 1 rzędem przed rozszerzeniem pętli do 5.</td>
+                        <td class="fc">"Narysuj ścieżkę przed jej zakodowaniem. W którym kierunku patrzy po pierwszym zwrocie? A po drugim? Agent wykonuje tylko dokładne instrukcje kodu, nie domyśla się trasy."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">System sortowania kieruje WSZYSTKIE przedmioty do pierwszej skrzyni niezależnie od ich rodzaju</td>
+                        <td>Sloty ekwipunku leja filtrującego nie są odpowiednio skonfigurowane — przedmioty filtrujące muszą częściowo wypełniać sloty leja, aby zatrzymać tylko pasujące elementy. Alternatywnie, nie ustawiono żadnego filtra i pierwszy Lej zabiera wszystko bez różnicowania.</td>
+                        <td>Sortowanie lejem wymaga umieszczenia przedmiotu filtrującego w każdym slocie ekwipunku leja filtrującego, nie pozostawiając wolnych miejsc. Przedmioty pasujące wypełniają sloty filtra; przedmioty niepasujące przechodzą dalej. Uproszczona metoda dla Poziomu 1: użyj lejków z wyraźnymi filtrami wizualnymi i przetestuj ręcznie dwoma różnymi przedmiotami (pszenica vs. nasiona), aby potwierdzić trasy przechowywania.</td>
+                        <td class="fc">"Lej sortujący potrzebuje 'szablonu' — umieść jeden z docelowych przedmiotów w jego slotach ekwipunku. W ten sposób zatrzyma pasujące rzeczy i przepuści inne."</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="protips" class="anchor-target">
+            <div class="section-head">7 · Wskazówki Pro Tutora i Analogie z Prawdziwego Świata</div>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Sortowanie Lejami = Analogia „Zakładu Recyklingu”</strong><br>
+                *„Pomyślcie o zautomatyzowanym zakładzie recyklingu: różne taśmy przenośnikowe kierują butelki szklane do jednego pojemnika, papier do innego, a metal do jeszcze innego. System lejków w Waszej farmie to Wasz cyfrowy zakład recyklingu. Pszenica trafia w lewo, nasiona w prawo — automatycznie, za każdym razem, bez konieczności ręcznego sortowania”.*
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Proces Czteroetapowy = Analogia „Centrum Dystrybucyjnego Amazon”</strong><br>
+                *„Kiedy zamawiacie coś na Amazonie: (1) Cyfrowy czujnik wykrywa Wasze zamówienie [Obserwator]. (2) Robotyczne ramię pobiera przedmiot z półki [Tłok]. (3) Taśma przenośnikowa transportuje go do stacji pakowania [Lej]. (4) Paczka trafia do oznaczonego pojemnika w odpowiedniej sekcji magazynu [Skrzynia]. Nasza farma działa na tych samych czterech etapach, tylko przetwarzając pszenicę zamiast paczek”.*
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Pętle Zagnieżdżone = Analogia „Drukarki Biurkowej” dla Siatek 2D</strong><br>
+                *„Kiedy drukarka drukuje stronę tekstu, głowica przesuwa się poziomo drukując jeden rząd kropek (pętla wewnętrzna), po czym schodzi o jedną linię w dół (pętla zewnętrzna) i drukuje kolejny rząd, powtarzając ten proces aż do zapełnienia kartki. Sadzenie rzędami przez Agenta działa identycznie: wewnętrzna pętla to jeden rząd nasion, a zewnętrzna realizuje zmianę rzędu”.*
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Testowanie w Izolacji — Zasada „Debugowania Jednego Etapu na Raz”</strong><br>
+                W przypadku wielokomponentowych systemów zawsze testuj każdy etap osobno przed ich integracją w końcowy obwód. Protokół debugowania dla Modułu 4 zakłada: (1) Sprawdzenie, czy Obserwator wysyła impuls przy wzroście rośliny (użyj lampy). (2) Sprawdzenie, czy Tłok wysuwa się przy ręcznym zasilaniu (użyj Dźwigni). (3) Sprawdzenie, czy Lej zbiera przedmioty (rzuć przedmioty ręcznie nad nim). (4) Sprawdzenie, czy Lej kieruje przedmioty do właściwej skrzyni (włóż przedmioty testowo do filtra). Dopiero gdy każdy etap przejdzie test pomyślnie, uczniowie powinni połączyć pełny rurociąg.
+            </p>
+        </div>
+
+        <div id="test-cta" class="anchor-target">
+            <div class="section-head">8 · Sprawdzian Wiedzy z Modułu 4</div>
+        </div>
+
+        <div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+            <div style="font-size:40px;margin-bottom:12px">📝</div>
+            <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Czy jesteś gotowy na Sprawdzian Wiedzy z Modułu 4?</div>
+            <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+                6 pytań dotyczących wyłącznie zawartości Modułu 4. Wynik <strong>70% lub wyższy</strong> odblokowuje dostęp do Modułu 5. Pytania są całkowicie niezależne od testów z poprzednich modułów oraz końcowego DST.
+            </p>
+            <div class="btn-row center">
+                <a href="PlModule4Test.html" class="btn-primary">Rozpocznij Test Modułu 4 →</a>
+                <button class="btn-outline" onclick="goHome()">← Pulpit</button>
+            </div>
+        </div>
+
+    </div><footer>© 2026 Kodland. Wewnętrzny materiał szkoleniowy dla tutorów — nie do rozpowszechniania na zewnątrz.</footer>
+    <script src="shared.js"></script>
+    <script>
+        initShared();
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        if (!isModuleUnlocked(4)) { alert('Najpierw ukończ poprzednie moduły.'); goHome(); }
+    </script>
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 4 — Floresta Mecânica | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        .module-banner {
+            background: linear-gradient(135deg,#B45309 0%,#D97706 55%,#F59E0B 100%);
+            padding: 36px 32px 28px;
+            position: relative;
+            overflow: hidden
+        }
+
+            .module-banner::before {
+                content: '🌲';
+                font-size: 180px;
+                position: absolute;
+                right: -20px;
+                top: -40px;
+                opacity: .09;
+                line-height: 1;
+                pointer-events: none
+            }
+
+            .module-banner .meyebrow {
+                color: rgba(255,255,255,.72)
+            }
+
+            .module-banner .mh1 {
+                color: #fff
+            }
+
+            .module-banner p {
+                color: rgba(255,255,255,.85);
+                font-size: 14px;
+                line-height: 1.65;
+                max-width: 640px;
+                margin-top: 6px
+            }
+
+            .module-banner .mobj {
+                background: rgba(255,255,255,.13);
+                border-color: rgba(255,255,255,.28);
+                border-left-color: #FDE68A;
+                color: rgba(255,255,255,.9)
+            }
+
+                .module-banner .mobj strong {
+                    color: #fff
+                }
+
+        .sec-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--surface2);
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 62px;
+            z-index: 90;
+            transition: background .25s
+        }
+
+        .sec-pill {
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            padding: 5px 13px;
+            border-radius: var(--rpill);
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text2);
+            text-decoration: none;
+            transition: all .15s;
+            white-space: nowrap
+        }
+
+            .sec-pill:hover, .sec-pill.active {
+                background: var(--lime);
+                border-color: var(--lime-d);
+                color: var(--ink)
+            }
+
+        .script-box {
+            background: var(--ink);
+            color: #FDE68A;
+            border-radius: var(--rsm);
+            padding: 14px 18px;
+            font-family: 'JetBrains Mono','Courier New',monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 10px 0;
+            border-left: 4px solid #D97706
+        }
+
+        [data-theme="dark"] .script-box {
+            background: #180e00
+        }
+
+        .trouble-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 13px
+        }
+
+            .trouble-table th {
+                background: var(--surface2);
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                text-align: left;
+                font-family: 'Nunito',sans-serif;
+                font-weight: 900;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: .6px;
+                color: var(--text)
+            }
+
+            .trouble-table td {
+                border: 1.5px solid var(--border);
+                padding: 9px 13px;
+                line-height: 1.55;
+                vertical-align: top;
+                color: var(--text2)
+            }
+
+            .trouble-table tr:nth-child(even) td {
+                background: var(--surface2)
+            }
+
+        .mc {
+            color: var(--no-t);
+            font-weight: 600
+        }
+
+        .fc {
+            color: var(--ok-t)
+        }
+
+        .tip-card {
+            background: var(--callout-tip-bg);
+            border: 1.5px solid var(--callout-tip-b);
+            border-left: 4px solid #D97706;
+            border-radius: var(--rsm);
+            padding: 14px 16px;
+            margin-bottom: 10px
+        }
+
+            .tip-card p {
+                font-size: 13.5px;
+                color: var(--callout-tip-t);
+                line-height: 1.65
+            }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        @media(max-width:580px) {
+            .two-col {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .code-block {
+            background: var(--ink);
+            border-radius: var(--r);
+            padding: 18px;
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12.5px;
+            line-height: 1.85;
+            color: #e0e0e0;
+            margin: 10px 0;
+            border: 2px solid var(--border)
+        }
+
+        [data-theme="dark"] .code-block {
+            background: #180e00
+        }
+
+        .ck {
+            color: #C792EA
+        }
+
+        .cf {
+            color: #82AAFF
+        }
+
+        .cs {
+            color: #C3E88D
+        }
+
+        .cn {
+            color: #F78C6C
+        }
+
+        .cm {
+            color: #FCD34D
+        }
+
+        .anchor-target {
+            scroll-margin-top: 130px
+        }
+
+        code {
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 7px;
+            color: var(--pink)
+        }
+
+        [data-theme="dark"] code {
+            color: var(--lime)
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+            <span class="logo-sub">Treinamento de Tutores</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="goHome()">← Painel</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+    <div class="sec-nav">
+        <a href="#overview" class="sec-pill">1 · Visão Geral</a>
+        <a href="#agent" class="sec-pill">2 · Agente como Jardineiro</a>
+        <a href="#circuits" class="sec-pill">3 · Circuitos Condicionais</a>
+        <a href="#hoppers" class="sec-pill">4 · Organização por Funil</a>
+        <a href="#pipeline" class="sec-pill">5 · Fluxo Completo</a>
+        <a href="#trouble" class="sec-pill">6 · Resolução de Problemas</a>
+        <a href="#protips" class="sec-pill">7 · Dicas Pro</a>
+        <a href="#test-cta" class="sec-pill">8 · Verificação de Conhecimento</a>
+    </div>
+
+    <div class="module-banner">
+        <div style="max-width:860px;margin:0 auto;position:relative">
+            <div class="meyebrow">Módulo 4 de 5</div>
+            <div class="mh1">🌲 Floresta Mecânica</div>
+            <p>Automação viva — os alunos aplicam todas as habilidades dos Módulos 1 a 3 para construir uma fazenda automatizada de ponta a ponta: o Agente planta as sementes, os circuitos de Redstone colhem quando as plantações estão prontas e os Funis organizam e armazenam a produção.</p>
+            <div class="mobj" style="margin-top:14px;margin-bottom:0">
+                <strong>Objetivos do Módulo 4:</strong> Programar o Agente como um Jardineiro automatizado (loop + comandos de plantio) · Construir circuitos de colheita condicionais de Redstone (Observador → Pistão) · Implementar a organização e armazenamento de itens baseados em Funil · Compreender o fluxo de automação completo: Detectar → Ativar → Coletar → Armazenar.
+            </div>
+        </div>
+    </div>
+
+    <div class="cbody">
+
+        <div id="overview" class="anchor-target">
+            <div class="section-head">1 · Visão Geral do Módulo — Integração &amp; Escalada</div>
+        </div>
+
+        <div class="card">
+            <h4>Por que o Módulo 4 é o "Módulo de Integração"</h4>
+            <p>Cada módulo anterior introduziu conceitos isolados. O Módulo 4 é o primeiro módulo que pede explicitamente aos alunos para <strong>combinar todas as habilidades anteriores</strong> em um único sistema:</p>
+            <ul style="margin-top:8px">
+                <li><strong>Do Módulo 1:</strong> Controle do Agente + circuito de Redstone com Observador–Pistão</li>
+                <li><strong>Do Módulo 2:</strong> Posicionamento por coordenadas para o layout da grade da fazenda</li>
+                <li><strong>Do Módulo 3:</strong> Lógica condicional ("se a planta cresceu, colha-a")</li>
+            </ul>
+            <p style="margin-top:8px">O resultado é um <strong>sistema agrícola totalmente autônomo</strong> que roda sem a intervenção do jogador — a construção de maior complexidade no Nível 1. Os alunos que concluem o Módulo 4 com sucesso demonstraram a capacidade de projetar, construir e depurar um sistema automatizado multicomponente.</p>
+        </div>
+
+        <div id="agent" class="anchor-target">
+            <div class="section-head">2 · O Agente como Jardineiro — Plantio Automatizado</div>
+        </div>
+
+        <div class="card">
+            <h4>Programando o Agente para Plantar em Fileiras</h4>
+            <p>No Módulo 1, os alunos moveram o Agente manualmente com comandos básicos de movimento. O Módulo 4 usa o Agente para <strong>plantar sementes automaticamente em uma grade estruturada</strong> — o primeiro uso do Agente como uma ferramenta automatizada produtiva em vez de um brinquedo de demonstração.</p>
+            <div class="code-block">
+                <span class="cm">// Carregue as sementes no inventário do Agente primeiro (clique com o botão direito no Agente, adicione Sementes ao slot 1)</span><br>
+                on chat command <span class="cs">"plant"</span> {<br>
+                &nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> times {                 <span class="com">← planta 5 sementes em uma fileira</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent place on move</span> down      <span class="com">← coloca o item abaixo enquanto o Agente se move</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> forward <span class="cn">1</span>          <span class="com">← avança um bloco</span><br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+            <p style="margin-top:10px"><strong>Pré-condições críticas para que isso funcione:</strong></p>
+            <ol style="padding-left:18px;margin-top:6px">
+                <li style="margin-bottom:6px">As sementes devem ser carregadas no inventário do Agente antes que o comando de chat dispare.</li>
+                <li style="margin-bottom:6px">O Agente deve estar posicionado no primeiro local de plantio, virado para a direção correta da fileira.</li>
+                <li style="margin-bottom:6px">O solo deve ser terra arada (use uma Enxada na terra/grama, depois molhe-a em um raio de até 4 blocks).</li>
+                <li>O plantio do Agente usa "colocar ao mover para baixo", o que coloca o item no bloco diretamente abaixo do Agente à medida que ele avança.</li>
+            </ol>
+            <div class="callout cw" style="margin-top:10px">
+                <span class="ci">⚠️</span>
+                <div><strong>Falha mais comum no plantio do Agente:</strong> O Agente joga as sementes no chão em vez de plantá-las. Isso acontece quando o solo não é terra arada — sementes colocadas em blocos de terra comuns son tratadas como itens dropados, não como plantações semeadas. Sempre confirme se o solo está arado e a até 4 blocos de uma fonte de água antes de executar o comando de plantio.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Plantio em Várias Fileiras — Loops Aninhados</h4>
+            <p>Para uma fazenda 5×5, os alunos precisam de loops aninhados: um loop externo para as fileiras e um loop interno para o comprimento de cada fileira. Essa é a introdução do Módulo 4 à iteração aninhada — um conceito que prefigura diretamente a varredura de matrizes 2D em etapas posteriores da educação em programação.</p>
+            <div class="code-block">
+                on chat command <span class="cs">"farm"</span> {<br>
+                &nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> times {             <span class="com">← loop externo: 5 fileiras</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">repeat</span> <span class="cn">5</span> times {           <span class="com">← loop interno: 5 colunas</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent place on move</span> down<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> forward <span class="cn">1</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> right <span class="cn">1</span>         <span class="com">← desloca uma fileira para a direita</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent turn</span> around              <span class="com">← vira para a direção oposta para a próxima fileira</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">agent move</span> back <span class="cn">5</span>           <span class="com">← retorna ao início da fileira</span><br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </div>
+
+        <div id="circuits" class="anchor-target">
+            <div class="section-head">3 · Circuitos de Colheita Condicionais</div>
+        </div>
+
+        <div class="card">
+            <h4>O Circuito de Colheita com Observador–Pistão — Aplicado a Plantações</h4>
+            <p>Os alunos já construíram uma cadeia de Observador–Pistão para bambu no Módulo 1. O Módulo 4 aplica o mesmo princípio ao trigo, cenouras, batatas e outras plantações cultiváveis. A principal diferença é a <strong>detecção do estágio de crescimento</strong>:</p>
+            <ul style="margin-top:8px">
+                <li>Bambu: cresce em incrementos distintos de blocos inteiros — fácil de detectar.</li>
+                <li>Trigo/Cenouras/Batatas: passam por 8 estágios de crescimento (0–7). <strong>O Estágio 7 é o crescimento completo</strong>. O Observador detecta a transição do estágio 6 → 7 como uma mudança de estado de bloco e dispara.</li>
+                <li>Repita o circuito do Módulo 1: face do Observador → fileira de cultivo. Parte traseira do Observador → entrada do Pistão (ou fio de Redstone). O Pistão se estende horizontalmente para quebrar a fileira de plantação madura.</li>
+            </ul>
+            <div class="callout ct" style="margin-top:10px">
+                <span class="ci">💡</span>
+                <div><strong>Ensinando a condicional "crescer para colher":</strong> Enquadre como uma estrutura se-então, mesmo que seja implementada em hardware: <em>“SE o trigo atingir o estágio de crescimento 7 (totalmente crescido), ENTÃO o Observador dispara, ENTÃO o Pistão quebra as plantações, ENTÃO as sementes e os itens de comida caem.”</em> Essa linguagem une a lógica condicional do MakeCode do Módulo 3 à lógica condicional do Redstone do Módulo 4.</div>
+            </div>
+        </div>
+
+        <div id="hoppers" class="anchor-target">
+            <div class="section-head">4 · Mecânicas do Funil &amp; Sistemas de Ordenação de Itens</div>
+        </div>
+
+        <div class="card">
+            <h4>O que é um Funil (Hopper)?</h4>
+            <p>Um <strong>Funil</strong> é um bloco em forma de funil com duas funções: (1) ele coleta itens que caem nele por cima e (2) transfere itens de seu próprio inventário para um contêiner adjacente (baú, fornalha, outro Funil) ou os deponha para baixo através de sua boca de saída.</p>
+            <div class="two-col" style="margin-top:10px">
+                <div class="card">
+                    <h4>Regras de Posicionamento do Funil</h4>
+                    <ul>
+                        <li><strong>Direção de saída:</strong> determinada por qual bloco o Funil está voltado — sua rampa de saída aponta para o bloco no qual ele foi colocado.</li>
+                        <li><strong>Para conectar a um baú:</strong> segure Shift + clique com o botão direito no baú. Sem o Shift, o inventário do baú se abrirá em vez de posicionar o Funil.</li>
+                        <li><strong>Para encadear Funis:</strong> coloque-os de ponta a ponta; os itens são transferidos pelo encadeamento a uma taxa fixa de 2,5 itens por segundo por Funil.</li>
+                        <li><strong>Capacidade:</strong> cada Funil comporta 5 pacotes (stacks) de itens (até ×64 por pacote).</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Sistema Básico de Ordenação</h4>
+                    <p>Uma ordenação simples de dois baús: um Funil acima de cada baú, cada um carregado com um item de filtro (o item que você deseja rotear para aquele baú específico). Quando os itens fluem, os itens que correspondem ao filtro vão para o baú daquele Funil; itens que não correspondem passam para o próximo Funil.</p>
+                    <p style="margin-top:8px"><strong>Objetivo do Módulo 4:</strong> Direcionar o trigo para um baú e as sementes para outro — separando a produção de alimentos do material de replantio de forma automática.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Tempo de Transferência do Funil — Números Práticos</h4>
+            <p>Taxa de transferência: um Funil processa um item a cada <strong>4 ticks de jogo</strong> (0,2 segundos). A 20 ticks/segundo, isso equivale a <strong>2,5 itens por segundo</strong>. Para uma fazenda grande que produz altos volumes, um único encadeamento de Funis pode se tornar um gargalo. Soluções:</p>
+            <ul style="margin-top:8px">
+                <li>Use <strong>encadeamentos de Funis paralelos</strong> — múltiplos pontos de coleta, cada um alimentando seu próprio baú.</li>
+                <li>Use um <strong>Carrinho com funil</strong> (Hopper Minecart) sobre um trilho de coleta — carrinhos com funil transferem itens com o dobro da velocidade de Funis estacionários.</li>
+            </ul>
+        </div>
+
+        <div id="pipeline" class="anchor-target">
+            <div class="section-head">5 · O Fluxo Completo de Automação</div>
+        </div>
+
+        <div class="card">
+            <h4>O Fluxo de Quatro Etapas — Detectar → Ativar → Coletar → Armazenar</h4>
+            <p>A estrutura de ensino assinada do Módulo 4. Todo sistema de fazenda totalmente automatizado pode ser descrito em quatro etapas sequenciais:</p>
+            <div class="two-col" style="margin-top:10px">
+                <div class="card" style="border-left:4px solid var(--lime)">
+                    <h4 style="color:var(--lime-d)">Etapa 1: Detectar</h4>
+                    <p>O <strong>bloco do Observador</strong> monitora o bloco da plantação para identificar uma mudança de estado (estágio de crescimento 6 → 7). Quando detectada, ele emite um pulso instantâneo de Redstone de 1 tick.</p>
+                </div>
+                <div class="card" style="border-left:4px solid var(--amber)">
+                    <h4 style="color:var(--amber-d,#D97706)">Etapa 2: Ativar</h4>
+                    <p>O pulso do Observador alimenta o <strong>Pistão</strong> via fio de Redstone. O Pistão se estende, quebrando o bloco de plantação totalmente crescido. A plantação cai como entidades de itens no chão.</p>
+                </div>
+                <div class="card" style="border-left:4px solid var(--pink)">
+                    <h4 style="color:var(--pink-d)">Etapa 3: Coletar</h4>
+                    <p>O <strong>Funil</strong> posicionado abaixo da fileira de cultivo coleta as entidades de itens que caem. Os itens entram no inventário de 5 slots do Funil automaticamente dentro de 0,5 segundos após entrarem no alcance do Funil.</p>
+                </div>
+                <div class="card" style="border-left:4px solid #3B82F6">
+                    <h4 style="color:#1D4ED8">Etapa 4: Armazenar</h4>
+                    <p>O Funil transfere os itens coletados para o <strong>Baú</strong> conectado a uma taxa de 2,5 itens por segundo. O sistema de ordenação direciona diferentes tipos de itens para baús diferentes com base nos filtros do Funil.</p>
+                </div>
+            </div>
+            <div class="callout cg" style="margin-top:14px">
+                <span class="ci">✅</span>
+                <div><strong>Momento de ensino:</strong> Assim que todas as quatro etapas forem construídas e testadas, peça para os alunos descreverem o fluxo com suas próprias palavras sem olhar para o código: "O que detecta? O que ativa? O que coleta? O que armazena?" Essa codificação verbal solidifica a estrutura conceitual e os prepara para o trabalho de design de projetos do Módulo 5.</div>
+            </div>
+        </div>
+
+        <div id="trouble" class="anchor-target">
+            <div class="section-head">6 · Catálogo de Resolução de Problemas — Módulo 4 (5 Cenários)</div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="trouble-table">
+                <thead>
+                    <tr><th>Erro / Sintoma</th><th>Causa Raiz</th><th>Solução Exata</th><th>Roteiro de Prevenção</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mc">O Agente joga as sementes no chão em vez de plantá-las</td>
+                        <td>O solo abaixo do Agente é terra ou grama não arada, não terra arada. Sementes colocadas em blocos que não sejam de terra arada aparecem como entidades de itens soltos (itens dropados), não como plantações semeadas.</td>
+                        <td>Antes de rodar o comando de plantar: (1) Use uma Enxada em cada bloco de terra para transformá-lo em terra arada. (2) Coloque uma fonte de água a até 4 blocos da terra arada para hidratá-la (castanho-escuro = hidratado, bege-claro = seco — as plantações crescem muito mais devagar em terra arada seca). (3) Confirme executando o Agente primeiro sobre uma terra arada já preparada.</td>
+                        <td class="fc">"Antes que o Agente possa plantar, o solo deve estar arado e regado. Verifique a cor do solo — castanho-escuro = pronto para plantar."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">O Funil se enche de itens, mas não os transfere para o baú</td>
+                        <td>A rampa de saída do Funil não está apontando para o baú — ele foi colocado sem segurar o Shift, fazendo com que o inventário do baú se abrisse em vez de criar uma conexão. O Funil agora está apontando para baixo no ar.</td>
+                        <td>Quebre o Funil e recoloque-o: segure o Shift e clique com o botão direito diretamente no bloco do baú. Confirme visualmente se a saída do Funil se conecta à lateral do baú. Alternativamente, quebre o Funil e recoloque-o adjacente ao baú em uma orientação horizontal (o baú pode ficar na lateral, não apenas abaixo).</td>
+                        <td class="fc">"Sempre segure o Shift ao colocar um Funil em um baú. Sem Shift = o baú abre = o Funil fica posicionado de forma errada."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">O Observador dispara quando as plantações crescem, mas o Pistão não se estende — as plantações nunca são colhidas</td>
+                        <td>A face de saída do Observador não está conectada ao Pistão. Esse é o mesmo problema de orientação do Módulo 1, mas costuma ser mais confuso porque o layout da fazenda é mais complexo.</td>
+                        <td>Teste em isolamento: desconecte o Observador do circuito da fazenda. Coloque uma Lâmpada de Redstone diretamente atrás da face de saída do Observador. Se a Lâmpada acender com o crescimento da plantação, o Observador funciona corretamente e o problema está adiante (lacuna no fio ou orientação do Pistão). Corrija a lacuna ou recoloque o Pistão voltado para a direção correta.</td>
+                        <td class="fc">"Teste cada etapa separadamente. O Observador funciona? Então verifique o fio. O fio funciona? Then check the Piston orientation."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">O loop aninhado de plantio em fileiras do Agente planta as culturas em espiral ou padrão aleatório em vez de uma grade</td>
+                        <td>O direcionamento do Agente após o "dar a volta" não está orientado corretamente — o aluno usou "virar à esquerda" duas vezes, mas esqueceu que após um número ímpar de comandos "virar à direita", "virar à esquerda + virar à esquerda" ≠ curva de 180° em todos os casos. Ou a contagem de passos no movimento de retorno está errada.</td>
+                        <td>Desenhe o caminho do Agente no papel antes de programar. Marque cada curva explicitamente. Verifique: após concluir a fileira 1, o Agente está voltado para a direção oposta? O comando "mover para trás 5" o retorna exatamente ao início da fileira? Teste primeiro com 1 fileira, observe e depois estenda para 5 fileiras.</td>
+                        <td class="fc">"Desenhe o caminho antes de programá-lo. Qual direção após a curva 1? Após a curva 2? O Agente não sabe para onde 'deveria' ir — apenas para onde seu código manda ir."</td>
+                    </tr>
+                    <tr>
+                        <td class="mc">O sistema de ordenação direciona TODOS os itens para o primeiro baú, independentemente do tipo de item</td>
+                        <td>Os slots do inventário do Funil de filtragem não estão configurados corretamente — os itens de filtro devem preencher parcialmente um slot no inventário do Funil para que apenas itens correspondentes sejam retidos ali. Alternativamente, nenhum filtro foi definido e o primeiro Funil pega todos os itens indiscriminadamente.</td>
+                        <td>A ordenação por Funil exige a colocação de um item de filtro em cada slot do inventário do Funil filtrador, sem deixar slots vazios. Os itens que correspondem ao filtro preenchem os slots de filtragem; os itens que não correspondem passam direto. Uma simplificação comum: use Funis Bloqueados com itens específicos — isso requer um circuito comparador de Redstone. Para o Módulo 4, use o método de filtro visual mais simples e teste com dois itens do tipo (trigo vs. sementes) para confirmar o roteamento.</td>
+                        <td class="fc">"O Funil de ordenação precisa de um 'modelo' — coloque um de cada item desejado em seus slots de inventário. Ele retém os itens correspondentes e deixa os outros passarem."</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="protips" class="anchor-target">
+            <div class="section-head">7 · Dicas Pro do Tutor &amp; Analogias do Mundo Real</div>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Organização por Funil = A Analogia da "Usina de Reciclagem"</strong><br>
+                <em>“Pensem em uma usina de reciclagem: diferentes esteiras transportadoras direcionam garrafas de vidro para uma caçamba, papel para outra e metal para outra. O sistema de funis na fazenda de vocês é a sua usina de reciclagem digital. O trigo vai para a esquerda, as sementes para a direita — de forma automática, todas as vezes, sem que ninguém precise organizar manualmente.”</em>
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 O Fluxo de Quatro Etapas = A Analogia do "Armazém da Amazon"</strong><br>
+                <em>“Quando vocês compram algo na Amazon: (1) Um sensor digital detecta o pedido de vocês [Observador]. (2) Um braço robótico retira o item da prateleira [Pistão]. (3) Uma esteira transportadora o leva até a estação de embalagem [Funil]. (4) O pacote vai para uma caixa identificada na seção correta do depósito [Baú]. Nossa fazenda funciona nessas mesmas quatro etapas, apenas processando trigo em vez de pacotes.”</em>
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Loops Aninhados = A Analogia da "Impressora" para Grades 2D</strong><br>
+                <em>“Quando uma impressora imprime uma página de texto, a cabeça se move horizontalmente imprimindo uma linha de pontos (loop interno), depois desce uma linha (loop externo) e imprime a linha seguinte, repetindo esse processo até preencher o papel. O plantio em fileiras feito pelo Agente funciona de forma idêntica: o loop interno é uma fileira de sementes, e o loop externo realiza a mudança de fileira.”</em>
+            </p>
+        </div>
+
+        <div class="tip-card">
+            <p>
+                <strong>💡 Testando em Isolamento — A Regra de "Depurar uma Etapa por Vez"</strong><br>
+                Para sistemas multicomponentes, sempre teste cada etapa de forma isolada antes de integrá-las ao circuito final. O protocolo de depuração para o Módulo 4 assume: (1) Verificar se o Observador envia o pulso com o crescimento da plantação (use uma lâmpada). (2) Verificar se o Pistão se estende quando alimentado manualmente (use uma Alavanca). (3) Verificar se o Funil coleta os itens (jogue itens manualmente sobre ele). (4) Verificar se o Funil direciona os itens para o baú correto (coloque itens de teste no filtro). Somente quando cada etapa passar no teste com sucesso os alunos devem conectar o fluxo completo.
+            </p>
+        </div>
+
+        <div id="test-cta" class="anchor-target">
+            <div class="section-head">8 · Verificação de Conhecimento do Módulo 4</div>
+        </div>
+
+        <div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+            <div style="font-size:40px;margin-bottom:12px">📝</div>
+            <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Pronto para a Verificação de Conhecimento do Módulo 4?</div>
+            <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+                6 perguntas apenas sobre o conteúdo do Módulo 4. Uma pontuação de <strong>70% ou mais</strong> desbloqueia o acesso ao Módulo 5. As perguntas são totalmente distintas de todos os testes de módulos anteriores e da avaliação final do DST.
+            </p>
+            <div class="btn-row center">
+                <a href="PtModule4Test.html" class="btn-primary">Iniciar Teste do Módulo 4 →</a>
+                <button class="btn-outline" onclick="goHome()">← Painel</button>
+            </div>
+        </div>
+
+    </div><footer>© 2026 Kodland. Material de treinamento interno de tutores — proibida a distribuição externa.</footer>
+    <script src="shared.js"></script>
+    <script>
+        initShared();
+        document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+        if (!isModuleUnlocked(4)) { alert('Por favor, conclua os módulos anteriores primeiro.'); goHome(); }
+    </script>
+</body>
+</html>

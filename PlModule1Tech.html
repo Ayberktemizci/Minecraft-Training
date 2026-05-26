@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>2) Szczegółowa analiza modułów (1-5) · Moduł 1 | Kodland</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        /* ── Dodatki do strony technicznej ─────────────────────────────────── */
+        .tech-hero {
+            background: linear-gradient(135deg,#1a2e0a 0%,#2f5222 55%,#4a7830 100%);
+            padding: 44px 32px 36px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--lime);
+        }
+
+            .tech-hero::before {
+                content: '🌿';
+                font-size: 220px;
+                position: absolute;
+                right: -30px;
+                top: -40px;
+                opacity: .07;
+                line-height: 1;
+                pointer-events: none;
+            }
+
+            .tech-hero .eyebrow {
+                background: rgba(196,240,70,.15);
+                border-color: rgba(196,240,70,.35);
+                color: var(--lime);
+            }
+
+            .tech-hero h1 {
+                font-family: 'Nunito',sans-serif;
+                font-size: clamp(20px,3.5vw,32px);
+                font-weight: 900;
+                letter-spacing: -.4px;
+                line-height: 1.1;
+                color: #fff;
+                margin: 12px 0 8px;
+            }
+
+            .tech-hero p {
+                color: rgba(255,255,255,.72);
+                font-size: 13.5px;
+                line-height: 1.65;
+                max-width: 640px;
+            }
+
+            .tech-hero .mobj {
+                background: rgba(255,255,255,.12);
+                border-color: rgba(255,255,255,.25);
+                border-left-color: #C4F046;
+                color: rgba(255,255,255,.85);
+            }
+
+                .tech-hero .mobj strong {
+                    color: #fff;
+                }
+
+        /* Nawigacja sekcji */
+        .sec-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 12px 24px;
+            background: var(--surface2);
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 62px;
+            z-index: 90;
+        }
+
+        .sec-pill {
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            padding: 5px 12px;
+            border-radius: var(--rpill);
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text2);
+            text-decoration: none;
+            transition: all .15s;
+            white-space: nowrap;
+        }
+
+            .sec-pill:hover, .sec-pill.active {
+                background: var(--lime);
+                border-color: var(--lime-d);
+                color: var(--ink);
+            }
+
+        .anchor {
+            scroll-margin-top: 128px;
+        }
+
+        /* Wykres układu współrzędnych */
+        .coord-box {
+            background: var(--ink);
+            border-radius: var(--r);
+            padding: 20px;
+            font-family: 'JetBrains Mono','Courier New',monospace;
+            font-size: 12.5px;
+            line-height: 1.9;
+            color: #e0e0e0;
+            margin: 10px 0;
+            border: 2px solid var(--border);
+        }
+
+        [data-theme="dark"] .coord-box {
+            background: #070f07;
+        }
+
+        .cx {
+            color: #F87171;
+        }
+
+        .cy {
+            color: #4ADE80;
+        }
+
+        .cz {
+            color: #60A5FA;
+        }
+
+        .cm {
+            color: #FCD34D;
+        }
+
+        .cg {
+            color: #C4F046;
+        }
+
+        .cr {
+            color: #F472B6;
+        }
+
+        /* Blok kodu */
+        .code-block {
+            background: var(--ink);
+            border-radius: var(--r);
+            padding: 18px;
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12.5px;
+            line-height: 1.85;
+            color: #e0e0e0;
+            margin: 10px 0;
+            border: 2px solid var(--border);
+        }
+
+        [data-theme="dark"] .code-block {
+            background: #070f07;
+        }
+
+        .ck {
+            color: #C792EA;
+        }
+
+        .cf {
+            color: #82AAFF;
+        }
+
+        .cs {
+            color: #C3E88D;
+        }
+
+        .cn {
+            color: #F78C6C;
+        }
+
+        .com {
+            color: #546E7A;
+            font-style: italic;
+        }
+
+        /* Tabela rozwiązywania problemów */
+        .trouble-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 12.5px;
+        }
+
+            .trouble-table th {
+                background: var(--surface2);
+                border: 1.5px solid var(--border);
+                padding: 8px 12px;
+                text-align: left;
+                font-family: 'Nunito',sans-serif;
+                font-weight: 900;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: .5px;
+                color: var(--text);
+            }
+
+            .trouble-table td {
+                border: 1.5px solid var(--border);
+                padding: 9px 12px;
+                line-height: 1.55;
+                vertical-align: top;
+                color: var(--text2);
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .trouble-table tr:nth-child(even) td {
+                background: var(--surface2);
+            }
+
+        .td-err {
+            color: var(--no-t);
+            font-weight: 600;
+        }
+
+        .td-fix {
+            color: var(--ok-t);
+        }
+
+        /* Karta analogii */
+        .analogy {
+            background: var(--callout-tip-bg);
+            border: 1.5px solid var(--callout-tip-b);
+            border-left: 4px solid #38BDF8;
+            border-radius: var(--rsm);
+            padding: 14px 16px;
+            margin-bottom: 10px;
+        }
+
+            .analogy p {
+                font-size: 13.5px;
+                color: var(--callout-tip-t);
+                line-height: 1.65;
+            }
+
+        /* Dwie kolumny */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media(max-width:580px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Numeryczna lista kroków */
+        ol.steps {
+            counter-reset: s;
+            padding: 0;
+            margin: 8px 0;
+        }
+
+            ol.steps li {
+                counter-increment: s;
+                list-style: none;
+                position: relative;
+                padding: 10px 14px 10px 46px;
+                margin-bottom: 8px;
+                background: var(--surface);
+                border: 1.5px solid var(--border);
+                border-radius: var(--rsm);
+                font-size: 13px;
+                color: var(--text2);
+                line-height: 1.6;
+            }
+
+                ol.steps li::before {
+                    content: counter(s);
+                    position: absolute;
+                    left: 11px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 22px;
+                    height: 22px;
+                    border-radius: 50%;
+                    background: var(--lime);
+                    border: 2px solid var(--lime-d);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: 'Nunito',sans-serif;
+                    font-weight: 900;
+                    font-size: 11px;
+                    color: var(--ink);
+                }
+
+        /* Oś czasu przebiegu lekcji */
+        .flow-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .flow-item {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 14px;
+            align-items: flex-start;
+        }
+
+        .flow-num {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--ink);
+            color: var(--lime);
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+            border: 2px solid var(--lime-d);
+        }
+
+        [data-theme="dark"] .flow-num {
+            background: rgba(196,240,70,.1);
+        }
+
+        .flow-body {
+            flex: 1;
+        }
+
+        .flow-head {
+            font-weight: 700;
+            font-size: 13.5px;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .flow-time {
+            font-family: 'Nunito',sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: var(--pink);
+            margin-bottom: 3px;
+        }
+
+        .flow-desc {
+            font-size: 13px;
+            color: var(--text2);
+            line-height: 1.65;
+        }
+
+        /* Dolny blok CTA */
+        .cta-block {
+            background: linear-gradient(135deg,#1a2e0a,#2f5222);
+            border-radius: var(--r);
+            padding: 36px 32px;
+            text-align: center;
+            margin-top: 32px;
+            border: 2px solid rgba(196,240,70,.25);
+            overflow: hidden;
+            position: relative;
+        }
+
+            .cta-block::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(ellipse 60% 50% at 50% 0%,rgba(196,240,70,.1) 0%,transparent 75%);
+                pointer-events: none;
+            }
+
+            .cta-block h3 {
+                font-family: 'Nunito',sans-serif;
+                font-size: 20px;
+                font-weight: 900;
+                color: #fff;
+                margin-bottom: 8px;
+                position: relative;
+            }
+
+            .cta-block p {
+                color: rgba(255,255,255,.68);
+                font-size: 13.5px;
+                line-height: 1.6;
+                max-width: 500px;
+                margin: 0 auto 22px;
+                position: relative;
+            }
+
+        code {
+            font-family: 'JetBrains Mono',monospace;
+            font-size: 12px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            padding: 1px 6px;
+            color: var(--pink);
+        }
+
+        [data-theme="dark"] code {
+            color: var(--lime);
+        }
+
+        kbd {
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-size: 11px;
+            font-family: 'JetBrains Mono',monospace;
+            color: var(--text);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+            <span class="logo-mark">Kodland</span>
+            <div class="logo-div"></div>
+            <span class="logo-sub">Szkolenie dla Tutorów</span>
+        </div>
+        <div class="nav-r">
+            <button class="nav-back" onclick="window.location.href='PlModule1.html'">← Pedagogika</button>
+            <button class="icon-btn" id="theme-toggle">🌙</button>
+        </div>
+    </nav>
+    <div class="progress-strip"><div class="progress-fill" id="top-bar" style="width:0%"></div></div>
+
+    <div class="sec-nav">
+        <a class="sec-pill" href="#sec-overview">Przegląd</a>
+        <a class="sec-pill" href="#sec-flow">Przebieg Lekcji</a>
+        <a class="sec-pill" href="#sec-coords">Współrzędne</a>
+        <a class="sec-pill" href="#sec-makecode">MakeCode i Agent</a>
+        <a class="sec-pill" href="#sec-redstone">Fizyka Redstone</a>
+        <a class="sec-pill" href="#sec-bamboo">Farma Bambusa</a>
+        <a class="sec-pill" href="#sec-cobble">Generator Bruku</a>
+        <a class="sec-pill" href="#sec-trouble">Rozwiązywanie problemów</a>
+        <a class="sec-pill" href="#sec-analogies">Analogie</a>
+        <a class="sec-pill" href="#sec-cta">→ Test</a>
+    </div>
+
+    <div class="tech-hero">
+        <div style="max-width:820px;margin:0 auto;position:relative">
+            <div class="eyebrow">2) Szczegółowa analiza modułów (1-5) · Moduł 1 z 5</div>
+            <h1>2) Szczegółowa analiza modułów (1-5)</h1>
+            <p style="margin-bottom:14px">Moduł 1: Nowy wspaniały świat zielonego kamienia — kompletne kompendium techniczne dotyczące wszystkiego, czego musisz uczyć, co musisz wyjaśniać, demonstrować i rozwiązywać. Tylko czysta mechanika; nie ma tutaj treści pedagogicznych.</p>
+            <div class="mobj">
+                <strong>Cele techniczne Modułu 1:</strong> Opanowanie trójwymiarowego układu współrzędnych X/Y/Z oraz składni polecenia /tp (względnego ~ i bezwzględnego) · Otwieranie i nawigacja po nakładce MakeCode za pomocą /code · Przywoływanie (spawn), orientacja i sterowanie robotem Agent · Zrozumienie siły sygnału Redstone i fizyki jego spadku na dystansie 15 bloków · Zbudowanie zautomatyzowanej farmy bambusa Obserwator→Tłok z systemem zbierania lejem (Hopper) · Zbudowanie nieskończonego generatora bruku z Wody+Lawy.
+            </div>
+        </div>
+    </div>
+
+    <div class="cbody">
+
+        <div id="sec-overview" class="anchor">
+            <div class="section-head">Przegląd Modułu 1 — Zakres i kontekst wymagań wstępnych</div>
+        </div>
+
+        <div class="card">
+            <h4>Z czym uczniowie muszą wyjść po Module 1</h4>
+            <p>Moduł 1 to punkt wejścia do całej spirali Poziomu 1. Każda wprowadzona tutaj koncepcja stanowi bezpośredni warunek wstępny dla kolejnych modułów — współrzędne dla Modułu 2, pętle MakeCode dla Modułów 3 i 4, logika Redstone dla Modułu 4. Po ukończeniu Modułu 1 uczniowie potrafią: nawigować w 3D bez gubienia się, przywoływać i sterować Agentem, rozumieć Redstone jako system sygnałowy oraz zaprezentować jedną działającą zautomatyzowaną budowlę. Nie są to cele życzeniowe — są to wymagania strukturalne niezbędne do funkcjonowania Modułu 2.</p>
+        </div>
+
+        <div class="card">
+            <h4>Techniczne kroki kontrolne przed sesją specyficzne dla Modułu 1</h4>
+            <p>Przed rozpoczęciem sesji zweryfikuj następujące elementy specyficzne dla Modułu 1 (oprócz standardowego Protokołu Przedlotowego ze strony pedagogicznej):</p>
+            <ol class="steps">
+                <li>Otwórz świat sesji i wpisz <code>/code</code> na czacie. Jeśli nakładka MakeCode się nie pojawi, przejdź do ustawień świata i włącz opcję „Code Builder” (Kreator kodu), zanim uczniowie dołączą.</li>
+                <li>Potwierdź, że strefa budowy farmy bambusa ma co najmniej 3×3 wolne kafelki na ziemi i 5 bloków wolnej przestrzeni w pionie. Przygotuj wcześniej jeden Obserwator i jeden Tłok jako odniesienie do demonstracji.</li>
+                <li>Przygotuj rów o szerokości 3 bloków do demonstracji generatora bruku. Umieść źródło Wody na jednym końcu, aby uczniowie musieli jedynie postawić Lawę.</li>
+                <li>Przypnij dzisiejsze współrzędne spawnu w swoim oknie czatu oraz na czacie Zoom/Meet, zanim uczniowie się pojawi m.</li>
+            </ol>
+        </div>
+
+
+        <div id="sec-flow" class="anchor">
+            <div class="section-head">Przebieg lekcji krok po kroku — Sesja Modułu 1</div>
+        </div>
+
+        <div class="card">
+            <h4>Pełna sekwencja sesji</h4>
+            <ul class="flow-list">
+                <li class="flow-item">
+                    <div class="flow-num">1</div>
+                    <div class="flow-body">
+                        <div class="flow-time">00:00 – 00:05</div>
+                        <div class="flow-head">Protokół Przedlotowy + Icebreaker (równolegle)</div>
+                        <div class="flow-desc">Cicha weryfikacja ładowania świata, logowania i dźwięku. Przypnij współrzędne spawnu na czacie: <code>/tp @a [X] [Y] [Z]</code>. Lodołamacz prowadzony jednocześnie na czacie.</div>
+                    </div>
+                </li>
+                <li class="flow-item">
+                    <div class="flow-num">2</div>
+                    <div class="flow-body">
+                        <div class="flow-time">00:05 – 00:08</div>
+                        <div class="flow-head">Aktywacja narracji misji</div>
+                        <div class="flow-desc">"Zapada zmrok — mamy 8 minut na zbudowanie schronienia z ziemi, zanim przybędą potwory!" Uczniowie nawigują do strefy budowy przy użyciu przypiętych współrzędnych. Uczy to nawigacji po współrzędnych pod autentyczną presją czasu, bez przedstawiania tego jako nudnej lekcji nawigacji.</div>
+                    </div>
+                </li>
+                <li class="flow-item">
+                    <div class="flow-num">3</div>
+                    <div class="flow-body">
+                        <div class="flow-time">00:08 – 00:15</div>
+                        <div class="flow-head">Nauka układu współrzędnych (7 min)</div>
+                        <div class="flow-desc">Gdy wszyscy uczniowie znajdą się w strefie budowy, wstrzymaj misję. Otwórz ekran F3 (lub HUD w MC Education) i omów na żywo osie X/Y/Z. Zdemonstruj jedno polecenie /tp. Każdy uczeń ćwiczy wpisanie komendy przywołania jeden raz. Reguła Panda po każdym udanym teleporcie.</div>
+                    </div>
+                </li>
+                <li class="flow-item">
+                    <div class="flow-num">4</div>
+                    <div class="flow-body">
+                        <div class="flow-time">00:15 – 00:20</div>
+                        <div class="flow-head">Wprowadzenie do MakeCode + Przywołanie Agenta</div>
+                        <div class="flow-desc">Wpiszcie wspólnie <code>/code</code>. Jeden pokaz układu edytora przez udostępnianie ekranu. Przedstaw Agenta jako postać: „Czy to dinozaur? Kurczak? Nie — to Twój nowy najlepszy przyjaciel. Nazwijmy go!” Uczniowie przywołują swojego Agenta za pomocą bloku „Al comando di chat” (Przy poleceniu czatu).</div>
+                    </div>
+                </li>
+                <li class="flow-item">
+                    <div class="flow-num">5</div>
+                    <div class="flow-body">
+                        <div class="flow-time">00:20 – 00:30</div>
+                        <div class="flow-head">Kierowana praktyka z Agentem — Pętla powtórzeń</div>
+                        <div class="flow-desc">Uczniowie piszą pętlę powtórzeń, aby przesunąć Agenta do przodu o 5 bloków. Tutor monitoruje pracę wywołując po imieniu. Reguła Panda po każdym potwierdzonym ruchu Agenta. Typowy błąd: uczniowie piszą kod poza blokiem „Al comando de chat” — patrz Rozwiązywanie problemów poniżej.</div>
+                    </div>
+                </li>
+                <li class="flow-item">
+                    <div class="flow-num">6</div>
+                    <div class="flow-body">
+                        <div class="flow-time">00:30 – 00:35</div>
+                        <div class="flow-head">🧠 Przerwa Poznawcza — OBOWIĄZKOWA</div>
+                        <div class="flow-desc">Uczniowie całkowicie zamykają Minecrafta. Tutor prowadzi grę „Szymon mówi” lub rozciąganie ramion przez 5 minut. Brak kontaktu z ekranem.</div>
+                    </div>
+                </li>
+                <li class="flow-item">
+                    <div class="flow-num">7</div>
+                    <div class="flow-body">
+                        <div class="flow-time">00:35 – 00:50</div>
+                        <div class="flow-head">Teoria Redstone + Budowa farmy bambusa</div>
+                        <div class="flow-desc">Wprowadź Redstone poprzez analogię do „domowej instalacji elektrycznej” (patrz sekcja Analogie). Zdemonstruj łańcuch Obserwator–Tłok jeden raz. Uczniowie budują samostatnie. Tutor pomaga wyłącznie za pomocą ukierunkowanych podpowiedzi. Szybcy uczniowie otrzymują zadanie dodatkowe (dodaj Lej pod farmą połączony ze Skrzynią).</div>
+                    </div>
+                </li>
+                <li class="flow-item">
+                    <div class="flow-num">8</div>
+                    <div class="flow-body">
+                        <div class="flow-time">00:50 – 00:55</div>
+                        <div class="flow-head">Demo generatora bruku (5 min rozszerzenia)</div>
+                        <div class="flow-desc">Szybka demonstracja kanału Woda+Lawa. Uczniowie obserwują i replikują, jeśli czas na to pozwoli. Jest to budowla uzupełniająca — nie poświęcaj dla niej czasu na ukończenie farmy bambusa.</div>
+                    </div>
+                </li>
+                <li class="flow-item">
+                    <div class="flow-num">9</div>
+                    <div class="flow-body">
+                        <div class="flow-time">00:55 – 01:00</div>
+                        <div class="flow-head">Refleksja + Zadanie Domowe</div>
+                        <div class="flow-desc">„Co dzisiaj zbudowaliśmy?” → „Co było najtrudniejsze?” → przydzielenie zadania domowego ze zrzutem ekranu według określonych kryteriów.</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <div id="sec-coords" class="anchor">
+            <div class="section-head">Teoria Techniczna — Trójwymiarowy Układ Współrzędnych (X, Y, Z)</div>
+        </div>
+
+        <div class="card">
+            <h4>Definicje osi i układ odniesienia świata</h4>
+            <p>Minecraft używa prawoskrętnego układu współrzędnych kartezjańskich 3D. Każdy blok w nieskończonym świecie zajmuje unikalną pozycję określoną przez trzy liczby całkowite ze znakiem:</p>
+            <div class="coord-box">
+                <span class="cx">Oś X</span>  →  Wschód (+X) / Zachód (−X)    ← pozioma pozycja wschód-zachód<br>
+                <span class="cy">Oś Y</span>  →  Góra (+Y) / Dół  (−Y)    ← WYSOKOŚĆ — wysokość nad skałą macierzystą (bedrock)<br>
+                <span class="cz">Oś Z</span>  →  Południe (+Z) / Północ (−Z)    ← pozioma pozycja północ-południe<br><br>
+                <span class="cm">Warstwa skały macierzystej (bedrock)</span>   =  Y  0   (niezniszczalna w Survivalu)<br>
+                <span class="cm">Poziom morza</span>       =  Y 63   (domyślny płaski świat Overworld)<br>
+                <span class="cm">Limit budowania w górę</span> =  Y 255  (starsze edycje) / Y 320 (1.18+)<br><br>
+                Jak odczytać bieżącą pozycję:<br>
+                · Java Edition: naciśnij <kbd>F3</kbd> — XYZ wyświetlane w lewym górnym rogu<br>
+                · Minecraft Education Edition: Ustawienia → Świat → włącz „Pokaż współrzędne” w HUD
+            </div>
+
+            <h4 style="margin-top:14px">Współrzędne Bezwzględne — Stałe Adresy w Świecie</h4>
+            <div class="coord-box">
+                <span class="com">// Bezwzględne — teleporuje do stałego adresu świata niezależnie od bieżącej pozycji</span><br>
+                <span class="cg">/tp @s  100  64  200</span>   → siebie do X=100, Y=64, Z=200 (zawsze)<br>
+                <span class="cg">/tp @a    0  64    0</span>   → wszystkich dokładnie do środka (początku) świata<br>
+                <span class="cg">/tp @a  [X] [Y]  [Z]</span>  → wszystkich do dzisiejszych współrzędnych spawnu (przypnij na czacie)
+            </div>
+
+            <h4 style="margin-top:14px">Współrzędne Względne — Prefiks Tildy <code>~</code></h4>
+            <p>Tilda oznacza <em>„przesunięcie w stosunku do mojej bieżącej pozycji w tym konkretnym momencie”.</em> Jest obliczana dynamicznie w momencie uruchomienia polecenia — nie jest to stały adres. Przesunięcia względne mogą być dodatnie lub ujemne:</p>
+            <div class="coord-box">
+                <span class="com">// ~ = "stamtąd, gdzie jestem teraz"</span><br>
+                <span class="cg">/tp @s ~0  ~0  ~0</span>   → przesunięcie zero = brak ruchu (zostaje w miejscu)<br>
+                <span class="cg">/tp @s ~3  ~0  ~0</span>   → 3 bloki na Wschód od bieżącej pozycji X<br>
+                <span class="cg">/tp @s ~0  ~5  ~0</span>   → 5 bloków prosto w GÓRĘ<br>
+                <span class="cg">/tp @s ~0  ~-3 ~0</span>   → 3 bloki w DÓŁ<br><br>
+                <span class="com">// Składnia mieszana — prawidłowa i często przydatna:</span><br>
+                <span class="cg">/tp @s ~0  64  ~0</span>   → zachowaj bieżące X i Z; ustaw wysokość dokładnie na Y=64<br>
+                <span class="cg">/tp @s 100 ~0  ~0</span>   → ustaw X=100; zachowaj bieżące Y i Z<br><br>
+                <span class="cr">POWSZECHNY BŁĄD:</span> „/tp @a ~0 ~0 ~0 przenosi wszystkich graczy w to samo miejsce”<br>
+                <span class="cy">PRAWIDŁOWO:</span>            „~0 ~0 ~0 = zerowe przesunięcie względem WŁASNEJ pozycji KAŻDEGO gracza = nikt się nie rusza”
+            </div>
+
+            <div class="callout ct" style="margin-top:10px">
+                <span class="ci">💡</span>
+                <div><strong>Fizyczne nauczanie różnicy:</strong> „Współrzędne bezwzględne są jak adres zamieszkania — ulica Główna 100 to zawsze ulica Główna 100. Współrzędne względne są jak wskazówki dojścia — '3 bloki w lewo' zależy od tego, w którą stronę aktualnie się obracasz”.</div>
+            </div>
+        </div>
+
+
+        <div id="sec-makecode" class="anchor">
+            <div class="section-head">Teoria Techniczna — Interfaccia del Pannello MakeCode</div>
+        </div>
+
+        <div class="card">
+            <h4>Dostęp do MakeCode z poziomu Minecrafta</h4>
+            <p><strong>Ścieżka dostępu:</strong> Naciśnij <kbd>T</kbd>, aby otworzyć czat Minecrafta → wpisz <code>/code</code> → naciśnij Enter. Edytor MakeCode otworzi się jako pełnoekranowa nakładka. Kod pozostaje zapisany między otwarciami — zamknięcie i ponowne otwarcie pokazuje ten sam stan programu.</p>
+            <p style="margin-top:8px"><strong>Krytyczny warunek wstępny:</strong> Opcja „Włącz Code Builder” (Kreator kodu) musi być włączona (ON) w ustawieniach świata (ikona ołówka na miniaturze świata na liście światów), zanim jakikolwiek uczeń wejdzie do świata. Jeśli ta opcja jest wyłączona (OFF), komenda <code>/code</code> uruchomi się po cichu, nie dając żadnej reakcji — uczniowie nic nie zobaczą i nie pojawi się żaden komunikat o błędzie. Jest to najczęstszy błąd przed sesją.</p>
+
+            <h4 style="margin-top:14px">Strefy Interfejsu MakeCode — Co Uczniowie Muszą Wiedzieć w Module 1</h4>
+            <div class="two-col" style="margin-top:8px">
+                <div class="card">
+                    <h4>Panel Lewy — Paleta Bloków</h4>
+                    <p>Sparametryzowana biblioteka bloków. Kategorie używane w Module 1: <strong>Pętle</strong> (Repeat), <strong>Agent</strong> (przemieszczaj, obracaj, umieszczaj), <strong>Gracz</strong> (Przy poleceniu czatu). Bloki są przeciągane na płótno. Kliknięcie prawym przyciskiem myszy na umieszczony blok otwiera opcje zmiany nazwy/usunięcia.</p>
+                </div>
+                <div class="card">
+                    <h4>Panel Prawy — Płótno Kodowania</h4>
+                    <p>Gdzie bloki są montowane. Płótno jest nieskończone — powiększaj za pomocą kółka myszy. Bloki muszą być połączone (zatrzaśnięte razem), aby działać; pływające bloki nic nie wykonują. Zielony przycisk „play” uruchamia program. Czerwony przycisk „stop” zatrzymuje wszystkie działające pętle.</p>
+                </div>
+            </div>
+
+            <h4 style="margin-top:14px">Tani bloku i funkcje — Wiedza wymagana w Module 1</h4>
+            <div class="code-block">
+                <span class="com">// 1. PRZY POLECENIU CZATU — Rejestrator zdarzeń. Uruchamia wewnętrzny kod, gdy gracz wpisze dane słowo na czacie MC.</span><br>
+                <span class="ck">on chat command</span> <span class="cs">"build"</span> {<br>
+                &nbsp;&nbsp;<span class="com">// Kod tutaj działa TYLKO wtedy, gdy gracz wpisze "build" na czacie Minecrafta</span><br>
+                &nbsp;&nbsp;<span class="com">// Kod POZA tym blokiem uruchamia się tylko raz przy ładowaniu programu</span><br>
+                }<br><br>
+                <span class="com">// 2. PĘTLA POWTÓRZEŃ — Wykonuje zamknięty kod dokładnie N razy sekwencyjnie.</span><br>
+                <span class="ck">repeat</span> <span class="cn">5</span> <span class="ck">times</span> {<br>
+                &nbsp;&nbsp;<span class="cf">agent move</span> forward <span class="cn">1</span>    <span class="com">// działa łącznie 5 razy</span><br>
+                }<br><br>
+                <span class="com">// 3. RUCH AGENTA — Przesuwa Agenta o N kroków w kierunku względnym do AKTUALNEGO ZWROTU Agenta.</span><br>
+                <span class="cf">agent move</span> forward  <span class="cn">3</span>   <span class="com">// 3 bloki w kierunku przednim Agenta</span><br>
+                <span class="cf">agent move</span> back     <span class="cn">1</span>   <span class="com">// 1 blok za Agentem</span><br>
+                <span class="cf">agent move</span> left     <span class="cn">2</span>   <span class="com">// 2 bloki po lewej stronie Agenta (względem zwrotu)</span><br>
+                <span class="cf">agent turn</span> left          <span class="com">// obraca Agenta o 90° w lewo — zmienia WSZYSTKIE kolejne kierunki</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Mechanika Agenta — Orientacja, Ekwipunek i Najbardziej Krytyczna Koncepcja</h4>
+            <p>Każde polecenie ruchu Agenta jest oceniane względem aktualnego kierunku zwrotu Agenta — a nie kompasu świata. Zwrot ten zmienia się po każdym poleceniu Obróć. Uczniowie, którzy nie będą tego wyraźnie kontrolować, za każdym razem uzyskają ukośne lub błędne ścieżki.</p>
+            <div class="coord-box">
+                <span class="com">// Agent zaczyna zwrócony na PÓŁNOC (kierunek −Z)</span><br>
+                <span class="cf">agent move</span> forward <span class="cn">3</span>  → przemieszcza się na PÓŁNOC o 3 bloki (Z maleje o 3)<br>
+                <span class="cf">agent turn</span> right      → Agent jest teraz zwrócony na <span class="cx">WSCHÓD (+X)</span><br>
+                <span class="cf">agent move</span> forward <span class="cn">2</span>  → przemieszcza się na <span class="cx">WSCHÓD</span> o 2 bloki (już NIE na północ!)<br>
+                <span class="cf">agent turn</span> right      → Agent jest teraz zwrócony na <span class="cz">POŁUDNIE (+Z)</span><br>
+                <span class="cf">agent move</span> forward <span class="cn">1</span>  → przemieszcza się na <span class="cz">POŁUDNIE</span> o 1 blok<br><br>
+                <span class="cm">ZASADA:</span> Po każdym bloku Obróć, "do przodu" oznacza inny kierunek świata.<br>
+                Wyraźnie kontroluj zwrot. Rysuj na papierze przed zakodowaniem sekwencji z wieloma zwrotami.
+            </div>
+            <div class="callout cw" style="margin-top:10px">
+                <span class="ci">⚠️</span>
+                <div><strong>Wymg p rzed kodowaniem:</strong> Zanim jakikolwiek uczeń napisze kod ruchu Agenta ze zwrotami, poproś go o narysowanie mapy od góry pokazującej: (a) pozycję startową Agenta, (b) początkową strzałkę zwrotu, (c) każdy zwrot ze zaktualizowaną strzałką. Uczniowie, którzy najpierw rysują, piszą kod poprawnie w ~75% przypadków; ci, którzy kodują bezpośrednio, generują błędy w ~65% przypadków.</div>
+            </div>
+
+            <h4 style="margin-top:14px">Ekwipunek Agenta</h4>
+            <p>Agent posiada ekwipunek składający się z 27 slotów (siatka 3×9), identyczny pod względem pojemności ze skrzynią. Przedmioty muszą być załadowane do Agenta, zanim będzie mógł je umieścić. Ładowanie: stań obok Agenta i kliknij na niego prawym przyciskiem myszy, aby open interfejs ekwipunku, a następnie przeciągnij przedmioty ze swojego ekwipunku lub pobliskiej skrzyni.</p>
+            <div class="code-block">
+                <span class="com">// Agent umieszcza blok — wymaga wcześniejszego załadowania przedmiotów do ekwipunku Agenta</span><br>
+                <span class="cf">agent place on move</span> down    <span class="com">// umieszcza przedmiot pod Agentem podczas ruchu (do obsiewania rzędów)</span><br>
+                <span class="cf">agent place</span> forward          <span class="com">// umieszcza przedmiot 1 blok przed Agentem</span><br>
+                <span class="cf">agent place</span> down             <span class="com">// umieszcza przedmiot bezpośrednio pod bieżącą pozycją</span><br><br>
+                <span class="com">// Typowy błąd: Agent nic nie robi, gdy wywoływane jest polecenie umieszczenia.</span><br>
+                <span class="com">// Przyczyna: slot ekwipunku jest pusty. Zawsze ładuj przed uruchomieniem poleceń umieszczania.</span>
+            </div>
+        </div>
+
+
+        <div id="sec-redstone" class="anchor">
+            <div class="section-head">Teoria Techniczna — Fizyka Sygnału Redstone</div>
+        </div>
+
+        <div class="card">
+            <h4>Siła Sygnału, Propagacja i Spadek na Dystansie 15 Bloków</h4>
+            <p>Każde źródło zasilania Redstone emituje sygnał o sile 15. Każdy blok proszku Redstone, przez który przechodzi sygnał, zmniejsza jego siłę o dokładnie 1. Przy sile 0 sygnał wygasa — obwód zostaje przerwany.</p>
+            <div class="coord-box">
+                <span class="com">// Siła sygnału w zależności od odległości (bez Repeatera)</span><br>
+                Proszek[1]: siła=15 → Proszek[5]: siła=11 → Proszek[10]: siła=6<br>
+                → Proszek[14]: siła=2 → Proszek[15]: siła=1 → <span class="cr">Proszek[16]: siła=0 → WYGASŁY</span><br><br>
+                Maksymalna długość przewodu przed Repeaterem: <span class="cg">15 bloków</span><br><br>
+                <span class="cm">Rozwiązanie:</span> Umieść Repeater Redstone na 15. bloku lub wcześniej.<br>
+                Repeater resetuje siłę sygnału do poziomu 15, niezależnie od siły sygnału wejściowego.<br>
+                Repeatery dodają również konfigurowalne opóźnienie: 1–4 ticki (1 tick = 0.05 sekundy).
+            </div>
+
+            <h4 style="margin-top:14px">Cztery Komponenty, Które Uczniowie Muszą Znać w Module 1</h4>
+            <div class="two-col" style="margin-top:8px">
+                <div class="card">
+                    <h4>Blok Obserwatora</h4>
+                    <p>Wykrywa <em>zmiany stanu bloku</em> w pojedynczym bloku, na który bezpośrednio patrzy jego <strong>twarz</strong> (strona z wyrzeźbioną teksturą). Emituje impuls Redstone o długości 1 ticka, gdy wykryje zmianę stanu. W przypadku bambusa: wzrost z jednej fazy do drugiej to zmiana stanu bloku. Obserwator no emituje sygnału ciągłego — jedynie krótki impuls.</p>
+                    <p style="margin-top:8px"><strong>Dwie strony do zapamiętania:</strong> Twarz (wyrzeźbiona tekstura) musi być skierowana na bambus. Tył (wyjście, gładka strona) musi być skierowany na Tłok lub przewód łączący. Pomylenie którejkolwiek z tych stron przerywa obwód w sposób silencjalny.</p>
+                </div>
+                <div class="card">
+                    <h4>Tłok (Zwykły)</h4>
+                    <p>Wysuwa się o 1 blok po podłączeniu zasilania; cofa się czysto po odłączeniu zasilania. Używany do łamania bambusa: głowica Tłoka wysuwa się w blok bambusa, łamiąc go i powodując spadanie przedmiotów jako entit.</p>
+                    <p style="margin-top:8px"><strong>Zwykły a Lepki:</strong> Lepki Tłok przyciąga sąsiedni blok z powrotem po odłączeniu zasilania. Do zbioru bambusa używaj <em>zwykłego</em> Tłoka — łamie bambus przy wysunięciu i cofa się pozostawiając wolną przestręń, gotową do kolejnego cyklu wzrostu.</p>
+                </div>
+                <div class="card">
+                    <h4>Przycisk a Dźwignia</h4>
+                    <p><strong>Przycisk (Kamienny):</strong> Chwilowy impuls o długości ~0.5 sekundy, a następnie automatycznie powraca do stanu off. Idealny do aktywacji jednorazowych. <strong>Dźwignia:</strong> Ciągły sygnał, dopóki nie zostanie ręcznie przełączona z powrotem. Idealna dla stanów, które muszą pozostać włączone/wyłączone (np. brama, która ma pozostać otwarta).</p>
+                    <p style="margin-top:8px">Znajomość tego rozróżnienia zapobiega typowemu błędowi polegającemu na użyciu Przycisku tam, gdzie wymagany jest sygnał ciągły — np. próba utrzymania włączonej Lampy Redstone za pomocą Przycisku (emituje impuls i gaśnie).</p>
+                </div>
+                <div class="card">
+                    <h4>Repeater Redstone</h4>
+                    <p>Resetuje sygnał z powrotem do siły 15. Dodaje opóźnienie 1–4 ticki (kliknij prawym przyciskiem myszy, aby przewijać wartości). <strong>Kierunkowy:</strong> musi być umieszczony <em>w linii</em> ze ścieżką sygnału, a nie prostopadle. Typowy błąd: Repeater umieszczony w poprzek przewodu pod kątem 90° — nie odbiera sygnału i nic nie transmituje, ale ten błąd jest wizualnie niewidoczny.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="sec-bamboo" class="anchor">
+            <div class="section-head">Teoria Techniczna — Automatyczna Farma Bambusa (Schemat Budowy)</div>
+        </div>
+
+        <div class="card">
+            <h4>Mapa komponentów przed budową</h4>
+            <div class="coord-box">
+                <span class="com">// Widok przekroju pionowego — B = blok, · = powietrze</span><br><br>
+                Y+3   ·  ·  ·<br>
+                Y+2   ·  ·  · ← <span class="cm">Tłok (skierowany w DÓŁ, zasilany przez Obserwator)</span><br>
+                Y+1   B  ·  O ← <span class="cy">B = blok bambusa Y+1, O = Obserwator (twarz→bambus, tył→Tłok)</span><br>
+                Y+0   B  H  · ← <span class="cy">B = korzeń bambusa, H = Lej (połączony ze Skrzynią obok)</span><br>
+                Y-1   ·  C  · ← <span class="cs">C = Skrzynia (odbiera przedmioty z Leja)</span><br><br>
+                <span class="cg">Przewód:</span> Wyjście z tyłu Obserwatora → proszek Redstone → wejście Tłoka (jeśli nie leżą bezpośrednio obok siebie)
+            </div>
+
+            <h4 style="margin-top:14px">Sekwencja Budowy Krok po Kroku</h4>
+            <ol class="steps">
+                <li><strong>Posadź bambus</strong> na bloku trawy lub ziemi. Upewnij się, że masz ≥ 3 bloki wolnej przestrzeni w pionie powyżej — bambus rośnie po 1 bloku na raz, maksymalnie do 16 bloków.</li>
+                <li><strong>Umieść Tłok</strong> bezpośrednio nad blokiem bambusa na wysokości Y+2, skierowany <em>w dół</em>. Po aktywacji wysunie się w dół w bambus na wysokości 2, łamiąc go.</li>
+                <li><strong>Umieść Obserwator</strong> obok łodygi bambusa na wysokości Y+1. <em>Twarz</em> (wyrzeźbiona tekstura) musi wskazywać na blok bambusa. <em>Tył</em> (gładka strona) musi wskazywać na Tłok — lub na łączący go proszek Redstone.</li>
+                <li><strong>Połącz Obserwator z Tłokiem</strong> za pomocą proszku Redstone, jeśli nie są bezpośrednio sąsiadujące. Pamiętaj o maksimum 15 bloków — dodaj Repeater, jeśli przewód jest dłuższy.</li>
+                <li><strong>Zweryfikuj orientację:</strong> Kliknij prawym przyciskiem myszy na Obserwator i sprawdź, czy jego wskaźnik wyjściowy pokrywa się z przewodem. Częsta metoda kontroli: umieść tymczasową Lampę Redstone na przewodzie i potwierdź, że wysyła impuls, gdy bambus rośnie.</li>
+                <li><strong>Dodaj zbieranie lejem:</strong> Przytrzymaj <kbd>Shift</kbd> i kliknij prawym przyciskiem myszy na blok pod korzeniem bambusa, aby umieścić Lej skierowany do Skrzyni z boku. Lej automatycznie zbiera upadłe przedmioty i deponuje je w Skrzyni.</li>
+                <li><strong>Test:</strong> Poczekaj, aż bambus urośnie o jedną fazę. Sekwencja: bambus rośnie → Obserwator wykrywa zmianę stanu → emituje impuls 1-tickowy → Tłok się wysuwa → bambus na wysokości 2 łamie się → spadają przedmioty → Lej je zbiera → przedmioty pojawiają się w Skrzyni.</li>
+            </ol>
+
+            <div class="callout cg" style="margin-top:10px">
+                <span class="ci">✅</span>
+                <div><strong>Kamień milowy sukcesu:</strong> Przedmioty gromadzą się w Skrzyni bez żadnego działania ze strony gracza. To pierwsze doświadczenie uczniów z prawdziwą autonomiczną automatyzacją. Świętuj je wyraźnie za pomocą konkretnej pochwały powiązanej z zachowaniem.</div>
+            </div>
+        </div>
+
+
+        <div id="sec-cobble" class="anchor">
+            <div class="section-head">Teoria Techniczna — Generator Bruku z Wody + Lawy</div>
+        </div>
+
+        <div class="card">
+            <h4>Chemia Kolizji — Co Dokładnie Się Dzieje i Dlaczego</h4>
+            <div class="coord-box">
+                <span class="com">// Trzy możliwe interakcje Woda × Lawa:</span><br><br>
+                Źródło Wody + <span class="cn">płynąca Lawa</span>    → <span class="cy">Bruk (Cobblestone)</span>   ← CEL MODUŁU 1<br>
+                <span class="cn">Źródło Lawy</span>   + płynąca Woda    → <span class="cr">Obsydian</span>     ← trwały; wymaga Diamentowego Kilofa<br>
+                <span class="cn">Źródło Lawy</span>   + źródło Wody     → <span class="cr">brak nowego bloku</span> ← tylko granica płynów; brak konwersji<br><br>
+                <span class="cm">KLUCZOWA ZASADA:</span> Dla uzyskania Bruku LAWA musi być płynąca, a nie stanowić bloku źródła.<br>
+                Jeden pusty blok odstępu między blokami źródłowymi zmusza oba płyny do przepływu przed spotkaniem.
+            </div>
+
+            <h4 style="margin-top:14px">Układ Budowy</h4>
+            <ol class="steps">
+                <li>Wykop kanał o <strong>szerokości 3 bloków i głębokości 1 bloku</strong> w dowolnym płaskim obszarze.</li>
+                <li>Umieść blok <strong>źródła Wody</strong> na skrajnym lewym końcu kanału (wiadro wody, kliknij prawym przyciskiem myszy na podłogę).</li>
+                <li>Umieść blok <strong>źródła Lawy</strong> na skrajnym prawym końcu. Pomiędzy dwoma blokami źródłowymi musi być <strong>dokładnie 1 pusty blok odstępu</strong> — to nie podlega negocjacjom.</li>
+                <li>Woda płynie w prawo; Lawa płynie w lewo. Spotykają się w środkowym odstępie, a płynąca Lawa krzepnie w kontakcie z przepływem Wody, wytwarzając Bruk.</li>
+                <li>Wydobądź blok Bruku za pomocą dowolnego Kilofa. Oba przepływy natychmiast spotykają się ponownie w opuszczonym odstępie i generują nowy blok Bruku. Ten cykl jest nieskończony.</li>
+            </ol>
+
+            <div class="callout cw" style="margin-top:10px">
+                <span class="ci">⚠️</span>
+                <div><strong>Błąd z Obsydianem:</strong> Uczniowie umieszczają blok źródła Lawy bezpośrednio obok źródła Wody (odstęp zero). Produkuje to Obsydian zamiast Bruku, ponieważ teraz oba stacjonarne źródła stykają się bezpośrednio. Obsydian wymaga Diamentowego Kilofa do wydobycia i nie można go rozbić na etapie Modułu 1. Zawsze egzekwuj zasadę 1 bloku odstępu przed umieszczeniem Lawy.</div>
+            </div>
+        </div>
+
+
+        <div id="sec-trouble" class="anchor">
+            <div class="section-head">Katalog Rozwiązywania Problemów — 6 Scenariuszy Operacyjnych</div>
+        </div>
+
+        <div style="overflow-x:auto">
+            <table class="trouble-table">
+                <thead>
+                    <tr>
+                        <th style="width:20%">Symptom</th>
+                        <th style="width:25%">Główna Przyczyna</th>
+                        <th style="width:30%">Dokładne Rozwiązanie</th>
+                        <th style="width:25%">Skrypt Prewencyjny</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="td-err">Uczeń zgubił się w pustym terenie; nie może znaleźć świata sesji ani innych uczniów</td>
+                        <td>Oddalił się od punktu spawnu przed poznaniem współrzędnych; brak dostępnego polecenia przywołania</td>
+                        <td>Tutor używa <code>/tp [imię] [X] [Y] [Z]</code> z przypiętymi współrzędnymi spawnu. Jeśli brak dostępu administratora, poinstruuj ucznia, aby wpisał <code>/kill</code> — odrodzi się w punkcie spawnu świata. Potwierdź wcześniej, że współrzędne spawnu są prawidłowo ustawione w ustawieniach świata.</td>
+                        <td class="td-fix">„Krok 1 na każdej sesji: przypnij współrzędne spawnu na czacie. Uczniowie kopiują je, zanim czegokolwiek dotkną. Polecenie awaryjne zawsze w gotowości.”</td>
+                    </tr>
+                    <tr>
+                        <td class="td-err">Obwód Redstone działa w pobliżu źródła, ale Tłok na drugim końcu nie reaguje; brak widocznego błędu</td>
+                        <td>Przewód przekracza 15 bloków — siła sygnału osiągnęła 0 przed dotarciem do Tłoka</td>
+                        <td>Policz bloki od źródła zasilania do Tłoka. Jeśli jest ich &gt;15, umieść Repeater Redstone na 14. bloku (lub wcześniej). Potwierdź, że Repeater jest umieszczony w linii ze ścieżką sygnału, a nie prostopadle. Przetestuj Tłok bezpośrednio za pomocą Dźwigni, aby potwierdzić, że działa niezależnie.</td>
+                        <td class="td-fix">„Zasada wzmacniacza sygnału: umieść Repeater co 14 bloków. Najpierw policz swój przewód, a potem go umieść.”</td>
+                    </tr>
+                    <tr>
+                        <td class="td-err">Obwód Obserwatora aktywuje się widocznie (tekstura pulsuje), ale Tłok się nie wysuwa</td>
+                        <td>Twarz wyjściowa z tyłu Obserwatora nie jest skierowana na Tłok lub przewód łączący; lub występuje 1-blokowa przerwa w linii proszku Redstone</td>
+                        <td>Rozbij i ponownie umieść Obserwator. Potwierdź: twarz (wyrzeźbiona) → bambus, tył (gładki) → Tłok. Jeśli nie są sąsiadujące, dodaj proszek Redstone między tył Obserwatora a Tłok. Przetestuj Tłok z Dźwignią niezależnie, aby potwierdzić, że Tłok i jego orientacja działają poprawnie.</td>
+                        <td class="td-fix">„Nos Obserwatora = obserwacja; ogon Obserwatora = transmisja. Nos jest skierowany na bambus. Ogon jest skierowany na to, co chcesz zasilić.”</td>
+                    </tr>
+                    <tr>
+                        <td class="td-err">Agent wytwarza ukośną lub zygzakowatą ścieżkę zamiast linii prostej</td>
+                        <td>Uczeń nie kontrolował zwrotu Agenta po poleceniu Obróć — „do przodu” oznacza teraz inny kierunek świata niż zamierzony</td>
+                        <td>Poproś ucznia o określenie aktualnego kierunku zwrotu Agenta przed każdym blokiem Przesuń. Rysuj na papierze, jeśli to konieczne. Wykonaj 1 ruch na raz i obserwuj kierunek w świecie. Zidentyfikuj blok Obróć, w którym zwrot odszedł od zamierzonego i popraw od tego punktu.</td>
+                        <td class="td-fix">„Przed napisaniem jakiejkolwiek sekwencji obróć + przesuń: narysuj ścieżkę. W którym kierunku wskazuje Agent po tym zwrocie? Zapisz to.”</td>
+                    </tr>
+                    <tr>
+                        <td class="td-err">Generator bruku produkuje Obsydian zamiast Bruku</td>
+                        <td>Blok źródła Lawy został umieszczony bezpośrednio obok bloku źródła Wody — zerowy odstęp oznacza styk dwóch stacjonarnych źródeł, co generuje Obsydian</td>
+                        <td>Usuń blok źródła Lawy. Potwierdź, że pomiędzy dwoma blokami źródłowymi znajduje się dokładnie 1 pusty blok. Ponownie umieść Lawę na właściwym końcu. Płynąca Lawa musi przebyć 1 blok przed spotkaniem z płynącą Wodą.</td>
+                        <td class="td-fix">„Jeden pusty blok odstępu między blokami źródłowymi — zawsze. Powiedz to przed umieszczcem Lawy: 'Jeden odstęp'. Płynące rzeki w odstępie = Bruk.”</td>
+                    </tr>
+                    <tr>
+                        <td class="td-err">Komenda /code wpisana na czacie nie daje żadnej odpowiedzi — MakeCode się nie otwiera</td>
+                        <td>Opcja „Włącz Code Builder” nie została aktywowana w ustawieniach świata; lub urządzenie ucznia jest offline (edytor MakeCode ładuje się z zewnętrznej sieci CDN)</td>
+                        <td>Zamknij świat. Otwórz ustawienia świata (ikona ołówka). Przełącz opcję „Włącz Code Builder” na ON. Ponownie wejdź do świata. Spróbuj ponownie <code>/code</code>. Jeśli nadal nie działa, sprawdź połączenie internetowe na urządzeniu ucznia — MakeCode nie może się załadować bez sieci.</td>
+                        <td class="td-fix">„Krok 1 Protokołu Przedlotowego: otwórz świat, wpisz /code. Jeśli edytor się otwiera = zielone światło. Jeśli nic się nie dzieje = sprawdź opcję Code Builder w ustawieniach świata, zanim uczniowie dołączą.”</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div id="sec-analogies" class="anchor">
+            <div class="section-head">Analogie Pojęciowe — Uproszczenie Abstrakcji dla Wieku 8–9 Lat</div>
+        </div>
+
+        <div class="analogy">
+            <p>
+                <strong>💡 Redstone = „Domowa Instalacja Elektryczna”</strong><br>
+                <em>„Proszek Redstone to przewód wewnątrz ścian Twojego domu. Dźwignia lub przycisk to włącznik światła. Tłok to silnik lub żarówka. I tak jak prawdziwy prąd może przemieszczać się tylko na określoną odległość, zanim napięcie spadnie zbyt nisko, sygnał Redstone wygasa po 15 blokach — dlatego potrzebujemy Repeatera, który działa jak wzmacniacz w długim kablu głośnikowym”.</em>
+            </p>
+        </div>
+
+        <div class="analogy">
+            <p>
+                <strong>💡 Obserwator = „Powiadomienie SMS z Czujnika Ruchu w Ogrodzie”</strong><br>
+                <em>„Wyobraź sobie, że posadziłeś słonecznik i chciałeś wiedzieć w tej samej sekundzie, kiedy urósł wyższy. Mógłbyś gapić się na niego cały dzień — albo postawić obok niego czujnik ruchu, który wyśle Ci wiadomość na telefon, gdy tylko się poruszy. Obserwator to ten czujnik. Gdy tylko bambus urośnie choćby o milimetr, wysyła wiadomość SMS za pomocą Redstone do Tłoka”.</em>
+            </p>
+        </div>
+
+        <div class="analogy">
+            <p>
+                <strong>💡 Współrzędne = „System Adresów Ulicznych w Mieście”</strong><br>
+                <em>„Każdy budynek w mieście ma swój adres: ulica Wschodnia 100, Piąta Aleja, Piętro 3. W Minecraft X to numer Twojej ulicy na linii Wschód-Zachód, Z to numer Twojej alei na linii Północ-Południe, a Y to piętro, na którym się znajdujesz. Twoja farma bambusa ma swój dokładny adres — X=100, Y=64, Z=200 — i żaden inny blok w całym nieskończonym świecie nie dzieli z nią tego adresu”.</em>
+            </p>
+        </div>
+
+        <div class="analogy">
+            <p>
+                <strong>💡 Pętla Powtórzeń = „Kserokopiarka”</strong><br>
+                <em>„Napisałeś idealne zdanie na kartce i potrzebujesz 20 kopii. Mógłbyś zapisać je ręcznie 20 razy — albo włożyć do kserokopiarki i wpisać '20'. Blok Powtórz to Twoja kserokopiarka. Zapisujesz akcję raz, mówisz, ile kopii potrzebujesz, a ona wykonuje je wszystkie, podczas gdy Ty odpoczywasz”.</em>
+            </p>
+        </div>
+
+        <div class="analogy">
+            <p>
+                <strong>💡 Agent = „Robot, Który Wykonuje Tylko Pisemne Instrukcje”</strong><br>
+                <em>„Agent to Twój robotyczny najlepszy przyjaciel — ale jest jedna rzecz: potrafi robić tylko to, co dla niego wcześniej zapiszesz. Nie potrafi improwizować. Jeśli powiesz 'idź do przodu', pójdzie do przodu. Jeśli powiesz 'skręć w prawo, idź do przodu', skręci w prawo, a potem pójdzie do przodu. Wykona Twoje instrukcje idealnie, nawet jeśli te instrukcje zrzucą go z klifu. Dlatego planujemy, zanim zakodujemy”. (Przedstaw go najpierw jako postać: „Czy to dinozaur? Kurczak? Nie — to Twój nowy najlepszy przyjaciel: Agent!”)</em>
+            </p>
+        </div>
+
+        <div class="analogy">
+            <p>
+                <strong>💡 Współrzędne Względne a Bezwzględne — „GPS a Wskazówki Osobiste”</strong><br>
+                <em>„Współrzędne bezwzględne są jak GPS — ulica Główna 100 to zawsze ulica Główna 100, niezależnie od tego, gdzie się znajdujesz. Współrzędne względne są jak udzielanie komuś wskazówek z miejsca, w którym aktualnie stoi — 'skręć w lewo i przejdź 3 bloki'. Tilda (~) oznacza 'stamtąd, gdzie stoję w tym momencie'. Dlatego dwóch różnych graczy używających /tp @s ~3 ~0 ~0 wyląduje w dwóch różnych miejscach — obaj przesunęli się o 3 bloki na wschód od swoich odpowiednich pozycji”.</em>
+            </p>
+        </div>
+
+
+        <div id="sec-cta" class="anchor cta-block">
+            <h3>Zawartość Techniczna Modułu 1 Zakończona</h3>
+            <p>Zapoznałeś się z pełną specyfikacją techniczną dla Modułu 1: fizyką układu współrzędnych, mechaniką nakładki MakeCode, orientacją i ekwipunkiem Agenta, tłumieniem sygnału Redstone, schematem budowy farmy bambusa, chemią generatora bruku, 6 scenariuszami rozwiązywania problemów i 6 analogiami pojęciowymi. Sprawdzian wiedzy poniżej testuje wyłącznie ten materiał — zero nakładania się z końcowym testem DST.</p>
+            <a href="PlModule1Test.html" class="btn-primary" style="font-size:15px;padding:14px 38px;position:relative;">Przystąp do sprawdzianu wiedzy z Modułu 1 →</a>
+        </div>
+
+    </div><footer>© 2026 Kodland · Wewnętrzny materiał szkoleniowy dla tutorów — nie do rozpowszechniania na zewnątrz.</footer>
+
+    <script src="shared.js"></script>
+    <script>
+        initShared();
+        document.getElementById('top-bar').style.width = `${getOverallProgress() / 5 * 100}%`;
+
+        const pills = document.querySelectorAll('.sec-pill');
+        const ids = ['sec-overview', 'sec-flow', 'sec-coords', 'sec-makecode', 'sec-redstone', 'sec-bamboo', 'sec-cobble', 'sec-trouble', 'sec-analogies', 'sec-cta'];
+        window.addEventListener('scroll', () => {
+            let active = 0;
+            ids.forEach((id, i) => {
+                const el = document.getElementById(id);
+                if (el && window.scrollY >= el.offsetTop - 150) active = i;
+            });
+            pills.forEach((p, i) => p.classList.toggle('active', i === active));
+        }, { passive: true });
+    </script>
+</body>
+</html>

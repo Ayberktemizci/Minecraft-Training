@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Modul 3 — Oasis Logika | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{background:linear-gradient(135deg,#6D28D9,#8B5CF6);padding:24px 32px;color:#fff;text-align:center}
+  .quiz-header h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+  .quiz-header p{color:rgba(255,255,255,.85);font-size:13px}
+  .feedback-box{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:13.5px;line-height:1.6;border:2px solid}
+  .feedback-box.show{display:block}
+  .feedback-box.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+  .feedback-box.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Pelatihan Tutor</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Modul 3</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="quiz-header">
+  <h2>📝 Kuis Pengetahuan Modul 3</h2>
+  <p>🧩 Oasis Logika · 6 Pertanyaan · 70% untuk Lulus</p>
+</div>
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Pertanyaan Berikutnya →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Kirim Jawaban</button>
+  </div>
+</div>
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+</div>
+<footer>© 2026 Kodland. Materi pelatihan tutor internal.</footer>
+<script src="shared.js"></script>
+<script>
+const MODULE_ID = 3;
+const PASS_PCT  = 70;
+const QUESTIONS = [
+  {
+    q: "Variabel 'skor' siswa selalu muncul sebagai 1 segera saat program dimulai, sebelum pemain berjalan sama sekali. Apa penyebab tepatnya?",
+    opts: [
+      "Peristiwa Saat Pemain Berjalan terpicu otomatis sekali saat inisialisasi program",
+      "Blok inisialisasi 'atur skor ke 0' ada di dalam peristiwa Saat Pemain Berjalan — setiap langkah jalan mereset skor ke 0 sebelum dinaikkan, jadi skor selalu sama dengan 1",
+      "Variabel MakeCode selalu dimulai dari 1 kecuali diatur secara eksplisit di blok Saat Mulai",
+      "Blok 'ubah skor sebesar 1' berjalan dalam loop latar belakang tak terbatas"
+    ],
+    correct: 1,
+    feedback: "Jika 'atur skor ke 0' ada di dalam peristiwa Berjalan, urutan setiap langkah adalah: (1) atur skor ke 0, (2) ubah skor sebesar 1 — skor selalu sama dengan 1. Perbaikan: pindahkan 'atur skor ke 0' ke blok Saat Mulai sehingga hanya berjalan sekali saat program dimuat."
+  },
+  {
+    q: "Seorang siswa ingin kondisi menang terpicu saat pemain mengumpulkan 10 batu atau lebih, tetapi kondisi tidak pernah terpicu bahkan saat batu = 12. Kode berbunyi: jika batu = 10 maka { katakan 'Menang!' }. Apa masalah dan perbaikannya?",
+    opts: [
+      "Variabel harus diberi nama 'skor' bukan 'batu' — MakeCode hanya mengenali nama variabel default",
+      "Blok 'katakan' harus diganti dengan blok 'cetak' di dalam kondisi",
+      "Kondisi menggunakan = (persis sama dengan 10) bukan ≥ (lebih besar atau sama dengan 10) — jika pemain mengumpulkan 12 batu, batu tidak pernah persis sama dengan 10, jadi kondisi tidak pernah benar",
+      "Kondisi tidak bisa membaca variabel secara langsung — blok 'baca' terpisah harus ditambahkan dulu"
+    ],
+    correct: 2,
+    feedback: "Dengan kondisi 'batu = 10', program memeriksa apakah batu persis sama dengan 10. Jika pemain mengumpulkan batu dalam kelompok (mis. +3 sekaligus), batu bisa melompat dari 9 ke 12 — melewati 10 sepenuhnya. Kondisi tidak pernah benar. Perbaikan: ubah operator ke ≥ (lebih besar atau sama dengan), yang terpicu saat batu mencapai 10 atau nilai di atasnya."
+  },
+  {
+    q: "Mana dari berikut ini yang menggambarkan cakupan variabel di MakeCode Education dengan benar?",
+    opts: [
+      "Semua variabel bersifat global — blok peristiwa mana pun di mana pun dalam program bisa membaca dan memodifikasi variabel mana pun",
+      "Variabel bersifat lokal terhadap blok peristiwa tempat mereka dibuat — blok lain tidak bisa mengaksesnya",
+      "Variabel hanya ada saat blok peristiwa pembuatnya sedang aktif berjalan",
+      "Variabel MakeCode harus dideklarasikan dengan tipe (angka, teks, atau boolean) sebelum bisa digunakan"
+    ],
+    correct: 0,
+    feedback: "Di MakeCode Education, semua variabel bersifat global secara default. Variabel yang dibuat di blok Saat Mulai sepenuhnya dapat diakses dan dimodifikasi di dalam Saat Pemain Berjalan, Saat Blok Dihancurkan, dan semua blok peristiwa lainnya. Tidak ada cakupan variabel lokal. Ini menyederhanakan coding untuk pemelajar muda tetapi berarti siswa harus berhati-hati — peristiwa apa pun bisa secara tidak sengaja menimpa variabel."
+  },
+  {
+    q: "Setelah mencapai kondisi menang (skor ≥ 10), animasi kembang api siswa terpicu di setiap langkah jalan, bukan hanya sekali. Apa penyebab teknis yang paling tepat?",
+    opts: [
+      "Blok kembang api memiliki pengaturan pengulangan internal yang disetel ke 'tak terbatas'",
+      "Peristiwa Saat Pemain Berjalan memiliki bug double-fire bawaan yang memicu dua kali per langkah",
+      "Operator perbandingan ≥ harus diubah ke = untuk mencegah kondisi memicu ulang",
+      "Skor tidak direset ke 0 (atau status game tidak diubah) di dalam blok kondisi menang — skor tetap ≥ 10 setelah menang pertama, sehingga setiap langkah jalan berikutnya memicu ulang kondisi"
+    ],
+    correct: 3,
+    feedback: "Setelah menang terpicu, jika skor tetap di 10 (atau lebih), setiap langkah jalan berikutnya mengevaluasi 'jika skor ≥ 10' → benar → kembang api lagi. Perbaikan: tambahkan 'atur skor ke 0' sebagai baris terakhir di dalam blok menang (reset untuk replay), atau perkenalkan variabel boolean 'gameAktif' yang disetel ke salah saat menang, kemudian bungkus seluruh blok Saat Berjalan dalam 'jika gameAktif = benar'."
+  },
+  {
+    q: "Seorang tutor ingin membantu siswa menghindari penempatan kode di luar blok peristiwa. Teknik pedagogis mana yang paling efektif sebelum siswa mulai coding?",
+    opts: [
+      "Minta siswa melihat layar tutor saat tutor membangun program, kemudian menyalinnya",
+      "Minta siswa menggambar persegi panjang di kertas, memberinya label dengan nama blok peristiwa, dan secara fisik memutuskan instruksi mana yang masuk ke dalam dan luar sebelum menyentuh MakeCode",
+      "Berikan siswa program yang sudah dibangun untuk dimodifikasi daripada membangun dari awal",
+      "Beri tahu siswa untuk memeriksa halaman dokumentasi MakeCode jika tidak yakin tentang penempatan blok"
+    ],
+    correct: 1,
+    feedback: "Teknik 'menggambar batas blok' secara fisik mengeksternalisasi tugas kognitif berisi blok. Siswa yang menggambar persegi panjang sebelum coding melakukan kesalahan ini ~70% lebih jarang karena batas menjadi konsep spasial yang nyata daripada aturan struktural abstrak. Ini juga mengharuskan siswa merencanakan sebelum coding — kebiasaan pemrograman profesional yang mendasar."
+  },
+  {
+    q: "Seorang siswa ingin programnya menampilkan teks 'Skor Saat Ini: 7' saat pemain berjalan. Mereka menempatkan blok 'katakan' yang hanya berisi variabel 'skor'. Output menampilkan '7' tetapi bukan teks label. Bagaimana ini harus diperbaiki?",
+    opts: [
+      "Tambahkan blok 'katakan' kedua yang terpisah yang hanya mengeluarkan teks label; MakeCode akan menampilkannya bersama",
+      "Gunakan blok 'cetak' alih-alih 'katakan' — cetak mendukung teks gabungan",
+      "Gunakan blok 'gabung teks' untuk menggabungkan string "Skor Saat Ini: " dengan variabel skor, kemudian teruskan hasil gabungan ke satu blok 'katakan'",
+      "Variabel tidak bisa ditampilkan dalam game menggunakan 'katakan' — mereka hanya bisa ditampilkan di konsol MakeCode"
+    ],
+    correct: 2,
+    feedback: "Blok 'katakan' menerima satu nilai. Untuk menggabungkan teks dan variabel, siswa harus menggunakan blok 'gabung teks': [gabung ["Skor Saat Ini: "] [skor]] → menghasilkan string gabungan tunggal "Skor Saat Ini: 7", yang kemudian diteruskan ke 'katakan'. Dua blok 'katakan' terpisah akan ditampilkan di baris terpisah, bukan digabungkan."
+  }
+];
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('question-area').innerHTML = `
+    <div class="qnum">Pertanyaan ${current + 1} / ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list">${q.opts.map((o,i) => `<div class="opt" id="opt-${i}" onclick="selectOpt(${i})"><span class="opt-letter">${LETTERS[i]}</span><span>${o}</span></div>`).join('')}</div>`;
+}
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i) el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  const fb = isRight ? '✅ Benar! ' + q.feedback : '❌ Salah. Jawaban benar: ' + q.opts[q.correct] + ' — ' + q.feedback;
+  document.getElementById('feedback-area').innerHTML = `<div class="feedback-box ${isRight?'ok':'bad'} show">${fb}</div>`;
+  if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+  else document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+function nextQuestion() { current++; renderQuestion(); window.scrollTo(0,0); }
+function submitQuiz() {
+  const score = answers.filter((a,i) => a === QUESTIONS[i].correct).length;
+  const pct = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+  if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed?'🎉':'😅'}</div>
+    <div class="result-title">${passed?'Modul 3 Selesai!':'Belum Berhasil'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> pertanyaan dijawab dengan benar.
+      ${passed?' Luar biasa — Modul 3 selesai!':` Nilai <strong>${PASS_PCT}%</strong> diperlukan. Tinjau materi dan coba lagi.`}
+    </div>`;
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="IdModule4.html" class="btn-primary">Lanjut ke Modul 4 →</a><button class="btn-outline" onclick="goHome()">← Dasbor</button>`
+    : `<button class="btn-primary" onclick="retake()">Ulangi Tes</button><a href="IdModule3.html" class="btn-outline">← Tinjau Modul 3</a>`;
+  window.scrollTo(0,0);
+}
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion(); window.scrollTo(0,0);
+}
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) { alert('Harap selesaikan modul sebelumnya terlebih dahulu.'); goHome(); }
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

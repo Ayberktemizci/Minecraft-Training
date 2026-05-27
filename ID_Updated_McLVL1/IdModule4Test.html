@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Modul 4 — Hutan Mekanik | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{background:linear-gradient(135deg,#B45309,#F59E0B);padding:24px 32px;color:#fff;text-align:center}
+  .quiz-header h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+  .quiz-header p{color:rgba(255,255,255,.85);font-size:13px}
+  .feedback-box{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:13.5px;line-height:1.6;border:2px solid}
+  .feedback-box.show{display:block}
+  .feedback-box.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+  .feedback-box.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Pelatihan Tutor</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Modul 4</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="quiz-header">
+  <h2>📝 Kuis Pengetahuan Modul 4</h2>
+  <p>🌲 Hutan Mekanik · 6 Pertanyaan · 70% untuk Lulus</p>
+</div>
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Pertanyaan Berikutnya →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Kirim Jawaban</button>
+  </div>
+</div>
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+</div>
+<footer>© 2026 Kodland. Materi pelatihan tutor internal.</footer>
+<script src="shared.js"></script>
+<script>
+const MODULE_ID = 4;
+const PASS_PCT  = 70;
+const QUESTIONS = [
+  {
+    q: "Loop nested Agen menghasilkan pola diagonal, bukan grid 5×5. Setelah loop dalam selesai baris 1, kode jalankan 'agen bergerak ke kanan 1' lalu 'agen bergerak mundur 5'. Apa yang salah?",
+    opts: [
+      "Loop luar harus berjalan 5 kali untuk cocok dengan loop dalam",
+      "Dua perintah tersebut harus diganti dengan satu perintah 'agen tp'",
+      "'Mundur 5' mengembalikan Agen ke awal kolom dengan benar. Tetapi 'berbalik arah' hilang — tanpa membalikkan arah, baris 2 ditanam di arah yang sama seperti baris 1, menciptakan pola diagonal",
+      "Hitungan loop dalam terlalu tinggi — kurangi ke 4"
+    ],
+    correct: 2,
+    feedback: "Setelah baris 1, 'mundur 5' dengan benar mengembalikan Agen ke awal kolom. Tetapi tanpa 'berbalik arah', Agen menghadap arah yang sama untuk baris 2 — menanam dari posisi asli ke arah yang sama, menciptakan pola diagonal atau tumpang tindih. Urutan yang benar: selesaikan baris → bergerak ke kanan 1 → berbalik arah → mundur 0 (sudah di awal baris 2) dan tanam."
+  },
+  {
+    q: "Apa prasyarat kritis sebelum perintah 'tempatkan saat bergerak ke bawah' Agen berhasil menanam tanaman?",
+    opts: [
+      "Tanah di bawah Agen harus berupa lahan pertanian yang diolah dan diirigasi — dalam 4 blok dari sumber air",
+      "Agen harus memiliki setidaknya 32 benih di inventarisnya",
+      "Pemain harus berada di chunk yang sama dengan Agen",
+      "Lahan pertanian harus berada tepat di Y=63"
+    ],
+    correct: 0,
+    feedback: "Dua kondisi harus dipenuhi: (1) tanah harus diolah dengan Cangkul dan (2) harus diirigasi — sumber air dalam 4 blok secara horizontal. Lahan pertanian kering (krem terang) akan kembali ke tanah dan mengeluarkan tanaman yang ditempatkan di atasnya."
+  },
+  {
+    q: "Hopper siswa terlihat di dunia di bawah zona jatuh kebun, tetapi item yang dipanen menumpuk di tanah dan tidak dikumpulkan. Setelah 5 menit item menghilang. Penyebab paling mungkin?",
+    opts: [
+      "Inventaris 5 slot Hopper penuh dengan item filter",
+      "Piston yang memecah tanaman terlalu tinggi",
+      "Output Hopper terblokir — terhubung ke peti yang sudah penuh, sehingga Hopper tidak dapat mentransfer dan menumpuk, mencegah pengambilan item baru",
+      "Hopper tidak bisa mengumpulkan item yang jatuh lebih dari 3 blok"
+    ],
+    correct: 2,
+    feedback: "Saat peti output Hopper benar-benar penuh, Hopper tidak dapat mentransfer item dari inventaris 5 slotnya sendiri. Setelah slot tersebut terisi, Hopper berhenti mengumpulkan item dari atas. Perbaikan: perluas penyimpanan (tambahkan lebih banyak peti) atau sortir item sehingga satu peti tidak pernah penuh sepenuhnya."
+  },
+  {
+    q: "Protokol debugging 'uji secara terpisah' Modul 4 merekomendasikan pengujian setiap tahap jalur secara mandiri. Dalam urutan apa?",
+    opts: [
+      "Simpan dulu, lalu Kumpulkan, lalu Picu, lalu Deteksi — uji mundur dari output",
+      "Deteksi dulu (Observer memicu menggunakan Lampu), lalu Picu (Piston dari Tuas), lalu Kumpulkan (Hopper dari item yang dijatuhkan), lalu Simpan (Hopper ke peti) — setiap tahap secara independen sebelum menghubungkan",
+      "Bangun dan uji semua empat tahap bersamaan",
+      "Picu dulu, lalu Deteksi, lalu Simpan, lalu Kumpulkan"
+    ],
+    correct: 1,
+    feedback: "Protokol mengikuti urutan aliran data: (1) Deteksi dengan Lampu, (2) Picu dengan Tuas manual, (3) Kumpulkan dengan menjatuhkan item dengan tangan, (4) Simpan ke peti. Setelah keempat lulus secara independen, hubungkan. Ini mencegah kegagalan majemuk yang sulit didiagnosis."
+  },
+  {
+    q: "Bahasa apa yang harus digunakan tutor saat menjelaskan sirkuit panen otomatis kepada anak usia 8 tahun, untuk menjembatani konsep kondisional Modul 3 dengan perangkat keras Redstone Modul 4?",
+    opts: [
+      "Notasi diagram sirkuit dengan simbol elektronik standar",
+      "Teori himpunan matematika",
+      "Bahasa Jika–Maka: 'JIKA gandum mencapai tahap 7 MAKA Observer terpicu MAKA Piston memecah MAKA item jatuh' — mendeskripsikan perangkat keras menggunakan pembingkaian kondisional yang sama dari Modul 3",
+      "Hanya bahasa diagram alur — gambar di whiteboard dulu"
+    ],
+    correct: 2,
+    feedback: "Menggunakan bahasa Jika–Maka adalah jembatan pedagogis yang disengaja antara Modul 3 dan 4. Siswa sudah memahami 'jika kondisi maka tindakan' dari MakeCode. Mendeskripsikan sirkuit Redstone dalam bahasa identik membuat perangkat keras terasa seperti logika yang sudah familiar."
+  },
+  {
+    q: "Siswa sudah membangun kebun bambu satu baris di Modul 1. Di Modul 4, mereka ingin membuatnya jadi kebun multi-baris otomatis. Konsep Modul 4 mana yang memungkinkan Agen menanam beberapa baris tanpa repositioning manual?",
+    opts: [
+      "Nested loop — loop luar beritasi pada baris, loop dalam menangani kolom dalam setiap baris, dengan kode repositioning di antara iterasi loop luar",
+      "Perintah /clone dari Modul 2 — duplikasi sirkuit satu baris",
+      "Peristiwa Saat Blok Dihancurkan dari Modul 3 — pemicu penanaman ulang otomatis",
+      "Redstone Repeater — penundaan timing di antara baris"
+    ],
+    correct: 0,
+    feedback: "Nested loop adalah konsep Modul 4 yang memungkinkan penanaman multi-baris otomatis. Loop luar beritasi pada baris; loop dalam menanam dalam setiap baris. Kode repositioning (bergerak ke kanan 1, berbalik arah) di antara iterasi loop luar menggeser Agen ke awal baris berikutnya."
+  }
+];
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('question-area').innerHTML = `
+    <div class="qnum">Pertanyaan ${current + 1} / ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list">${q.opts.map((o,i) => `<div class="opt" id="opt-${i}" onclick="selectOpt(${i})"><span class="opt-letter">${LETTERS[i]}</span><span>${o}</span></div>`).join('')}</div>`;
+}
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i) el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  const fb = isRight ? '✅ Benar! ' + q.feedback : '❌ Salah. Jawaban benar: ' + q.opts[q.correct] + ' — ' + q.feedback;
+  document.getElementById('feedback-area').innerHTML = `<div class="feedback-box ${isRight?'ok':'bad'} show">${fb}</div>`;
+  if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+  else document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+function nextQuestion() { current++; renderQuestion(); window.scrollTo(0,0); }
+function submitQuiz() {
+  const score = answers.filter((a,i) => a === QUESTIONS[i].correct).length;
+  const pct = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+  if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed?'🎉':'😅'}</div>
+    <div class="result-title">${passed?'Modul 4 Selesai!':'Belum Berhasil'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> pertanyaan dijawab dengan benar.
+      ${passed?' Luar biasa — Modul 4 selesai!':` Nilai <strong>${PASS_PCT}%</strong> diperlukan. Tinjau materi dan coba lagi.`}
+    </div>`;
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="IdModule5.html" class="btn-primary">Lanjut ke Modul 5 →</a><button class="btn-outline" onclick="goHome()">← Dasbor</button>`
+    : `<button class="btn-primary" onclick="retake()">Ulangi Tes</button><a href="IdModule4.html" class="btn-outline">← Tinjau Modul 4</a>`;
+  window.scrollTo(0,0);
+}
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion(); window.scrollTo(0,0);
+}
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) { alert('Harap selesaikan modul sebelumnya terlebih dahulu.'); goHome(); }
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

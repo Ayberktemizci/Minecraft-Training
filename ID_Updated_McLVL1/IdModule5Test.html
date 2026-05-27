@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Modul 5 — Kastil Pencipta | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{background:linear-gradient(135deg,#7E22CE,#EC4899);padding:24px 32px;color:#fff;text-align:center}
+  .quiz-header h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+  .quiz-header p{color:rgba(255,255,255,.85);font-size:13px}
+  .feedback-box{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:13.5px;line-height:1.6;border:2px solid}
+  .feedback-box.show{display:block}
+  .feedback-box.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+  .feedback-box.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Pelatihan Tutor</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Modul 5</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="quiz-header">
+  <h2>📝 Kuis Pengetahuan Modul 5</h2>
+  <p>🏰 Kastil Pencipta · 6 Pertanyaan · 70% untuk Lulus</p>
+</div>
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Pertanyaan Berikutnya →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Kirim Jawaban</button>
+  </div>
+</div>
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+</div>
+<footer>© 2026 Kodland. Materi pelatihan tutor internal.</footer>
+<script src="shared.js"></script>
+<script>
+const MODULE_ID = 5;
+const PASS_PCT  = 70;
+const QUESTIONS = [
+  {
+    q: "Seorang siswa mendefinisikan Fungsi MakeCode bernama 'bukaPintu' yang menggerakkan Piston dan memainkan suara. Setelah menambahkan definisi Fungsi, pintu tidak terbuka saat pemain berjalan di atas Pressure Plate. Tidak ada blok di dalam peristiwa 'Saat Pemain Berjalan'. Apa penyebab tepat dan perbaikannya?",
+    opts: [
+      "Nama 'bukaPintu' adalah kata yang dicadangkan — harus diganti nama",
+      "Blok Piston di dalam Fungsi harus diganti dengan blok sinyal Redstone langsung",
+      "Fungsi hanya berjalan saat pemain berada dalam 10 blok dari lokasi yang didefinisikan",
+      "Fungsi sudah didefinisikan tetapi tidak pernah dipanggil — blok 'Panggil Fungsi bukaPintu' harus ditempatkan di dalam blok peristiwa 'Saat Pemain Berjalan' agar Fungsi berjalan saat peristiwa terpicu"
+    ],
+    correct: 3,
+    feedback: "Mendefinisikan Fungsi menciptakan blok kode yang dapat digunakan kembali dengan nama — tetapi tidak pernah berjalan sendiri. Fungsi harus secara eksplisit dipanggil dari penanganan peristiwa. Tanpa 'Panggil Fungsi bukaPintu' di dalam peristiwa Saat Pemain Berjalan, definisi Fungsi ada di memori tetapi tidak pernah dipicu."
+  },
+  {
+    q: "Mengapa Fase Blueprint terstruktur mengharuskan siswa mengkonfirmasi persetujuan dengan mengetik ke obrolan ('Saya setuju dengan rencana ini: [nama]') daripada dengan tangan terangkat atau konfirmasi verbal?",
+    opts: [
+      "Mengetik lebih cepat dari konfirmasi verbal dan menghemat waktu sesi",
+      "Mengetik membuat komitmen sosial yang terlihat dan permanen di log obrolan — jika siswa kemudian mencoba mengubah arah di tengah pembangunan, tutor bisa merujuk pada persetujuan tertulisnya sendiri; ini secara dramatis mengurangi perubahan arah di tengah pembangunan",
+      "Obrolan game secara otomatis mencatat perjanjian tertulis sebagai kontrak yang mengikat",
+      "Konfirmasi verbal tidak diizinkan dalam sesi karena kualitas audio"
+    ],
+    correct: 1,
+    feedback: "Tujuan komitmen tertulis adalah akuntabilitas sosial melalui catatan yang terlihat dan permanen. Siswa yang mengetik 'Saya setuju' jauh lebih tidak mau berdebat untuk perubahan arah kemudian karena komitmen mereka terlihat oleh semua orang. Perjanjian verbal bersifat pribadi dan sementara; perjanjian obrolan tertulis bersifat publik dan permanen."
+  },
+  {
+    q: "Dalam siklus Bangun → Debug → Dekorasi, seorang siswa ingin menambahkan spanduk berwarna dan pola lantai kustom sebelum menguji apakah jembatan proyek sebenarnya terbuka. Apa yang harus dilakukan tutor?",
+    opts: [
+      "Langsung arahkan siswa ke Fase Debug: jelaskan bahwa mendekorasi sebelum debugging akan memerlukan perusakan dekorasi untuk mengakses sirkuit jika ditemukan bug — urutan siklus ketat karena itu. Spanduk masuk ke daftar tugas 'Setelah Debug'.",
+      "Izinkan — dekorasi adalah sistem terpisah dan tidak dapat mempengaruhi sirkuit Redstone di bawahnya",
+      "Biarkan siswa memutuskan — urutan siklus adalah panduan, bukan aturan",
+      "Hentikan pelajaran dan minta siswa mendemonstrasikan jembatan berfungsi sebelum mengizinkan siapa pun melanjutkan"
+    ],
+    correct: 0,
+    feedback: "Urutan Bangun → Debug → Dekorasi ketat persis karena dekorasi yang dibangun di atas sirkuit yang belum di-debug menciptakan masalah majemuk: jika bug ditemukan selama fase dekorasi, mengakses sirkuit memerlukan perusakan dekorasi — pekerjaan dan waktu yang terbuang. Tutor harus mengarahkan segera."
+  },
+  {
+    q: "Proyek siswa memenuhi semua kriteria keberhasilan dari Fase Blueprint dengan 15 menit tersisa dalam sesi. Siswa ingin menambahkan 3 fitur baru. Respons tutor yang benar?",
+    opts: [
+      "Izinkan ketiga fitur — siswa harus selalu didorong untuk memperluas ambisi mereka",
+      "Izinkan 1 fitur yang dipilih siswa sebagai yang paling penting",
+      "Tulis 3 ide ke daftar 'Versi 2' di obrolan, terima secara positif, kemudian arahkan siswa ke Fase Dekorasi — fitur baru di 15 menit terakhir berisiko merusak prototipe yang berfungsi sebelum Peluncuran Studio Game",
+      "Tutup sesi lebih awal karena kriteria keberhasilan sudah terpenuhi"
+    ],
+    correct: 2,
+    feedback: "Teknik daftar 'Versi 2' mencapai dua hal sekaligus: ide siswa dihargai dan dicatat (tidak ditolak), scope produksi terjaga. Menambahkan fitur baru di 15 menit terakhir membawa risiko nyata merusak prototipe yang berfungsi sebelum presentasi. Setelah ide ditulis ke Versi 2, arahkan ke Fase Dekorasi yang menggunakan sisa waktu secara produktif tanpa menyentuh sistem fungsional."
+  },
+  {
+    q: "Apa alasan utama mengapa menyebut presentasi akhir sebagai 'Peluncuran Studio Game' daripada 'tunjukkan dan ceritakan' secara terukur menghasilkan presentasi siswa yang lebih baik?",
+    opts: [
+      "Nama yang lebih panjang memberi siswa lebih banyak waktu untuk menyiapkan konten presentasi",
+      "Orang tua merespons lebih positif terhadap kata 'studio' daripada 'tunjukkan dan ceritakan'",
+      "Menggunakan terminologi industri yang selaras dengan pedoman merek Kodland",
+      "Bahasa membentuk perilaku dan ekspektasi — 'Peluncuran Studio Game' menetapkan standar yang diinternalisasi siswa sebagai profesional yang memerlukan penjelasan teknis, demo langsung, dan kepemilikan publik atas pekerjaan mereka; sedangkan 'tunjukkan dan ceritakan' membawa konotasi aktivitas kelas informal berisiko rendah"
+    ],
+    correct: 3,
+    feedback: "Bahasa yang digunakan untuk membingkai suatu aktivitas secara langsung mempengaruhi upaya dan kualitas yang diinvestasikan siswa. 'Tunjukkan dan ceritakan' secara kultural dikaitkan dengan aktivitas masa kecil yang kasual dan berisiko rendah. 'Peluncuran Studio Game' dikaitkan dengan peluncuran produk profesional — memerlukan penjelasan, demo langsung, dan akuntabilitas publik."
+  },
+  {
+    q: "Tim tiga siswa akan memulai Modul 5. Fase Blueprint menetapkan empat peran: Arsitek, Programmer, Dekorator, dan Presenter. Bagaimana tutor harus menangani ketidaksesuaian ini?",
+    opts: [
+      "Lewati penugasan peran sepenuhnya — peran opsional untuk kelompok 3 orang atau lebih sedikit",
+      "Gabungkan peran secara logis: Arsitek + Dekorator (visi struktural dan penyelesaian visual), Programmer (semua logika MakeCode dan Redstone), dan Presenter yang juga membantu peran lain. Setiap siswa masih memiliki area kepemilikan utama",
+      "Minta siswa keempat dari tim lain untuk mengisi peran yang hilang",
+      "Tetapkan keempat peran ke tiga siswa — beri satu siswa dua peran utama, baik sebagai Arsitek maupun Programmer secara bersamaan"
+    ],
+    correct: 1,
+    feedback: "Penggabungan peran adalah solusi standar saat ukuran tim tidak cocok dengan jumlah peran. Untuk tim 3: (1) Arsitek + Dekorator — satu siswa memiliki desain struktural dan penyelesaian visual; (2) Programmer — kepemilikan penuh atas semua kode dan Redstone; (3) Presenter yang juga membantu orang lain. Aturan kritis: setiap siswa masih harus memiliki area kepemilikan utama."
+  }
+];
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('question-area').innerHTML = `
+    <div class="qnum">Pertanyaan ${current + 1} / ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list">${q.opts.map((o,i) => `<div class="opt" id="opt-${i}" onclick="selectOpt(${i})"><span class="opt-letter">${LETTERS[i]}</span><span>${o}</span></div>`).join('')}</div>`;
+}
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i) el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  const fb = isRight ? '✅ Benar! ' + q.feedback : '❌ Salah. Jawaban benar: ' + q.opts[q.correct] + ' — ' + q.feedback;
+  document.getElementById('feedback-area').innerHTML = `<div class="feedback-box ${isRight?'ok':'bad'} show">${fb}</div>`;
+  if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+  else document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+function nextQuestion() { current++; renderQuestion(); window.scrollTo(0,0); }
+function submitQuiz() {
+  const score = answers.filter((a,i) => a === QUESTIONS[i].correct).length;
+  const pct = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+  if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed?'🎉':'😅'}</div>
+    <div class="result-title">${passed?'Modul 5 Selesai!':'Belum Berhasil'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> pertanyaan dijawab dengan benar.
+      ${passed?' Luar biasa — Modul 5 selesai!':` Nilai <strong>${PASS_PCT}%</strong> diperlukan. Tinjau materi dan coba lagi.`}
+    </div>`;
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="IdDST.html#library" class="btn-primary">Lihat Referensi Pelajaran Sukses →</a><button class="btn-outline" onclick="goHome()">← Dasbor</button>`
+    : `<button class="btn-primary" onclick="retake()">Ulangi Tes</button><a href="IdModule5.html" class="btn-outline">← Tinjau Modul 5</a>`;
+  window.scrollTo(0,0);
+}
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion(); window.scrollTo(0,0);
+}
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) { alert('Harap selesaikan modul sebelumnya terlebih dahulu.'); goHome(); }
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

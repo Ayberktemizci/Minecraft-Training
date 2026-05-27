@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Seviye 1 Pedagoji ve Kurs Mimarisi | Kodland Tutor Eğitimi</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.ped-hero{
+  background:linear-gradient(135deg,#0e1f0a 0%,#1c3b12 55%,#2f5a1e 100%);
+  padding:52px 32px 42px; position:relative; overflow:hidden;
+  border-bottom:3px solid var(--lime);
+}
+.ped-hero::before{ content:'🌿'; font-size:220px; position:absolute; right:-30px; bottom:-30px; opacity:.06; line-height:1; pointer-events:none; }
+.ped-hero .eyebrow{ background:rgba(196,240,70,.15); border-color:rgba(196,240,70,.35); color:var(--lime); }
+.ped-hero h1{ font-family:'Nunito',sans-serif; font-size:clamp(22px,3.8vw,36px); font-weight:900; letter-spacing:-.5px; line-height:1.1; color:#fff; margin:14px 0 10px; }
+.ped-hero p{ color:rgba(255,255,255,.72); font-size:14px; line-height:1.65; max-width:640px; }
+.sec-nav{ display:flex; flex-wrap:wrap; gap:6px; padding:12px 24px; background:var(--surface2); border-bottom:2px solid var(--border); position:sticky; top:62px; z-index:90; }
+.sec-pill{ font-family:'Nunito',sans-serif; font-weight:900; font-size:11px; text-transform:uppercase; letter-spacing:.4px; padding:5px 12px; border-radius:var(--rpill); background:var(--surface); border:2px solid var(--border); color:var(--text2); text-decoration:none; transition:all .15s; white-space:nowrap; }
+.sec-pill:hover,.sec-pill.active{ background:var(--lime); border-color:var(--lime-d); color:var(--ink); }
+.anchor{ scroll-margin-top:128px; }
+.spiral-grid{ display:grid; grid-template-columns:repeat(5,1fr); border:2px solid var(--border); border-radius:var(--r); overflow:hidden; margin:14px 0; }
+.spiral-col{ padding:16px 14px; border-right:2px solid var(--border); background:var(--surface); display:flex; flex-direction:column; }
+.spiral-col:last-child{ border-right:none; }
+.spiral-col-head{ font-family:'Nunito',sans-serif; font-weight:900; font-size:11px; text-transform:uppercase; letter-spacing:.4px; padding:5px 10px; border-radius:var(--rpill); text-align:center; margin-bottom:8px; line-height:1.4; }
+.spiral-col-body{ font-size:12px; color:var(--text2); line-height:1.55; flex:1; }
+.spiral-col-body ul{ padding-left:14px; margin:0; }
+.spiral-col-body li{ margin-bottom:4px; }
+.spiral-note{ font-style:italic; font-size:11px; color:var(--text-muted); margin-top:8px; }
+@media(max-width:760px){ .spiral-grid{ grid-template-columns:1fr; } .spiral-col{ border-right:none; border-bottom:2px solid var(--border); } .spiral-col:last-child{ border-bottom:none; } }
+.timeline{ position:relative; padding-left:28px; margin:8px 0; }
+.timeline::before{ content:''; position:absolute; left:9px; top:4px; bottom:4px; width:2px; background:var(--border); border-radius:2px; }
+.tl-item{ position:relative; margin-bottom:22px; }
+.tl-item::before{ content:''; position:absolute; left:-22px; top:5px; width:10px; height:10px; border-radius:50%; background:var(--lime); border:2px solid var(--lime-d); }
+.tl-time{ font-family:'Nunito',sans-serif; font-weight:900; font-size:11px; text-transform:uppercase; letter-spacing:.8px; color:var(--pink); margin-bottom:3px; }
+.tl-head{ font-weight:700; font-size:13.5px; color:var(--text); margin-bottom:4px; }
+.tl-body{ font-size:13px; color:var(--text2); line-height:1.65; }
+.script{ background:var(--ink); color:#C4F046; font-family:'JetBrains Mono','Courier New',monospace; font-size:12.5px; line-height:1.7; padding:14px 18px; border-radius:var(--rsm); border-left:4px solid var(--lime); margin:10px 0; }
+[data-theme="dark"] .script{ background:#070e07; }
+.script .lbl{ color:#6B8A5A; font-size:11px; display:block; margin-bottom:6px; text-transform:uppercase; letter-spacing:.8px; }
+.compare-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+@media(max-width:580px){ .compare-grid{ grid-template-columns:1fr; } }
+.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:580px){ .two-col{ grid-template-columns:1fr; } }
+ol.deep{ counter-reset:dc; padding:0; margin:8px 0; }
+ol.deep li{ counter-increment:dc; list-style:none; position:relative; padding:10px 14px 10px 46px; margin-bottom:8px; background:var(--surface); border:1.5px solid var(--border); border-radius:var(--rsm); font-size:13px; color:var(--text2); line-height:1.6; }
+ol.deep li::before{ content:counter(dc); position:absolute; left:12px; top:50%; transform:translateY(-50%); width:22px; height:22px; border-radius:50%; background:var(--lime); border:2px solid var(--lime-d); display:flex; align-items:center; justify-content:center; font-family:'Nunito',sans-serif; font-weight:900; font-size:11px; color:var(--ink); }
+.crumbs{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:16px; }
+.crumb{ display:flex; align-items:center; gap:6px; padding:6px 14px; border-radius:var(--rpill); font-size:12px; font-weight:700; font-family:'Nunito',sans-serif; border:2px solid rgba(196,240,70,.3); background:rgba(196,240,70,.1); color:var(--lime); }
+.crumb.here{ background:var(--lime); border-color:var(--lime-d); color:var(--ink); }
+.crumb.dim{ opacity:.55; }
+.crumb-sep{ color:rgba(255,255,255,.4); font-size:14px; }
+.cta-block{ background:linear-gradient(135deg,#0e1f0a,#1c3b12); border-radius:var(--r); padding:40px 32px; text-align:center; margin-top:36px; border:2px solid rgba(196,240,70,.25); overflow:hidden; position:relative; }
+.cta-block::before{ content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(196,240,70,.1) 0%,transparent 75%); pointer-events:none; }
+.cta-block h3{ font-family:'Nunito',sans-serif; font-size:22px; font-weight:900; color:#fff; margin-bottom:8px; position:relative; }
+.cta-block p{ color:rgba(255,255,255,.68); font-size:13.5px; line-height:1.65; max-width:520px; margin:0 auto 22px; position:relative; }
+code{ font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--surface2); border:1.5px solid var(--border); border-radius:4px; padding:1px 6px; color:var(--pink); }
+[data-theme="dark"] code{ color:var(--lime); }
+kbd{ background:var(--surface2); border:1.5px solid var(--border); border-radius:4px; padding:1px 5px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span>
+    <div class="logo-div"></div>
+    <span class="logo-sub">Tutor Eğitimi</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Panel</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-bar" style="width:0%"></div></div>
+
+<div class="sec-nav">
+  <a class="sec-pill" href="#sec0">0 · Kurs Haritası</a>
+  <a class="sec-pill" href="#sec1">1 · Bilişsel Profil</a>
+  <a class="sec-pill" href="#sec2">2 · 60 Dk. Akış</a>
+  <a class="sec-pill" href="#sec3">3 · Yumuşak Beceriler</a>
+  <a class="sec-pill" href="#sec-cta">→ Teknik Derinlik</a>
+</div>
+
+<div class="ped-hero">
+  <div style="max-width:820px;margin:0 auto;position:relative">
+    <div class="eyebrow">📚 Seviye 1 Tutor Eğitimi · Pedagoji ve Kurs Mimarisi</div>
+    <h1>Seviye 1 Pedagoji ve Kurs Mimarisi</h1>
+    <p>Bu dosya yalnızca kurs yapısı, pedagoji çerçeveleri ve öğretmen yumuşak becerileri içindir. Teknik kodlama blokları veya modüle özgü mekanikler burada yer almaz — bunlar Teknik Derinlik bölümündedir. Önce bu çerçeveye hakim olun: öğrettiğiniz her teknik becerinin gerçekten yerleşip yerleşmediğini bu belirler.</p>
+    <div class="crumbs">
+      <div class="crumb here">📖 Pedagoji — Buradasınız</div>
+      <div class="crumb-sep">→</div>
+      <div class="crumb dim">🔧 Teknik Derinlik</div>
+      <div class="crumb-sep">→</div>
+      <div class="crumb dim">📝 Modül 1 Testi</div>
+    </div>
+  </div>
+</div>
+
+<div class="cbody">
+
+<div id="sec0" class="anchor">
+  <div class="section-head">0 · Genel Kurs Tanıtımı ve Müfredat Haritası</div>
+</div>
+
+<div class="card">
+  <h4>Harita Neden İçerikten Önce Gelir</h4>
+  <p>Çoğu eğitim programı 1. Dersle başlar. Bu program mimariyle başlar. Beş modüllük dizinin yapısal mantığını anlamayan bir tutor, her oturumu kümülatif ivmeyi kaybederek yalnız bir etkinlik olarak öğretir. Minecraft Education Seviye 1, beş ayrı ders değildir — her modülün kasıtlı olarak tüm önceki kavramları yeniden ele alırken bir yeni karmaşıklık katmanı eklediği <strong>tek bir sarmal müfredattır</strong>.</p>
+  <p style="margin-top:9px">Modül 5'e gelindiğinde öğrencileriniz "Modül 5 şeyleri" yapmıyor. Modülleri 1'den 5'e kadar eş zamanlı sentezliyorlar. Bunu anlamak, ilk günden itibaren her oturumu öğretme biçiminizi değiştirir.</p>
+</div>
+
+<div class="section-head">Minecraft Seviye 1 Sarmalı — Modül Bağımlılık Haritası</div>
+
+<div class="spiral-grid">
+  <div class="spiral-col">
+    <div class="spiral-col-head" style="background:rgba(92,135,49,.18);color:#5C8731;border:1.5px solid rgba(92,135,49,.4)">🌿 M1<br>Yeşil Taş Dünyası</div>
+    <div class="spiral-col-body">
+      <ul>
+        <li>3D navigasyon (X/Y/Z)</li>
+        <li>/tp + göreceli koordinatlar (~)</li>
+        <li>MakeCode: Tekrar döngüleri</li>
+        <li>Ajan hareketi ve yönelimi</li>
+        <li>Redstone sinyal azalması (15 blok)</li>
+        <li>Gözlemci → Piston zinciri</li>
+        <li>Bambu çiftliği inşası</li>
+        <li>Su+Lav kopuk taş fabrikası</li>
+      </ul>
+      <p class="spiral-note">Giriş: ham mekansal farkındalık + ilk otomasyon refleksi</p>
+    </div>
+  </div>
+  <div class="spiral-col">
+    <div class="spiral-col-head" style="background:rgba(37,99,235,.14);color:#2563EB;border:1.5px solid rgba(37,99,235,.3)">🏙️ M2<br>Işık Şehri</div>
+    <div class="spiral-col-body">
+      <ul>
+        <li>Kesin koordinatlar (mutlak)</li>
+        <li>/clone çoğaltma</li>
+        <li>İşleme Masası 3×3 ızgarası</li>
+        <li>Basınç plakası tuzakları</li>
+        <li>Çok oyunculu ekip rolleri</li>
+        <li>Komşuluk Kuralları</li>
+      </ul>
+      <p class="spiral-note">M1 koordinatlarını derinleştirir. Ekler: mimari çoğaltma ve sosyal sözleşmeler</p>
+    </div>
+  </div>
+  <div class="spiral-col">
+    <div class="spiral-col-head" style="background:rgba(124,58,237,.14);color:#7C3AED;border:1.5px solid rgba(124,58,237,.3)">🧩 M3<br>Mantık Vahası</div>
+    <div class="spiral-col-body">
+      <ul>
+        <li>Olay güdümlü paradigma</li>
+        <li>Yürüyüş / Kırılma / Sohbet olayları</li>
+        <li>Değişkenler (global, ayarla/değiştir)</li>
+        <li>Eğer–O Zaman / Eğer–O Zaman–Değilse</li>
+        <li>Operatörler (=, ≠, >, &lt;, ≥, ≤)</li>
+        <li>Mini oyun inşası</li>
+      </ul>
+      <p class="spiral-note">M1-2 MakeCode'u derinleştirir. Ekler: etkileşim, reaktif mantık</p>
+    </div>
+  </div>
+  <div class="spiral-col">
+    <div class="spiral-col-head" style="background:rgba(217,119,6,.14);color:#D97706;border:1.5px solid rgba(217,119,6,.3)">🌲 M4<br>Mekanik Orman</div>
+    <div class="spiral-col-body">
+      <ul>
+        <li>Bahçıvan olarak Ajan (iç içe döngüler)</li>
+        <li>Tarla + sulama önkoşulları</li>
+        <li>Mahsul büyüme aşamaları (0–7)</li>
+        <li>Huni: Shift+tık, oran, kapasite</li>
+        <li>2 sandıklı sıralama sistemi</li>
+        <li>Algıla→Tetikle→Topla→Depola</li>
+      </ul>
+      <p class="spiral-note">M1–3'ün tek özerk endüstriyel boru hattına tam sentezi</p>
+    </div>
+  </div>
+  <div class="spiral-col">
+    <div class="spiral-col-head" style="background:rgba(236,72,153,.12);color:#EC4899;border:1.5px solid rgba(236,72,153,.3)">🏰 M5<br>Yaratıcının Kalesi</div>
+    <div class="spiral-col-body">
+      <ul>
+        <li>Plan Aşaması</li>
+        <li>Özel Fonksiyonlar (DRY)</li>
+        <li>Ekip rolleri (Mimar / Programcı / Dekoratör / Sunucu)</li>
+        <li>İnşa → Hata Ayıkla → Dekore Et</li>
+        <li>Oyun Stüdyosu Lansmanı sunumu</li>
+      </ul>
+      <p class="spiral-note">Soyut fonksiyonel optimizasyon + proje yönetimi — M1–M4'ü birlikte uygular</p>
+    </div>
+  </div>
+</div>
+
+<div class="callout ct">
+  <span class="ci">ℹ️</span>
+  <div>
+    <strong>Sarmayı nasıl okumalı:</strong> Her sütun solundakilerin tamamını miras alır. Bir Modül 4 oturumu, M1'den /tp, M2'den mutlak koordinatlar ve M3'ten koşullu düşünce kullanır — hepsi eş zamanlı, bir sıralama boru hattı oluşturmak için. M1 öğretiminiz M4'te unutulmaz; yük taşıyan temeldir. Öğrettiğiniz her kavram, her gelecek oturumda yük taşıyacakmış gibi sunulmalıdır — çünkü öyle olacak.
+  </div>
+</div>
+
+<div class="section-head" style="margin-top:28px">Sarmal Neden Ortak Kaşif Kimliğini Gerektirir</div>
+
+<div class="card">
+  <h4>Bilişsel Yük Argümanı — Anlatıcı Modunun Sarmalı Neden Başarısız Kıldığı</h4>
+  <p>Modül 1'de bir öğrenci yaklaşık <strong>3–4 yeni kavramı eş zamanlı</strong> yönetir (navigasyon, MakeCode arayüzü, Ajan yönelimi, Redstone sinyali). Modül 4'e gelindiğinde, tek bir inşa oturumunda <strong>12–15 farklı kavramı</strong> entegre ediyorlar. Modül 5'te bunların hepsi artı proje planlaması, ekip müzakeresi, Fonksiyon soyutlaması ve canlı sunum.</p>
+  <p style="margin-top:9px">Bir <strong>Anlatıcı</strong> bilgiyi tek yönlü iletir. Bilişsel yük öğrencinin alma kapasitesini aştığında, anlatıcının uyarlanabilir bir mekanizması yoktur. Oturum sessizce başarısız olur — öğrenciler aktarılabilir bir beceri oluşturmadan başını sallayıp kopyalar.</p>
+  <p style="margin-top:9px">Bir <strong>Ortak Kaşif</strong>, gerçek paylaşımlı misyonlarla rehberli keşif koşulları yaratır. Bu model altında, tutor kalibreli ipuçları sağlarken öğrencinin kendi merakı katılımı yönlendirir. Bu, 8–9 yaşındaki çocuklar için 5 modüllü bir sarmal müfredatı sürdürebilecek tek pedagojik mimaridir.</p>
+</div>
+
+<div class="compare-grid">
+  <div class="card" style="background:var(--no-bg);border-color:var(--no-b)">
+    <h4 style="color:var(--no-t)">❌ Anlatıcı — Sarmayı Neden Başarısız Kılar</h4>
+    <p style="color:var(--no-t);font-size:13px;line-height:1.6">Tek yönlü iletim. Uyarlanabilir geri bildirim döngüsü yok. Yük M3–M4'te yükseldiğinde, tek araç dersi daha yüksek sesle tekrarlamak. Farklılaştırma mekanizması yok. Hızlı öğrenciler ilgisini kaybeder; mücadele edenler sessizce geride kalır. M5'e gelindiğinde oturum tutor tarafından performansa dönüşür — öğrenciler kendi öğrenmelerinin pasif izleyicisidir.</p>
+  </div>
+  <div class="card" style="background:var(--ok-bg);border-color:var(--ok-b)">
+    <h4 style="color:var(--ok-t)">✅ Ortak Kaşif — Sarmayı Nasıl Sürdürür</h4>
+    <p style="color:var(--ok-t);font-size:13px;line-height:1.6">Gerçek aciliyet içeren misyonlar yaratır. Öğrenciler almak yerine keşfeder. Gerçek zamanlı uyarlanabilir. Hızlı öğrenciler Ekstra Görevler alır; mücadele edenler çözümler değil hedefli sorular alır. M5'e gelindiğinde oturum öğrenciler tarafından bir prodüksiyon haline gelir — tutor görünmez altyapıdır.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Misyon Çerçeveleme — Ortak Kaşifin Birincil Aracı</h4>
+  <p>Her oturum, teknik hedefe acil ve kişisel anlam yükleyen bir misyonla açılmalıdır. Misyon Minecraft dünyasına içsel olmalıdır. Üç yapısal gereklilik: (1) aciliyet yaratan bir zaman kısıtlaması, (2) yön veren belirli bir teslim edilebilir, (3) görevi akademik değil anlamlı kılan bir anlatı bağlamı.</p>
+  <div class="script" style="margin-top:10px">
+    <span class="lbl">// Kanıtlanmış misyon çerçeveleri — modül başına en az birini ezberleyin</span>
+    M1 HAYATTA KALMA: "Gece çöküyor — canavarlar gelmeden önce sığınak inşa edin!"
+    M1 FABRİKA:       "Kopuk taşımız tükeniyor — hemen otomatik bir fabrikaya ihtiyacımız var."
+    M2 ŞEHİR:         "Şehir Konseyi gün doğumuna kadar yeni bir bölge istiyor — koordinatlar gönderildi."
+    M3 OYUN:          "Köy için yürüyüş oyunu tasarlayın — en uzak oyuncu tacı kazanır."
+    M4 HASAT:         "Krallığın yiyecek stoku tükeniyor — kıştan önce hasatı otomatize edin."
+    M5 LANSMAN:       "Ekibinizin Oyun Stüdyosu'nun ilk sürümünü bir oturumda inşa ve sunum yapın."
+  </div>
+</div>
+
+
+<div id="sec1" class="anchor">
+  <div class="section-head">1 · Bilişsel Gelişim Profili — 8–9 Yaş</div>
+</div>
+
+<div class="card">
+  <h4>Piaget'nin Somut İşlemler Aşaması — Operasyonel Sonuçlar</h4>
+  <p>8–9 yaşındaki öğrenciler Piaget'nin <strong>Somut İşlemler Aşaması</strong>ndadır. Bu aşamada öğrenciler sıralı neden-sonuç akıl yürütmesini ve temel geri dönüşümlü mantık işlemlerini kaldırabilir — ancak yalnızca somut, gözlemlenebilir referanslara bağlı olduğunda. Fiziksel veya görsel bir çıpa olmadan sunulan soyut kavramlar anlamlı bilgi olarak işlenmez; gürültü olarak depolanır ve saatler içinde atılır.</p>
+  <p style="margin-top:9px"><strong>Operasyonel sonuçlar:</strong></p>
+  <ul style="padding-left:16px;margin-top:6px">
+    <li style="margin-bottom:5px"><strong>Soyutlamadan önce gösterin.</strong> Gözlemci sinyal fiziğini açıklamadan önce bambu çiftliğinin çalışmasını gösterin.</li>
+    <li style="margin-bottom:5px"><strong>Mekansal yapıya sahip fiziksel metaforlar kullanın.</strong> "Redstone sinyali ev duvarındaki elektrik gibi ilerler" işe yarar — evler somuttur.</li>
+    <li><strong>Talimatları tek adımlar olarak sıralayın.</strong> Her ikisi arasında bir Panda kontrolüyle teslim edin.</li>
+  </ul>
+</div>
+
+<div class="two-col">
+  <div class="card">
+    <h4>Çalışma Belleği Zarfı</h4>
+    <p>8–9 yaş: çalışma belleğinde eş zamanlı yaklaşık <strong>5–7 ayrı öğe</strong> (Miller Yasası, yaşa göre uyarlanmış). Bu gelişim aşamasındaki eş zamanlı bilişsel yük için nörolojik tavandır — esnek bir kılavuz değil.</p>
+    <p style="margin-top:8px">Pratikte: 2–3'ten fazla gömülü koşul içeren herhangi bir tek talimat öğrencilerin yaklaşık %60'ı için bu tavanı aşacak. Karmaşıklık paralel değil seri olarak sunulmalıdır.</p>
+    <div class="callout cw" style="margin-top:10px">
+      <span class="ci">⚠️</span>
+      <div><strong>Öz kontrol:</strong> Planladığınız talimattaki gömülü koşulları sayın. Eğer 3'ten fazlaysa, aralarında Panda kontrolü olan sıralı adımlara bölün.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h4>Dikkat Süresi Veri Noktaları</h4>
+    <p><strong>Pasif dinleme:</strong> Önemli çöküş öncesi maksimum 10–15 dakika. Kesintisiz öğretimin 15. dakikasından sonra bilgi alımı %30'un altına düşer.</p>
+    <p style="margin-top:8px"><strong>Aktif hedef odaklı inşa:</strong> Görevin görünür ilerleme işaretleri ve özgün bir hedefi varsa 20–30 dakika sürdürülebilir.</p>
+    <p style="margin-top:8px"><strong>Fiziksel hareket molasından sonra:</strong> Dikkat saati sıfırlanır. 30. dakikadaki Bilişsel Mola nezaket değil — son 25 dakikayı verimli kılan mekanizmadır.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Teknik Altyapı Olarak Psikolojik Güvenlik</h4>
+  <p>8–9 yaşında, amigdala algılanan başarısızlığa veya sosyal aşağılanmaya tepki olarak prefrontal korteks aktivitesini baskılar — mantıksal akıl yürütme ve talimat takibi için tam olarak ihtiyaç duyulan bölge. "Yanlış yaptın" duyan bir öğrenci, dersin gerektirdiği bilişsel işlevlerde ölçülebilir bir nörobiyolojik azalma yaşar.</p>
+  <p style="margin-top:9px">Bu nedenle psikolojik güvenlik bir sınıf atmosferi tercihi değildir. <strong>Bilişsel performans için teknik altyapıdır.</strong></p>
+</div>
+
+
+<div id="sec2" class="anchor">
+  <div class="section-head">2 · Standart 60 Dakikalık Ders Akışı</div>
+</div>
+
+<div class="callout cw">
+  <span class="ci">⚠️</span>
+  <div><strong>Müzakere Edilemez Standardizasyon.</strong> 60 dakikalık yapı, tüm Kodland bölgelerinde tutarlı sonuçları garanti eden tek KG mekanizmasıdır. Eksik Bilişsel Mola, 30 dakikalık giriş veya yansıma aşaması olmayan bir oturum kaydı, teknik teslimat kalitesinden bağımsız olarak belgelenmiş bir KG başarısızlığıdır.</div>
+</div>
+
+<div class="card">
+  <h4>Aşamaya Göre Zaman Çizelgesi</h4>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-time">00:00 – 00:05 · Uçuş Öncesi Kontrol + Buz Kırıcı (5 dk)</div>
+      <div class="tl-head">Sessiz teknik kurulum, buz kırıcı aktivasyonuyla paralel yürütülür</div>
+      <div class="tl-body">
+        Öğrenciler sohbette buz kırıcıya yanıt verirken tüm öğrencilerde sessizce doğrulayın: (1) Minecraft Education başlar ve doğru dünya yüklenir. (2) Giriş bilgileri çalışır. (3) Dünya içe aktarıldı. (4) Ses çalışıyor.
+        <div class="script" style="margin-top:8px">
+          <span class="lbl">// Buz kırıcı komut dosyaları — her oturumda döndürün</span>
+          "Şu an en sevdiğin çizgi film nedir?"
+          "Minecraft'a bir yeni yaratık ekleyebilseydin, ne yapardı?"
+          "Bu hafta en çok hangi oyunu oynadın?"
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">00:05 – 00:20 · Misyon Çerçevesi + Doğrudan Öğretim (15 dk KESİN)</div>
+      <div class="tl-head">⚠️ 20 DAKİKA GİRİŞ TAVANI — en sık ihlal edilen güvenlik rayı</div>
+      <div class="tl-body">
+        Misyon anlatısını sunun (~30 saniye). Tek teknik kavramı ekran paylaşımıyla bir kez gösterin (~7 dakika). Öğrencilere hemen bağımsız görev verin. Öğrenciler denemeden önce kavramı iki kez açıklamayın.<br><br>
+        <strong>Başarısızlık modeli:</strong> 25–30 dk açıklama → 20 dk inşa → oturum tamamlanmamış inşaatlarla biter. Doğru oran: 10–12 dk çerçeveleme : 40–42 dk inşa.
+        <div class="callout cw" style="margin-top:8px">
+          <span class="ci">⚠️</span>
+          <div>KG incelemeleri öğrencilerin 20. dakikada görev alıp almadığını kontrol eder. Almadıysa, oturum ne olursa olsun işaretlenir.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">00:20 – 00:30 · Rehberli Pratik (10 dk)</div>
+      <div class="tl-head">Öğrenciler görevi dener; tutor hedefli ipuçlarıyla dolaşır — asla çözümlerle değil</div>
+      <div class="tl-body">
+        Beklenen sonucu küçültülmüş ölçekte ekran paylaşın. Öğrenci isimlerini doğrudan çağırarak dolaşın — el kaldırmasını beklemeyin.<br><br>
+        <strong>İpucu, çözüm değil.</strong> "Hangi blok blok durumu değişikliklerini algılar?" yerine "Gözlemciyi buraya yerleştir" değil.
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">00:30 – 00:35 · 🧠 Bilişsel Mola (5 dk ZORUNLU)</div>
+      <div class="tl-head">Ekran tamamen kapalı. Fiziksel aktivite. Asla kısaltılmaz, asla atlanmaz.</div>
+      <div class="tl-body">
+        Öğrenciler Minecraft'ı kapatır (simge duruma küçültme değil — kapatın). Tutor fiziksel aktivite yönetir: kol germe, Simon Diyor, ilgisiz bir konuda 5 sözlü soru.<br><br>
+        <strong>Nörobilim gerekçesi:</strong> 30 dakika ekran tabanlı mekansal akıl yürütmeden sonra prefrontal korteks yürütme işlevi ölçülebilir biçimde azalır. 5 dakikalık ekransız fiziksel mola her iki etkiyi de kısmen tersine çevirir.<br><br>
+        <strong>"Yetişmek için" atlamak kendi kendini engelleyicidir.</strong> Bilişsel yorgunluk sırasında verilen talimat alınmaz.
+        <div class="callout cw" style="margin-top:8px">
+          <span class="ci">⚠️</span>
+          <div>Bilişsel Molası olmayan bir oturum belgelenmiş KG başarısızlığıdır. İstisna yoktur.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">00:35 – 00:55 · Bağımsız Pratik + Farklılaştırma (20 dk)</div>
+      <div class="tl-head">En yüksek değerli pencere — öğrenciler bağımsız olarak uygulayarak pekiştiriri</div>
+      <div class="tl-body">
+        Öğrenme burada pekişir. İzleyin ve farklılaştırın — yeni içerik sunmayın.
+        <ul style="margin-top:8px;padding-left:14px">
+          <li style="margin-bottom:5px"><strong>Hızlı bitirenler:</strong> Hemen önceden hazırlanmış Ekstra Görev verin.</li>
+          <li style="margin-bottom:5px"><strong>Zorlanan öğrenciler:</strong> Öğrenci başına bir hedefli ipucu, bu aşamada maksimum iki müdahale.</li>
+          <li><strong>Orta çoğunluk:</strong> Müdahale etme dürtüsüne direnin. Verimli mücadele belgelenmiş bir öğrenme mekanizmasıdır.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-time">00:55 – 01:00 · Yansıma + Ödev (5 dk)</div>
+      <div class="tl-head">Pekiştirme, üstbilişsel aktivasyon, ebeveyn görünürlük döngüsü kapanması</div>
+      <div class="tl-body">
+        <div class="script" style="margin-top:4px">
+          <span class="lbl">// İki zorunlu yansıma sorusu — bu sırayla</span>
+          S1: "Bugün ne inşa ettik?"               ← epizodik hatırlama
+          S2: "Senin için en zor kısım ne oldu?"   ← üstbilişsel işleme
+          TAKİP: "Bugünü kaçıran bir arkadaşına hangi kısmı anlatabilirsin?"
+        </div>
+        <strong>Ödev:</strong> Belirli kriterlerle ekran görüntüsü görevi: "Tamamladığın [inşaat]ın [belirli görünür öğe] ile ekran görüntüsünü al ve yarın sabahtan önce WhatsApp grubuna gönder." Spesifik, doğrulanabilir, son tarihi belirli.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+  <h4>Oturum Öncesi Hazırlık Kontrol Listesi (Aşama 0)</h4>
+  <ol class="deep">
+    <li>Notlarınıza hızlı bitirenler için 2–3 Ekstra Görev yazın. Bunları hiçbir zaman anlık olarak doğaçlamayın.</li>
+    <li>Bugünün spawn koordinatlarını sabitleyin. Acil durum geri çağırma komutu hazır: <code>/tp @a [X] [Y] [Z]</code></li>
+    <li>Oturum dünyasında <code>/code</code> test edin — "Code Builder'ı Etkinleştir" dünya ayarlarında AÇIK olmalıdır yoksa komut sessizce başarısız olur.</li>
+    <li>Bir misyon anlatısı ve iki buz kırıcı seçeneği hazırlayın.</li>
+    <li>Önceki oturumdaki notları gözden geçirin — zorlanan herhangi bir öğrenci ilk 5 dakikada hedefli destek almalıdır.</li>
+  </ol>
+</div>
+
+
+<div id="sec3" class="anchor">
+  <div class="section-head">3 · Yumuşak Beceriler ve Aktif Katılım Komut Dosyaları</div>
+</div>
+
+<div class="callout ct">
+  <span class="ci">ℹ️</span>
+  <div>
+    <strong>"Sorun Değil!" Kuralı — Hata Normalleştirme + EQ</strong><br>
+    Programlama tanım gereği yinelemlidir. Kodu başarısız olan bir öğrenci hata yapmamıştır — bir veri noktası üretmiştir. Her profesyonel geliştirici sürekli hata ayıklar. Başarısızlığa tepkinizde kullandığınız dil, öğrencinin sorunu çözmek için ihtiyaç duyduğu prefrontal korteks işlevini ya aktive eder ya da baskılar.<br><br>
+    <strong>Yasak dil kategorileri:</strong> kimlik atıfı ("yanlış yaptın"), karşılaştırma ("takım arkadaşın doğru yaptı"), dikkatsizlik ima etme ("dinlemiş olsaydın").<br><br>
+    <div class="script" style="margin-top:10px">
+      <span class="lbl">// Kanonik "Sorun Değil!" komut dosyası — içselleşene kadar kelimesi kelimesine kullanın</span>
+      "Sorun değil! İlk seferinde çalışmazsa panik yapmayın.
+      Bloklarınıza adım adım bakalım.
+      Hatalar maceranın parçası — her gerçek mühendis sürekli hata ayıklar!"
+    </div>
+    <strong>Tam ifadenin neden önemli olduğu:</strong> "Sorun değil!" anında başarısızlığın duygusal yükünü etkisiz hale getirir. "Adım adım" bir eylem yolu sağlar. "Her gerçek mühendis" öğrenciyi başarısız biri olarak değil profesyonel olarak yeniden çerçeveler.
+  </div>
+</div>
+
+<div class="card">
+  <h4>Belirli, Davranışa Bağlı Övgü</h4>
+  <p>Genel övgü ("Aferin!") hangi davranışın tekrarlanacağına dair sıfır bilgi içerir. Hiçbir pekiştirme döngüsü aktive etmez. Belirli övgü tam eylemi adlandırır, onu mesleki açıdan değerli olarak bağlamlandırır ve o davranışın tekrarlanma olasılığını artıran bir döngü oluşturur.</p>
+  <p style="margin-top:8px;font-size:12px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px">Formül: [öğrenci adı] + [belirli gözlemlenebilir eylem] + [bu eylemin neyi gösterdiğinin mesleki çerçevelemesi]</p>
+  <div class="compare-grid" style="margin-top:10px">
+    <div class="card" style="background:var(--no-bg);border-color:var(--no-b)">
+      <h4 style="color:var(--no-t)">❌ Genel — Sıfır Pekiştirme</h4>
+      <p style="color:var(--no-t);font-size:13px">"Aferin!" · "Güzel iş!" · "Bravo!" · "Ne kadar akıllısın." · "Harika çaba."<br><br>Bunların hiçbiri öğrenciye neyi tekrarlayacağını söylemez. "Akıllı" ek olarak zararlıdır — başarıyı sabit bir özelliğe atfederek sabit zihniyeti teşvik eder.</p>
+    </div>
+    <div class="card" style="background:var(--ok-bg);border-color:var(--ok-b)">
+      <h4 style="color:var(--ok-t)">✅ Belirli — Aktif Pekiştirme</h4>
+      <p style="color:var(--ok-t);font-size:13px">"Mükemmel — söylenmeden bambuya bakan Gözlemciyi yerleştirdiniz. Gerçek bir Redstone mühendisi tam olarak bunu yapar."<br><br>"Sinyalin öldüğünü fark ettiniz ve ben söylemeden Tekrarlayıcı eklediniz. Bu profesyonel hata ayıklama içgüdüsü."</p>
+    </div>
+  </div>
+  <div class="script" style="margin-top:10px">
+    <span class="lbl">// Modüle özgü övgü komut dosyaları — duruma göre uyarlayın</span>
+    M1 KOORDİNAT: "[Ad], bir şeye dokunmadan önce spawn koordinatlarını sabitlediniz — profesyoneller böyle çalışır."
+    M1 AJAN:      "[Ad], önce Ajan'ın yolunu kağıda çizdiniz. Mimarlar inşa etmeden tam olarak bunu yapar."
+    M2 KLON:      "[Ad], /clone yazmadan önce iki köşeyi de kontrol ettiniz — bu çakışma hatasını önledi."
+    M3 DEĞİŞKEN:  "[Ad], 's' değil 'score' kullandınız — bu kendi kodunuzu okuyup hata ayıklayabileceğiniz anlamına gelir."
+    M4 BORU:      "[Ad], bağlamadan önce her aşamayı test ettiniz. Endüstriyel mühendisler böyle çalışır."
+  </div>
+</div>
+
+<div class="callout ct">
+  <span class="ci">ℹ️</span>
+  <div>
+    <strong>Panda Kuralı — Aktif Katılım Doğrulaması</strong><br>
+    Katılım varsayılamaz — doğrulanmalıdır. Panda Kuralı, soğuk çağrı (kaygı riski) veya "herkes anlıyor mu?" (gerçek durumdan bağımsız evrensel baş sallama üretir) olmadan gerçek zamanlı anlama doğrular.<br><br>
+    <div class="script" style="margin-top:8px">
+      <span class="lbl">// Tanıtım komut dosyası — her oturumun ilk 3 dakikasında sunun</span>
+      "Başlamadan önce bir kural: yeni bir kural duyduğunuzda,
+      veya bir adımı başarıyla tamamladığınızda, sohbete 🐼 Panda emojisi gönderin!"
+    </div>
+    <strong>Ne zaman tetiklenecek:</strong> Öğrenciler denemeden önce her talimat adımından sonra · Temel kavram açıklamalarından sonra · Bilişsel Moladan sonra · Ödev atamasından sonra.<br><br>
+    <strong>Yanıtı yorumlama:</strong> Tüm pandalar ≤10 saniye → devam. &lt;%80 yanıt → talimat en az bir öğrenci için başarısız oldu; yeniden ifade edin ve yeniden tetikleyin. Bir öğrenciden yanıt yok → anında özel mesaj.
+  </div>
+</div>
+
+<div class="card">
+  <h4>Hızlı Bitiren Protokolü — Önceden Hazırlanmış Ekstra Görevler</h4>
+  <p>Erken biten ve yapacak bir şeyi olmayan bir öğrenci 60 saniye içinde rahatsızlık yaratacak. Bu bir davranış sorunu değil — bir hazırlık başarısızlığıdır. "Sessizce bekle" asla kabul edilebilir bir yanıt değildir.</p>
+  <p style="margin-top:8px"><strong>Tartışılmaz kural:</strong> Oturum notlarınıza <em>oturum başlamadan önce</em> 2–3 Ekstra Görev yazın. Anlık doğaçlama yapmayın.</p>
+  <ol class="deep" style="margin-top:10px">
+    <li><strong>Mevcut inşayı genişletmeli</strong>, gelecekteki modül içeriğini önizlememeli. "İkinci bambu çiftliği sırası ekle" M1'i pekiştirir. "/clone komutunu dene" bir bağımlılık zincirini atlar.</li>
+    <li><strong>Sohbette isimle yazılan tek cümlede teslim edilebilir:</strong> "Amara — bonus görev: çıktısını iki katına çıkarmak için ikinci bir Gözlemci–Piston çifti ekle."</li>
+    <li><strong>Ödev hesap verebilirlik döngüsüne bağlanan görünür, ekran görüntüsü alınabilir bir çıktı üretmeli.</strong></li>
+  </ol>
+  <div class="script" style="margin-top:10px">
+    <span class="lbl">// Ekstra Görev şablon bankası — modül bağlamına göre uyarlayın</span>
+    YAPISAL:    "Tamamladığın [inşa]nın etrafına çevre duvarı veya çit ekle."
+    TEKNİK:     "Devre aktifken yanan bir Redstone Lamba göstergesi ekle."
+    ÖLÇEK:      "Çıktıyı iki katına çıkarmak için ikinci bir [tekrarlayan öğe] sırası ekle."
+    DEKORATIF:  "Redstone tellerini farklı renkli blokları etiket olarak kullanarak renk kodla."
+    BELGELEME:  "3 ekran görüntüsü al — öncesi / sırası / sonrası — her birini sohbette açıkla."
+  </div>
+</div>
+
+
+<div id="sec-cta" class="anchor cta-block">
+  <h3>Pedagoji Tamamlandı — Teknik Derinliğe Geçin</h3>
+  <p>Minecraft Seviye 1'in tam mimarisini kapsadınız: sarmal müfredat modeli, öğrencilerinizin bilişsel profili, standart 60 dakikalık oturum yapısı ve tüm yumuşak beceri komut dosyaları. Bu çerçeve öğrettiğiniz her teknik oturumu yönetir.<br><br>Sonraki dosya Modül 1 Teknik Derinliği'ni açar — 3D koordinatlar, MakeCode arayüzü, Ajan mekaniği, Redstone sinyal fiziği, otomatik bambu çiftliği ve kopuk taş fabrikası — tam 6 senaryo sorun giderme kataloğu ve kavram analogiyle.</p>
+  <a href="TrModule1Tech.html" class="btn-primary" style="font-size:15px;padding:14px 38px;position:relative;">Teknik Derinliğe Geç → Modül 1</a>
+</div>
+
+</div>
+
+<footer>© 2026 Kodland · Dahili tutor eğitim materyali — harici dağıtım için değildir.</footer>
+
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-bar').style.width = `${getOverallProgress() / 5 * 100}%`;
+
+  const pills = document.querySelectorAll('.sec-pill');
+  const ids   = ['sec0','sec1','sec2','sec3','sec-cta'];
+  window.addEventListener('scroll', () => {
+    let active = 0;
+    ids.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 150) active = i;
+    });
+    pills.forEach((p, i) => p.classList.toggle('active', i === active));
+  }, { passive: true });
+</script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modül 2 Testi — Işık Şehri | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{background:linear-gradient(135deg,#1D4ED8,#3B82F6);padding:24px 32px;color:#fff;text-align:center}
+  .quiz-header h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+  .quiz-header p{color:rgba(255,255,255,.8);font-size:13px}
+  .feedback-box{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:13.5px;line-height:1.6;border:2px solid}
+  .feedback-box.show{display:block}
+  .feedback-box.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+  .feedback-box.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Eğitimi</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Modül 2</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="quiz-header">
+  <h2>📝 Modül 2 Bilgi Kontrolü</h2>
+  <p>🏙️ Işık Şehri · 6 Soru · Geçmek için %70</p>
+</div>
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Sonraki Soru →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Yanıtları Gönder</button>
+  </div>
+</div>
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+</div>
+<footer>© 2026 Kodland. Dahili tutor eğitim materyali.</footer>
+<script src="shared.js"></script>
+<script>
+const MODULE_ID = 2;
+const PASS_PCT  = 70;
+const QUESTIONS = [
+  {
+    q: "Bir öğrenci /clone 100 64 200  104 68 204  100 64 200 komutunu çalıştırıyor ve hiçbir şey olmuyor. Neden ve doğru düzeltme nedir?",
+    opts: [
+      "Hedef çok uzak — /clone maksimum 10 blok menzile sahip",
+      "Hedefin Y koordinatı her zaman 0 olmalıdır",
+      "Komut doğru yazılmış — klon her zaman 5 saniyelik gecikmeden sonra görünür",
+      "Kaynak ve hedef bölgeler çakışıyor — hedef koordinatlar kaynak sınırlayıcı kutusunun dışında olmalıdır"
+    ],
+    correct: 3,
+    feedback: "/clone hedefi [100 64 200] kaynağın birinci köşesiyle aynı — bölgeler tamamen çakışarak sessiz bir hataya neden oluyor. Hedef, kaynak sınırlayıcı kutusunun tamamen dışında bir koordinat çifti olmalıdır (ör. /clone 100 64 200  104 68 204  120 64 200)."
+  },
+  {
+    q: "Bir öğrenci /tp @s ~0 64 ~0 yazıyor. Bu komut /tp @s ~0 ~0 ~0 ve /tp @s 0 64 0'dan nasıl farklı bir şey yapar?",
+    opts: [
+      "Öğrencinin mevcut X ve Z konumlarını korur ancak yüksekliği tam Y=64'e ayarlar; bir mutlak değeri iki göreceli uzaklıkla birleştirir",
+      "Öğrenciyi tam deniz seviyesinde dünya orijinine ışınlar",
+      "Tüm oyuncuları (~0) 64. kata ışınlar — @s tüm öğrencilerin seçicisidir",
+      "Geçersiz sözdizimi — tek bir /tp komutunda tilde ve mutlak değerleri karıştıramazsınız"
+    ],
+    correct: 0,
+    feedback: "Minecraft karma koordinat sözdizimine izin verir. ~0 mevcut X'i değiştirmeden tutar; 64 (tilde yok) yüksekliği tam Y=64'e ayarlar; ~0 mevcut Z'yi tutar. Bu 'deniz seviyesine sabitle' komutları için kullanışlıdır."
+  },
+  {
+    q: "İşleme Masasında bir öğrenci üst sıraya iki Taş bloğunu yan yana koyuyor ve hiçbir şey alamıyor. Sorun nedir?",
+    opts: [
+      "Taş Basınç Plakaları iki değil üç Taş bloğu gerektirir",
+      "İşleme Masasının tariflerin çalışması için zemine yerleştirilmesi gerekir",
+      "Taş Basınç Plakası tarifi herhangi bir sırada yatay bitişik slotlarda iki Taş bloğu gerektirir — öğrenci 1 ve 2 yerine 1 ve 3. slotlara, ortadaki slotu atlayarak yerleştirmiş olabilir",
+      "Taş, İşleme Masasında kullanılamaz — Kopuk Taş gerektirir"
+    ],
+    correct: 2,
+    feedback: "Taş Basınç Plakası tarifi herhangi bir sırada yatay bitişik slotlarda iki Taş bloğu gerektirir. Öğrenci ortadaki slotu atladıysa — 1 ve 2 yerine 1 ve 3 konumlarına koyduysa — ızgara deseni hiçbir tarifte eşleşmez ve hiçbir şey üretilmez."
+  },
+  {
+    q: "Kooperatif şehir inşasında bir öğrenci başka ekibin köprüsünden 10 blok yıkıyor. Komşuluk Kuralları çerçevesine göre doğru tutor yanıtı nedir?",
+    opts: [
+      "İhlal için net sonuç olarak öğrenciyi geçici olarak oturumdan çıkarın",
+      "Komşuluk Kuralına adıyla atıfta bulunun, öğrenciyi hasarlı blokları yeniden inşa etmeye rehberlik edin ve cezalandırıcı dil kullanmadan topluluk standartlarını pekiştirin",
+      "Durumu kötüleştirmemek için etkilenen öğrenci şikayet etmediği sürece görmezden gelin",
+      "Tüm oturumu durdurun ve dünyayı hasar oluşmadan önceki haline sıfırlayın"
+    ],
+    correct: 1,
+    feedback: "Cezalandırıcı yanıtlar kırgınlık yaratır. Komşuluk Kuralları çerçevesi onarıcıdır: kuralı adıyla anın, öğrenciyi yeniden inşa etmeye rehberlik edin ve topluluk standartları anı olarak kullanın."
+  },
+  {
+    q: "20 blok ötedeki bir Dağıtıcıya bağlı Basınç Plakası tuzağında oyuncu plakaya basar ancak Dağıtıcı 1 saniyelik gecikmeli ateşler. Teknik neden nedir?",
+    opts: [
+      "Dağıtıcının normal hızda ateşlemesi için yanında bir Redstone Tekrarlayıcısı gerekiyor",
+      "Redstone telinde sinyali yavaşlatan bir boşluk var",
+      "Basınç Plakası yalnızca ikinci adımda tetikleniyor, birincide değil",
+      "Redstone sinyalleri tik başına 1 blok hızıyla ilerler (0.05 saniye); 20 blokluk toz boyunca sinyal Dağıtıcıya ulaşmak için 20 tik = 1 saniye alır — bu beklenen fizik davranışıdır, hata değil"
+    ],
+    correct: 3,
+    feedback: "Redstone sinyal yayılım hızı tik başına 1 bloktur ve bir tik 0.05 saniyeye eşittir. 20 blokluk tel 20 tik gecikme = 1 saniye getirir. Bu normal Minecraft fiziğidir, düzeltilecek bir hata değil."
+  },
+  {
+    q: "Bugünkü kooperatif oturumunun ardından bir tutor Köprü Yapıcılar ekibine övgü vermek istiyor. Aşağıdakilerden hangisi en etkili örnektir?",
+    opts: [
+      "\"Mükemmel iş, Köprü Yapıcılar — köprü uç noktalarını her iki bölgeyle hizalamak için tam koordinatları kullandınız ve kemer tasarımınız simetri düşündüğünüzü gösteriyor. Bu profesyonel mimari düşünce.\"",
+      "\"Harika iş bugün, ekip — çok güzel bir köprü inşa ettiniz!\"",
+      "\"Köprü Yapıcılar bugün en iyi ekipti — diğerlerinden çok daha iyi.\"",
+      "\"İyi yaptınız. Ödül olarak bir sonraki seferde size ek görev vereceğim.\""
+    ],
+    correct: 0,
+    feedback: "A seçeneği belirli ve davranışa bağlıdır: tam teknik eylemi adlandırır ('tam koordinatları kullandınız'), uygulanan tasarım ilkesini belirtir ('simetri') ve mesleki terimlerle çerçeveler ('mimari düşünce'). Genel övgü, karşılaştırmalı övgü ve ertelenmiş ödüller aynı pekiştirme döngüsünü oluşturmaz."
+  }
+];
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('question-area').innerHTML = `
+    <div class="qnum">Soru ${current + 1} / ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list" id="opt-list">
+      ${q.opts.map((o, i) => `<div class="opt" id="opt-${i}" onclick="selectOpt(${i})"><span class="opt-letter">${LETTERS[i]}</span><span>${o}</span></div>`).join('')}
+    </div>`;
+}
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i)    el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  const _fb = isRight ? '✅ Doğru! ' + q.feedback : '❌ Yanlış. Doğru yanıt: ' + q.opts[q.correct] + ' — ' + q.feedback;
+  document.getElementById('feedback-area').innerHTML = `<div class="feedback-box ${isRight ? 'ok' : 'bad'} show">${_fb}</div>`;
+  if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+  else document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+function nextQuestion() { current++; renderQuestion(); window.scrollTo(0,0); }
+function submitQuiz() {
+  const score = answers.filter((a,i) => a === QUESTIONS[i].correct).length;
+  const pct   = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+  if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+  document.getElementById('quiz-screen').style.display    = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed?'🎉':'😅'}</div>
+    <div class="result-title">${passed?'Modül 2 Tamamlandı!':'Henüz Değil'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> soruyu doğru yanıtladınız.
+      ${passed?' Harika iş — Modül 2 tamamlandı!':` İlerleme için <strong>${PASS_PCT}%</strong> gereklidir. Materyali gözden geçirin ve tekrar deneyin.`}
+    </div>`;
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="TrModule3.html" class="btn-primary">Modül 3'e Devam →</a><button class="btn-outline" onclick="goHome()">← Panel</button>`
+    : `<button class="btn-primary" onclick="retake()">Testi Tekrarla</button><a href="TrModule2.html" class="btn-outline">← Modül 2'yi Gözden Geçir</a>`;
+  window.scrollTo(0,0);
+}
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display    = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion(); window.scrollTo(0,0);
+}
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) { alert('Lütfen önce önceki modülleri tamamlayın.'); goHome(); }
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

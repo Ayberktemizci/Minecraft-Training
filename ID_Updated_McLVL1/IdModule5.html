@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul 5 — Kastil Pencipta | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#7E22CE 0%,#EC4899 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:'🏰';font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.85);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:rgba(255,255,255,.7);color:rgba(255,255,255,.9)}
+  .module-banner .mobj strong{color:#fff}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .code-block{background:var(--ink);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .code-block{background:#0a0a0a}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #38BDF8;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}.fc{color:var(--ok-t)}
+  .anchor-target{scroll-margin-top:130px}
+  .phase-card-inner{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:10px;border-left:4px solid var(--pink);box-shadow:var(--shadow)}
+  .phase-label-inner{font-family:'Nunito',sans-serif;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--pink);margin-bottom:4px}
+  code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Pelatihan Tutor</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dasbor</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Modul 5 / 5</div>
+    <div class="mh1">🏰 Kastil Pencipta</div>
+    <p>Pembuatan proyek ujung-ke-ujung — siswa menerapkan setiap keterampilan dari Modul 1–4 untuk merancang, membangun, dan mempresentasikan game Minecraft atau dunia otomatis mereka sendiri.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Tujuan Modul 5:</strong> Laksanakan brainstorming proyek terstruktur dan Fase Blueprint · Tetapkan peran tim yang jelas untuk konstruksi kooperatif · Buat dan gunakan Fungsi MakeCode kustom untuk menghilangkan pengulangan kode · Terapkan siklus Bangun → Debug → Dekorasi · Selenggarakan presentasi bergaya profesional "Peluncuran Studio Game" untuk orang tua dan teman sebaya.
+    </div>
+  </div>
+</div>
+<div class="cbody">
+
+<div class="anchor-target" id="overview"><div class="section-head">1 · Gambaran Umum — Proyek Akhir</div></div>
+<div class="card hi">
+  <h4>🎓 Mengapa Modul 5 Berbeda dari Modul Lainnya</h4>
+  <p>Setiap modul sebelumnya mengajarkan keterampilan teknis tertentu dalam struktur tutor terbimbing. Modul 5 dengan sengaja membalikkan ini: siswa adalah direktur, dan tutor adalah konsultan produksi. Tantangan kognitif sekarang bukan teknis — melainkan kreatif dan manajerial.</p>
+  <p style="margin-top:8px">Peran utama tutor di Modul 5 adalah menjaga momentum produksi yang maju: mencegah kelumpuhan keputusan saat brainstorming, mendorong disiplin Fase Blueprint, dan melatih siswa melalui siklus bangun tanpa mengambil alih.</p>
+</div>
+<div class="anchor-target" id="blueprint"><div class="section-head">2 · Fase Blueprint — Rencanakan Sebelum Membangun Satu Blok</div></div>
+<div class="callout cw"><span class="ci">⚠️</span><div><strong>Mode Kegagalan #1 Modul 5: Membangun Tanpa Merencanakan</strong><br>Tim yang melewati Fase Blueprint menghabiskan 15–20 menit sesi berdebat tentang apa yang akan dibangun. Jika siswa tidak sepakat tentang arah di tengah pembangunan, tidak ada penyelamatan dalam jendela 60 menit. <strong>Fase Blueprint tidak dapat dinegosiasikan dan harus diselesaikan sebelum blok apa pun ditempatkan.</strong></div></div>
+<div class="card">
+  <h4>Protokol Brainstorming Terstruktur — Maksimum 10 Menit</h4>
+  <ol style="padding-left:18px;margin-top:8px">
+    <li style="margin-bottom:6px"><strong>Ideasi diam (3 menit):</strong> Setiap siswa menulis 1–2 ide proyek ke obrolan secara bersamaan. Belum ada diskusi verbal.</li>
+    <li style="margin-bottom:6px"><strong>Ringkasan ide (2 menit):</strong> Tutor membacakan semua ide dengan keras tanpa komentar.</li>
+    <li style="margin-bottom:6px"><strong>Pemungutan suara tim (2 menit):</strong> Siswa memilih dengan angka di obrolan. Mayoritas menang. Jika seri, tutor memutuskan. <strong>Tidak ada diskusi ulang setelah voting ditutup.</strong></li>
+    <li><strong>Komitmen blueprint (3 menit):</strong> Semua siswa mengetik "Saya setuju dengan rencana ini: [nama proyek]" ke obrolan. Ini menciptakan akuntabilitas sosial.</li>
+  </ol>
+</div>
+<div class="card">
+  <h4>Dokumen Blueprint — Apa yang Harus Disepakati Sebelum Membangun</h4>
+  <div class="two-col" style="margin-top:10px">
+    <div class="card"><h4>1. Tema Proyek</h4><p>Apa lingkungan atau tujuan dunia? (mis. "Kastil abad pertengahan dengan jembatan kerja dan ruang harta", "Stasiun luar angkasa dengan produksi sumber daya otomatis")</p></div>
+    <div class="card"><h4>2. Fitur Unggulan</h4><p>Satu sistem interaktif atau otomatis — potongan teknis utama. Harus menggunakan setidaknya satu keterampilan dari Modul 1–4.</p></div>
+    <div class="card"><h4>3. Peran Tim</h4><p>Setiap siswa memiliki tanggung jawab utama: Arsitek (desain struktural), Programmer (logika MakeCode), Dekorator (detail visual), Presenter (mengelola presentasi akhir).</p></div>
+    <div class="card"><h4>4. Kriteria Keberhasilan</h4><p>Tentukan Versi Minimum yang Dapat Dijalankan: "Jembatan terbuka saat pemain mengaktifkan pressure plate DAN peti harta dapat diakses di belakang." Ini mencegah scope creep.</p></div>
+  </div>
+</div>
+<div class="anchor-target" id="functions"><div class="section-head">3 · Fungsi MakeCode Kustom — Teknis Mendalam</div></div>
+<div class="card">
+  <h4>Apa itu Fungsi?</h4>
+  <p>Sebuah <strong>Fungsi</strong> adalah blok kode yang dapat digunakan kembali dengan nama. Setelah didefinisikan, ia dapat dipanggil dari mana saja dalam program dengan satu blok perintah. Fungsi menghilangkan pengulangan: daripada menyalin urutan 5 blok yang sama di 4 penanganan peristiwa yang berbeda, tulis sekali sebagai Fungsi dan panggil 4 kali.</p>
+  <div class="code-block">
+    <span style="color:#546E7A;font-style:italic">// Definisikan Fungsi sekali:</span><br>
+    <span style="color:#C792EA">fungsi</span> <span style="color:#82AAFF">rayakanKemenangan</span>() {<br>
+    &nbsp;&nbsp;<span style="color:#82AAFF">kembang api</span> di posisi pemain<br>
+    &nbsp;&nbsp;<span style="color:#FCD34D">katakan</span> <span style="color:#C3E88D">"Level Selesai!"</span><br>
+    &nbsp;&nbsp;<span style="color:#82AAFF">musik</span> mainkan kemenangan<br>
+    }<br><br>
+    <span style="color:#546E7A;font-style:italic">// Panggil dari beberapa tempat tanpa menulis ulang:</span><br>
+    <span style="color:#C792EA">saat pemain</span> berjalan {<br>
+    &nbsp;&nbsp;<span style="color:#C792EA">jika</span> skor <span style="color:#F78C6C">≥ 10</span> <span style="color:#C792EA">maka</span> {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#82AAFF">rayakanKemenangan</span>()  ← satu panggilan menggantikan 3 blok<br>
+    &nbsp;&nbsp;}<br>
+    }
+  </div>
+  <p style="margin-top:10px"><strong>Prinsip DRY (Don't Repeat Yourself):</strong> Ini adalah pertemuan pertama siswa dengan prinsip fundamental ini. Saat siswa menyalin kode, mereka menciptakan inkonsistensi. Dengan Fungsi, mereka hanya perlu memperbarui satu tempat.</p>
+</div>
+<div class="anchor-target" id="build"><div class="section-head">4 · Siklus Bangun → Debug → Dekorasi</div></div>
+<div class="card">
+  <h4>Tiga Fase Siklus Bangun</h4>
+  <div>
+    <div class="phase-card-inner">
+      <div class="phase-label-inner">Fase 1</div>
+      <strong>🔨 Bangun — Versi Minimum Dapat Dijalankan Dulu</strong>
+      <p style="margin-top:6px;font-size:13px;color:var(--text2)">Hanya bangun kriteria keberhasilan yang didefinisikan dalam Blueprint. Tidak ada dekorasi, tidak ada fitur ekstra, tidak ada scope creep. Target Fase 1 adalah prototipe yang berfungsi dan jelek.</p>
+    </div>
+    <div class="phase-card-inner" style="border-left-color:#D97706">
+      <div class="phase-label-inner" style="color:#D97706">Fase 2</div>
+      <strong>🔍 Debug — Buat Berfungsi Sebelum Dibuat Cantik</strong>
+      <p style="margin-top:6px;font-size:13px;color:var(--text2)">Uji setiap fitur interaktif dan otomatis dalam kriteria keberhasilan. Gunakan protokol pengujian terpisah dari Modul 4. Setiap bug harus diselesaikan sebelum Fase 3 dimulai.</p>
+    </div>
+    <div class="phase-card-inner" style="border-left-color:#A855F7">
+      <div class="phase-label-inner" style="color:#A855F7">Fase 3</div>
+      <strong>🎨 Dekorasi — Biarkan Tim Mengekspresikan Visi Kreatif Mereka</strong>
+      <p style="margin-top:6px;font-size:13px;color:var(--text2)">Hanya setelah konfirmasi debugging: tambahkan spanduk, konstruksi kustom, skema warna, tanda. Siswa yang selesai dekorasi lebih awal mendapat tugas — jangan biarkan siswa mana pun menganggur.</p>
+    </div>
+  </div>
+</div>
+<div class="anchor-target" id="presentation"><div class="section-head">5 · Peluncuran Studio Game — Presentasi Profesional</div></div>
+<div class="callout ct"><span class="ci">💡</span><div><strong>Mengapa "Peluncuran Studio Game" Bukan "Tunjukkan dan Ceritakan"</strong><br>Bahasa membentuk perilaku. "Tunjukkan dan ceritakan" adalah yang dilakukan siswa SD dengan mainan mereka. "Peluncuran Studio Game" adalah yang dilakukan Mojang, Nintendo, dan Valve. Peningkatan bahasa meningkatkan kepercayaan diri dan menghasilkan presentasi yang lebih baik.</div></div>
+<div class="card">
+  <h4>Struktur Presentasi — Setiap Tim Mengikuti Format Ini (5 menit per tim)</h4>
+  <ol style="padding-left:18px;margin-top:8px">
+    <li style="margin-bottom:6px"><strong>Nama &amp; Konsep Proyek (30 detik):</strong> "Proyek kami bernama [nama]. Idenya adalah [konsep dalam satu kalimat]."</li>
+    <li style="margin-bottom:6px"><strong>Demo Langsung Fitur Unggulan (2 menit):</strong> Tunjukkan sistem interaktif atau otomatis utama secara real-time.</li>
+    <li style="margin-bottom:6px"><strong>Penjelasan Teknis (1 menit):</strong> "Ini berfungsi karena [mekanisme teknis]. Kami menggunakan [keterampilan Modul X] dari pelatihan kami."</li>
+    <li style="margin-bottom:6px"><strong>Yang Akan Kami Tambahkan Selanjutnya (30 detik):</strong> "Jika ada satu sesi lagi, kami akan menambahkan [fitur]." Ini mengajarkan pemikiran iteratif.</li>
+    <li><strong>T&amp;J (1 menit):</strong> Siswa dan orang tua lain masing-masing mengajukan satu pertanyaan. Tutor memfasilitasi.</li>
+  </ol>
+</div>
+<div class="anchor-target" id="trouble"><div class="section-head">6 · Pemecahan Masalah — Modul 5</div></div>
+<div style="overflow-x:auto"><table class="trouble-table">
+  <thead><tr><th>Masalah</th><th>Penyebab</th><th>Perbaikan</th><th>Pencegahan</th></tr></thead>
+  <tbody>
+    <tr><td class="mc">Tim berdebat 20+ menit tentang apa yang akan dibangun — tidak ada konsensus di menit ke-20</td><td>Fase Blueprint tidak dimulai dengan format terstruktur</td><td>Langsung beralih ke brainstorming terstruktur formal. Tutup voting tepat di menit ke-15. "Kita sudah voting. Kita membangun [X]. Keputusan ini final."</td><td class="fc">"Jika tidak ada konsensus sebelum menit brainstorming ke-10, langsung panggil voting dan gunakan hak tie-break tutor."</td></tr>
+    <tr><td class="mc">Fungsi kustom siswa didefinisikan tapi tidak menghasilkan hasil yang terlihat</td><td>Blok Fungsi dibuat tapi 'Panggil Fungsi [nama]' tidak ditempatkan di penanganan peristiwa mana pun</td><td>"Fungsimu sudah didefinisikan — seperti resep di buku masak. Tapi tidak ada yang memberi tahu koki untuk memasaknya. Tambahkan blok 'Panggil Fungsi [nama]' di dalam peristiwa Obrolan atau Saat Pemain Berjalan."</td><td class="fc">"Definisi Fungsi adalah resep. Panggilan Fungsi adalah 'masak resep ini sekarang'. Kamu butuh keduanya — definisikan DAN panggil."</td></tr>
+    <tr><td class="mc">Tim mulai dekorasi sebelum fitur inti diuji — dekorasi dibangun di atas sirkuit yang rusak</td><td>Fase Dekorasi dimulai tanpa menyelesaikan Fase Debug</td><td>Tangani akar penyebab segera: gunakan /clone untuk mencadangkan bangunan yang sudah didekorasi, lalu akses sirkuit yang rusak di lokasi asli dan perbaiki.</td><td class="fc">"Tidak ada dekorasi sampai setiap fitur berfungsi. Demo prototipe yang berfungsi dulu, baru buat cantik."</td></tr>
+    <tr><td class="mc">Scope proyek terus berkembang melampaui waktu sesi yang tersisa</td><td>Versi minimum yang dapat dijalankan tidak didefinisikan di Fase Blueprint</td><td>Kembali ke Blueprint: "Apa kriteria keberhasilan kita? Apakah itu selesai? Jika ya: hentikan fitur baru, lanjutkan ke Debug dan Dekorasi. Jika tidak: selesaikan kriteria keberhasilan dulu." Ide fitur baru masuk ke daftar 'Versi 2'.</td><td class="fc">"Ide fitur baru masuk ke daftar 'Versi 2'. Tidak ada yang baru dibangun sampai kriteria keberhasilan selesai dan di-debug."</td></tr>
+    <tr><td class="mc">Demo langsung Peluncuran Studio Game mogok atau rusak di depan orang tua</td><td>Fase Debug tidak selesai sebelum presentasi; fitur tidak diuji dalam kondisi demo</td><td>Lakukan gladi resik penuh 10 menit sebelum orang tua masuk. Siapkan rencana cadangan: Presenter harus memiliki tangkapan layar yang diambil sebelumnya yang menunjukkan fitur berfungsi dengan benar.</td><td class="fc">"Selalu lakukan gladi resik penuh 10 menit sebelum orang tua bergabung. Uji demo dalam kondisi yang identik dengan presentasi langsung."</td></tr>
+  </tbody>
+</table></div>
+<div class="anchor-target" id="protips"><div class="section-head">7 · Tips Pro &amp; Analogi</div></div>
+<div class="tip-card"><p><strong>💡 Fungsi = "Kartu Resep"</strong><br><em>"Koki profesional tidak menulis resep pasta lengkap setiap kali dibutuhkan — ia menulisnya sekali di kartu dan hanya berkata 'buat saus pasta'. Fungsi MakeCode adalah kartu resep pribadimu."</em></p></div>
+<div class="tip-card"><p><strong>💡 Bangun → Debug → Dekorasi = "Lokasi Konstruksi"</strong><br><em>"Perusahaan konstruksi nyata membangun kerangka baja dan atap dulu [Bangun]. Lalu inspektur listrik menguji semua kabel sebelum dinding ditutup [Debug]. Baru kemudian desainer interior datang [Dekorasi]. Tidak ada yang mengecat dinding sebelum tukang listrik memeriksa kabel."</em></p></div>
+<div class="tip-card"><p><strong>💡 Mengelola Scope Creep dengan Daftar "Versi 2"</strong><br>Setiap ide bagus yang muncul setelah Fase Blueprint ditulis di "daftar Versi 2" di obrolan. Dua efeknya: (1) siswa merasa idenya dihargai dan dicatat, bukan ditolak; (2) scope produksi tetap terkunci. Siswa yang melihat idenya di daftar Versi 2 jauh lebih fokus pada versi saat ini daripada yang idenya ditolak.</p></div>
+
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h);margin-top:28px">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Siap untuk Kuis Pengetahuan Modul 5?</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+    6 pertanyaan murni dari konten Modul 5. Nilai <strong>70% atau lebih</strong> diperlukan untuk membuka Modul selanjutnya.
+  </p>
+  <div class="btn-row center">
+    <a href="IdModule5Test.html" class="btn-primary">Mulai Tes Modul 5 →</a>
+    <button class="btn-outline" onclick="goHome()">← Dasbor</button>
+  </div>
+</div>
+</div>
+<footer>© 2026 Kodland. Materi pelatihan tutor internal — tidak untuk distribusi eksternal.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(5)) { alert('Harap selesaikan modul sebelumnya terlebih dahulu.'); goHome(); }
+</script>
+</body>
+</html>

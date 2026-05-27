@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Modül 1 Bilgi Kontrolü | Kodland Tutor Eğitimi</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.test-header{background:linear-gradient(135deg,#1a2e0a 0%,#2f5222 55%,#4a7830 100%);padding:36px 32px 28px;border-bottom:3px solid var(--lime);text-align:center}
+.test-header h2{font-family:'Nunito',sans-serif;font-size:clamp(20px,3.5vw,28px);font-weight:900;color:#fff;margin-bottom:6px}
+.test-header p{color:rgba(255,255,255,.72);font-size:13px}
+.test-header .badges{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.tbadge{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:var(--rpill);font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+.tbadge.lime{background:rgba(196,240,70,.2);border:2px solid rgba(196,240,70,.4);color:var(--lime)}
+.tbadge.pink{background:rgba(240,61,158,.2);border:2px solid rgba(240,61,158,.4);color:#F472B6}
+.q-feedback{display:none;margin-top:12px;border-radius:var(--rsm);padding:13px 16px;font-size:13px;line-height:1.6;border:2px solid}
+.q-feedback.show{display:block}
+.q-feedback.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+.q-feedback.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Eğitimi</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="window.location.href='TrModule1Tech.html'">← Modül 1 Teknik</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-bar" style="width:0%"></div></div>
+
+<div class="test-header">
+  <h2>📝 Modül 1 Bilgi Kontrolü</h2>
+  <p>Cesur Yeni Yeşil Taş Dünyası — Teknik Değerlendirme</p>
+  <div class="badges">
+    <span class="tbadge lime">6 Soru</span>
+    <span class="tbadge lime">Geçmek için ≥ %70</span>
+    <span class="tbadge pink">DST Örtüşmesi Sıfır</span>
+    <span class="tbadge lime">Soruya Özel Geri Bildirim</span>
+  </div>
+</div>
+
+<div id="quiz-screen">
+  <div class="quiz-wrap">
+    <div class="q-progress">
+      <div class="q-prog-track"><div class="q-prog-fill" id="q-fill" style="width:0%"></div></div>
+      <span class="q-count" id="q-count">Soru 1 / 6</span>
+    </div>
+    <div id="q-num" class="qnum"></div>
+    <div id="q-text" class="qtext"></div>
+    <div id="q-opts" class="opt-list"></div>
+    <div id="q-feedback" class="q-feedback"></div>
+    <div class="btn-row" style="margin-top:20px">
+      <button class="btn-primary" id="btn-next" onclick="nextQ()" style="display:none">Sonraki Soru →</button>
+      <button class="btn-primary" id="btn-submit" onclick="submitQuiz()" style="display:none">Gönder &amp; Sonuçları Gör</button>
+    </div>
+  </div>
+</div>
+
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" id="result-actions" style="margin-top:20px"></div>
+</div>
+
+<footer>© 2026 Kodland · Dahili tutor eğitim materyali — harici dağıtım için değildir.</footer>
+
+<script src="shared.js"></script>
+<script>
+const MODULE_ID  = 1;
+const PASS_SCORE = 70;
+
+const QUESTIONS = [
+  {
+    text: "Bir tutor tüm öğrencileri X=200'e ışınlaması, mevcut Z konumlarını koruması ve onları tam Y=64'e (deniz seviyesi) sabitlemesi gerekiyor. Hangi komut sözdizimi bunu başarır?",
+    opts: [
+      "A) /tp @a 200 64 200",
+      "B) /tp @a ~200 ~64 ~0",
+      "C) /tp @a 200 64 ~0",
+      "D) /tp @a ~0 64 ~0"
+    ],
+    correct: 2,
+    feedback: "✅ Doğru. C seçeneği karma sözdizimi kullanır: 200 mutlak X değeridir (her zaman X=200), 64 mutlak Y değeridir (her zaman deniz seviyesi) ve ~0 sıfır göreceli Z uzaklığıdır (her oyuncu kendi Z konumunu korur). A seçeneği herkesi Z=200'e de taşır. B seçeneği tüm değerleri göreceli uzaklık olarak uygular. D seçeneği X ve Z'yi göreceli tutar, yalnızca Y'yi sabitler."
+  },
+  {
+    text: "MakeCode'da 'Sohbet Komutu'nda [kelime]' bloğunun tam işlevi nedir ve içine yerleştirilen kod ne zaman çalışır?",
+    opts: [
+      "A) Bu bir olay işleyicisidir: içindeki kod, oyuncu Minecraft oyun içi sohbetine tam olarak o sözcüğü her yazdığında bir kez çalışır.",
+      "B) Arka plan döngüsü olarak her 0.5 saniyede bir otomatik çalışır.",
+      "C) MakeCode editörü ilk açıldığında bir kez çalışır.",
+      "D) Etkinleştirildiğinde sunucudaki tüm oyunculara mesaj gönderir."
+    ],
+    correct: 0,
+    feedback: "✅ Doğru. 'Sohbet Komutu'nda' bir olay işleyicisidir — tetikleyici koşul ateşlenene kadar pasif olarak bekleyen bir dinleyici kaydeder. İçindeki kod yalnızca olay ateşlendiğinde çalışır; bu bloğun dışındaki kod yalnızca program yüklemede bir kez çalışır. Bu ayrım kritiktir: bloğun dışına yerleştirilen kod sohbet girişine yanıt vermez."
+  },
+  {
+    text: "Bir öğrenci şu Ajan programını yazar: [sağa dön] → [sağa dön] → [ileri 3 hareket et]. Ajan Kuzeye bakarak başlar. Tam diziyi çalıştırdıktan sonra Ajan hangi yönde ve kaç blok hareket etmiştir?",
+    opts: [
+      "A) Kuzey 3 blok — iki sağa dönüş birbirini iptal eder",
+      "B) Doğu 3 blok — Kuzeyden bir net sağa dönüş Doğu'ya eşittir",
+      "C) Batı 3 blok — Kuzeyden iki sağa dönüş Doğu'dan Güney'e oradan Batı'ya geçer",
+      "D) Güney 3 blok — ilk sağa dönüş Doğu'ya bakar; Doğudan ikinci sağa dönüş Güney'e bakar; ileri 3 hareket Güney yönünde 3 blok hareket eder"
+    ],
+    correct: 3,
+    feedback: "✅ Doğru. Kuzeye bakarak başlar: Sağa dön → artık Doğuya bakıyor. Tekrar sağa dön → artık Güneye bakıyor. Güneye bakan yönelimden '3 ileri hareket' Ajanı 3 blok Güneye (+Z yönünde) hareket ettirir. Ardışık iki sağa dönüş = 180° dönüş = başlangıçtan tam karşı ana yöne bakıyor."
+  },
+  {
+    text: "Otomatik bambu çiftliğini inşa ederken, bir öğrenci Pistona doğru bakan oyma doku (yüz) ile Gözlemciyi yerleştirir. Gözlemci görsel olarak ateşleniyor ancak Piston hiç uzamıyor. Tam neden nedir?",
+    opts: [
+      "A) Piston, devrenin çalışması için normal Piston değil Yapışkan Piston olmalıdır.",
+      "B) Gözlemcinin yüzü (oyma doku) algılama tarafıdır — bambuya bakmalıdır. Düz arka taraf, Pistona bakması gereken çıkış/verici taraftır. Öğrenci iki tarafı ters çevirmiştir.",
+      "C) Bambu bitkisi yanlış blok türüdür — Bambu, Bambu Fidanıyla değiştirilmelidir.",
+      "D) Redstone sinyali, Gözlemcinin darbesini güçlendirmek için Piston üzerinde Kaldıraç gerektirir."
+    ],
+    correct: 1,
+    feedback: "✅ Doğru. Gözlemcinin iki ayrı işlevsel tarafı vardır: yüz (oyma/göz dokusu) doğrudan baktığı bloktaki durum değişikliklerini izleyen sensördür — bambuya bakmalıdır. Arka (düz çıkış tarafı) Redstone darbesinin yayıldığı yerdir — Pistona veya bağlantı teline bakmalıdır. Taraflar ters çevrildiğinde, Gözlemci bambu yerine Pistonu izler, dolayısıyla hiç ateşlenmez veya yanlış nedenle ateşlenir."
+  },
+  {
+    text: "Bir öğrenci kopuk taş fabrikası inşa ediyor ancak Su kaynak bloğunu ve Lav kaynak bloğunu aralarında boşluk bırakmadan yan yana yerleştiriyor. Fabrika Kopuk Taş yerine Obsidyen üretiyor. Tam neden nedir ve doğru yapılandırma nedir?",
+    opts: [
+      "A) İki bitişik kaynak blok her ikisi de durağan olduğundan Obsidyen üretir — akan sıvı çarpışması yoktur. Düzeltme: her iki sıvının da ortadaki boşlukta buluşmadan önce akması için iki kaynak blok arasında tam olarak bir boş blok boşluk olduğundan emin olun, böylece Kopuk Taş üretilir.",
+      "B) Öğrenci yanlış Lav türünü kullandı — normal Lav Nether boyutundan Nether Lavıyla değiştirilmelidir.",
+      "C) Kopuk Taş oluşumu için Lav kaynağının Su kaynağının yanına değil üstüne yerleştirilmesi gerekir.",
+      "D) Obsidyen ve Kopuk Taş aynı şekilde üretilir — öğrencinin Obsidyeni Kopuk Taşa dönüştüren Taş Kazmasıyla çıkarması gerekir."
+    ],
+    correct: 0,
+    feedback: "✅ Doğru. Bir Lav kaynak bloğu doğrudan bir Su kaynak bloğunun yanına yerleştirildiğinde, her ikisi de durağandır — hiçbiri akmıyor. Çarpışma kuralı: akan Su + akan Lav = Kopuk Taş; durağan Lav kaynağı + bitişik Su kaynağı = Obsidyen. 1 blokluk boşluk her iki sıvıyı da merkeze doğru akmaya zorlar ve Kopuk Taş üretir."
+  },
+  {
+    text: "Canlı bir oturum sırasında, bir öğrenci Minecraft sohbetine '/code' yazıyor ve hiçbir şey olmuyor — MakeCode arayüzü açılmıyor ve hata mesajı gösterilmiyor. Öğrencinin internet bağlantısının çalıştığı doğrulanmış. En olası neden ve tam düzeltme nedir?",
+    opts: [
+      "A) Öğrenci uyumsuz bir tarayıcı kullanıyor — MakeCode Chrome 90 veya üstü sürüm gerektirir.",
+      "B) /code komutu büyük/küçük harf duyarlıdır — öğrenci büyük C ile '/Code' yazmalıdır.",
+      "C) Öğrencinin Yaratıcı Modda olması gerekiyor; /code Survival Modda çalışmaz.",
+      "D) Oturum başlamadan önce dünya ayarlarında 'Code Builder'ı Etkinleştir' AÇIK konumuna getirilmemişti. Düzeltme: dünyayı kapatın, dünya ayarlarını açın (dünya küçük resmindeki kalem simgesi), Code Builder geçişini etkinleştirin, dünyaya yeniden girin ve /code'u yeniden deneyin."
+    ],
+    correct: 3,
+    feedback: "✅ Doğru. 'Code Builder'ı Etkinleştir', herhangi bir öğrenci dünyaya girmeden önce açıkça etkinleştirilmesi gereken Minecraft Education Edition'daki dünyaya özel bir ayardır. Kapalıyken, /code komutu sessizce çalışır — hata mesajı yok, yanıt yok. Bu, internet bağlantısı onaylandığında /code başarısızlığının en yaygın nedenidir."
+  }
+];
+
+const LETTERS = ['A','B','C','D'];
+let current  = 0;
+let answers  = new Array(QUESTIONS.length).fill(null);
+let answered = false;
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-fill').style.width    = `${(current / QUESTIONS.length) * 100}%`;
+  document.getElementById('q-count').textContent   = `Soru ${current + 1} / ${QUESTIONS.length}`;
+  document.getElementById('q-num').textContent     = `S${current + 1} / ${QUESTIONS.length}`;
+  document.getElementById('q-text').textContent    = q.text;
+  document.getElementById('btn-next').style.display   = 'none';
+  document.getElementById('btn-submit').style.display = 'none';
+  const fb = document.getElementById('q-feedback');
+  fb.className   = 'q-feedback';
+  fb.textContent = '';
+  const container = document.getElementById('q-opts');
+  container.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'opt';
+    btn.id = `opt-${i}`;
+    btn.innerHTML = `<span class="opt-letter">${LETTERS[i]}</span><span>${opt.slice(3)}</span>`;
+    btn.addEventListener('click', () => pickAnswer(i));
+    container.appendChild(btn);
+  });
+}
+
+function pickAnswer(i) {
+  if (answered) return;
+  answered = true;
+  answers[current] = i;
+  const q = QUESTIONS[current];
+  const isRight = i === q.correct;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i)    el.classList.add('wrong');
+  }
+  const fb = document.getElementById('q-feedback');
+  fb.className = `q-feedback show ${isRight ? 'ok' : 'bad'}`;
+  const prefix = isRight ? '✅ Doğru!' : '❌ Yanlış.';
+  const body = q.feedback.replace(/^[✅❌]\s*\w+[!\.]?\s*/, '');
+  fb.innerHTML = `<strong>${prefix}</strong><br>${body}`;
+  if (current < QUESTIONS.length - 1) {
+    document.getElementById('btn-next').style.display = 'inline-flex';
+  } else {
+    document.getElementById('btn-submit').style.display = 'inline-flex';
+  }
+}
+
+function nextQ() {
+  current++;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function submitQuiz() {
+  const score  = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+  const pct    = Math.round((score / QUESTIONS.length) * 100);
+  const passed = pct >= PASS_SCORE;
+  if (passed) {
+    const prev = getModuleScore(MODULE_ID);
+    if (!prev || pct > prev) markModulePassed(MODULE_ID, pct);
+  }
+  document.getElementById('quiz-screen').style.display    = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+
+  let reviewHtml = '<div style="margin-top:14px;text-align:left">';
+  QUESTIONS.forEach((q, i) => {
+    const correct = answers[i] === q.correct;
+    reviewHtml += `
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--text2)">
+        <span style="font-size:14px">${correct ? '✅' : '❌'}</span>
+        <span>S${i+1}: ${correct ? 'Doğru' : `Yanlış — doğru yanıt <strong style="color:var(--text)">${LETTERS[q.correct]}</strong> idi`}</span>
+      </div>`;
+  });
+  reviewHtml += '</div>';
+
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed ? '🎉' : '📚'}</div>
+    <div class="result-title">${passed ? 'Modül 1 Geçildi!' : 'Çalışmaya Devam Et'}</div>
+    <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+    <div class="result-sub">
+      <strong>${score} / ${QUESTIONS.length}</strong> soruyu doğru yanıtladınız.
+      ${passed
+        ? ' Mükemmel — Modül 1 teknik içeriğini sağlam anladığınızı gösterdiniz. Modül 2 kilidi açıldı.'
+        : ` İlerleme için <strong>%${PASS_SCORE}</strong> veya üzeri gereklidir. Modül 1 Teknik Derinliği gözden geçirin ve tekrar deneyin.`}
+    </div>
+    ${reviewHtml}
+  `;
+
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="TrModule2.html"     class="btn-primary">Modül 2'ye Devam →</a>
+       <button class="btn-outline"  onclick="goHome()">← Panel</button>`
+    : `<button class="btn-primary"  onclick="retake()">Testi Tekrarla</button>
+       <a href="TrModule1Tech.html" class="btn-outline">← Modül 1'i Gözden Geçir</a>`;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function retake() {
+  current  = 0;
+  answers  = new Array(QUESTIONS.length).fill(null);
+  answered = false;
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display    = 'block';
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+initShared();
+document.getElementById('top-bar').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

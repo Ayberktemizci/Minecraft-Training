@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Modul 2 — Kota Cahaya | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{background:linear-gradient(135deg,#1D4ED8,#3B82F6);padding:24px 32px;color:#fff;text-align:center}
+  .quiz-header h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+  .quiz-header p{color:rgba(255,255,255,.8);font-size:13px}
+  .feedback-box{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:13.5px;line-height:1.6;border:2px solid}
+  .feedback-box.show{display:block}
+  .feedback-box.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+  .feedback-box.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Pelatihan Tutor</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Modul 2</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="quiz-header">
+  <h2>📝 Kuis Pengetahuan Modul 2</h2>
+  <p>🏙️ Kota Cahaya · 6 Pertanyaan · 70% untuk Lulus</p>
+</div>
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Pertanyaan Berikutnya →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Kirim Jawaban</button>
+  </div>
+</div>
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+</div>
+<footer>© 2026 Kodland. Materi pelatihan tutor internal.</footer>
+<script src="shared.js"></script>
+<script>
+const MODULE_ID = 2;
+const PASS_PCT  = 70;
+const QUESTIONS = [
+  {
+    q: "Seorang siswa menjalankan /clone 100 64 200  104 68 204  100 64 200 dan tidak ada yang terjadi. Apa penyebabnya dan perbaikan yang benar?",
+    opts: [
+      "Tujuan terlalu jauh — /clone memiliki jangkauan maksimum 10 blok",
+      "Koordinat Y tujuan harus selalu 0",
+      "Perintah sudah benar — clone selalu muncul setelah penundaan 5 detik",
+      "Region sumber dan tujuan tumpang tindih — koordinat tujuan harus berada di luar kotak pembatas sumber"
+    ],
+    correct: 3,
+    feedback: "Tujuan /clone [100 64 200] identik dengan sudut pertama sumber — region benar-benar tumpang tindih menyebabkan kegagalan diam. Tujuan harus berupa pasangan koordinat yang sepenuhnya di luar kotak pembatas sumber (mis. /clone 100 64 200  104 68 204  120 64 200)."
+  },
+  {
+    q: "Seorang siswa mengetik /tp @s ~0 64 ~0. Apa yang dilakukan perintah ini secara berbeda dari /tp @s ~0 ~0 ~0 maupun /tp @s 0 64 0?",
+    opts: [
+      "Mempertahankan posisi X dan Z siswa saat ini tetapi mengatur ketinggian mereka tepat ke Y=64, menggabungkan satu nilai absolut dengan dua offset relatif",
+      "Menteleportasi siswa ke titik asal dunia tepat di permukaan laut",
+      "Menteleportasi semua pemain (~0) ke lantai 64 — @s adalah selektor untuk semua siswa",
+      "Sintaks tidak valid — kamu tidak bisa mencampur tilde dan nilai absolut dalam satu perintah /tp"
+    ],
+    correct: 0,
+    feedback: "Minecraft mengizinkan sintaks koordinat campuran. ~0 mempertahankan X saat ini tidak berubah; 64 (tanpa tilde) mengatur ketinggian tepat ke Y=64; ~0 mempertahankan Z saat ini. Ini berguna untuk perintah 'snap ke permukaan laut' tanpa mengubah posisi horizontal. /tp @s ~0 ~0 ~0 tidak memindahkan pemain sama sekali; /tp @s 0 64 0 mengirim mereka ke titik asal dunia."
+  },
+  {
+    q: "Grid Crafting Table memiliki 9 slot. Seorang siswa menempatkan dua blok Batu berdampingan di baris atas Crafting Table dan tidak mendapatkan apa pun. Apa masalahnya?",
+    opts: [
+      "Pressure Plate Batu membutuhkan tiga blok Batu, bukan dua",
+      "Crafting Table harus diletakkan di tanah agar resep berfungsi",
+      "Resep Pressure Plate Batu memerlukan dua blok Batu yang ditempatkan dalam pola horizontal 1×2 di baris mana pun — siswa kemungkinan menempatkan di slot 1 dan 3 bukan 1 dan 2 (berdekatan), melewati slot tengah",
+      "Batu tidak bisa digunakan di Crafting Table — memerlukan Cobblestone"
+    ],
+    correct: 2,
+    feedback: "Resep Pressure Plate Batu memerlukan dua blok Batu di slot horizontal yang berdekatan (baris mana pun). Jika siswa melewati slot tengah — menempatkan Batu di posisi 1 dan 3 bukan 1 dan 2 — pola grid tidak cocok dengan resep apa pun dan tidak ada yang dihasilkan. Resep crafting bersifat posisional secara ketat."
+  },
+  {
+    q: "Selama pembangunan kota kooperatif, seorang siswa tidak sengaja menghancurkan 10 blok jembatan tim lain. Menurut kerangka Aturan Bertetangga, apa respons tutor yang benar?",
+    opts: [
+      "Keluarkan siswa dari sesi sementara sebagai konsekuensi yang jelas atas pelanggaran",
+      "Referensikan Aturan Bertetangga dengan namanya, bimbing siswa membantu membangun kembali blok yang rusak, dan gunakan momen tersebut untuk memperkuat standar komunitas tanpa bahasa hukuman",
+      "Abaikan kecuali siswa yang terkena dampak mengadu, untuk menghindari memperburuk situasi",
+      "Hentikan seluruh sesi dan reset dunia ke sebelum kerusakan terjadi"
+    ],
+    correct: 1,
+    feedback: "Respons hukuman (pengusiran, jeda sesi) menciptakan kebencian dan suasana kelas yang penuh ketakutan. Kerangka Aturan Bertetangga bersifat restoratif, bukan hukuman: sebut aturan dengan namanya ('Ingat — Aturan Bertetangga'), bimbing siswa membangun kembali apa yang rusak, dan gunakan sebagai momen standar komunitas. Ini memodelkan norma kolaboratif dunia nyata yang dirancang untuk dipraktikkan oleh aktivitas pembangunan kota."
+  },
+  {
+    q: "Jebakan Pressure Plate terhubung ke Dispenser 20 blok jauhnya. Seorang siswa menginjak plate tetapi Dispenser menembak dengan penundaan 1 detik yang terasa. Apa penyebab teknisnya?",
+    opts: [
+      "Dispenser membutuhkan Redstone Repeater di sebelahnya untuk menembak dengan kecepatan normal",
+      "Ada celah di kabel debu Redstone yang memperlambat sinyal",
+      "Pressure Plate hanya memicu pada langkah kedua, bukan yang pertama",
+      "Sinyal Redstone merambat dengan kecepatan 1 blok per tick (0,05 detik); melewati 20 blok debu, sinyal membutuhkan 20 tick = 1 detik untuk mencapai Dispenser — ini adalah perilaku fisika yang diharapkan, bukan bug"
+    ],
+    correct: 3,
+    feedback: "Kecepatan propagasi sinyal Redstone adalah 1 blok per tick, dan satu tick sama dengan 0,05 detik. Kabel 20 blok oleh karena itu memperkenalkan penundaan 20 tick = 1 detik. Ini adalah fisika Minecraft normal. Jika respons lebih cepat diperlukan, persingkat kabel atau gunakan Redstone Comparator untuk memperkuat tanpa penundaan."
+  },
+  {
+    q: "Setelah sesi kooperatif hari ini, seorang tutor ingin memberikan pujian spesifik terkait perilaku kepada tim Pembangun Jembatan. Mana dari berikut ini yang merupakan contoh paling efektif?",
+    opts: [
+      "\"Kerja luar biasa, Pembangun Jembatan — kamu menggunakan koordinat tepat untuk menyelaraskan titik akhir jembatanmu dengan kedua distrik tim, dan desain lengkungmu menunjukkan kamu memikirkan simetri. Itu pemikiran arsitektur profesional.\"",
+      "\"Kerja bagus hari ini, tim — kalian membangun jembatan yang sangat bagus!\"",
+      "\"Pembangun Jembatan adalah tim terbaik hari ini — jauh lebih baik dari yang lain.\"",
+      "\"Kalian melakukannya dengan baik. Saya akan memberi kalian tugas bonus lain kali sebagai hadiah.\""
+    ],
+    correct: 0,
+    feedback: "Opsi A bersifat spesifik dan terkait perilaku: ia menyebut tindakan teknis yang tepat ('menggunakan koordinat tepat untuk menyelaraskan titik akhir'), prinsip desain yang diterapkan ('simetri'), dan membingkainya dalam istilah profesional ('pemikiran arsitektur'). Ini memberi siswa informasi yang jelas tentang perilaku mana yang harus diulang. Pujian umum, pujian komparatif, dan hadiah yang ditangguhkan tidak menciptakan loop penguatan yang sama."
+  }
+];
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('question-area').innerHTML = `
+    <div class="qnum">Pertanyaan ${current + 1} / ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list">${q.opts.map((o,i) => `<div class="opt" id="opt-${i}" onclick="selectOpt(${i})"><span class="opt-letter">${LETTERS[i]}</span><span>${o}</span></div>`).join('')}</div>`;
+}
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i) el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  const fb = isRight ? '✅ Benar! ' + q.feedback : '❌ Salah. Jawaban benar: ' + q.opts[q.correct] + ' — ' + q.feedback;
+  document.getElementById('feedback-area').innerHTML = `<div class="feedback-box ${isRight?'ok':'bad'} show">${fb}</div>`;
+  if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+  else document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+function nextQuestion() { current++; renderQuestion(); window.scrollTo(0,0); }
+function submitQuiz() {
+  const score = answers.filter((a,i) => a === QUESTIONS[i].correct).length;
+  const pct = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+  if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed?'🎉':'😅'}</div>
+    <div class="result-title">${passed?'Modul 2 Selesai!':'Belum Berhasil'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> pertanyaan dijawab dengan benar.
+      ${passed?' Kerja bagus — kamu telah menunjukkan pemahaman yang kuat tentang konten Modul 2.':` Nilai <strong>${PASS_PCT}%</strong> diperlukan untuk membuka Modul 3. Tinjau materi dan coba lagi.`}
+    </div>`;
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="IdModule3.html" class="btn-primary">Lanjut ke Modul 3 →</a><button class="btn-outline" onclick="goHome()">← Dasbor</button>`
+    : `<button class="btn-primary" onclick="retake()">Ulangi Tes</button><a href="IdModule2.html" class="btn-outline">← Tinjau Modul 2</a>`;
+  window.scrollTo(0,0);
+}
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion(); window.scrollTo(0,0);
+}
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) { alert('Harap selesaikan Modul 1 terlebih dahulu.'); goHome(); }
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

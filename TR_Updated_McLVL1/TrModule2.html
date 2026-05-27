@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modül 2 — Işık Şehri | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#1D4ED8 0%,#2563EB 55%,#3B82F6 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:"🏙️";font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.82);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:#93C5FD;color:rgba(255,255,255,.88)}
+  .module-banner .mobj strong{color:#fff}
+  .sec-nav{display:flex;flex-wrap:wrap;gap:8px;padding:14px 28px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90}
+  .sec-pill{font-family:"Nunito",sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:5px 13px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+  .sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+  .script-box{background:var(--ink);color:#93C5FD;border-radius:var(--rsm);padding:14px 18px;font-family:"JetBrains Mono","Courier New",monospace;font-size:13px;line-height:1.7;margin:10px 0;border-left:4px solid #3B82F6}
+  [data-theme="dark"] .script-box{background:#0a0e18}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:"Nunito",sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}.fc{color:var(--ok-t)}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #3B82F6;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .coord-box{background:var(--ink);border-radius:var(--r);padding:18px;font-family:"JetBrains Mono",monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .coord-box{background:#0a0e18}
+  .cx{color:#F87171}.cy{color:#4ADE80}.cz{color:#60A5FA}.cm{color:#FCD34D}
+  .anchor-target{scroll-margin-top:130px}
+  code{font-family:"JetBrains Mono",monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Eğitimi</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Panel</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="sec-nav">
+  <a href="#overview"   class="sec-pill">1 · Genel Bakış</a>
+  <a href="#flow"       class="sec-pill">2 · Öğretim Akışı</a>
+  <a href="#tech"       class="sec-pill">3 · Teknik Derinlik</a>
+  <a href="#multi"      class="sec-pill">4 · Çok Oyunculu</a>
+  <a href="#trouble"    class="sec-pill">5 · Sorun Giderme</a>
+  <a href="#protips"    class="sec-pill">6 · Uzman İpuçları</a>
+  <a href="#test-cta"   class="sec-pill">7 · Bilgi Kontrolü</a>
+</div>
+
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Modül 2 / 5</div>
+    <div class="mh1">🏙️ Işık Şehri</div>
+    <p>Gelişmiş mekanikler, kooperatif dünya inşası ve mimari düşünce — öğrenciler koordinatlar, klon komutları ve Redstone tuzakları kullanarak birlikte paylaşılan bir şehir inşa eder.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Modül 2 Hedefleri:</strong> Kesin ve göreceli koordinatlara hakim olun · Yapısal simetri için /clone kullanın · İnteraktif Redstone tuzakları inşa edin · İşleme Masası mekaniği tanıtın · Tanımlanmış ekip rolleriyle kooperatif çok oyunculu şehir planlaması yapın.
+    </div>
+  </div>
+</div>
+
+<div class="cbody">
+
+<div id="overview" class="anchor-target">
+  <div class="section-head">1 · Modül Genel Bakışı ve Bölgesel Özelleştirme</div>
+</div>
+
+<div class="card">
+  <h4>Modül 1'den Kapsam Yükselmesi</h4>
+  <p>Modül 2 üç ana yükselme getirir: (1) Komutlar artık kesin koordinat argümanları gerektirir — öğrenciler yalnızca göreceli konumlara güvenemez. (2) Sosyal bağlam tek oyuncudan kooperatife geçer — öğrenciler müzakere etmeli, planlamalı ve iletişim kurmalıdır. (3) İnşa karmaşıklığı tek mekanizma otomasyonundan mimari planlama gerektiren çok elemanlı şehir bölgelerine yükselir.</p>
+</div>
+
+<div class="card">
+  <h4>Bölgesel Özelleştirme Notu</h4>
+  <p>MakeCode mantığı ve Minecraft mekaniği evrenseldir. Ancak anlatı kancaları ve buz kırıcılar yerel kültüre uyarlanabilir — tanıdık yerel simgeleri, çizgi filmleri veya gerçek şehir örneklerini kullanın. <strong>Temel teknik hedefler asla değiştirilmemelidir</strong>. İstanbul'daki bir tutor İstanbul'un şehir ızgarasını referans gösterebilir. Koordinat dersi hangi şehir referans gösterilirse gösterilsin aynıdır.</p>
+</div>
+
+<div id="flow" class="anchor-target">
+  <div class="section-head">2 · Öğretim Akışı</div>
+</div>
+
+<div class="card">
+  <h4>Adım Adım Oturum Kılavuzu</h4>
+  <ol style="padding-left:18px;margin-top:8px">
+    <li style="margin-bottom:8px"><strong>Buz Kırıcı (00:00–00:05):</strong> "Şehrinizdeki hangi binanın tasarımını değiştirmek isterdiniz?" Bu mimari düşünceyi hazırlar ve bugünkü şehir inşa temasıyla kişisel bağlantı kurar.</li>
+    <li style="margin-bottom:8px"><strong>Koordinat Tekrarı (00:05–00:12):</strong> Modül 1 koordinatlarının hızlı tekrarı. Öğrencilerden X/Y/Z eksen anlamlarını notssuz belirtmelerini isteyin. Ardından kesin koordinatları tanıtın: "Bugün göreceli uzaklıklar değil gerçek koordinat adresleri kullanacağız."</li>
+    <li style="margin-bottom:8px"><strong>İşleme Masası Tanıtımı (00:12–00:20):</strong> İşleme Masasını açmayı (3×3 ızgara) gösterin, taş kazma yapmak için malzemeleri tam desene yerleştirin. Her öğrenci bir alet üretir.</li>
+    <li style="margin-bottom:8px"><strong>Redstone Tuzak İnşası (00:20–00:30):</strong> Adım adım: (a) 2×2 basınç plakası çukuru kazın. (b) Zemine Basınç Plakaları yerleştirin. (c) Oklar veya Sıçrayan İksirler yüklü Dağıtıcıya Redstone tozu aracılığıyla bağlayın. (d) Plakalar üzerinde yürüyerek test edin.</li>
+    <li style="margin-bottom:8px"><strong>Bilişsel Mola (00:30–00:35):</strong> Zorunlu. Fiziksel aktivite veya ekransız quiz.</li>
+    <li style="margin-bottom:8px"><strong>Klon Komutu + Şehir Planlaması (00:35–00:55):</strong> Bir yapıyı çoğaltmak için /clone öğretin. Ekip rolleri atayın (Köprü Yapıcılar, Deniz Feneri Bekçileri, Şehir Planlamacılar). Öğrenciler yapıları hizalamak için kesin koordinatlar kullanarak şehir bölgelerini inşa eder.</li>
+    <li><strong>Yansıma (00:55–01:00):</strong> Her ekip bölgesini sunar. Her biri bir cümle: "Biz [X] inşa ettik ve [Y tekniği] kullandık."</li>
+  </ol>
+</div>
+
+<div id="tech" class="anchor-target">
+  <div class="section-head">3 · Teknik Derinlik — Modül 2</div>
+</div>
+
+<div class="card">
+  <h4>3.1 · İşleme Masası Mekaniği</h4>
+  <p>İşleme Masası oyuncunun envanter 2×2 ızgarasıyla (4 slot) karşılaştırıldığında <strong>3×3 ızgara</strong> (toplam 9 slot) sağlar. Daha fazla slot = daha karmaşık, daha güçlü tarifler. Modül 2 temel tarifleri:</p>
+  <div class="coord-box">
+    Taş Kazma:    [Taş][Taş][Taş] / [  ][Çubuk][  ] / [  ][Çubuk][  ]<br>
+    Dağıtıcı:     [KopukTaş][KopukTaş][KopukTaş] / [KopukTaş][Yay][KopukTaş] / [KopukTaş][Redstone][KopukTaş]<br>
+    Basınç Plakası (Taş): [Taş][Taş] / (herhangi bir sırada 2×1 ızgara)
+  </div>
+  <p style="margin-top:8px"><strong>Temel öğretim noktası:</strong> Tarifler konumsaldır — ızgaradaki malzemelerin düzenlemesi üretilen öğeyi belirler. Malzemeleri yanlış göreceli konumlara yerleştirmek hiçbir şey üretmez. Bu öğrencilerin konumsal veri yapılarıyla ilk karşılaşmasıdır.</p>
+</div>
+
+<div class="card">
+  <h4>3.2 · Kesin Koordinatlar ve Göreceli Koordinatlar</h4>
+  <div class="coord-box">
+    <span class="cm">KESİN koordinatlar</span> — dünya ızgarasındaki sabit konumlar:<br>
+    <span class="cy">/tp @s 100 64 200</span>  →  mevcut konumdan bağımsız olarak her zaman X=100, Y=64, Z=200'e ışınlar<br><br>
+    <span class="cm">GÖRECELİ koordinatlar</span> — mevcut konumdan uzaklık:<br>
+    <span class="cy">/tp @s ~5 ~0 ~0</span>   →  şu an bulunduğunuz yerden 5 blok Doğuya ışınlar<br><br>
+    <span class="cm">Karma sözdizimi (geçerli):</span><br>
+    <span class="cy">/tp @s ~0 64 ~0</span>   →  aynı X ve Z; yüksekliği tam Y=64'e sabitle<br><br>
+    <span style="color:#F87171">Kritik test:</span> /tp @a 0 64 0  (tilde yok) her zaman TÜM oyuncuları dünya orijinine gönderir.<br>
+    <span style="color:#F87171">Karşılaştır:</span>    /tp @a ~0 ~0 ~0 (tüm tildeler) kimseyi hareket ettirmez — uzaklıklar sıfır.
+  </div>
+  <div class="callout ct" style="margin-top:10px">
+    <span class="ci">💡</span>
+    <div><strong>Farkı fiziksel olarak öğretin:</strong> "Mutlak koordinatlar sokak adresi gibidir — Cumhuriyet Caddesi 100 her zaman Cumhuriyet Caddesi 100'dür. Göreceli koordinatlar yol tarifi gibidir — 'solunuza 3 blok' şu an hangi yöne baktığınıza bağlıdır."</div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>3.3 · /clone Komutu — Yapısal Çoğaltma</h4>
+  <p>/clone komutu tanımlanmış bir 3B bölgeyi yeni bir konuma kopyalar:</p>
+  <div class="coord-box">
+    Sözdizimi:  /clone [x1 y1 z1] [x2 y2 z2] [hedef-x hedef-y hedef-z]<br><br>
+    [x1 y1 z1] = kaynak bölgenin bir köşesi<br>
+    [x2 y2 z2] = kaynak bölgenin karşı köşesi (tam 3B kutuyu tanımlar)<br>
+    [hedef-x hedef-y hedef-z] = kopyanın görüneceği köşe<br><br>
+    Örnek — 100,64,200'de başlayan 5×5×5 evi 120,64,200'e kopyala:<br>
+    <span class="cy">/clone 100 64 200  104 68 204  120 64 200</span>
+  </div>
+  <p style="margin-top:10px"><strong>Mimari uygulama:</strong> Bir kule bölümü inşa edin, ardından yolun karşı tarafında mükemmel simetrik bir kopya oluşturmak için /clone kullanın. Bu modüler mimarinin arkasındaki ilkedir — bir öğeyi iyi tasarlayın, ardından çoğaltın.</p>
+  <div class="callout cw" style="margin-top:8px">
+    <span class="ci">⚠️</span>
+    <div><strong>Çakışma hatası:</strong> Kaynak ve hedef bölgeler çakışamaz. Çakışırlarsa komut sessizce hata verir. Hedef koordinatların her zaman kaynak bölge sınırlarından yeterince uzakta olduğundan emin olun.</div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>3.4 · Redstone Tuzakları — Bileşenler ve Devre Tasarımı</h4>
+  <div class="two-col" style="margin-top:8px">
+    <div class="card">
+      <h4>Basınç Plakası</h4>
+      <p>Bir oyuncu, yaratık veya öğe yığını üzerinde durduğu sürece sürekli Redstone sinyali yayar. Varlık ayrılır ayrılmaz sinyal durur. İki çeşit: <strong>Taş</strong> (yalnızca yaratıklar/oyuncular tetikler) ve <strong>Ahşap</strong> (öğeler de tetikler). Modül 2 tuzakları için Taş tercih edilir.</p>
+    </div>
+    <div class="card">
+      <h4>Dağıtıcı</h4>
+      <p>Redstone darbesi aldığında, baktığı yönde envanterinden bir öğe fırlatır. Oklarla yüklü = mermi tuzağı. Sıçrayan İksirlerle yüklü = alan etkisi tuzağı. TNT ile yüklü = patlama tetikleyicisi (grup oturumlarında dikkatli kullanın). Sağ tıklayarak 3×3 envanterini açın ve öğeleri yükleyin.</p>
+    </div>
+    <div class="card">
+      <h4>TNT</h4>
+      <p>Redstone sinyali veya ateşle aktive edilen TNT 4 tıklık fitil süresine sahiptir (0.2 saniye) ardından patlar. Patlama yarıçapı ~4 blok. Modül 2 tuzaklarında TNT'yi Dağıtıcı çıkışına zincirleme bağlayın.</p>
+    </div>
+    <div class="card">
+      <h4>Tuzak Devre Mantığı</h4>
+      <p><strong>Standart tuzak kablolaması:</strong> Basınç Plakası → Redstone tozu (1–15 blok) → Dağıtıcı. Oyuncu Plaka üzerinde durduğunda sinyal tel boyunca seyahat eder ve Dağıtıcıyı aktive eder. <strong>Zamanlama notu:</strong> Redstone sinyalleri tik başına 1 blok hızla seyahat eder.</p>
+    </div>
+  </div>
+</div>
+
+<div id="multi" class="anchor-target">
+  <div class="section-head">4 · Kooperatif Çok Oyunculu Şehir Planlaması</div>
+</div>
+
+<div class="card">
+  <h4>Ekip Rolü Ataması</h4>
+  <p>Sınıfı çakışmayan sorumluluklara sahip 2–3 ekibe bölün. Her ekibin çakışmayı önlemek için belirli bir koordinat bölgesi vardır:</p>
+  <ul style="margin-top:8px">
+    <li><strong>Köprü Yapıcılar:</strong> Bölge bölgelerini birbirine bağlayan yollar inşa eder. Köprülerinin diğer ekiplerin bölgelerindeki son noktalarla hizalandığından emin olmak için kesin koordinatlar kullanmalıdır.</li>
+    <li><strong>Deniz Feneri Bekçileri:</strong> Tepesinde otomatik açma/kapama için Günışığı Sensörüne bağlı Redstone lambası bulunan yüksek bir simge (15+ blok yüksekliğinde) inşa eder.</li>
+    <li><strong>Şehir Planlamacılar:</strong> Yolları ve kamusal alanları düzenler. Bir koordinat ızgarası tanımlamalı ve diğer ekiplere iletmelidir.</li>
+  </ul>
+</div>
+
+<div class="callout cw">
+  <span class="ci">⚠️</span>
+  <div>
+    <strong>#1 Çok Oyunculu Risk: Öğrencilerin Birbirinin İnşatlarını Yıkması</strong><br>
+    Bu önceden önlenmelidir, tepkisel olarak değil. Öğrenciler paylaşılan dünyaya girmeden önce her çok oyunculu oturumun ilk 5 dakikasında "Komşuluk Kuralları"nı oluşturun.<br>
+    <div class="script-box" style="margin-top:8px">"Şehre girmeden önce, iyi bir komşunun izlediği kurallar nelerdir? Komşuların evlerini kırmayın! Başkalarının sandıklarından eşya almayın! Yanlışlıkla bir şeyi kırarsanız, onu yeniden inşa edin — bu Komşuluk Kuralıdır."</div>
+    <strong>İhlal gerçekleştiğinde:</strong> Öğrenciyi oturumdan çıkarmayın. Komşuluk Kuralına adıyla atıfta bulunun ve yeniden inşa etmelerine rehberlik edin. Cezalandırıcı tepkiler kırgınlık yaratır; onarıcı tepkiler topluluk standartları oluşturur.
+  </div>
+</div>
+
+<div id="trouble" class="anchor-target">
+  <div class="section-head">5 · Sorun Giderme Kataloğu — Modül 2 (5 Senaryo)</div>
+</div>
+
+<div style="overflow-x:auto">
+  <table class="trouble-table">
+    <thead>
+      <tr>
+        <th style="width:22%">Hata / Belirti</th>
+        <th style="width:27%">Kök Neden</th>
+        <th style="width:31%">Tam Düzeltme</th>
+        <th style="width:20%">Önleme Komut Dosyası</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mc">/clone komutu sessizce hata veriyor — hedefte hiçbir şey görünmüyor</td>
+        <td>Kaynak ve hedef bölgeler çakışıyor; VEYA hedef koordinatlar yanlış sırayla girildi</td>
+        <td>Doğrulayın: (1) Hedef, kaynak sınırlayıcı kutusunun dışında. (2) Birinci köşe [x1,y1,z1] ve ikinci köşe [x2,y2,z2] kaynağın karşı köşeleri. (3) Hedef [dx,dy,dz] yeni konumdaki birinci köşenin eşdeğeri.</td>
+        <td class="fc">"Komutu yazmadan önce üç köşe koordinatını da yazın. Bir yanlış sayı = sessiz başarısızlık."</td>
+      </tr>
+      <tr>
+        <td class="mc">Basınç Plakası aktive oluyor ancak Dağıtıcı ateşlemiyor</td>
+        <td>Redstone tozu teli kırık; VEYA Dağıtıcı yanlış yöne bakıyor; VEYA Dağıtıcı envanteri boş</td>
+        <td>Teli izleyin: hangi segmentin güçsüz olduğunu kontrol etmek için her Redstone tozu bloğuna geçici bir meşale yerleştirin. Boşlukları düzeltin. Dağıtıcının doğru yöne baktığını doğrulayın.</td>
+        <td class="fc">"Üç adımlı tuzak kontrolü: tel sürekli mi? Dağıtıcı stoklu mu? Dağıtıcı doğru yönde mi? Test etmeden önce her üçünü kontrol edin."</td>
+      </tr>
+      <tr>
+        <td class="mc">Öğrenci /clone hedefini diğer ekibin yapılarıyla hizalamakta zorlanıyor — köprüler bağlanmıyor</td>
+        <td>Ekipler inşa etmeden önce paylaşılan bir koordinat ızgarası üzerinde anlaşmadı</td>
+        <td>Tüm ekipleri durdurun. Şehir Planlamacılar ekibinin paylaşılan ızgarayı duyurmasını sağlayın. Tüm ekipler başlangıç noktalarını ızgarayla eşleşecek şekilde ayarlar.</td>
+        <td class="fc">"Herhangi bir ekip tek bir blok yerleştirmeden önce, Şehir Planlamacılar koordinat ızgarasını sohbette duyurmalıdır."</td>
+      </tr>
+      <tr>
+        <td class="mc">Öğrenci inşa sırasında yanlışlıkla Redstone telini kırdı</td>
+        <td>Redstone tozu, yanına blok yerleştirilmesiyle tahrip edilir; öğrenciler Redstone'un bitişik blok değişikliklerine duyarlı olduğunu bilmiyor</td>
+        <td>Öğretin: Redstone tozu üstüne düz blok yerleştirilirse tahrip olur. Önce duvarları ve zeminleri inşa edin, ardından Redstone'u döşeyin.</td>
+        <td class="fc">"Önce kabuğu inşa et, en son onu kov. Redstone yalnızca bitmiş yüzeylere gider."</td>
+      </tr>
+      <tr>
+        <td class="mc">İşleme Masası tarifi yanlış öğe üretiyor veya hiçbir şey üretmiyor</td>
+        <td>Malzemeler yanlış konumsal desene yerleştirildi — üretme tarifleri konuma özgü</td>
+        <td>Öğrencinin başarısız düzenlemesinin ekran görüntüsünü almasını isteyin, ardından İşleme Defterindeki doğru tarifiyle yan yana karşılaştırın. Hangi slotun yanlış olduğunu belirleyin.</td>
+        <td class="fc">"Bana ızgara ekran görüntünüzü ve tarif ekran görüntünüzü yan yana gösterin. Biri biraz farklı — bulabilir misiniz?"</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="protips" class="anchor-target">
+  <div class="section-head">6 · Tutor Uzman İpuçları ve Gerçek Dünya Analogileri</div>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Koordinatlar = "Şehir Sokak Izgara" Analogisi (Modül 2 İçin Genişletilmiş)</strong><br>
+  <em>"Gerçek bir şehirde mimarlar sadece 'gökdeleni oralarda bir yere inşa et' demez. 'Doğu 5. Cadde 100'e, zemin kattan 20. kata kadar inşa et' derler. Kesin koordinatlar tam olarak bunu sağlar — kesin bir inşa adresi."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 /clone = "Mimari Plan" Analogisi</strong><br>
+  <em>"Gerçek mimarlar bir gökdelenin her katını ayrı ayrı tasarlamaz — bir tipik katı mükemmel şekilde tasarlar, ardından 40 kez kopyalar. /clone komutu planın fotokopi makinenizdir."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 İşleme Tarifi = "Kesin Tarif" Analogisi</strong><br>
+  <em>"Bir pasta pişirdiğinizi hayal edin. Tarif 'solda iki su bardağı un, sağda bir yumurta' diyorsa, bunları değiştirmek daha iyi bir pasta yapmaz — farklı bir pasta ya da hiç pasta yapmaz. İşleme Masası tarifleri tam olarak aynı şekilde çalışır."</em></p>
+</div>
+
+<div id="test-cta" class="anchor-target">
+  <div class="section-head">7 · Modül 2 Bilgi Kontrolü</div>
+</div>
+
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Modül 2 Bilgi Kontrolüne Hazır mısınız?</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+    Yalnızca Modül 2 içeriğinden 6 soru. Modül 3'ün kilidini açmak için <strong>%70 (5/6) veya üzeri</strong> gereklidir.
+  </p>
+  <div class="btn-row center">
+    <a href="TrModule2Test.html" class="btn-primary">Modül 2 Testini Başlat →</a>
+    <button class="btn-outline" onclick="goHome()">← Panel</button>
+  </div>
+</div>
+
+</div>
+<footer>© 2026 Kodland. Dahili tutor eğitim materyali — harici dağıtım için değildir.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(2)) { alert('Lütfen önce Modül 1'i tamamlayın.'); goHome(); }
+</script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modül 3 — Mantık Vahası | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#6D28D9 0%,#7C3AED 55%,#8B5CF6 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:'🧩';font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.82);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:#DDD6FE;color:rgba(255,255,255,.88)}
+  .module-banner .mobj strong{color:#fff}
+  .sec-nav{display:flex;flex-wrap:wrap;gap:8px;padding:14px 28px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90}
+  .sec-pill{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:5px 13px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+  .sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+  .script-box{background:var(--ink);color:#C4B5FD;border-radius:var(--rsm);padding:14px 18px;font-family:'JetBrains Mono','Courier New',monospace;font-size:13px;line-height:1.7;margin:10px 0;border-left:4px solid #7C3AED}
+  [data-theme="dark"] .script-box{background:#0f0a18}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}.fc{color:var(--ok-t)}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #8B5CF6;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .code-block{background:var(--ink);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .code-block{background:#0f0a18}
+  .ck{color:#C792EA}.cf{color:#82AAFF}.cs{color:#C3E88D}.cn{color:#F78C6C}.cm{color:#FCD34D}
+  .anchor-target{scroll-margin-top:130px}
+  code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Eğitimi</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Panel</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="sec-nav">
+  <a href="#overview"    class="sec-pill">1 · Genel Bakış</a>
+  <a href="#events"      class="sec-pill">2 · Olay Güdümlü Prog.</a>
+  <a href="#variables"   class="sec-pill">3 · Değişkenler</a>
+  <a href="#conditionals" class="sec-pill">4 · Koşullar</a>
+  <a href="#minigame"    class="sec-pill">5 · Mini Oyun İnşası</a>
+  <a href="#trouble"     class="sec-pill">6 · Sorun Giderme</a>
+  <a href="#protips"     class="sec-pill">7 · Uzman İpuçları</a>
+  <a href="#test-cta"    class="sec-pill">8 · Bilgi Kontrolü</a>
+</div>
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Modül 3 / 5</div>
+    <div class="mh1">🧩 Mantık Vahası</div>
+    <p>Oyunlar, bulmacalar ve programlama mantığının gerçek temelleri — öğrenciler MakeCode olay blokları, değişkenler ve koşulları kullanarak ilk interaktif mini oyunlarını inşa eder.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Modül 3 Hedefleri:</strong> Olay güdümlü programlamayı anlayın (Oyuncu Yürüyüşünde, Blok Kırıldığında) · Değişkenleri "skor kapları" olarak oluşturun ve değiştirin · Eğer–O Zaman ve Eğer–O Zaman–Değilse koşullu mantığı uygulayın · Oynanabilir bir mini oyun inşa etmek için Olaylar + Değişkenler + Koşulları birleştirin.
+    </div>
+  </div>
+</div>
+<div class="cbody">
+
+<div id="overview" class="anchor-target">
+  <div class="section-head">1 · Modül Genel Bakışı — Programlama Dönüşümü</div>
+</div>
+<div class="card">
+  <h4>Modül 3 Neden Kavramsal Dönüm Noktasıdır</h4>
+  <p>Modüller 1 ve 2 fiziksel inşaları otomatize etmek için MakeCode kullandı — program bir kez çalıştı ve statik bir sonuç üretti. Modül 3 <strong>reaktif, interaktif programlamayı</strong> tanıtır: bir şeyin olmasını bekleyen, ardından yanıt veren kod. Bu, mobil uygulamalardan oyun motorlarına neredeyse tüm gerçek dünya yazılımlarının temel paradigmasıdır. Öğrenciler artık makine inşa etmiyor — <em>deneyim</em> inşa ediyor.</p>
+  <p style="margin-top:8px">Tanıtılan üç kavram — olaylar, değişkenler ve koşullar — basit herhangi bir oyun inşa etmeye yeterlidir. Bu modülün sonunda öğrenciler ilk tam interaktif programlarını yazmış olacak.</p>
+</div>
+
+<div id="events" class="anchor-target">
+  <div class="section-head">2 · Olay Güdümlü Programlama</div>
+</div>
+<div class="card">
+  <h4>Olay Nedir?</h4>
+  <p>Bir <strong>olay</strong>, oyun dünyasında bir şeyin gerçekleştiğinin sinyalidir. MakeCode'daki bir <strong>olay bloğu</strong> bir dinleyici kaydeder: bloğun içindeki kod yalnızca ve tam olarak o olay ateşlendiğinde çalışır. Kod sürekli çalışmaz — bekler, ardından yanıt verir.</p>
+  <div class="code-block">
+    <span class="ck">oyuncu</span> yürüdüğünde {            ← olay bloğu: her adımda ateşlenir<br>
+    &nbsp;&nbsp;<span class="cf">skor</span>'u <span class="cn">1</span> artır         ← bu kod her olay ateşlenişinde çalışır<br>
+    }                                    ← bu bloğun dışı = yürüyüşle tetiklenmez
+  </div>
+  <p style="margin-top:8px"><strong>Tutorların açıklaması gereken Modül 3 olayları:</strong></p>
+  <ul style="margin-top:6px">
+    <li><strong>Oyuncu Yürüdüğünde:</strong> Oyuncunun attığı her adımda bir kez ateşlenir. Adım sayacı, mesafeye dayalı puanlama için kullanışlıdır.</li>
+    <li><strong>Blok Kırıldığında:</strong> Oyuncu belirli bir blok türünü çıkardığında ateşlenir.</li>
+    <li><strong>Sohbet Komutunda [kelime]:</strong> Oyuncu kelimeyi sohbete yazdığında ateşlenir.</li>
+    <li><strong>Oyuncu Zıpladığında:</strong> Her zıplamada bir kez ateşlenir.</li>
+  </ul>
+</div>
+<div class="callout cw">
+  <span class="ci">⚠️</span>
+  <div>
+    <strong>Kritik Hata: Olay Bloğunun Dışına Yerleştirilen Kod</strong><br>
+    Bu Modül 3'teki en yaygın kodlama hatasıdır. Öğrenciler "değişkeni 1 değiştir" bloğunu olay bloğunun dışına koyar. Olduğunda, değişken değişimi olay her ateşlendiğinde değil yalnızca program yüklendiğinde çalışır.<br>
+    <div class="code-block" style="margin-top:8px;background:#2a0000;border-color:#B91C1C">
+      <span style="color:#F87171">YANLIŞ — skor yürüyüşte değil program başlangıcında değişir:</span><br>
+      <span class="ck">oyuncu</span> yürüdüğünde { ← boş olay bloğu<br>
+      }<br>
+      <span style="color:#F78C6C">skor'u 1 artır</span>  ← DIŞARIDA — bir kez çalışır, bir daha asla
+    </div>
+    <div class="code-block" style="margin-top:8px;background:#0a2000;border-color:#16A34A">
+      <span style="color:#4ADE80">DOĞRU — skor her adımda değişir:</span><br>
+      <span class="ck">oyuncu</span> yürüdüğünde {<br>
+      &nbsp;&nbsp;<span class="cf">skor'u 1 artır</span>  ← İÇERİDE<br>
+      }
+    </div>
+    <strong>Öğretim düzeltmesi:</strong> Öğrenciler kodlamadan önce bir kağıda dikdörtgen çizmelerini ve her talimatı içine veya dışına yerleştirmelerini isteyin.
+  </div>
+</div>
+
+<div id="variables" class="anchor-target">
+  <div class="section-head">3 · Değişkenler — Değişen Veriler İçin Kaplar</div>
+</div>
+<div class="card">
+  <h4>Değişken Nedir?</h4>
+  <p>Bir <strong>değişken</strong>, bir değer tutan (sayı, metin veya mantıksal doğru/yanlış) adlandırılmış bir bellek depolama konumudur. Modül 3 için tüm değişkenler sayısal olacak — skorlar, sayaçlar ve zamanlayıcılar tutarlar.</p>
+  <div class="code-block">
+    <span class="ck">skor'u</span>    <span class="cn">0</span>'a ayarla      ← değişkeni oluşturur ve başlangıç değeri verir<br>
+    <span class="ck">skor'u</span> <span class="cn">+1</span> artır           ← o anda saklanan değere 1 ekler<br>
+    <span class="ck">skor'u</span> <span class="cn">-5</span> değiştir         ← mevcut değerden 5 çıkarır<br>
+    <span class="cm">skor</span>'u söyle               ← mevcut değeri sohbette görüntüler (test için)
+  </div>
+  <p style="margin-top:10px"><strong>MakeCode'da değişken kapsamı:</strong> Tüm değişkenler MakeCode Education ortamında <em>globaldir</em> — herhangi bir olay bloğu herhangi bir değişkeni okuyup yazabilir. Yerel değişken yoktur.</p>
+  <p style="margin-top:8px"><strong>Öğretilecek adlandırma kuralı:</strong> Tek harfler (<code>x</code>, <code>a</code>) yerine tanımlayıcı adlar (<code>skor</code>, <code>adim</code>, <code>tas</code>) kullanın. 8 yaşındaki çocuklar için hata ayıklamayı mümkün kılar.</p>
+</div>
+
+<div id="conditionals" class="anchor-target">
+  <div class="section-head">4 · Koşullar — Eğer–O Zaman Mantığı</div>
+</div>
+<div class="card">
+  <h4>Eğer–O Zaman ve Eğer–O Zaman–Değilse Blokları</h4>
+  <p>Bir <strong>koşul</strong>, programın karar vermesini sağlar. Koşullar olmadan program her zaman oyun durumundan bağımsız olarak aynı şeyi yapar.</p>
+  <div class="code-block">
+    <span class="ck">eğer</span> skor <span class="cn">≥ 10</span> <span class="ck">ise</span> {<br>
+    &nbsp;&nbsp;<span class="cm">söyle</span> <span class="cs">"Kazandın! Final skoru: "</span> + skor<br>
+    &nbsp;&nbsp;<span class="cf">havai fişek</span> oyuncu konumunda<br>
+    &nbsp;&nbsp;<span class="ck">skor'u</span> <span class="cn">0</span>'a ayarla    ← yeni oyun için sıfırla<br>
+    }<br><br>
+    <span class="ck">eğer</span> skor <span class="cn">≥ 10</span> <span class="ck">ise</span> {<br>
+    &nbsp;&nbsp;<span class="cm">söyle</span> <span class="cs">"Kazandın!"</span><br>
+    } <span class="ck">değilse</span> {<br>
+    &nbsp;&nbsp;<span class="cm">söyle</span> <span class="cs">"Devam et! "</span> + (10 - skor) + <span class="cs">" adım kaldı"</span><br>
+    }
+  </div>
+  <p style="margin-top:10px"><strong>Öğrencilerin bilmesi gereken karşılaştırma operatörleri:</strong></p>
+  <div class="two-col" style="margin-top:8px">
+    <div class="card">
+      <h4>Eşitlik ve Eşitsizlik</h4>
+      <p><code>=</code> eşittir · <code>≠</code> eşit değil<br><code>&gt;</code> büyüktür · <code>&lt;</code> küçüktür<br><code>≥</code> büyük veya eşit · <code>≤</code> küçük veya eşit</p>
+    </div>
+    <div class="card">
+      <h4>Mantıksal İşlemler</h4>
+      <p><code>VE</code> — her iki koşul da doğru olmalı<br><code>VEYA</code> — herhangi bir koşul doğru<br><code>DEĞİL</code> — koşulu tersine çevirir<br>Örnek: <code>skor ≥ 10 VE hayat &gt; 0</code></p>
+    </div>
+  </div>
+</div>
+
+<div id="minigame" class="anchor-target">
+  <div class="section-head">5 · Mini Oyun İnşası — Tam Örnek</div>
+</div>
+<div class="card">
+  <h4>"10'a Koş" Mini Oyunu — Tam Teknik Özellik</h4>
+  <p>Bu, tüm üç Modül 3 kavramını tek programda uygulayan minimum uygulanabilir mini oyundur.</p>
+  <div class="code-block">
+    <span class="cm">// Kurulum bloğu — program başladığında bir kez çalışır</span><br>
+    başlangıçta {<br>
+    &nbsp;&nbsp;<span class="ck">skor'u</span> <span class="cn">0</span>'a ayarla<br>
+    &nbsp;&nbsp;<span class="cm">söyle</span> <span class="cs">"Oyun başladı! Puan kazanmak için yürü. 10'a ulaş!"</span><br>
+    }<br><br>
+    <span class="cm">// Olay bloğu — her adımda ateşlenir</span><br>
+    <span class="ck">oyuncu</span> yürüdüğünde {<br>
+    &nbsp;&nbsp;<span class="cf">skor'u 1 artır</span><br>
+    &nbsp;&nbsp;<span class="ck">eğer</span> skor <span class="cn">≥ 10</span> <span class="ck">ise</span> {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">söyle</span> <span class="cs">"KAZANDIN! Final skoru: "</span> + skor<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">havai fişek</span> oyuncu konumunda<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">skor'u</span> <span class="cn">0</span>'a ayarla<br>
+    &nbsp;&nbsp;}<br>
+    }
+  </div>
+</div>
+
+<div id="trouble" class="anchor-target">
+  <div class="section-head">6 · Sorun Giderme Kataloğu — Modül 3 (5 Senaryo)</div>
+</div>
+<div style="overflow-x:auto">
+  <table class="trouble-table">
+    <thead>
+      <tr><th style="width:22%">Hata / Belirti</th><th style="width:27%">Kök Neden</th><th style="width:31%">Tam Düzeltme</th><th style="width:20%">Önleme Komut Dosyası</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mc">Skor /code çalıştırıldığında hemen 1 olarak görünüyor, oyuncu yürümeden önce</td>
+        <td>"Skoru 0'a ayarla" bloğu Oyuncu Yürüdüğünde olayı içinde, ayrı bir başlangıç bloğunda değil</td>
+        <td>"Skoru 0'a ayarla" bloğunu Yürüyüş olayının dışına, Başlangıçta bloğuna taşıyın.</td>
+        <td class="fc">"Kurulum kodu Başlangıçta'ya gider. Oyun kodu olaylara gider. Başlatma ile yanıt kodunu asla karıştırmayın."</td>
+      </tr>
+      <tr>
+        <td class="mc">Değişken skor hiçbir zaman 1'in üzerine çıkmıyor — her adımda sıfırlanıyor</td>
+        <td>"Skoru 0'a ayarla" Yürüyüş olayı bloğunun içine konmuş, bu yüzden her adımda sıfırlanıyor</td>
+        <td>"Skoru 0'a ayarla"yı Yürüyüş bloğunun içinden tamamen çıkarın. Başlatma yalnızca Başlangıçta bloğuna aittir.</td>
+        <td class="fc">"Kodunuzu yüksek sesle okuyun. 'Her adımda: skoru 0'a ayarla, sonra 1 ekle.' Skor her zaman ne olur?"</td>
+      </tr>
+      <tr>
+        <td class="mc">Eğer–O Zaman koşulu, skor hedefi açıkça aştığında bile hiç tetiklenmiyor</td>
+        <td>Karşılaştırma operatörü yanlış (≥ yerine = kullanılmış); VEYA koşuldaki değişken adı artımlanan değişkenden farklı yazılmış</td>
+        <td>Operatörü kontrol edin: hedef skorun 10 veya üzerine ulaşması ise koşul skor = 10 değil skor ≥ 10 olmalı. Yazımı kontrol edin: MakeCode değişken adlarında büyük/küçük harf duyarlıdır.</td>
+        <td class="fc">"Kazanma koşulları için = (tam eşit) değil ≥ (büyük veya eşit) kullanın — oyuncu tam sayıyı atlayabilir."</td>
+      </tr>
+      <tr>
+        <td class="mc">Skor 10'a ulaştıktan sonra kazanma koşulu her adımda tetikleniyor — havai fişekler tekrar tekrar çalıyor</td>
+        <td>Skor, kazanma koşulu bloğunun içinde sıfırlanmıyor; kazandıktan sonra ≥ 10 olarak kalıyor</td>
+        <td>Eğer-o zaman kazanma bloğunun son satırı olarak "skoru 0'a ayarla" ekleyin. Alternatif olarak "oyunAktif" boolean değişkeni ekleyin: kazanışta yanlış yapın ve tüm Yürüyüş olayını "eğer oyunAktif = doğru ise" içine sarın.</td>
+        <td class="fc">"Kazandıktan sonra skora ne olmalı? Ya sıfırlayın ya da oyunu kapatın. Sıfırlamazsanız kazanma sonsuza kadar tetiklenir."</td>
+      </tr>
+      <tr>
+        <td class="mc">Öğrenci "söyle skoru" neden bir sayı gösterdiğini anlayamıyor, onlar metin + sayı ("Skor: 5") görmek istiyordu</td>
+        <td>Yanlış blok kombinasyonu: yalnızca değişken bloğu içeren "söyle" sayıyı üretir; metin + değişkeni birleştirmek için "birleştir" bloğu gerekir</td>
+        <td>Öğrencilere MakeCode'daki "metin birleştir" bloğunu gösterin: [söyle [birleştir ["Skor: "] [skor]]]. "Söyle" bir şeyi tutabilir — metin VE sayı göstermek için önce birleştirmeniz gerekir.</td>
+        <td class="fc">"'Söyle' yalnızca bir şey tutabilir. Onu 'Söyle'ye vermeden önce metin ve sayıları birleştirmek için 'birleştir' kullanın."</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="protips" class="anchor-target">
+  <div class="section-head">7 · Tutor Uzman İpuçları ve Gerçek Dünya Analogileri</div>
+</div>
+<div class="tip-card">
+  <p><strong>💡 Değişkenler = "Video Oyunu Skoru" Analogisi (Modül 3 Birincil Kancası)</strong><br>
+  <em>"Oynadığınız her video oyununu düşünün. Mario'nun jeton sayacı var. FIFA'nın gol sayacı var. Minecraft'ın XP çubuğu var. Bunların hepsi değişken — bir sayı depolayan ve oynandıkça değişen, adlandırılmış bir kutu. Bugün kendi skor sayacınızın arkasındaki kodu inşa edeceksiniz."</em></p>
+</div>
+<div class="tip-card">
+  <p><strong>💡 Olaylar = "Bildirim Sistemi" Analogisi</strong><br>
+  <em>"Telefonunuz gönderilen her mesajı hemen okumaz. Sessizce bekler — bir mesaj geldiğinde sizi bildirir. Bu bildirim bir olaydır. MakeCode olay blokları tam olarak aynı şekilde çalışır: Minecraft'ta bir şey olana kadar uyur, ardından uyanır ve kodunu çalıştırır."</em></p>
+</div>
+<div class="tip-card">
+  <p><strong>💡 Eğer–O Zaman = "Termostat" Analogisi</strong><br>
+  <em>"Termostat sürekli evi ısıtmaz — sürekli kontrol eder: 'Sıcaklık 20°C'nin altında mı?' Evet ise ısıtıcı açılır. Hayır ise kapalı kalır. Eğer–O Zaman bloğu tam olarak bunu yapar: bir koşulu kontrol eder ve yalnızca koşul doğru olduğunda hareket eder."</em></p>
+</div>
+<div class="tip-card">
+  <p><strong>💡 Dış Blok Hatalarını Önlemek İçin "Blok Sınırı Görselleştirme" Hilesi</strong><br>
+  Modül 3 için herhangi bir öğrenci kod yazmadan önce, onlardan kağıda bir dikdörtgen çizmelerini isteyin. Üzerine "Oyuncu Yürüdüğünde" yazın. Ardından: "Talimatlarınızın hangisi bu dikdörtgenin İÇİNE, hangisi dışına gidiyor?" Sınırı kodlamadan önce fiziksel olarak çizen öğrenciler bu hatayı yaklaşık %70 daha az yapar.</p>
+</div>
+
+<div id="test-cta" class="anchor-target">
+  <div class="section-head">8 · Modül 3 Bilgi Kontrolü</div>
+</div>
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Modül 3 Bilgi Kontrolüne Hazır mısınız?</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+    Yalnızca Modül 3 içeriğinden 6 soru. Modül 4'ün kilidini açmak için <strong>%70 veya üzeri</strong> gereklidir.
+  </p>
+  <div class="btn-row center">
+    <a href="TrModule3Test.html" class="btn-primary">Modül 3 Testini Başlat →</a>
+    <button class="btn-outline" onclick="goHome()">← Panel</button>
+  </div>
+</div>
+
+</div>
+<footer>© 2026 Kodland. Dahili tutor eğitim materyali — harici dağıtım için değildir.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(3)) { alert('Lütfen önce önceki modülleri tamamlayın.'); goHome(); }
+</script>
+</body>
+</html>

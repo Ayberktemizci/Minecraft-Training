@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul 4 — Hutan Mekanik | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#B45309 0%,#F59E0B 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:'🌲';font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.85);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:rgba(255,255,255,.7);color:rgba(255,255,255,.9)}
+  .module-banner .mobj strong{color:#fff}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .code-block{background:var(--ink);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .code-block{background:#0a0a0a}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #38BDF8;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}.fc{color:var(--ok-t)}
+  .anchor-target{scroll-margin-top:130px}
+  .phase-card-inner{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:10px;border-left:4px solid var(--pink);box-shadow:var(--shadow)}
+  .phase-label-inner{font-family:'Nunito',sans-serif;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--pink);margin-bottom:4px}
+  code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Pelatihan Tutor</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dasbor</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Modul 4 / 5</div>
+    <div class="mh1">🌲 Hutan Mekanik</div>
+    <p>Otomasi hidup — siswa menerapkan setiap keterampilan dari Modul 1–3 untuk membangun kebun otomatis ujung-ke-ujung: Agen menanam benih, sirkuit Redstone memanen saat siap, dan Hopper menyortir dan menyimpan output.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Tujuan Modul 4:</strong> Program Agen sebagai Tukang Kebun otomatis (loop + perintah tanam) · Bangun sirkuit panen Redstone kondisional (Observer → Piston) · Implementasikan sortir dan penyimpanan item berbasis Hopper · Pahami jalur otomasi penuh: Deteksi → Picu → Kumpulkan → Simpan.
+    </div>
+  </div>
+</div>
+<div class="cbody">
+
+<div class="anchor-target" id="overview"><div class="section-head">1 · Gambaran Umum — Modul Integrasi</div></div>
+<div class="card">
+  <h4>Mengapa Modul 4 adalah "Modul Integrasi"</h4>
+  <p>Modul 4 adalah modul pertama yang secara eksplisit meminta siswa untuk <strong>menggabungkan semua keterampilan sebelumnya</strong>: kontrol Agen + Redstone (M1), koordinat (M2), dan logika kondisional (M3) — semuanya dalam satu sistem kebun otonom yang lengkap.</p>
+</div>
+<div class="anchor-target" id="agent"><div class="section-head">2 · Agen sebagai Tukang Kebun — Penanaman Otomatis</div></div>
+<div class="card">
+  <h4>Penanaman Multi-Baris — Nested Loop</h4>
+  <div class="code-block">
+    pada perintah obrolan <span style="color:#C3E88D">"kebun"</span> {<br>
+    &nbsp;&nbsp;<span style="color:#C792EA">ulangi</span> <span style="color:#F78C6C">5</span> kali {      ← loop luar: 5 baris<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#C792EA">ulangi</span> <span style="color:#F78C6C">5</span> kali {    ← loop dalam: 5 kolom<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#82AAFF">tempatkan saat bergerak ke bawah</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#82AAFF">agen bergerak maju</span> <span style="color:#F78C6C">1</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#82AAFF">agen bergerak ke kanan</span> <span style="color:#F78C6C">1</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#82AAFF">agen berbalik arah</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#82AAFF">agen bergerak mundur</span> <span style="color:#F78C6C">5</span><br>
+    &nbsp;&nbsp;}<br>
+    }
+  </div>
+  <div class="callout cw" style="margin-top:10px"><span class="ci">⚠️</span><div><strong>Prasyarat kritis:</strong> Tanah harus berupa lahan pertanian yang diolah dan diirigasi sebelum Agen menanam. Tanah biasa = benih jatuh sebagai item, bukan tertanam.</div></div>
+</div>
+<div class="anchor-target" id="circuits"><div class="section-head">3 · Sirkuit Panen Kondisional</div></div>
+<div class="card">
+  <h4>Observer–Piston Diterapkan ke Tanaman Pertanian</h4>
+  <p>Gandum/Wortel/Kentang melewati 8 tahap pertumbuhan (0–7). <strong>Tahap 7 = tumbuh penuh.</strong> Observer mendeteksi transisi 6→7 dan terpicu. Ajarkan dengan bahasa Jika–Maka: <em>"JIKA gandum mencapai tahap 7 MAKA Observer terpicu MAKA Piston memecah MAKA item jatuh."</em></p>
+</div>
+<div class="anchor-target" id="hoppers"><div class="section-head">4 · Mekanik Hopper &amp; Sistem Sortir</div></div>
+<div class="card">
+  <h4>Aturan Penempatan Hopper &amp; Sistem Sortir Dasar</h4>
+  <div class="two-col">
+    <div class="card"><h4>Penempatan Hopper</h4><p>Tahan <strong>Shift + klik kanan</strong> blok peti untuk menghubungkan. Tanpa Shift = inventaris peti terbuka = Hopper salah ditempatkan. Kapasitas: 5 tumpukan item per Hopper.</p></div>
+    <div class="card"><h4>Sortir Dua Peti</h4><p>Satu Hopper per peti, masing-masing dimuat dengan item filter. Item yang cocok filter masuk ke peti itu; item lain diteruskan. Target M4: gandum ke satu peti, benih ke peti lain — otomatis.</p></div>
+  </div>
+</div>
+<div class="anchor-target" id="pipeline"><div class="section-head">5 · Jalur Otomasi Penuh</div></div>
+<div class="card">
+  <h4>Empat Tahap: Deteksi → Picu → Kumpulkan → Simpan</h4>
+  <div class="two-col">
+    <div class="card" style="border-left:4px solid var(--lime)"><h4 style="color:var(--lime-d)">1: Deteksi</h4><p><strong>Observer</strong> mendeteksi perubahan status blok tanaman (tahap 6→7), memancarkan denyut 1-tick.</p></div>
+    <div class="card" style="border-left:4px solid var(--amber)"><h4 style="color:#D97706">2: Picu</h4><p><strong>Piston</strong> diberi daya oleh denyut Observer, memanjang dan memecah tanaman yang sudah panen.</p></div>
+    <div class="card" style="border-left:4px solid var(--pink)"><h4 style="color:var(--pink-d)">3: Kumpulkan</h4><p><strong>Hopper</strong> di bawah baris tanaman mengumpulkan entitas item yang jatuh.</p></div>
+    <div class="card" style="border-left:4px solid #3B82F6"><h4 style="color:#1D4ED8">4: Simpan</h4><p>Hopper mentransfer ke <strong>Peti</strong> yang terhubung dengan kecepatan 2,5 item/detik.</p></div>
+  </div>
+</div>
+<div class="anchor-target" id="trouble"><div class="section-head">6 · Pemecahan Masalah — Modul 4</div></div>
+<div style="overflow-x:auto"><table class="trouble-table">
+  <thead><tr><th>Gejala</th><th>Penyebab</th><th>Perbaikan</th><th>Pencegahan</th></tr></thead>
+  <tbody>
+    <tr><td class="mc">Agen menjatuhkan benih bukan menanamnya</td><td>Tanah bukan lahan pertanian yang diolah dan diirigasi</td><td>Gunakan Cangkul pada tanah, tambahkan sumber air dalam 4 blok. Verifikasi warna tanah cokelat gelap.</td><td class="fc">"Sebelum Agen menanam, tanah harus diolah dan diirigasi."</td></tr>
+    <tr><td class="mc">Hopper meluap, tidak mentransfer ke peti</td><td>Ditempatkan tanpa Shift — output Hopper tidak menghadap peti</td><td>Hancurkan dan tempatkan kembali: tahan Shift + klik kanan langsung pada blok peti.</td><td class="fc">"Selalu tahan Shift saat menempatkan Hopper ke peti."</td></tr>
+    <tr><td class="mc">Observer memicu tapi Piston tidak memanjang</td><td>Wajah output Observer tidak mengarah ke Piston — masalah orientasi</td><td>Uji terpisah dengan Lampu Redstone. Jika Lampu menyala saat tanaman tumbuh = Observer OK, masalah di kabel/Piston.</td><td class="fc">"Uji setiap tahap secara terpisah sebelum menghubungkan."</td></tr>
+    <tr><td class="mc">Loop nested menghasilkan pola diagonal</td><td>'Berbalik arah' hilang setelah menyelesaikan satu baris</td><td>Gambar jalur di kertas sebelum coding. Uji 1 baris dulu, amati, lalu perluas ke 5 baris.</td><td class="fc">"Gambar jalurnya sebelum coding. Agen pergi ke mana kode mengarah."</td></tr>
+    <tr><td class="mc">Sortir mengarahkan semua item ke peti pertama</td><td>Slot filter Hopper tidak dikonfigurasi dengan benar</td><td>Isi setiap slot inventaris Hopper filter dengan satu item target, tanpa slot kosong.</td><td class="fc">"Hopper sortir butuh 'template' — satu item target di setiap slot."</td></tr>
+  </tbody>
+</table></div>
+<div class="anchor-target" id="protips"><div class="section-head">7 · Tips Pro &amp; Analogi</div></div>
+<div class="tip-card"><p><strong>💡 Sortir Hopper = "Fasilitas Daur Ulang"</strong><br><em>"Sabuk konveyor berbeda mengarahkan kaca ke satu wadah, kertas ke yang lain. Sistem sortir Hopper kamu adalah fasilitas daur ulang digitalmu — gandum ke kiri, benih ke kanan, otomatis."</em></p></div>
+<div class="tip-card"><p><strong>💡 Jalur 4 Tahap = "Gudang Online"</strong><br><em>"Sensor mendeteksi pesanan [Observer] → lengan robot mengambil [Piston] → ban berjalan membawa [Hopper] → masuk kotak berlabel [Peti]. Kebun kita memiliki empat tahap yang sama."</em></p></div>
+<div class="tip-card"><p><strong>💡 Nested Loop = "Printer"</strong><br><em>"Printer bergerak di sepanjang satu baris (loop dalam), turun satu baris (loop luar), mencetak baris berikutnya. Penanaman Agen bekerja persis sama."</em></p></div>
+
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h);margin-top:28px">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Siap untuk Kuis Pengetahuan Modul 4?</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+    6 pertanyaan murni dari konten Modul 4. Nilai <strong>70% atau lebih</strong> diperlukan untuk membuka Modul Modul 5.
+  </p>
+  <div class="btn-row center">
+    <a href="IdModule4Test.html" class="btn-primary">Mulai Tes Modul 4 →</a>
+    <button class="btn-outline" onclick="goHome()">← Dasbor</button>
+  </div>
+</div>
+</div>
+<footer>© 2026 Kodland. Materi pelatihan tutor internal — tidak untuk distribusi eksternal.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(4)) { alert('Harap selesaikan modul sebelumnya terlebih dahulu.'); goHome(); }
+</script>
+</body>
+</html>

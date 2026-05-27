@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Modül 1 Teknik Derinlik | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.tech-hero{background:linear-gradient(135deg,#1a2e0a 0%,#2f5222 55%,#4a7830 100%);padding:44px 32px 36px;position:relative;overflow:hidden;border-bottom:3px solid var(--lime)}
+.tech-hero::before{content:'🌿';font-size:220px;position:absolute;right:-30px;top:-40px;opacity:.07;line-height:1;pointer-events:none}
+.tech-hero .eyebrow{background:rgba(196,240,70,.15);border-color:rgba(196,240,70,.35);color:var(--lime)}
+.tech-hero h1{font-family:'Nunito',sans-serif;font-size:clamp(20px,3.5vw,32px);font-weight:900;letter-spacing:-.4px;line-height:1.1;color:#fff;margin:12px 0 8px}
+.tech-hero p{color:rgba(255,255,255,.72);font-size:13.5px;line-height:1.65;max-width:640px}
+.tech-hero .mobj{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);border-left-color:#C4F046;color:rgba(255,255,255,.85)}
+.tech-hero .mobj strong{color:#fff}
+.sec-nav{display:flex;flex-wrap:wrap;gap:6px;padding:12px 24px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90}
+.sec-pill{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:5px 12px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+.sec-pill:hover,.sec-pill.active{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+.anchor{scroll-margin-top:128px}
+.coord-box{background:var(--ink);border-radius:var(--r);padding:20px;font-family:'JetBrains Mono','Courier New',monospace;font-size:12.5px;line-height:1.9;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+[data-theme="dark"] .coord-box{background:#070f07}
+.cx{color:#F87171}.cy{color:#4ADE80}.cz{color:#60A5FA}.cm{color:#FCD34D}.cg{color:#C4F046}.cr{color:#F472B6}
+.code-block{background:var(--ink);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+[data-theme="dark"] .code-block{background:#070f07}
+.ck{color:#C792EA}.cf{color:#82AAFF}.cs{color:#C3E88D}.cn{color:#F78C6C}.com{color:#546E7A;font-style:italic}
+.trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12.5px}
+.trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:8px 12px;text-align:left;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text)}
+.trouble-table td{border:1.5px solid var(--border);padding:9px 12px;line-height:1.55;vertical-align:top;color:var(--text2)}
+.trouble-table tr:nth-child(even) td{background:var(--surface2)}
+.td-err{color:var(--no-t);font-weight:600}.td-fix{color:var(--ok-t)}
+.analogy{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #38BDF8;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+.analogy p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:580px){.two-col{grid-template-columns:1fr}}
+ol.steps{counter-reset:s;padding:0;margin:8px 0}
+ol.steps li{counter-increment:s;list-style:none;position:relative;padding:10px 14px 10px 46px;margin-bottom:8px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rsm);font-size:13px;color:var(--text2);line-height:1.6}
+ol.steps li::before{content:counter(s);position:absolute;left:11px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:var(--lime);border:2px solid var(--lime-d);display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;color:var(--ink)}
+.flow-list{list-style:none;padding:0;margin:10px 0}
+.flow-item{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start}
+.flow-num{width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--lime);font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;border:2px solid var(--lime-d)}
+[data-theme="dark"] .flow-num{background:rgba(196,240,70,.1)}
+.flow-body{flex:1}
+.flow-head{font-weight:700;font-size:13.5px;color:var(--text);margin-bottom:4px}
+.flow-time{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--pink);margin-bottom:3px}
+.flow-desc{font-size:13px;color:var(--text2);line-height:1.65}
+.cta-block{background:linear-gradient(135deg,#1a2e0a,#2f5222);border-radius:var(--r);padding:36px 32px;text-align:center;margin-top:32px;border:2px solid rgba(196,240,70,.25);overflow:hidden;position:relative}
+.cta-block::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(196,240,70,.1) 0%,transparent 75%);pointer-events:none}
+.cta-block h3{font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:#fff;margin-bottom:8px;position:relative}
+.cta-block p{color:rgba(255,255,255,.68);font-size:13.5px;line-height:1.6;max-width:500px;margin:0 auto 22px;position:relative}
+code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:1px 6px;color:var(--pink)}
+[data-theme="dark"] code{color:var(--lime)}
+kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:1px 5px;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Eğitimi</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="window.location.href='TrModule1.html'">← Pedagoji</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-bar" style="width:0%"></div></div>
+
+<div class="sec-nav">
+  <a class="sec-pill" href="#sec-overview">Genel Bakış</a>
+  <a class="sec-pill" href="#sec-flow">Öğretim Akışı</a>
+  <a class="sec-pill" href="#sec-coords">Koordinatlar</a>
+  <a class="sec-pill" href="#sec-makecode">MakeCode &amp; Ajan</a>
+  <a class="sec-pill" href="#sec-redstone">Redstone Fiziği</a>
+  <a class="sec-pill" href="#sec-bamboo">Bambu Çiftliği</a>
+  <a class="sec-pill" href="#sec-cobble">Kopuk Taş Fabrikası</a>
+  <a class="sec-pill" href="#sec-trouble">Sorun Giderme</a>
+  <a class="sec-pill" href="#sec-analogies">Analogiler</a>
+  <a class="sec-pill" href="#sec-cta">→ Test</a>
+</div>
+
+<div class="tech-hero">
+  <div style="max-width:820px;margin:0 auto;position:relative">
+    <div class="eyebrow">Teknik Derinlik Modül Dökümü · Modül 1 / 5</div>
+    <h1>Teknik Derinlik — Modül 1</h1>
+    <p style="margin-bottom:14px">Modül 1: Cesur Yeni Yeşil Taş Dünyası — öğretmeniz, açıklamanız, göstermeniz ve sorun gidermeniz gereken her şey için tam teknik referans. Yalnızca saf mekanikler; pedagoji burada yer almaz.</p>
+    <div class="mobj">
+      <strong>Modül 1 Teknik Hedefleri:</strong> X/Y/Z 3D koordinat sistemini ve /tp komut sözdizimini (göreceli ~ ve mutlak) öğrenin · /code aracılığıyla MakeCode arayüzünü açın ve gezinin · Ajan robotunu oluşturun, yönlendirin ve komut verin · Redstone sinyal gücünü ve 15 blok azalma fiziğini anlayın · Gözlemci→Piston otomatik bambu çiftliğini Huni toplayıcıyla inşa edin · Su+Lav sonsuz kopuk taş fabrikasını inşa edin.
+    </div>
+  </div>
+</div>
+
+<div class="cbody">
+
+<div id="sec-overview" class="anchor">
+  <div class="section-head">Modül 1 Genel Bakışı — Kapsam ve Önkoşul Bağlamı</div>
+</div>
+
+<div class="card">
+  <h4>Öğrencilerin Modül 1'den Sonra Ayrılması Gerekenler</h4>
+  <p>Modül 1, tüm Seviye 1 sarmalının giriş noktasıdır. Burada tanıtılan her kavram sonraki modüller için doğrudan önkoşuldur — Modül 2 için koordinatlar, Modül 3 ve 4 için MakeCode döngüleri, Modül 4 için Redstone mantığı. Öğrenciler Modül 1'den şunları yapabilecek şekilde ayrılır: 3D'de kaybolmadan gezinmek, Ajanı oluşturup komut vermek, Redstone'u bir sinyal sistemi olarak anlamak ve çalışan bir otomatik inşa sergilemek.</p>
+</div>
+
+<div class="card">
+  <h4>Modül 1'e Özgü Oturum Öncesi Teknik Kontroller</h4>
+  <ol class="steps">
+    <li>Oturum dünyasını açın ve sohbete <code>/code</code> yazın. MakeCode arayüzü görünmezse, öğrenciler katılmadan önce dünya ayarlarına gidin ve "Code Builder"ı etkinleştirin.</li>
+    <li>Bambu çiftliği inşa bölgesinin en az 3×3 temiz zemin karosu ve 5 blok dikey boşluğa sahip olduğunu doğrulayın.</li>
+    <li>Kopuk taş fabrikası demosu için 3 blok genişliğinde bir hendek hazırlayın. Öğrencilerin yalnızca Lav yerleştirmesi gereksin diye Su kaynağını önceden bir uca yerleştirin.</li>
+    <li>Bugünün spawn koordinatlarını kendi sohbet pencerenize ve Zoom/Meet sohbetine öğrenciler gelmeden önce sabitleyin.</li>
+  </ol>
+</div>
+
+<div id="sec-flow" class="anchor">
+  <div class="section-head">Adım Adım Öğretim Akışı — Modül 1 Oturumu</div>
+</div>
+
+<div class="card">
+  <h4>Tam Oturum Dizisi</h4>
+  <ul class="flow-list">
+    <li class="flow-item">
+      <div class="flow-num">1</div>
+      <div class="flow-body">
+        <div class="flow-time">00:00 – 00:05</div>
+        <div class="flow-head">Uçuş Öncesi + Buz Kırıcı (paralel)</div>
+        <div class="flow-desc">Dünya yüklemesi, giriş ve sesin sessiz doğrulaması. Spawn koordinatlarını sohbete sabitleyin: <code>/tp @a [X] [Y] [Z]</code>. Buz kırıcı eş zamanlı çalışıyor.</div>
+      </div>
+    </li>
+    <li class="flow-item">
+      <div class="flow-num">2</div>
+      <div class="flow-body">
+        <div class="flow-time">00:05 – 00:08</div>
+        <div class="flow-head">Misyon Anlatısı Aktivasyonu</div>
+        <div class="flow-desc">"Gece çöküyor — canavarlar gelmeden önce bir sığınak inşa etmek için 8 dakikamız var!" Öğrenciler sabitlenmiş koordinatları kullanarak inşa bölgesine gider. Bu, bunu bir navigasyon dersi olarak çerçevelemeden gerçek zaman baskısı altında koordinat navigasyonu öğretir.</div>
+      </div>
+    </li>
+    <li class="flow-item">
+      <div class="flow-num">3</div>
+      <div class="flow-body">
+        <div class="flow-time">00:08 – 00:15</div>
+        <div class="flow-head">Koordinat Sistemi Öğretimi (7 dk)</div>
+        <div class="flow-desc">Tüm öğrenciler inşa bölgesine geldiğinde misyonu durdurun. F3'ü (veya MC Education HUD'unu) açın ve X/Y/Z eksenlerini canlı olarak inceleyin. Bir /tp komutu gösterin. Her öğrenci geri çağırma komutunu bir kez yazar. Her başarılı ışınlanmadan sonra Panda Kuralı.</div>
+      </div>
+    </li>
+    <li class="flow-item">
+      <div class="flow-num">4</div>
+      <div class="flow-body">
+        <div class="flow-time">00:15 – 00:20</div>
+        <div class="flow-head">MakeCode Tanıtımı + Ajan Oluşturma</div>
+        <div class="flow-desc">Birlikte <code>/code</code> yazın. Editör düzeninin bir ekran paylaşımı turu. Ajanı bir karakter olarak tanıtın: "Bu bir dinozor mu? Tavuk mu? Hayır — yeni en iyi arkadaşınız. Ona bir isim verelim!" Öğrenciler Sohbet Komutu bloğunu kullanarak Ajanlarını oluşturur.</div>
+      </div>
+    </li>
+    <li class="flow-item">
+      <div class="flow-num">5</div>
+      <div class="flow-body">
+        <div class="flow-time">00:20 – 00:30</div>
+        <div class="flow-head">Rehberli Ajan Pratiği — Tekrar Döngüsü</div>
+        <div class="flow-desc">Öğrenciler Ajanı 5 blok ileri hareket ettiren bir Tekrar döngüsü yazar. Tutor isimlere göre dolaşır. Her onaylanan Ajan hareketinden sonra Panda Kuralı.</div>
+      </div>
+    </li>
+    <li class="flow-item">
+      <div class="flow-num">6</div>
+      <div class="flow-body">
+        <div class="flow-time">00:30 – 00:35</div>
+        <div class="flow-head">🧠 Bilişsel Mola — ZORUNLU</div>
+        <div class="flow-desc">Öğrenciler Minecraft'ı tamamen kapatır. Tutor 5 dakika Simon Diyor veya kol germesi yönetir. Ekran teması yok.</div>
+      </div>
+    </li>
+    <li class="flow-item">
+      <div class="flow-num">7</div>
+      <div class="flow-body">
+        <div class="flow-time">00:35 – 00:50</div>
+        <div class="flow-head">Redstone Teorisi + Bambu Çiftliği İnşası</div>
+        <div class="flow-desc">"Ev elektriği" analogisi aracılığıyla Redstone'u tanıtın. Gözlemci–Piston zincirini bir kez gösterin. Öğrenciler bağımsız olarak inşa eder. Tutor yalnızca hedefli ipuçlarıyla dolaşır. Hızlı bitirenler Ekstra Görev alır (çiftliğin altına bir Sandığa bağlı Huni ekleyin).</div>
+      </div>
+    </li>
+    <li class="flow-item">
+      <div class="flow-num">8</div>
+      <div class="flow-body">
+        <div class="flow-time">00:50 – 00:55</div>
+        <div class="flow-head">Kopuk Taş Fabrikası Demosu (5 dk uzantı)</div>
+        <div class="flow-desc">Su+Lav kanalının hızlı demosu. Zaman izin verirse öğrenciler izler ve çoğaltır. Bu tamamlayıcı bir inşadır — bunun için bambu çiftliği tamamlama süresini feda etmeyin.</div>
+      </div>
+    </li>
+    <li class="flow-item">
+      <div class="flow-num">9</div>
+      <div class="flow-body">
+        <div class="flow-time">00:55 – 01:00</div>
+        <div class="flow-head">Yansıma + Ödev</div>
+        <div class="flow-desc">"Bugün ne inşa ettik?" → "En zor ne oldu?" → belirli kriterlerle ekran görüntüsü ödevi ataması.</div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+<div id="sec-coords" class="anchor">
+  <div class="section-head">Teknik Teori — 3D Koordinat Sistemi (X, Y, Z)</div>
+</div>
+
+<div class="card">
+  <h4>Eksen Tanımları ve Dünya Referans Çerçevesi</h4>
+  <p>Minecraft sağ el kuralıyla 3D Kartezyen koordinat sistemi kullanır. Sonsuz dünyadaki her blok üç işaretli tam sayıyla tanımlanan benzersiz bir konumu kapsar:</p>
+  <div class="coord-box">
+    <span class="cx">X ekseni</span>  →  Doğu (+X) / Batı  (−X)    ← yatay doğu-batı konumu<br>
+    <span class="cy">Y ekseni</span>  →  Yukarı (+Y) / Aşağı (−Y)  ← YÜKSEKLİK — bedrock üzerindeki yükseklik<br>
+    <span class="cz">Z ekseni</span>  →  Güney(+Z) / Kuzey (−Z)   ← yatay kuzey-güney konumu<br><br>
+    <span class="cm">Bedrock katmanı</span>   =  Y  0   (Survival'da tahrip edilemez)<br>
+    <span class="cm">Deniz seviyesi</span>    =  Y 63   (varsayılan Overworld süperflat)<br>
+    <span class="cm">Gökyüzü inşa sınırı</span> =  Y 255 (eski sürümler) / Y 320 (1.18+)<br><br>
+    Mevcut konumu okuma:<br>
+    · Java Edition: <kbd>F3</kbd> tuşuna basın — XYZ sol üstte görüntülenir<br>
+    · Minecraft Education Edition: Ayarlar → Dünya → HUD'da "Koordinatları Göster"i etkinleştirin
+  </div>
+
+  <h4 style="margin-top:14px">Mutlak Koordinatlar — Dünyadaki Sabit Adresler</h4>
+  <div class="coord-box">
+    <span class="com">// Mutlak — mevcut konumdan bağımsız olarak sabit bir dünya adresine ışınlar</span><br>
+    <span class="cg">/tp @s  100  64  200</span>   → kendini  X=100, Y=64, Z=200'e ışınlar (her zaman)<br>
+    <span class="cg">/tp @a    0  64    0</span>   → herkesi  tam dünya orijinine ışınlar<br>
+    <span class="cg">/tp @a  [X] [Y]  [Z]</span>  → herkesi  bugünün spawn koordinatlarına ışınlar
+  </div>
+
+  <h4 style="margin-top:14px">Göreceli Koordinatlar — <code>~</code> Tilde Öneki</h4>
+  <p>Tilde <em>"şu anki konumumdan uzaklık"</em> anlamına gelir. Komut çalıştığı anda dinamik olarak değerlendirilir — sabit adres değil.</p>
+  <div class="coord-box">
+    <span class="com">// ~ = "şu an bulunduğum yerden"</span><br>
+    <span class="cg">/tp @s ~0  ~0  ~0</span>   → sıfır uzaklık = hareket yok<br>
+    <span class="cg">/tp @s ~3  ~0  ~0</span>   → mevcut X konumundan 3 blok Doğu<br>
+    <span class="cg">/tp @s ~0  ~5  ~0</span>   → 5 blok düz YUKARI<br>
+    <span class="cg">/tp @s ~0  ~-3 ~0</span>   → 3 blok AŞAĞI<br><br>
+    <span class="com">// Karma sözdizimi — geçerli ve sıkça kullanışlı:</span><br>
+    <span class="cg">/tp @s ~0  64  ~0</span>   → mevcut X ve Z'yi koru; yüksekliği tam Y=64'e sabitle<br><br>
+    <span class="cr">YAYGIN YANILGI:</span> "/tp @a ~0 ~0 ~0 tüm oyuncuları aynı noktaya taşır."<br>
+    <span class="cy">DOĞRU:</span>           "~0 ~0 ~0 = her oyuncunun KENDİ konumundan sıfır uzaklık = kimse hareket etmez."
+  </div>
+
+  <div class="callout ct" style="margin-top:10px">
+    <span class="ci">💡</span>
+    <div><strong>Farkı fiziksel olarak öğretmek:</strong> "Mutlak koordinatlar sokak adresi gibidir — Atatürk Caddesi 100 her zaman Atatürk Caddesi 100'dür. Göreceli koordinatlar yol tarifi gibidir — 'solunuza 3 blok' şu an hangi yöne baktığınıza bağlıdır."</div>
+  </div>
+</div>
+
+
+<div id="sec-makecode" class="anchor">
+  <div class="section-head">Teknik Teori — MakeCode Arayüzü</div>
+</div>
+
+<div class="card">
+  <h4>Minecraft İçinden MakeCode'a Erişim</h4>
+  <p><strong>Erişim yolu:</strong> Minecraft sohbetini açmak için <kbd>T</kbd>'ye basın → <code>/code</code> yazın → Enter'a basın. MakeCode editörü tam ekran arayüz olarak açılır. Kod açmalar arasında kalıcıdır.</p>
+  <p style="margin-top:8px"><strong>Kritik önkoşul:</strong> Herhangi bir öğrenci dünyaya girmeden önce dünya ayarlarında (Dünyalar listesindeki dünya küçük resmindeki kalem simgesi) "Code Builder'ı Etkinleştir" açılmalıdır. Bu açık değilse <code>/code</code> sessizce çalışır — öğrenciler hiçbir şey görmez ve hata mesajı çıkmaz.</p>
+
+  <h4 style="margin-top:14px">Modül 1'de Öğrencilerin Bilmesi Gereken Temel Blok Türleri</h4>
+  <div class="code-block">
+    <span class="com">// 1. SOHBET KOMUTU'NDA — Olay işleyici. Oyuncu o sözcüğü MC sohbetine yazdığında çalışır.</span><br>
+    <span class="ck">sohbet komutunda</span> <span class="cs">"inşa"</span> {<br>
+    &nbsp;&nbsp;<span class="com">// Buradaki kod YALNIZCA oyuncu Minecraft sohbetine "inşa" yazdığında çalışır</span><br>
+    &nbsp;&nbsp;<span class="com">// Bu bloğun DIŞINDA kalan kod yalnızca program yüklemede bir kez çalışır</span><br>
+    }<br><br>
+    <span class="com">// 2. TEKRAR DÖNGÜSÜ — İçindeki kodu tam N kez sıralı olarak çalıştırır.</span><br>
+    <span class="ck">tekrar</span> <span class="cn">5</span> <span class="ck">kez</span> {<br>
+    &nbsp;&nbsp;<span class="cf">ajan hareket et</span> ileri <span class="cn">1</span>    <span class="com">// toplam 5 kez çalışır</span><br>
+    }<br><br>
+    <span class="com">// 3. AJAN HAREKET — Ajanı N adım Ajanın MEVCUT YÖNÜNE göre hareket ettirir.</span><br>
+    <span class="cf">ajan hareket et</span> ileri  <span class="cn">3</span>   <span class="com">// Ajanın ileri yönünde 3 blok</span><br>
+    <span class="cf">ajan hareket et</span> geri    <span class="cn">1</span>   <span class="com">// Ajanın arkasında 1 blok</span><br>
+    <span class="cf">ajan dön</span> sola                <span class="com">// Ajanı 90° saat yönünün tersine döndürür — tüm sonraki yönleri değiştirir</span>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Ajan Mekaniği — Yönelim, Envanter ve En Kritik Kavram</h4>
+  <p>Her Ajan hareket komutu Ajanın <strong>mevcut yön</strong>üne göre değerlendirilir — dünya pusulasına göre değil. Bu yönelim her Dön komutundan sonra değişir. Bunu açıkça takip etmeyen öğrenciler her seferinde çapraz veya hatalı yollar üretir.</p>
+  <div class="coord-box">
+    <span class="com">// Ajan KUZEYE bakarak başlar (−Z yönü)</span><br>
+    <span class="cf">ajan hareket et</span> ileri <span class="cn">3</span>  → KUZEY'e 3 blok hareket eder<br>
+    <span class="cf">ajan dön</span> sağa      → Ajan artık <span class="cx">DOĞU (+X)</span>'ya bakıyor<br>
+    <span class="cf">ajan hareket et</span> ileri <span class="cn">2</span>  → <span class="cx">DOĞU</span>'ya 2 blok hareket eder (artık kuzey değil!)<br>
+    <span class="cf">ajan dön</span> sağa      → Ajan artık <span class="cz">GÜNEY (+Z)</span>'e bakıyor<br><br>
+    <span class="cm">KURAL:</span> Her Dön bloğundan sonra "ileri" farklı bir dünya yönü anlamına gelir.<br>
+    Yönelimi açıkça takip edin. Çok dönüşlü herhangi bir diziyi kodlamadan önce kağıda çizin.
+  </div>
+  <div class="callout cw" style="margin-top:10px">
+    <span class="ci">⚠️</span>
+    <div><strong>Kodlamadan önce zorunlu:</strong> Herhangi bir öğrenci dönüşlü Ajan hareket kodu yazmadan önce, onlardan yukarıdan aşağıya harita çizmelerini isteyin: (a) Ajan başlangıç konumu, (b) başlangıç yön oku, (c) güncellenmiş okla her dönüş. Önce çizen öğrenciler yaklaşık %75 doğrulukla kodlar; doğrudan kod yazanlar ~%65 hata üretir.</div>
+  </div>
+
+  <h4 style="margin-top:14px">Ajan Envanteri</h4>
+  <p>Ajanın 27 slotlu envanteri vardır (3×9 ızgara). Ajan öğeleri yerleştirebilmek için önce yüklenmelidir. Yükleme: Ajanın yanında durun ve envanteri açmak için sağ tıklayın, ardından öğeleri kendi envanterinizden veya yakındaki bir sandıktan sürükleyin.</p>
+</div>
+
+
+<div id="sec-redstone" class="anchor">
+  <div class="section-head">Teknik Teori — Redstone Sinyal Fiziği</div>
+</div>
+
+<div class="card">
+  <h4>Sinyal Gücü, Yayılım ve 15 Blok Azalması</h4>
+  <p>Her Redstone güç kaynağı <strong>güç 15</strong>'te sinyal yayar. Sinyalin geçtiği her Redstone tozu bloğu gücü tam olarak 1 azaltır. Güç 0'da sinyal ölür — devre kesilir.</p>
+  <div class="coord-box">
+    <span class="com">// Sinyal gücü ve mesafe (Tekrarlayıcı olmadan)</span><br>
+    Toz[1]: güç=15 → Toz[5]: güç=11 → Toz[10]: güç=6<br>
+    → Toz[14]: güç=2 → Toz[15]: güç=1 → <span class="cr">Toz[16]: güç=0 → ÖLÜ</span><br><br>
+    Tekrarlayıcıdan önce maksimum tel uzunluğu: <span class="cg">15 blok</span><br><br>
+    <span class="cm">Düzeltme:</span> 15. blokta veya öncesinde bir Redstone Tekrarlayıcı yerleştirin.<br>
+    Tekrarlayıcı, gelen güçten bağımsız olarak sinyal gücünü 15'e sıfırlar.<br>
+    Tekrarlayıcılar ayrıca yapılandırılabilir gecikme ekler: 1–4 tık (1 tık = 0.05 saniye).
+  </div>
+
+  <h4 style="margin-top:14px">Modül 1'de Öğrencilerin Bilmesi Gereken Dört Bileşen</h4>
+  <div class="two-col" style="margin-top:8px">
+    <div class="card">
+      <h4>Gözlemci Bloğu</h4>
+      <p>Doğrudan baktığı tek bloktaki <em>blok durumu değişikliklerini</em> algılar (<strong>yüzü</strong> = oyma dokulu taraf). Bir durum değişikliği algılandığında 1 tıklık Redstone darbesi yayar. Bambu için: bir aşamadan diğerine büyüme bir blok durumu değişikliğidir.</p>
+      <p style="margin-top:8px"><strong>İki önemli taraf:</strong> Yüz (oyma/göz dokusu) bambuya bakmalıdır. Arka (çıkış, düz taraf) Pistona veya bağlantı teline bakmalıdır.</p>
+    </div>
+    <div class="card">
+      <h4>Piston (Normal)</h4>
+      <p>Güçlendirildiğinde 1 blok uzar; güç kesildiğinde geri çekilir. Bambuyu kırmak için kullanılır: Piston başı bambu bloğuna uzanarak onu kırar ve öğelerin düşmesine neden olur.</p>
+      <p style="margin-top:8px"><strong>Normal vs. Yapışkan:</strong> Bambu hasadı için <em>normal</em> Piston kullanın — bambuyu uzatarak kırar ve bir sonraki büyüme döngüsüne hazır olarak temiz çekilir.</p>
+    </div>
+    <div class="card">
+      <h4>Düğme ve Kaldıraç</h4>
+      <p><strong>Düğme (Taş):</strong> ~0.5 saniyelik anlık darbe, ardından otomatik olarak kapalıya döner. Tek atışlı tetikleyiciler için en iyisi. <strong>Kaldıraç:</strong> Manuel olarak geri çevrilene kadar sürekli sinyal. Açık/kapalı kalması gereken durumlar için en iyisi.</p>
+    </div>
+    <div class="card">
+      <h4>Redstone Tekrarlayıcı</h4>
+      <p>Sinyali 15 güce sıfırlar. 1–4 tık gecikme ekler (döngülemek için sağ tıklayın). <strong>Yönlü:</strong> sinyal yoluna göre dik değil, <em>sıralı</em> olarak yerleştirilmelidir.</p>
+    </div>
+  </div>
+</div>
+
+
+<div id="sec-bamboo" class="anchor">
+  <div class="section-head">Teknik Teori — Otomatik Bambu Çiftliği (İnşa Planı)</div>
+</div>
+
+<div class="card">
+  <h4>İnşadan Önce Bileşen Haritası</h4>
+  <div class="coord-box">
+    <span class="com">// Dikey kesit görünümü — X = blok, · = hava</span><br><br>
+    Y+3   ·  ·  ·<br>
+    Y+2   ·  ·  · ← <span class="cm">Piston (AŞAĞI bakan, Gözlemci tarafından güçlendirilen)</span><br>
+    Y+1   B  ·  G ← <span class="cy">B = bambu bloğu Y+1, G = Gözlemci (yüz→bambu, arka→Piston)</span><br>
+    Y+0   B  H  · ← <span class="cy">B = bambu kökü, H = Huni (yanındaki Sandığa bağlı)</span><br>
+    Y-1   ·  S  · ← <span class="cs">S = Sandık (Huni'den öğeler alır)</span><br><br>
+    <span class="cg">Tel:</span> Gözlemci arka yüz çıkışı → Redstone tozu → Piston girişi (doğrudan bitişik değilse)
+  </div>
+
+  <h4 style="margin-top:14px">Adım Adım İnşa Dizisi</h4>
+  <ol class="steps">
+    <li><strong>Bambu ekin</strong> çim veya toprak blok üzerine. Üstte ≥ 3 blok dikey boşluk olduğundan emin olun — bambu maksimum 16 bloğa kadar birer birer büyür.</li>
+    <li><strong>Pistonu</strong> Y+2 yüksekliğinde bambu bloğunun doğrudan üzerine, <em>aşağıya</em> bakacak şekilde yerleştirin.</li>
+    <li><strong>Gözlemciyi</strong> Y+1 yüksekliğinde bambu sapının yanına yerleştirin. <em>Yüz</em> (oyma doku) bambu bloğuna bakmalıdır. <em>Arka</em> (düz taraf) Pistona — veya onu bağlayan Redstone tozuna — bakmalıdır.</li>
+    <li><strong>Gözlemciyi Pistona</strong> doğrudan bitişik değillerse Redstone tozu ile bağlayın. 15 blok maksimumunu unutmayın — tel daha uzunsa Tekrarlayıcı ekleyin.</li>
+    <li><strong>Yönelimi doğrulayın:</strong> Gözlemciye sağ tıklayın ve çıkış göstergesinin telle hizalandığını kontrol edin.</li>
+    <li><strong>Huni toplayıcı ekleyin:</strong> <kbd>Shift</kbd> tutun ve bambu kökünün altındaki bloğa sağ tıklayarak Huniyi yana doğru bir Sandığa bakacak şekilde yerleştirin.</li>
+    <li><strong>Test edin:</strong> Bambunun bir aşama büyümesini bekleyin. Dizi: bambu büyür → Gözlemci algılar → 1 tıklık darbe → Piston uzar → bambu kırılır → öğeler düşer → Huni toplar → Sandıkta görünür.</li>
+  </ol>
+
+  <div class="callout cg" style="margin-top:10px">
+    <span class="ci">✅</span>
+    <div><strong>Başarı kilometre taşı:</strong> Oyuncu eylemi olmadan Sandıkta biriken öğeler. Bu öğrencilerin gerçek özerk otomasyonu ilk kez deneyimlemesidir. Belirli, davranışa bağlı övgüyle açıkça kutlayın.</div>
+  </div>
+</div>
+
+
+<div id="sec-cobble" class="anchor">
+  <div class="section-head">Teknik Teori — Su + Lav Kopuk Taş Fabrikası</div>
+</div>
+
+<div class="card">
+  <h4>Çarpışma Kimyası — Tam Olarak Ne Olur ve Neden</h4>
+  <div class="coord-box">
+    <span class="com">// Üç olası Su × Lav etkileşimi:</span><br><br>
+    Su kaynağı  + <span class="cn">akan Lav</span>    → <span class="cy">Kopuk Taş</span>   ← MODÜL 1 HEDEFİ<br>
+    <span class="cn">Lav kaynağı</span>   + akan Su    → <span class="cr">Obsidyen</span>    ← kalıcı; Elmas Kazması gerektirir<br>
+    <span class="cn">Lav kaynağı</span>   + Su kaynağı → <span class="cr">yeni blok yok</span> ← yalnızca sıvı sınırı<br><br>
+    <span class="cm">TEMEL KURAL:</span> Kopuk Taş için LAV akmalıdır, kaynak blok olmamalıdır.<br>
+    Kaynak bloklar arasında bir boş boşluk her ikisini de buluşmadan önce aklamaya zorlar.
+  </div>
+
+  <h4 style="margin-top:14px">İnşa Düzeni</h4>
+  <ol class="steps">
+    <li>Herhangi bir düz alanda <strong>3 blok geniş, 1 blok derin</strong> bir kanal kazın.</li>
+    <li>Kanalın sol ucuna bir <strong>Su kaynağı</strong> bloğu yerleştirin.</li>
+    <li>Sağ uca bir <strong>Lav kaynağı</strong> bloğu yerleştirin. İki kaynak blok arasında <strong>tam olarak 1 boş blok boşluk</strong> olmalıdır — bu müzakere edilemez.</li>
+    <li>Su sağa akar; Lav sola akar. Orta boşlukta buluşurlar ve akan Lav Su akışıyla temastan katılaşarak Kopuk Taş üretir.</li>
+    <li>Herhangi bir Kazmayla Kopuk Taş bloğunu çıkarın. İki akış hemen şimdi boş boşlukta yeniden buluşur ve yeni bir Kopuk Taş bloğu oluşturur. Bu döngü sonsuzdur.</li>
+  </ol>
+
+  <div class="callout cw" style="margin-top:10px">
+    <span class="ci">⚠️</span>
+    <div><strong>Obsidyen hatası:</strong> Öğrenciler Lav kaynağını doğrudan Su kaynağının yanına yerleştirir (sıfır boşluk). Bu, her ikisi de artık doğrudan temas eden durağan kaynaklar olduğu için Kopuk Taş değil Obsidyen üretir. Obsidyen Elmas Kazması gerektirir ve Modül 1 aşamasında kırılamaz.</div>
+  </div>
+</div>
+
+
+<div id="sec-trouble" class="anchor">
+  <div class="section-head">Sorun Giderme Kataloğu — 6 Operasyonel Senaryo</div>
+</div>
+
+<div style="overflow-x:auto">
+<table class="trouble-table">
+  <thead>
+    <tr>
+      <th style="width:20%">Belirti</th>
+      <th style="width:25%">Kök Neden</th>
+      <th style="width:30%">Tam Düzeltme</th>
+      <th style="width:25%">Önleme Komut Dosyası</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-err">Öğrenci boş arazide kaybolmuş; oturum dünyasını veya diğer öğrencileri bulamıyor</td>
+      <td>Koordinatları öğrenmeden spawn'dan uzaklaştı; geri çağırma komutu mevcut değil</td>
+      <td>Öğretmen sabitlenmiş spawn koordinatlarıyla <code>/tp [ad] [X] [Y] [Z]</code> kullanır. Yönetici erişimi yoksa öğrenciye <code>/kill</code> yazmasını söyleyin — dünya spawn noktasında yeniden doğarlar.</td>
+      <td class="td-fix">"Her oturumda 1. adım: spawn koordinatlarını sohbette sabitleyin. Öğrenciler bir şeye dokunmadan kopyalar. Acil durum komutu her zaman hazır."</td>
+    </tr>
+    <tr>
+      <td class="td-err">Redstone devresi kaynağın yakınında çalışıyor ancak uzak uçtaki Piston yanıt vermiyor</td>
+      <td>Tel 15 bloğu aşıyor — sinyal gücü Piston'a ulaşmadan 0'a düştü</td>
+      <td>Güç kaynağından Piston'a blokları sayın. 15'ten büyükse, 14. bloğa (veya daha önce) bir Redstone Tekrarlayıcı yerleştirin.</td>
+      <td class="td-fix">"Sinyal güçlendirici kuralı: her 14 blokta bir Tekrarlayıcı yerleştirin. Önce teli sayın, sonra yerleştirin."</td>
+    </tr>
+    <tr>
+      <td class="td-err">Gözlemci görünür biçimde ateşleniyor (doku titriyor) ancak Piston uzamıyor</td>
+      <td>Gözlemci çıkış arka yüzü Piston'a veya bağlantı teline yönlendirilmemiş</td>
+      <td>Gözlemciyi kırın ve yeniden yerleştirin. Doğrulayın: yüz (oyma) → bambu, arka (düz) → Piston.</td>
+      <td class="td-fix">"Gözlemci burnu = izliyor; Gözlemci kuyruğu = iletiliyor. Burun bambuya bakıyor. Kuyruk güçlendirmek istediğinize bakıyor."</td>
+    </tr>
+    <tr>
+      <td class="td-err">Ajan düz çizgi yerine çapraz veya zikzak yol üretiyor</td>
+      <td>Öğrenci Dön komutundan sonra Ajan yönelimini takip etmedi</td>
+      <td>Her Hareket bloğundan önce öğrencinin Ajanın mevcut yönünü belirtmesini isteyin. Gerekirse kağıda çizin. Birer birer 1 Hareket çalıştırın.</td>
+      <td class="td-fix">"Herhangi bir dönüş + hareket dizisi yazmadan önce: yolu çizin. Bu dönüşten sonra Ajan hangi yöne bakıyor?"</td>
+    </tr>
+    <tr>
+      <td class="td-err">Kopuk taş fabrikası Kopuk Taş yerine Obsidyen üretiyor</td>
+      <td>Lav kaynak bloğu doğrudan Su kaynak bloğunun yanına yerleştirildi — sıfır boşluk</td>
+      <td>Lav kaynak bloğunu çıkarın. İki kaynak blok arasında tam olarak 1 boş blok olduğunu doğrulayın. Lavı doğru uca yeniden yerleştirin.</td>
+      <td class="td-fix">"Kaynak bloklar arasında her zaman bir boş boşluk. Lav yerleştirmeden önce söyleyin: 'Bir boşluk.' Akan ırmaklar = Kopuk Taş."</td>
+    </tr>
+    <tr>
+      <td class="td-err">Sohbette yazılan <code>/code</code> yanıt vermiyor — MakeCode açılmıyor</td>
+      <td>Dünya ayarlarında "Code Builder'ı Etkinleştir" açık değil; veya öğrencinin cihazı çevrimdışı</td>
+      <td>Dünyayı kapatın. Dünya ayarlarını açın (kalem simgesi). "Code Builder'ı Etkinleştir"i AÇIK konuma getirin. Dünyaya yeniden girin. <code>/code</code>'u yeniden deneyin.</td>
+      <td class="td-fix">"Uçuş Öncesi Kontrol adım 1: dünyayı açın, /code yazın. Editör açılırsa = yeşil. Hiçbir şey yoksa = öğrenciler katılmadan önce dünya ayarlarında Code Builder'ı kontrol edin."</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<div id="sec-analogies" class="anchor">
+  <div class="section-head">Kavram Analogileri — 8–9 Yaş İçin Soyutlamayı Basitleştirme</div>
+</div>
+
+<div class="analogy">
+  <p><strong>💡 Redstone = "Ev Elektriği"</strong><br>
+  <em>"Redstone tozu ev duvarlarınızdaki teldir. Kaldıraç veya düğme ışık şalteridir. Piston motor veya ampuldür. Ve gerçek elektrik gibi Redstone sinyali de belirli bir mesafeden sonra zayıflar — bu nedenle 15 blok sonra Tekrarlayıcıya ihtiyaç duyarız, bu da uzun bir hoparlör kablosundaki amplifikatör gibi çalışır."</em></p>
+</div>
+
+<div class="analogy">
+  <p><strong>💡 Gözlemci = "Bahçe Hareket Sensörü Metin Uyarısı"</strong><br>
+  <em>"Bir ayçiçeği ektiğinizi ve tam ne zaman uzadığını bilmek istediğinizi hayal edin. Bütün gün bakabilirsiniz — ya da hareket ettiği anda size mesaj atan bir hareket sensörü yerleştirebilirsiniz. Gözlemci o sensördür. Bambu bir milimetre büyüdüğü an, Pistona bir Redstone metin mesajı atar."</em></p>
+</div>
+
+<div class="analogy">
+  <p><strong>💡 Koordinatlar = "Şehir Sokak Adresi Sistemi"</strong><br>
+  <em>"Bir şehirdeki her binanın bir adresi vardır: Doğu 100, 5. Sokak, Kat 3. Minecraft'ta X Doğu-Batı sokak numaranızdır, Z Kuzey-Güney cadde numaranızdır ve Y bulunduğunuz kattır. Bambu çiftliğinizin bir adresi var — X=100, Y=64, Z=200 — ve tüm sonsuz dünyada başka hiçbir blok o adresi paylaşmaz."</em></p>
+</div>
+
+<div class="analogy">
+  <p><strong>💡 Tekrar Döngüsü = "Fotokopi Makinesi"</strong><br>
+  <em>"Kağıda mükemmel bir cümle yazdınız ve 20 kopyaya ihtiyacınız var. Onu 20 kez elle yazabilirsiniz — ya da bir fotokopi makinesine koyup '20' tuşuna basabilirsiniz. Tekrar bloğu fotokopi makinenizdir. Eylemi bir kez yazın, kaç kopya istediğinizi söyleyin ve o siz oturururken hepsini yapar."</em></p>
+</div>
+
+<div class="analogy">
+  <p><strong>💡 Ajan = "Yalnızca Yazılı Talimatları Takip Eden Bir Robot"</strong><br>
+  <em>"Ajan robotik en iyi arkadaşınız — ancak şu var: yalnızca önceden yazdığınız şeyleri yapabilir. Doğaçlama yapamaz. 'İleri git' derseniz ileri gider. 'Sağa dön, ileri git' derseniz sağa döner sonra ileri gider. Talimatlarınızı mükemmel şekilde takip eder, o talimatlar onu uçurumdan atsa bile. İşte bu yüzden kodlamadan önce planlıyoruz."</em></p>
+</div>
+
+<div class="analogy">
+  <p><strong>💡 Göreceli ve Mutlak Koordinatlar — "GPS ve Kişisel Yol Tarifi"</strong><br>
+  <em>"Mutlak koordinatlar GPS gibidir — Atatürk Caddesi 100 nerede olduğunuzdan bağımsız olarak her zaman Atatürk Caddesi 100'dür. Göreceli koordinatlar şu an nerede durduğunuzdan birinin size yol tarifi vermesi gibidir — 'sol tarafınıza doğru 3 blok'. Tilde (~) 'şu an durduğum yerden' anlamına gelir."</em></p>
+</div>
+
+
+<div id="sec-cta" class="anchor cta-block">
+  <h3>Modül 1 Teknik İçeriği Tamamlandı</h3>
+  <p>Modül 1 için tam teknik spesifikasyonu kapsadınız: koordinat sistemi fiziği, MakeCode arayüz mekaniği, Ajan yönelimi ve envanteri, Redstone sinyal azalması, bambu çiftliği inşa planı, kopuk taş fabrikası kimyası, 6 sorun giderme senaryosu ve 6 kavram analogisi.</p>
+  <a href="TrModule1Test.html" class="btn-primary" style="font-size:15px;padding:14px 38px;position:relative;">Modül 1 Bilgi Kontrolüne Gir →</a>
+</div>
+
+</div>
+
+<footer>© 2026 Kodland · Dahili tutor eğitim materyali — harici dağıtım için değildir.</footer>
+
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-bar').style.width = `${getOverallProgress() / 5 * 100}%`;
+
+  const pills = document.querySelectorAll('.sec-pill');
+  const ids   = ['sec-overview','sec-flow','sec-coords','sec-makecode','sec-redstone','sec-bamboo','sec-cobble','sec-trouble','sec-analogies','sec-cta'];
+  window.addEventListener('scroll', () => {
+    let active = 0;
+    ids.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 150) active = i;
+    });
+    pills.forEach((p, i) => p.classList.toggle('active', i === active));
+  }, { passive: true });
+</script>
+</body>
+</html>

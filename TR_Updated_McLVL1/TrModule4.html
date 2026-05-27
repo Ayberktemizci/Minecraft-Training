@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modül 4 — Mekanik Orman | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#B45309 0%,#D97706 55%,#F59E0B 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:'🌲';font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.85);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:#FDE68A;color:rgba(255,255,255,.9)}
+  .module-banner .mobj strong{color:#fff}
+  .sec-nav{display:flex;flex-wrap:wrap;gap:8px;padding:14px 28px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90}
+  .sec-pill{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:5px 13px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+  .sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+  .script-box{background:var(--ink);color:#FDE68A;border-radius:var(--rsm);padding:14px 18px;font-family:'JetBrains Mono','Courier New',monospace;font-size:13px;line-height:1.7;margin:10px 0;border-left:4px solid #D97706}
+  [data-theme="dark"] .script-box{background:#180e00}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}.fc{color:var(--ok-t)}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #D97706;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .code-block{background:var(--ink);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .code-block{background:#180e00}
+  .ck{color:#C792EA}.cf{color:#82AAFF}.cs{color:#C3E88D}.cn{color:#F78C6C}.cm{color:#FCD34D}
+  .anchor-target{scroll-margin-top:130px}
+  code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Eğitimi</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Panel</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="sec-nav">
+  <a href="#overview"  class="sec-pill">1 · Genel Bakış</a>
+  <a href="#agent"     class="sec-pill">2 · Bahçıvan Ajan</a>
+  <a href="#circuits"  class="sec-pill">3 · Koşullu Devreler</a>
+  <a href="#hoppers"   class="sec-pill">4 · Huni Sıralama</a>
+  <a href="#pipeline"  class="sec-pill">5 · Tam Boru Hattı</a>
+  <a href="#trouble"   class="sec-pill">6 · Sorun Giderme</a>
+  <a href="#protips"   class="sec-pill">7 · Uzman İpuçları</a>
+  <a href="#test-cta"  class="sec-pill">8 · Bilgi Kontrolü</a>
+</div>
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Modül 4 / 5</div>
+    <div class="mh1">🌲 Mekanik Orman</div>
+    <p>Canlı otomasyon — öğrenciler Modül 1–3'teki her beceriyi tam, uçtan uca otomatik bir çiftlik inşa etmek için uygular: Ajan tohum eker, Redstone devreleri hazır olduğunda hasat eder ve Huniler çıktıyı sıralar ve depolar.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Modül 4 Hedefleri:</strong> Ajanı otomatik Bahçıvan olarak programlayın (döngü + ekim komutları) · Koşullu Redstone hasat devreleri inşa edin (Gözlemci → Piston) · Huni tabanlı öğe sıralama ve depolamayı uygulayın · Tam otomasyon boru hattını anlayın: Algıla → Tetikle → Topla → Depola.
+    </div>
+  </div>
+</div>
+<div class="cbody">
+
+<div id="overview" class="anchor-target">
+  <div class="section-head">1 · Modül Genel Bakışı — Entegrasyon ve Yükselme</div>
+</div>
+<div class="card">
+  <h4>Modül 4 Neden "Entegrasyon Modülü"dür</h4>
+  <p>Her önceki modül ayrı kavramlar tanıttı. Modül 4, öğrencilerden tek bir sisteme <strong>tüm önceki becerileri birleştirmelerini</strong> açıkça isteyen ilk modüldür:</p>
+  <ul style="margin-top:8px">
+    <li><strong>Modül 1'den:</strong> Ajan kontrolü + Redstone Gözlemci–Piston devresi</li>
+    <li><strong>Modül 2'den:</strong> Çiftlik ızgara düzeni için koordinat konumlandırma</li>
+    <li><strong>Modül 3'ten:</strong> Koşullu mantık ("bitki büyüdüyse, hasat et")</li>
+  </ul>
+  <p style="margin-top:8px">Sonuç, oyuncu müdahalesi olmadan çalışan <strong>tam özerk bir çiftlik sistemidir</strong> — Seviye 1'deki en yüksek karmaşıklıklı inşaat.</p>
+</div>
+
+<div id="agent" class="anchor-target">
+  <div class="section-head">2 · Bahçıvan Olarak Ajan — Otomatik Ekim</div>
+</div>
+<div class="card">
+  <h4>Ajanı Satırlarda Ekim Yapacak Şekilde Programlama</h4>
+  <p>Modül 1'de öğrenciler Ajanı temel hareket komutlarıyla manuel olarak hareket ettirdi. Modül 4, Ajanı yapılandırılmış bir ızgarada <strong>otomatik olarak tohum ekmek</strong> için kullanır.</p>
+  <div class="code-block">
+    <span class="cm">// Önce Ajan envanterine tohum yükleyin (Ajan'a sağ tıklayın, slot 1'e Tohum ekleyin)</span><br>
+    sohbet komutunda <span class="cs">"ek"</span> {<br>
+    &nbsp;&nbsp;<span class="ck">tekrar</span> <span class="cn">5</span> kez {           ← bir satırda 5 tohum ek<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">hareket ederken aşağı yerleştir</span>  ← Ajan hareket ederken altına öğe koyar<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">ajan ileri hareket et</span> <span class="cn">1</span><br>
+    &nbsp;&nbsp;}<br>
+    }
+  </div>
+  <p style="margin-top:10px"><strong>Bunun çalışması için kritik önkoşullar:</strong></p>
+  <ol style="padding-left:18px;margin-top:6px">
+    <li style="margin-bottom:6px">Sohbet komutu ateşlenmeden önce tohumlar Ajan'ın envanterine yüklenmiş olmalıdır.</li>
+    <li style="margin-bottom:6px">Ajan satır için doğru yöne bakarak ilk ekim noktasında konumlandırılmış olmalıdır.</li>
+    <li style="margin-bottom:6px">Zemin işlenmiş tarım arazisi olmalıdır (Çapa kullanın, ardından 4 blok içinde su kaynağıyla sulayın).</li>
+    <li>Ajan ekimi "hareket ederken aşağı yerleştir"i kullanır — ilerlerken Ajan'ın doğrudan altındaki bloğa öğe koyar.</li>
+  </ol>
+  <div class="callout cw" style="margin-top:10px">
+    <span class="ci">⚠️</span>
+    <div><strong>En yaygın Ajan ekim hatası:</strong> Ajan tohumları ekmek yerine yere bırakıyor. Bu, zemin işlenmiş tarım arazisi değilken olur — normal toprak bloklarına yerleştirilen tohumlar ekilmiş mahsul değil bırakılmış öğe olarak işlenir.</div>
+  </div>
+</div>
+<div class="card">
+  <h4>Çok Satırlı Ekim — İç İçe Döngüler</h4>
+  <div class="code-block">
+    sohbet komutunda <span class="cs">"çiftlik"</span> {<br>
+    &nbsp;&nbsp;<span class="ck">tekrar</span> <span class="cn">5</span> kez {      ← dış döngü: 5 satır<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="ck">tekrar</span> <span class="cn">5</span> kez {    ← iç döngü: 5 sütun<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">hareket ederken aşağı yerleştir</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">ajan ileri hareket et</span> <span class="cn">1</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">ajan sağa hareket et</span> <span class="cn">1</span>   ← bir sonraki satıra geç<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">ajan etrafını dön</span>           ← bir sonraki satır için ters yöne bak<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="cf">ajan geri hareket et</span> <span class="cn">5</span>  ← satır başına dön<br>
+    &nbsp;&nbsp;}<br>
+    }
+  </div>
+</div>
+
+<div id="circuits" class="anchor-target">
+  <div class="section-head">3 · Koşullu Hasat Devreleri</div>
+</div>
+<div class="card">
+  <h4>Gözlemci–Piston Hasat Devresi — Mahsullere Uygulandı</h4>
+  <p>Öğrenciler Modül 1'de bambu için Gözlemci–Piston zinciri inşa etti. Modül 4 aynı ilkeyi buğday, havuç, patates ve diğer çiftçilik mahsullerine uygular. Temel fark <strong>büyüme aşaması algılamasıdır</strong>:</p>
+  <ul style="margin-top:8px">
+    <li>Bambu: ayrı tam blok artışlarıyla büyür — algılaması kolay.</li>
+    <li>Buğday/Havuç/Patates: 8 büyüme aşamasından geçer (0–7). <strong>Aşama 7 tam olarak büyümüş.</strong> Gözlemci, aşama 6→7 geçişini bir blok durumu değişikliği olarak algılar ve ateşler.</li>
+  </ul>
+  <div class="callout ct" style="margin-top:10px">
+    <span class="ci">💡</span>
+    <div><strong>"Büyümeden hasada" koşulunu öğretmek:</strong> Donanımda uygulansa da Eğer-O Zaman olarak çerçeveleyin: <em>"EĞER buğday aşama 7'ye (tam büyüme) ulaşırsa O ZAMAN Gözlemci ateşler O ZAMAN Piston mahsulü kırar O ZAMAN tohumlar ve yiyecek öğeleri düşer."</em> Bu dil, Modül 3'teki MakeCode koşullu mantığını Modül 4'ün Redstone koşullu mantığına bağlar.</div>
+  </div>
+</div>
+
+<div id="hoppers" class="anchor-target">
+  <div class="section-head">4 · Huni Mekaniği ve Öğe Sıralama Sistemleri</div>
+</div>
+<div class="card">
+  <h4>Huni Nedir?</h4>
+  <p>Bir <strong>Huni</strong>, iki işlevi olan huni biçimli bir bloktur: (1) yukarıdan içine düşen öğeleri toplar ve (2) kendi envanterindeki öğeleri bitişik bir kaba (sandık, fırın, başka bir Huni) aktarır.</p>
+  <div class="two-col" style="margin-top:10px">
+    <div class="card">
+      <h4>Huni Yerleştirme Kuralları</h4>
+      <ul>
+        <li><strong>Çıkış yönü:</strong> Huninin bağlı olduğu bloğa göre belirlenir — ucu yerleştirildiği bloğa doğru.</li>
+        <li><strong>Sandığa bağlamak için:</strong> Shift + sandık bloğuna sağ tıklayın. Shift olmadan sandık envanteri açılır.</li>
+        <li><strong>Zincirleme Huniler:</strong> Uçtan uca yerleştirin; öğeler saniyede 2.5 öğe oranında aktarılır.</li>
+        <li><strong>Kapasite:</strong> her Huni 5 öğe yığını tutar (yığın başına ×64).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Temel Sıralama Sistemi</h4>
+      <p>Basit iki sandıklı sıralama: her sandığın üzerinde bir Huni, her biri filtre öğesiyle yüklü. Öğeler aktığında, filtreyle eşleşen öğeler o Huninin sandığına gider; eşleşmeyenler bir sonraki Huniye geçer.</p>
+      <p style="margin-top:8px"><strong>Modül 4 hedefi:</strong> Buğdayı bir sandığa, tohumları diğerine yönlendirin — yiyecek çıktısını ekim malzemesinden otomatik olarak ayırın.</p>
+    </div>
+  </div>
+</div>
+
+<div id="pipeline" class="anchor-target">
+  <div class="section-head">5 · Tam Otomasyon Boru Hattı</div>
+</div>
+<div class="card">
+  <h4>Dört Aşamalı Boru Hattı — Algıla → Tetikle → Topla → Depola</h4>
+  <p>Modül 4'ün imza öğretim çerçevesi. Her tam otomatik çiftlik sistemi dört sıralı aşama olarak tanımlanabilir:</p>
+  <div class="two-col" style="margin-top:10px">
+    <div class="card" style="border-left:4px solid var(--lime)">
+      <h4 style="color:var(--lime-d)">Aşama 1: Algıla</h4>
+      <p><strong>Gözlemci bloğu</strong>, mahsul bloğunu bir durum değişikliği (büyüme aşaması 6→7) için izler. Algılandığında 1 tıklık Redstone darbesi yayar.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--amber)">
+      <h4 style="color:#D97706">Aşama 2: Tetikle</h4>
+      <p>Gözlemcinin darbesi Redstone teli aracılığıyla <strong>Pistonu</strong> güçlendirir. Piston uzanır, tam büyümüş mahsul bloğunu kırar. Mahsul yere öğe varlıkları olarak düşer.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--pink)">
+      <h4 style="color:var(--pink-d)">Aşama 3: Topla</h4>
+      <p>Mahsul sırasının altında konumlandırılmış <strong>Huni</strong>, düşen öğe varlıklarını toplar.</p>
+    </div>
+    <div class="card" style="border-left:4px solid #3B82F6">
+      <h4 style="color:#1D4ED8">Aşama 4: Depola</h4>
+      <p>Huni, toplanan öğeleri bağlı <strong>Sandığa</strong> saniyede 2.5 öğe hızıyla aktarır.</p>
+    </div>
+  </div>
+  <div class="callout cg" style="margin-top:14px">
+    <span class="ci">✅</span>
+    <div><strong>Öğretim anı:</strong> Dört aşama inşa ve test edildiğinde, öğrencilerden boru hattını kodlarına bakmadan kendi kelimeleriyle açıklamalarını isteyin: "Ne algılar? Ne tetikler? Ne toplar? Ne depolar?" Bu sözlü kodlama kavramsal çerçeveyi pekiştirir.</div>
+  </div>
+</div>
+
+<div id="trouble" class="anchor-target">
+  <div class="section-head">6 · Sorun Giderme Kataloğu — Modül 4 (5 Senaryo)</div>
+</div>
+<div style="overflow-x:auto">
+  <table class="trouble-table">
+    <thead>
+      <tr><th style="width:22%">Hata / Belirti</th><th style="width:27%">Kök Neden</th><th style="width:31%">Tam Düzeltme</th><th style="width:20%">Önleme Komut Dosyası</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mc">Ajan tohumları ekmek yerine yere bırakıyor</td>
+        <td>Ajanın altındaki zemin işlenmiş tarım arazisi değil, işlenmemiş toprak veya çim. Normal toprak bloklarına yerleştirilen tohumlar ekilmiş mahsul değil bırakılmış öğe olarak görünür.</td>
+        <td>Ekim komutunu çalıştırmadan önce: (1) Her toprak bloğunu işlemek için Çapa kullanın. (2) Tarım arazisini sulamak için 4 blok içine su kaynağı yerleştirin (koyu kahverengi = sulanmış). (3) Önce halihazırda işlenmiş tarım arazisinde Ajan'ı çalıştırarak doğrulayın.</td>
+        <td class="fc">"Ajan ekmeden önce zemin işlenmeli ve sulanmalı. Toprak rengini kontrol edin — koyu kahverengi = ekime hazır."</td>
+      </tr>
+      <tr>
+        <td class="mc">Huni öğelerle dolup taşıyor ama sandığa aktarmıyor</td>
+        <td>Huninin çıkış ucu sandığa bakmıyor — Shift'siz yerleştirildi, bu yüzden Huni aşağıya hava içine bakıyor.</td>
+        <td>Huniyi kırın ve yeniden yerleştirin: Shift tuşunu basılı tutun, ardından doğrudan sandık bloğuna sağ tıklayın. Huninin ucunun görsel olarak sandık tarafına bağlandığını doğrulayın.</td>
+        <td class="fc">"Huniyi sandığa yerleştirirken her zaman Shift'i basılı tutun. Shift yok = sandık açılır = Huni yanlış iner."</td>
+      </tr>
+      <tr>
+        <td class="mc">Gözlemci mahsuller büyüdüğünde ateşleniyor ama Piston uzanmıyor — mahsuller asla hasat edilmiyor</td>
+        <td>Gözlemci çıkış yüzü Pistona bağlı değil. Bu Modül 1 ile aynı yönelim sorunudur ancak çiftlik düzeni daha karmaşık olduğu için genellikle daha kafa karıştırıcıdır.</td>
+        <td>Ayrı test edin: Gözlemciyi çiftlik devresinden ayırın. Gözlemci çıkış yüzünün hemen arkasına bir Redstone Lambası yerleştirin. Mahsul büyüdüğünde Lamba yanıyorsa Gözlemci doğru çalışıyor ve sorun akıştadır. Boşluğu düzeltin veya Pistonu doğru yönde yeniden yerleştirin.</td>
+        <td class="fc">"Her aşamayı ayrı test edin. Gözlemci çalışıyor mu? O zaman teli kontrol edin. Tel çalışıyor mu? O zaman Piston yönelimini kontrol edin."</td>
+      </tr>
+      <tr>
+        <td class="mc">Ajanın iç içe satır ekim döngüsü ızgara yerine spiral veya rastgele desen ekiyor</td>
+        <td>Ajanın "etrafını dön" sonrasındaki yön tam olarak hizalanmamış — "sola dön" iki kez garip sayıda "sağa dön" sonrası her durumda 180° dönüşe eşit değil. Veya dönüş hareketindeki adım sayısı yanlış.</td>
+        <td>Kodlamadan önce Ajanın yolunu kağıda çizin. Her dönüşü açıkça işaretleyin. Satır 1 tamamlandıktan sonra Ajan ters yöne mi bakıyor? "Geri 5 hareket" tam olarak satır başına döndürüyor mu? Önce 1 satırla test edin, gözlemleyin, ardından 5 satıra genişletin.</td>
+        <td class="fc">"Kodlamadan önce yolu çizin. 1. dönüşten sonra hangi yön? 2. dönüşten sonra? Ajan 'gitmesi gereken' yeri değil, kodun gittiği yeri bilir."</td>
+      </tr>
+      <tr>
+        <td class="mc">Sıralama sistemi öğe türünden bağımsız olarak tüm öğeleri ilk sandığa yönlendiriyor</td>
+        <td>Filtre Hunisinin envanter slotları doğru ayarlanmamış — filtre öğeleri Huninin envanterinde bir slotu kısmen doldurmalıdır. Veya hiç filtre ayarlanmamış.</td>
+        <td>Huni sıralama, filtre Hunisinin envanterindeki her slota bir filtre öğesi yerleştirmeyi gerektirir, boş slot bırakmadan. Eşleşen öğeler filtre slotlarını doldurur; eşleşmeyenler bir sonrakine geçer. Basit test: iki farklı öğeyle (buğday ve tohum) test ederek yönlendirmeyi doğrulayın.</td>
+        <td class="fc">"Sıralama Hunisinin bir 'şablona' ihtiyacı var — envanter slotlarına her hedef öğeden birini koyun. Eşleşenleri tutar, diğerlerini geçirir."</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="protips" class="anchor-target">
+  <div class="section-head">7 · Tutor Uzman İpuçları ve Gerçek Dünya Analogileri</div>
+</div>
+<div class="tip-card">
+  <p><strong>💡 Huni Sıralama = "Geri Dönüşüm Tesisi" Analogisi</strong><br>
+  <em>"Bir geri dönüşüm tesisini düşünün: farklı konveyör bantları camı bir kaba, kağıdı diğerine, metali diğerine yönlendirir. Huni sıralama sisteminiz dijital geri dönüşüm tesisinizdir. Buğday sola, tohumlar sağa — otomatik olarak, her seferinde, kimse manuel sıralamadan."</em></p>
+</div>
+<div class="tip-card">
+  <p><strong>💡 Dört Aşamalı Boru Hattı = "Amazon Deposu" Analogisi</strong><br>
+  <em>"Amazon'dan bir şey sipariş ettiğinizde: (1) Bir sensör siparişinizi algılar [Gözlemci]. (2) Bir robot kolu öğeyi raftan alır [Piston]. (3) Bir konveyör bandı ambalaj istasyonuna taşır [Huni]. (4) Deponun doğru bölümündeki etiketli kutuya gider [Sandık]. Çiftliğimiz aynı dört aşama — sadece paket yerine buğday."</em></p>
+</div>
+<div class="tip-card">
+  <p><strong>💡 İç İçe Döngüler = 2D Izgaralar İçin "Yazıcı Analogisi"</strong><br>
+  <em>"Bir yazıcı bir sayfa yazdırırken, bir nokta satırı boyunca hareket eder (iç döngü), ardından bir satır düşer (dış döngü), ardından bir sonraki satırı yazdırır. Ajan satırlarda ekim tıpatıp aynı çalışır: iç döngü = bir sıra tohum, dış döngü = bir sonraki satıra geçme."</em></p>
+</div>
+<div class="tip-card">
+  <p><strong>💡 Ayrı Test Etme — "Her Seferinde Bir Aşama Hata Ayıkla" Kuralı</strong><br>
+  Çok bileşenli sistemler için, entegre etmeden önce her aşamayı ayrı test edin. Modül 4 için hata ayıklama protokolü: (1) Gözlemci mahsul büyümesinde ateşleniyor mu test edin (Lamba kullanın). (2) Manuel güçlendirildiğinde Piston uzanıyor mu test edin (Kaldıraç kullanın). (3) Huni öğeleri topluyor mu test edin (elle yukarıdan atın). (4) Huni doğru sandığa yönlendiriyor mu test edin.</p>
+</div>
+
+<div id="test-cta" class="anchor-target">
+  <div class="section-head">8 · Modül 4 Bilgi Kontrolü</div>
+</div>
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Modül 4 Bilgi Kontrolüne Hazır mısınız?</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+    Yalnızca Modül 4 içeriğinden 6 soru. Modül 5'in kilidini açmak için <strong>%70 veya üzeri</strong> gereklidir.
+  </p>
+  <div class="btn-row center">
+    <a href="TrModule4Test.html" class="btn-primary">Modül 4 Testini Başlat →</a>
+    <button class="btn-outline" onclick="goHome()">← Panel</button>
+  </div>
+</div>
+
+</div>
+<footer>© 2026 Kodland. Dahili tutor eğitim materyali — harici dağıtım için değildir.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(4)) { alert('Lütfen önce önceki modülleri tamamlayın.'); goHome(); }
+</script>
+</body>
+</html>

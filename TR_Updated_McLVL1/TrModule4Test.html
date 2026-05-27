@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modül 4 Testi — Mekanik Orman | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{background:linear-gradient(135deg,#B45309,#F59E0B);padding:24px 32px;color:#fff;text-align:center}
+  .quiz-header h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+  .quiz-header p{color:rgba(255,255,255,.85);font-size:13px}
+  .feedback-box{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:13.5px;line-height:1.6;border:2px solid}
+  .feedback-box.show{display:block}
+  .feedback-box.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+  .feedback-box.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Eğitimi</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Modül 4</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="quiz-header">
+  <h2>📝 Modül 4 Bilgi Kontrolü</h2>
+  <p>🌲 Mekanik Orman · 6 Soru · Geçmek için %70</p>
+</div>
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Sonraki Soru →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Yanıtları Gönder</button>
+  </div>
+</div>
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+</div>
+<footer>© 2026 Kodland. Dahili tutor eğitim materyali.</footer>
+<script src="shared.js"></script>
+<script>
+const MODULE_ID = 4;
+const PASS_PCT  = 70;
+const QUESTIONS = [
+  {
+    q: "Bir öğrenci Ajanı iç içe döngülerle 5×5 ızgara ekmek için programlıyor, ancak sonuç ızgara yerine çapraz tohum şeridi oluyor. Satır 1 tamamlanıp dış döngü kodu 'ajan sağa 1 hareket et' çalıştırdıktan sonra, Ajan 'ajan geri 5 hareket et' çalıştırıyor. Bu diziyle ne yanlış?",
+    opts: [
+      "Dış döngü iç döngüyle eşleşmek için 5 kez çalışmalı — her ikisi de aynı sayıma sahip olmalı",
+      "'Ajan sağa 1 hareket et' ve 'ajan geri 5 hareket et' tek bir 'ajan tp' komutuyla değiştirilmeli",
+      "Satır 1'i ileri giderek tamamladıktan sonra Ajan 5 blok ilerdedir. 'Geri 5 hareket' onu orijinal sütun başına döndürür. Ancak 'etrafını dön' da eksik — ters yöne bakmadan, Satır 2 aynı yönde Satır 1'i yeniden ekmekle başlar, bitişik satır değil",
+      "İç döngü sayısı çok yüksek — 4'e düşürmek çapraz deseni düzeltir"
+    ],
+    correct: 2,
+    feedback: "Satır 1'den sonra Ajan 5 blok öndedir ve başlangıç sütununa dönmesi gerekir. 'Geri 5 hareket' bunu doğru yapar. Ancak 'etrafını dön' olmadan (iki sağa dönüş veya eşdeğeri), Ajan Satır 2'ye başlarken Satır 1 ile aynı yönde bakar — o zaman özgün konumdan aynı yönde Satır 2'yi eker, çapraz veya örtüşen desen oluşturur."
+  },
+  {
+    q: "Ajanın 'hareket ederken aşağı yerleştir' komutunun tohum bırakmak yerine başarıyla mahsul ekmesi için karşılanması gereken kritik önkoşul nedir?",
+    opts: [
+      "Ajanın doğrudan altındaki zemin, sulanan işlenmiş tarım arazisi olmalıdır — bir su kaynağı bloğunun 4 blok içinde",
+      "Ekim döngüsü başlamadan önce Ajanın envanterinde en az 32 tohum olmalı",
+      "Oyuncu, ekim komutunun çalışması için Ajan ile aynı chunk'ta olmalı",
+      "Tarım arazisi tam Y=63'te olmalı — diğer yüksekliklerde ekim tohumların düşmesine neden olur"
+    ],
+    correct: 0,
+    feedback: "Her iki koşulun da karşılanması gerekir: (1) zemin işlenmiş tarım arazisi olmalı — onu oluşturmak için toprak veya çime Çapa kullanın. (2) Tarım arazisi sulanmalı — tarım arazisinin (yatay olarak) 4 blok içinde bir su kaynağı bloğu olmalı. Kuru tarım arazisi (açık ten rengi) koyduğunuz mahsulleri toprak formuna döndürür ve atar."
+  },
+  {
+    q: "Bir öğrencinin Hunisi doğrudan çiftliğin düşme bölgesinin altında ve dünyada görünür, ancak hasat edilen öğeler yerde birikiyor ve asla toplanmıyor. 5 dakika sonra öğeler kayboluyor. En olası neden nedir?",
+    opts: [
+      "Huninin 5 slotlu envanteri filtre öğeleriyle tamamen dolu — yeni öğeler için boş slot yok",
+      "Mahsulleri kıran Piston çok yüksekte — öğeler tam olarak 1 blok Huniye düşmeli",
+      "Huninin çıkışı bloke — zaten dolu bir sandığa bağlanmış, bu yüzden Huni öğeleri aktaramıyor ve dolup taşıyor, yeni öğe alımını engelliyor",
+      "Huniler 3 bloktan fazla düşen öğeleri toplayamaz — Huni mahsul katmanının 3 bloğu içine kaldırılmalı"
+    ],
+    correct: 3,
+    feedback: "Huninin çıkış sandığı tamamen dolduğunda, Huni kendi 5 slotlu envanterinden daha fazla öğe aktaramaz. O 5 slot dolduğunda, Huni yukarıdan öğe toplamayı durdurur. Düzeltme: depolamayı genişletin (daha fazla sandık ekleyin) veya çıkışın tek bir sandığı tamamen doldurmayacağı şekilde öğeleri sıralayın."
+  },
+  {
+    q: "Modül 4 için 'ayrı test etme' hata ayıklama protokolü, entegrasyon öncesinde her boru hattı aşamasının ayrı test edilmesini önerir. Aşamalar hangi sırayla test edilmelidir?",
+    opts: [
+      "Önce Depola, sonra Topla, sonra Tetikle, sonra Algıla — çıkıştan girişe geriye doğru test edin",
+      "Önce Algıla (Gözlemci mahsul büyümesinde Lamba ile ateşleniyor), sonra Tetikle (Piston Kaldıraçla uzanıyor), sonra Topla (Huni elle bırakılan öğeleri topluyor), sonra Depola (Huni sandığa yönlendiriyor) — bağlamadan önce her aşamayı bağımsız test edin",
+      "Tüm dört aşamayı eş zamanlı inşa edin ve test edin — ayrı test etme 60 dakikalık oturumda zaman kaybettirir",
+      "Önce Tetikle, sonra Algıla, sonra Depola, sonra Topla — daha basit olanlardan önce en karmaşık aşamayı test edin"
+    ],
+    correct: 1,
+    feedback: "Ayrı test etme protokolü veri akış sırasıyla gider: (1) Algıla — Gözlemcinin mahsul büyüdüğünde ateşlendiğini doğrulayın (Redstone Lambası ile test edin). (2) Tetikle — Pistonun güçlendirildiğinde uzandığını doğrulayın (Kaldıraçla test edin). (3) Topla — Huninin öğeleri topladığını doğrulayın (elle yukarıdan bırakın). (4) Depola — Huninin doğru sandığa yönlendirdiğini doğrulayın. Hepsi ayrı ayrı geçtiğinde bağlayın."
+  },
+  {
+    q: "8 yaşındaki çocuklara otomatik hasat devresini açıklarken, Modül 3'ün koşullu programlama kavramlarını Modül 4'ün Redstone donanımıyla köprülemek için hangi dil çerçevesi kullanılmalıdır?",
+    opts: [
+      "Devre diyagram gösterimi, anahtarlar, sensörler ve aktüatörler için standart elektronik sembolleri kullanarak",
+      "Matematiksel küme teorisi — 'hasat olayı büyüme-durumu-değişiklik olayları kümesinin bir üyesidir'",
+      "Eğer–O Zaman dili: 'EĞER buğday büyüme aşaması 7'ye ulaşırsa O ZAMAN Gözlemci ateşler O ZAMAN Piston mahsulleri kırar O ZAMAN öğeler düşer' — donanım davranışını Modül 3'ten bilinen koşullu çerçevede tanımlamak",
+      "Yalnızca akış şeması dili — herhangi bir blok yerleştirmeden önce beyaz tahtaya boru hattı çizin"
+    ],
+    correct: 2,
+    feedback: "Eğer–O Zaman dili kullanmak Modüller 3 ve 4 arasındaki kasıtlı pedagojik köprüdür. Öğrenciler MakeCode koşullarından 'eğer koşul ise eylem' anlayışına zaten sahiptir. Redstone hasat devresini aynı dilde tanımlayarak ('EĞER buğday tam büyüdüyse O ZAMAN Gözlemci ateşler'), tutor donanım devresini tanıdık mantık gibi hissettiren bir şeye dönüştürür."
+  },
+  {
+    q: "Bir öğrenci Modül 1'de başarıyla tek sıralı bambu çiftliği inşa etmiştir. Modül 4'te bunu çok satırlı, çok mahsullü otomatik çiftliğe yükseltmek istiyor. Hangi yeni Modül 4 kavramı özellikle Ajanın satırlar arasında öğrenci tarafından manuel olarak yeniden konumlandırılmadan çok satır ekmesini sağlar?",
+    opts: [
+      "İç içe döngüler — dış döngü satırlar üzerinde iterasyon yaparken iç döngü her satırdaki sütun ekimini yönetir, dış döngünün iterasyonları arasında yeniden konumlandırma koduyla",
+      "Modül 2'den /clone komutu — çok satır oluşturmak için tek satır devresini çoğaltın",
+      "Modül 3'ten Blok Kırıldığında olayı — mahsuller hasat edildiğinde otomatik yeniden ekimi tetikleyin",
+      "Redstone Tekrarlayıcılar — her satırın ekim dizisi arasına zamanlama gecikmeleri ekleyin"
+    ],
+    correct: 0,
+    feedback: "İç içe döngüler çok satırlı otomatik ekimi mümkün kılan Modül 4 kavramıdır. Dış döngü (5 tekrar) satırlar üzerinde iterasyon yapar; iç döngü (5 tekrar) her satırdaki tohumları eker. Dış döngü iterasyonları arasında yeniden konumlandırma kodu (sağa 1 hareket, etrafını dön) Ajanı bir sonraki satırın başına kaydırır."
+  }
+];
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('question-area').innerHTML = `
+    <div class="qnum">Soru ${current + 1} / ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list">${q.opts.map((o,i) => `<div class="opt" id="opt-${i}" onclick="selectOpt(${i})"><span class="opt-letter">${LETTERS[i]}</span><span>${o}</span></div>`).join('')}</div>`;
+}
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i) el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  const _fb = isRight ? '✅ Doğru! ' + q.feedback : '❌ Yanlış. Doğru yanıt: ' + q.opts[q.correct] + ' — ' + q.feedback;
+  document.getElementById('feedback-area').innerHTML = `<div class="feedback-box ${isRight?'ok':'bad'} show">${_fb}</div>`;
+  if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+  else document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+function nextQuestion() { current++; renderQuestion(); window.scrollTo(0,0); }
+function submitQuiz() {
+  const score = answers.filter((a,i) => a === QUESTIONS[i].correct).length;
+  const pct = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+  if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed?'🎉':'😅'}</div>
+    <div class="result-title">${passed?'Modül 4 Tamamlandı!':'Henüz Değil'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> soruyu doğru yanıtladınız.
+      ${passed?' Olağanüstü — Modül 4 tamamlandı! Artık Modül 5'e erişebilirsiniz.':` İlerleme için <strong>${PASS_PCT}%</strong> gereklidir.`}</div>`;
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="TrModule5.html" class="btn-primary">Modül 5'e Devam →</a><button class="btn-outline" onclick="goHome()">← Panel</button>`
+    : `<button class="btn-primary" onclick="retake()">Testi Tekrarla</button><a href="TrModule4.html" class="btn-outline">← Modül 4'ü Gözden Geçir</a>`;
+  window.scrollTo(0,0);
+}
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion(); window.scrollTo(0,0);
+}
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) { alert('Lütfen önce önceki modülleri tamamlayın.'); goHome(); }
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

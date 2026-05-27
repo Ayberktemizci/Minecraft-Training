@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul 2 — Kota Cahaya | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#1D4ED8 0%,#2563EB 55%,#3B82F6 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:"🏙️";font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.82);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:#93C5FD;color:rgba(255,255,255,.88)}
+  .module-banner .mobj strong{color:#fff}
+  .sec-nav{display:flex;flex-wrap:wrap;gap:8px;padding:14px 28px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90}
+  .sec-pill{font-family:"Nunito",sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:5px 13px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+  .sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+  .script-box{background:var(--ink);color:#93C5FD;border-radius:var(--rsm);padding:14px 18px;font-family:"JetBrains Mono","Courier New",monospace;font-size:13px;line-height:1.7;margin:10px 0;border-left:4px solid #3B82F6}
+  [data-theme="dark"] .script-box{background:#0a0e18}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:"Nunito",sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}.fc{color:var(--ok-t)}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #3B82F6;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .coord-box{background:var(--ink);border-radius:var(--r);padding:18px;font-family:"JetBrains Mono",monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .coord-box{background:#0a0e18}
+  .cx{color:#F87171}.cy{color:#4ADE80}.cz{color:#60A5FA}.cm{color:#FCD34D}
+  .anchor-target{scroll-margin-top:130px}
+  code{font-family:"JetBrains Mono",monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Pelatihan Tutor</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dasbor</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+
+<div class="sec-nav">
+  <a href="#overview"   class="sec-pill">1 · Gambaran Umum</a>
+  <a href="#flow"       class="sec-pill">2 · Alur Pengajaran</a>
+  <a href="#tech"       class="sec-pill">3 · Teknis Mendalam</a>
+  <a href="#multi"      class="sec-pill">4 · Multipemain</a>
+  <a href="#trouble"    class="sec-pill">5 · Pemecahan Masalah</a>
+  <a href="#protips"    class="sec-pill">6 · Tips Pro</a>
+  <a href="#test-cta"   class="sec-pill">7 · Kuis Pengetahuan</a>
+</div>
+
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Modul 2 / 5</div>
+    <div class="mh1">🏙️ Kota Cahaya</div>
+    <p>Mekanik lanjutan, pembangunan dunia kooperatif, dan pemikiran arsitektural — siswa membangun kota bersama menggunakan koordinat, perintah clone, dan jebakan Redstone.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Tujuan Modul 2:</strong> Kuasai koordinat tepat vs. relatif · Gunakan /clone untuk simetri struktural · Bangun jebakan Redstone interaktif (Pressure Plate, Dispenser, TNT) · Perkenalkan mekanik Crafting Table · Laksanakan perencanaan kota multipemain kooperatif dengan peran tim yang terdefinisi.
+    </div>
+  </div>
+</div>
+
+<div class="cbody">
+
+<div id="overview" class="anchor-target">
+  <div class="section-head">1 · Gambaran Umum Modul &amp; Kustomisasi Regional</div>
+</div>
+
+<div class="card">
+  <h4>Eskalasi Cakupan dari Modul 1</h4>
+  <p>Modul 2 memperkenalkan tiga eskalasi utama: (1) Perintah sekarang memerlukan argumen koordinat yang tepat — siswa tidak bisa lagi hanya mengandalkan posisi relatif. (2) Konteks sosial beralih dari solo ke kooperatif — siswa harus bernegosiasi, merencanakan, dan berkomunikasi. (3) Kompleksitas bangunan meningkat dari otomasi kontrapsi tunggal ke distrik kota multi-elemen yang memerlukan perencanaan arsitektural.</p>
+</div>
+
+<div class="card">
+  <h4>Catatan Kustomisasi Regional</h4>
+  <p>Logika MakeCode dan mekanik Minecraft bersifat universal. Namun, kail narasi dan es pencair dapat disesuaikan dengan budaya lokal — gunakan landmark lokal yang familiar, kartun, atau contoh kota nyata sebagai analogi. <strong>Tujuan teknis inti tidak boleh pernah diubah</strong>. Tutor di Jakarta dapat mereferensikan jaringan kota Jakarta. Pelajaran koordinat identik terlepas dari kota mana yang direferensikan.</p>
+</div>
+
+<div id="flow" class="anchor-target">
+  <div class="section-head">2 · Alur Pengajaran</div>
+</div>
+
+<div class="card">
+  <h4>Panduan Sesi Langkah demi Langkah</h4>
+  <ol style="padding-left:18px;margin-top:8px">
+    <li style="margin-bottom:8px"><strong>Es Pencair (00:00–00:05):</strong> "Gedung mana di kotamu yang ingin kamu redesain?" Bu mimari düşünceyi hazırlar ve bugünkü şehir inşa temasıyla kişisel bağlantı kurar.</li>
+    <li style="margin-bottom:8px"><strong>Tinjauan Koordinat (00:05–00:12):</strong> Tinjauan cepat koordinat Modul 1. Minta siswa menyatakan makna sumbu X/Y/Z tanpa catatan. Kemudian perkenalkan koordinat tepat: "Hari ini kita akan menggunakan alamat koordinat nyata, bukan offset relatif."</li>
+    <li style="margin-bottom:8px"><strong>Pengenalan Crafting Table (00:12–00:20):</strong> Demonstrasikan cara membuka Crafting Table (grid 3×3), menempatkan material dalam pola yang tepat untuk membuat pickaxe batu. Setiap siswa membuat satu alat.</li>
+    <li style="margin-bottom:8px"><strong>Pembangunan Jebakan Redstone (00:20–00:30):</strong> Adım adım: (a) Gali lubang pressure plate 2×2. (b) Letakkan Pressure Plate di lantai. (c) Hubungkan via debu Redstone ke Dispenser yang dimuat dengan panah atau Splash Potion. (d) Uji dengan berjalan di atas plate.</li>
+    <li style="margin-bottom:8px"><strong>Jeda Kognitif (00:30–00:35):</strong> Wajib. Aktivitas fisik atau kuis tanpa layar.</li>
+    <li style="margin-bottom:8px"><strong>Perintah Clone + Perencanaan Kota (00:35–00:55):</strong> Ajarkan /clone untuk menduplikasi struktur. Tetapkan peran tim (Pembangun Jembatan, Penjaga Mercusuar, Perencana Kota). Siswa membangun distrik kota mereka menggunakan koordinat tepat untuk menyelaraskan struktur.</li>
+    <li><strong>Refleksi (00:55–01:00):</strong> Setiap tim mempresentasikan distriknya. Satu kalimat masing-masing: "Kami membangun [X] dan menggunakan [teknik Y]."</li>
+  </ol>
+</div>
+
+<div id="tech" class="anchor-target">
+  <div class="section-head">3 · Teknis Mendalam — Modül 2</div>
+</div>
+
+<div class="card">
+  <h4>3.1 · Mekanik Crafting Table</h4>
+  <p>Crafting Table menyediakan <strong>grid 3×3</strong> (total 9 slot) dibandingkan grid 2×2 inventaris pemain (4 slot). Daha fazla slot = daha karmaşık, daha güçlü tarifler. Modül 2 temel tarifleri:</p>
+  <div class="coord-box">
+    Taş Kazma:    [Taş][Taş][Taş] / [  ][Çubuk][  ] / [  ][Çubuk][  ]<br>
+    Dispenser:     [KopukTaş][KopukTaş][KopukTaş] / [KopukTaş][Yay][KopukTaş] / [KopukTaş][Redstone][KopukTaş]<br>
+    Pressure Plate (Taş): [Taş][Taş] / (herhangi bir sırada 2×1 ızgara)
+  </div>
+  <p style="margin-top:8px"><strong>Poin pengajaran kunci:</strong> Resep bersifat posisional — susunan material di grid menentukan item yang diproduksi. Menempatkan material di posisi relatif yang salah tidak menghasilkan apa pun. Bu öğrencilerin konumsal veri yapılarıyla ilk karşılaşmasıdır.</p>
+</div>
+
+<div class="card">
+  <h4>3.2 · Koordinat Tepat vs. Koordinat Relatif</h4>
+  <div class="coord-box">
+    <span class="cm">Koordinat TEPAT</span> — posisi tetap di grid dunia:<br>
+    <span class="cy">/tp @s 100 64 200</span>  →  mevcut konumdan bağımsız olarak her zaman X=100, Y=64, Z=200'e ışınlar<br><br>
+    <span class="cm">Koordinat RELATIF</span> — offset dari posisi saat ini:<br>
+    <span class="cy">/tp @s ~5 ~0 ~0</span>   →  şu an bulunduğunuz yerden 5 blok Doğuya ışınlar<br><br>
+    <span class="cm">Sintaks campuran (valid):</span><br>
+    <span class="cy">/tp @s ~0 64 ~0</span>   →  aynı X ve Z; yüksekliği tam Y=64'e sabitle<br><br>
+    <span style="color:#F87171">Tes kritis:</span> /tp @a 0 64 0  (tilde yok) her zaman TÜM oyuncuları dünya orijinine gönderir.<br>
+    <span style="color:#F87171">Bandingkan:</span>    /tp @a ~0 ~0 ~0 (tüm tildeler) kimseyi hareket ettirmez — uzaklıklar sıfır.
+  </div>
+  <div class="callout ct" style="margin-top:10px">
+    <span class="ci">💡</span>
+    <div><strong>Ajarkan perbedaan secara fisik:</strong> "Koordinat absolut seperti alamat jalan — Jalan Sudirman 100 selalu Jalan Sudirman 100. Koordinat relatif seperti petunjuk arah — '3 blok ke kirimu' tergantung ke mana kamu menghadap sekarang."</div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>3.3 · Perintah /clone — Duplikasi Struktural</h4>
+  <p>Perintah /clone menyalin region 3D yang terdefinisi ke lokasi baru:</p>
+  <div class="coord-box">
+    Sözdizimi:  /clone [x1 y1 z1] [x2 y2 z2] [hedef-x hedef-y hedef-z]<br><br>
+    [x1 y1 z1] = kaynak bölgenin bir köşesi<br>
+    [x2 y2 z2] = kaynak bölgenin karşı köşesi (tam 3B kutuyu tanımlar)<br>
+    [hedef-x hedef-y hedef-z] = kopyanın görüneceği köşe<br><br>
+    Contoh — salin rumah 5×5×5 yang dimulai di 100,64,200 ke 120,64,200:<br>
+    <span class="cy">/clone 100 64 200  104 68 204  120 64 200</span>
+  </div>
+  <p style="margin-top:10px"><strong>Aplikasi arsitektural:</strong> Bir kule bölümü inşa edin, ardından yolun karşı tarafında mükemmel simetrik bir kopya oluşturmak için /clone kullanın. Bu modüler mimarinin arkasındaki ilkedir — bir öğeyi iyi tasarlayın, ardından çoğaltın.</p>
+  <div class="callout cw" style="margin-top:8px">
+    <span class="ci">⚠️</span>
+    <div><strong>Kesalahan tumpang tindih:</strong> Region sumber dan tujuan tidak boleh tumpang tindih. Jika ya, perintah error tanpa suara. Selalu pastikan koordinat tujuan cukup jauh dari batas region sumber.</div>
+  </div>
+</div>
+
+<div class="card">
+  <h4>3.4 · Jebakan Redstone — Komponen &amp; Desain Sirkuit</h4>
+  <div class="two-col" style="margin-top:8px">
+    <div class="card">
+      <h4>Pressure Plate</h4>
+      <p>Memancarkan sinyal Redstone terus-menerus saat pemain, mob, atau tumpukan item berdiri di atasnya. Sinyal berhenti begitu entitas pergi. İki çeşit: <strong>Batu</strong> (hanya mob/pemain yang memicu) dan <strong>Kayu</strong> (item juga memicu). Untuk jebakan Modul 2, Batu yang lebih disukai.</p>
+    </div>
+    <div class="card">
+      <h4>Dispenser</h4>
+      <p>Saat menerima denyut Redstone, mengeluarkan satu item dari inventarisnya ke arah yang dihadapinya. Dimuat dengan panah = jebakan proyektil. Dimuat dengan Splash Potion = jebakan efek area. Dimuat dengan TNT = pemicu ledakan (gunakan dengan hati-hati dalam sesi kelompok).</p>
+    </div>
+    <div class="card">
+      <h4>TNT</h4>
+      <p>Redstone sinyali veya ateşle aktive edilen TNT 4 tıklık fitil süresine sahiptir (0.2 saniye) ardından patlar. Patlama yarıçapı ~4 blok. Modül 2 tuzaklarında TNT'yi Dispenser çıkışına zincirleme bağlayın.</p>
+    </div>
+    <div class="card">
+      <h4>Logika Sirkuit Jebakan</h4>
+      <p><strong>Standart tuzak kablolaması:</strong> Pressure Plate → Redstone tozu (1–15 blok) → Dispenser. Oyuncu Plaka üzerinde durduğunda sinyal tel boyunca seyahat eder ve Dispenseryı aktive eder. <strong>Zamanlama notu:</strong> Redstone sinyalleri tik başına 1 blok hızla seyahat eder.</p>
+    </div>
+  </div>
+</div>
+
+<div id="multi" class="anchor-target">
+  <div class="section-head">4 · Perencanaan Kota Multipemain Kooperatif</div>
+</div>
+
+<div class="card">
+  <h4>Penugasan Peran Tim</h4>
+  <p>Bagi kelas menjadi 2–3 tim dengan tanggung jawab yang tidak tumpang tindih. Her ekibin çakışmayı önlemek için belirli bir koordinat bölgesi vardır:</p>
+  <ul style="margin-top:8px">
+    <li><strong>Pembangun Jembatan:</strong> Membangun jalur yang menghubungkan zona distrik. Harus menggunakan koordinat tepat untuk memastikan jembatan mereka sejajar dengan titik akhir di zona tim lain.</li>
+    <li><strong>Penjaga Mercusuar:</strong> Membangun landmark tinggi (tinggi 15+ blok) dengan lampu Redstone di atas yang terhubung ke Sensor Siang untuk aktif/nonaktif otomatis.</li>
+    <li><strong>Perencana Kota:</strong> Menata jalan dan ruang publik. Harus mendefinisikan grid koordinat dan mengkomunikasikannya ke tim lain.</li>
+  </ul>
+</div>
+
+<div class="callout cw">
+  <span class="ci">⚠️</span>
+  <div>
+    <strong>#1 Risiko Multipemain: Siswa Menghancurkan Bangunan Satu Sama Lain</strong><br>
+    Ini harus dicegah sebelum terjadi, bukan ditangani secara reaktif. Tetapkan "Aturan Bertetangga" dalam 5 menit pertama setiap sesi multipemain, sebelum siswa memasuki dunia bersama.<br>
+    <div class="script-box" style="margin-top:8px">"Sebelum kita memasuki kota, apa aturan yang diikuti tetangga yang baik? Jangan hancurkan rumah tetangga! Jangan ambil barang dari peti orang lain! Jika kamu tidak sengaja menghancurkan sesuatu, kamu membangunnya kembali — itulah Aturan Bertetangga."</div>
+    <strong>Saat pelanggaran terjadi:</strong> Jangan keluarkan siswa dari sesi. Referensikan Aturan Bertetangga dengan namanya dan bimbing mereka membangun kembali. Respons hukuman menciptakan kebencian; respons restoratif membangun standar komunitas.
+  </div>
+</div>
+
+<div id="trouble" class="anchor-target">
+  <div class="section-head">5 · Pemecahan Masalah Kataloğu — Modül 2 (5 Senaryo)</div>
+</div>
+
+<div style="overflow-x:auto">
+  <table class="trouble-table">
+    <thead>
+      <tr>
+        <th style="width:22%">Kesalahan / Gejala</th>
+        <th style="width:27%">Kök Neden</th>
+        <th style="width:31%">Tam Düzeltme</th>
+        <th style="width:20%">Önleme Komut Dosyası</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mc">Perintah /clone error secara diam-diam — tidak ada yang muncul di tujuan</td>
+        <td>Region sumber dan tujuan tumpang tindih; ATAU koordinat tujuan dimasukkan dalam urutan yang salah</td>
+        <td>Verifikasi: (1) Tujuan di luar kotak pembatas sumber. (2) Sudut pertama [x1,y1,z1] dan sudut kedua [x2,y2,z2] adalah sudut berlawanan dari sumber. (3) Tujuan [dx,dy,dz] adalah ekuivalen sudut pertama di lokasi baru.</td>
+        <td class="fc">"Tulis semua tiga koordinat sudut sebelum mengetik perintah. Satu angka salah = kegagalan diam."</td>
+      </tr>
+      <tr>
+        <td class="mc">Pressure Plate aktive oluyor ancak Dispenser ateşlemiyor</td>
+        <td>Redstone tozu teli kırık; VEYA Dispenser yanlış yöne bakıyor; VEYA Dispenser envanteri boş</td>
+        <td>Teli izleyin: hangi segmentin güçsüz olduğunu kontrol etmek için her Redstone tozu bloğuna geçici bir meşale yerleştirin. Boşlukları düzeltin. Dispensernın doğru yöne baktığını doğrulayın.</td>
+        <td class="fc">"Üç adımlı tuzak kontrolü: tel sürekli mi? Dispenser stoklu mu? Dispenser doğru yönde mi? Test etmeden önce her üçünü kontrol edin."</td>
+      </tr>
+      <tr>
+        <td class="mc">Siswa kesulitan menyelaraskan tujuan /clone dengan struktur tim lain — jembatan tidak terhubung</td>
+        <td>Tim tidak menyetujui grid koordinat bersama sebelum membangun</td>
+        <td>Hentikan semua tim. Minta tim Perencana Kota mengumumkan grid bersama. Semua tim menyesuaikan titik awal mereka agar sesuai dengan grid.</td>
+        <td class="fc">"Sebelum tim mana pun meletakkan satu blok, Perencana Kota harus mengumumkan grid koordinat di obrolan."</td>
+      </tr>
+      <tr>
+        <td class="mc">Siswa tidak sengaja menghancurkan kabel Redstone saat membangun</td>
+        <td>Debu Redstone hancur jika blok padat ditempatkan di atasnya; siswa tidak tahu Redstone sensitif terhadap perubahan blok yang berdekatan</td>
+        <td>Ajarkan: debu Redstone hancur jika blok padat ditempatkan di atasnya. Selalu bangun dinding dan lantai terlebih dahulu, lalu pasang Redstone di permukaan yang sudah jadi.</td>
+        <td class="fc">"Bangun cangkangnya dulu, kabel terakhir. Redstone hanya di permukaan yang sudah jadi."</td>
+      </tr>
+      <tr>
+        <td class="mc">Resep Crafting Table menghasilkan item yang salah atau tidak menghasilkan apa pun</td>
+        <td>Material ditempatkan dalam pola posisional yang salah — resep crafting bersifat spesifik posisi</td>
+        <td>Minta siswa mengambil tangkapan layar susunan yang gagal, lalu bandingkan berdampingan dengan resep yang benar di Buku Resep. Identifikasi slot mana yang salah.</td>
+        <td class="fc">"Tunjukkan padaku tangkapan layar grid dan tangkapan layar resepmu berdampingan. Salah satunya sedikit berbeda — bisakah kamu menemukannya?"</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="protips" class="anchor-target">
+  <div class="section-head">6 · Tips Pro Tutor &amp; Analogi Dunia Nyata</div>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Koordinat = Analogi "Grid Jalan Kota" (Diperluas untuk Modul 2)</strong><br>
+  <em>"Di kota nyata, arsitek tidak hanya mengatakan 'bangun gedung pencakar langit di suatu tempat di sana.' Mereka mengatakan 'Bangun di 100 Jalan Timur ke-5, dari lantai dasar hingga lantai 20.' Itulah yang diberikan koordinat tepat padamu — alamat konstruksi yang presisi."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 /clone = Analogi "Cetak Biru Arsitektural"</strong><br>
+  <em>"Arsitek nyata tidak mendesain setiap lantai gedung pencakar langit secara terpisah — mereka mendesain satu lantai tipikal dengan sempurna, lalu menyalinnya 40 kali. Perintah /clone adalah mesin fotokopi cetak birumu."</em></p>
+</div>
+
+<div class="tip-card">
+  <p><strong>💡 Resep Crafting = Analogi "Resep yang Tepat"</strong><br>
+  <em>"Bayangkan kamu membuat kue. Jika resep mengatakan 'dua cangkir tepung di kiri, satu telur di kanan,' menukarnya tidak membuat kue yang lebih baik — membuat kue yang berbeda, atau tidak ada kue sama sekali. Resep Crafting Table bekerja identik."</em></p>
+</div>
+
+<div id="test-cta" class="anchor-target">
+  <div class="section-head">7 · Kuis Pengetahuan Modul 2</div>
+</div>
+
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h)">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Siap untuk Kuis Pengetahuan Modul 2?</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+    6 pertanyaan murni dari konten Modul 2. Nilai <strong>70% (5/6) atau lebih</strong> diperlukan untuk membuka kunci Modul 3.
+  </p>
+  <div class="btn-row center">
+    <a href="IdModule2Test.html" class="btn-primary">Mulai Tes Modul 2 →</a>
+    <button class="btn-outline" onclick="goHome()">← Dasbor</button>
+  </div>
+</div>
+
+</div>
+<footer>© 2026 Kodland. Materi pelatihan tutor internal — tidak untuk distribusi eksternal.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(2)) { alert('Harap selesaikan Modul 1 terlebih dahulu.'); goHome(); }
+</script>
+</body>
+</html>

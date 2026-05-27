@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul 3 — Oasis Logika | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .module-banner{background:linear-gradient(135deg,#6D28D9 0%,#8B5CF6 100%);padding:36px 32px 28px;position:relative;overflow:hidden}
+  .module-banner::before{content:'🧩';font-size:180px;position:absolute;right:-20px;top:-40px;opacity:.09;line-height:1;pointer-events:none}
+  .module-banner .meyebrow{color:rgba(255,255,255,.72)}
+  .module-banner .mh1{color:#fff}
+  .module-banner p{color:rgba(255,255,255,.85);font-size:14px;line-height:1.65;max-width:640px;margin-top:6px}
+  .module-banner .mobj{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28);border-left-color:rgba(255,255,255,.7);color:rgba(255,255,255,.9)}
+  .module-banner .mobj strong{color:#fff}
+  .sec-nav{display:flex;flex-wrap:wrap;gap:8px;padding:14px 28px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90}
+  .sec-pill{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:5px 13px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+  .sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:580px){.two-col{grid-template-columns:1fr}}
+  .code-block{background:var(--ink);border-radius:var(--r);padding:18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#e0e0e0;margin:10px 0;border:2px solid var(--border)}
+  [data-theme="dark"] .code-block{background:#0a0a0a}
+  .tip-card{background:var(--callout-tip-bg);border:1.5px solid var(--callout-tip-b);border-left:4px solid #38BDF8;border-radius:var(--rsm);padding:14px 16px;margin-bottom:10px}
+  .tip-card p{font-size:13.5px;color:var(--callout-tip-t);line-height:1.65}
+  .trouble-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .trouble-table th{background:var(--surface2);border:1.5px solid var(--border);padding:9px 13px;text-align:left;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text)}
+  .trouble-table td{border:1.5px solid var(--border);padding:9px 13px;line-height:1.55;vertical-align:top;color:var(--text2)}
+  .trouble-table tr:nth-child(even) td{background:var(--surface2)}
+  .mc{color:var(--no-t);font-weight:600}.fc{color:var(--ok-t)}
+  .anchor-target{scroll-margin-top:130px}
+  code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--pink)}
+  [data-theme="dark"] code{color:var(--lime)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Pelatihan Tutor</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dasbor</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="module-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Modul 3 / 5</div>
+    <div class="mh1">🧩 Oasis Logika</div>
+    <p>Permainan, teka-teki, dan fondasi nyata logika pemrograman — siswa membangun mini-game interaktif pertama mereka menggunakan blok peristiwa MakeCode, variabel, dan kondisi.</p>
+    <div class="mobj" style="margin-top:14px;margin-bottom:0">
+      <strong>Tujuan Modul 3:</strong> Pahami pemrograman berbasis peristiwa (Saat Pemain Berjalan, Saat Blok Dihancurkan) · Buat dan ubah variabel sebagai "wadah skor" · Terapkan logika kondisional Jika–Maka dan Jika–Maka–Selain · Gabungkan Peristiwa + Variabel + Kondisi untuk membangun mini-game yang dapat dimainkan.
+    </div>
+  </div>
+</div>
+<div class="cbody">
+
+<div class="anchor-target" id="overview">
+  <div class="section-head">1 · Gambaran Umum — Titik Balik Pemrograman</div>
+</div>
+<div class="card">
+  <h4>Mengapa Modul 3 adalah Titik Balik Konseptual</h4>
+  <p>Modul 1 dan 2 menggunakan MakeCode untuk mengotomatisasi konstruksi fisik — program berjalan sekali dan menghasilkan hasil statis. Modul 3 memperkenalkan <strong>pemrograman reaktif dan interaktif</strong>: kode yang menunggu sesuatu terjadi, lalu merespons. Ini adalah paradigma mendasar dari hampir semua perangkat lunak dunia nyata. Siswa sekarang tidak membangun mesin — mereka membangun <em>pengalaman</em>.</p>
+</div>
+
+<div class="anchor-target" id="events">
+  <div class="section-head">2 · Pemrograman Berbasis Peristiwa</div>
+</div>
+<div class="card">
+  <h4>Apa itu Peristiwa?</h4>
+  <p>Sebuah <strong>peristiwa</strong> adalah sinyal bahwa sesuatu telah terjadi di dunia game. Sebuah <strong>blok peristiwa</strong> di MakeCode mendaftarkan pendengar: kode yang tertutup di dalamnya hanya berjalan tepat saat peristiwa itu terpicu.</p>
+  <div class="code-block">
+    <span style="color:#C792EA">saat pemain</span> berjalan {           ← blok peristiwa: terpicu setiap langkah<br>
+    &nbsp;&nbsp;<span style="color:#82AAFF">ubah skor</span> sebesar <span style="color:#F78C6C">1</span>      ← kode ini berjalan setiap peristiwa terpicu<br>
+    }                                   ← kode DI LUAR blok ini = tidak dipicu oleh jalan
+  </div>
+  <p style="margin-top:8px"><strong>Peristiwa Modul 3 yang perlu diajarkan tutor:</strong></p>
+  <ul style="margin-top:6px">
+    <li><strong>Saat Pemain Berjalan:</strong> Terpicu sekali per langkah yang diambil pemain.</li>
+    <li><strong>Saat Blok Dihancurkan:</strong> Terpicu saat pemain menambang jenis blok tertentu.</li>
+    <li><strong>Pada Perintah Obrolan [kata]:</strong> Terpicu saat pemain mengetik kata di obrolan.</li>
+    <li><strong>Saat Pemain Melompat:</strong> Terpicu sekali per lompatan.</li>
+  </ul>
+</div>
+<div class="callout cw">
+  <span class="ci">⚠️</span>
+  <div>
+    <strong>Kesalahan Kritis: Kode yang Ditempatkan di Luar Blok Peristiwa</strong><br>
+    Ini adalah kesalahan coding paling umum di Modul 3. Siswa menempatkan blok "ubah variabel sebesar 1" di luar blok peristiwa. Hasilnya: variabel hanya berubah saat program dimuat, bukan saat peristiwa terpicu.<br>
+    <div class="code-block" style="margin-top:8px;background:#2a0000;border-color:#B91C1C">
+      <span style="color:#F87171">SALAH — skor berubah saat program dimuat, bukan saat berjalan:</span><br>
+      <span style="color:#C792EA">saat pemain</span> berjalan { ← blok peristiwa kosong<br>
+      }<br>
+      <span style="color:#F78C6C">ubah skor sebesar 1</span>  ← DI LUAR — berjalan sekali, tidak pernah lagi
+    </div>
+    <div class="code-block" style="margin-top:8px;background:#0a2000;border-color:#16A34A">
+      <span style="color:#4ADE80">BENAR — skor berubah setiap langkah:</span><br>
+      <span style="color:#C792EA">saat pemain</span> berjalan {<br>
+      &nbsp;&nbsp;<span style="color:#82AAFF">ubah skor sebesar 1</span>  ← DI DALAM<br>
+      }
+    </div>
+    <strong>Koreksi pengajaran:</strong> Sebelum coding, minta siswa menggambar persegi panjang di kertas dan secara fisik memutuskan instruksi mana yang masuk ke dalam dan luar.
+  </div>
+</div>
+
+<div class="anchor-target" id="variables">
+  <div class="section-head">3 · Variabel — Wadah untuk Data yang Berubah</div>
+</div>
+<div class="card">
+  <h4>Apa itu Variabel?</h4>
+  <p>Sebuah <strong>variabel</strong> adalah lokasi penyimpanan memori bernama yang menyimpan sebuah nilai. Semua variabel di Modul 3 bersifat numerik — menyimpan skor, penghitung, dan timer.</p>
+  <div class="code-block">
+    <span style="color:#C792EA">atur skor</span> ke <span style="color:#F78C6C">0</span>           ← membuat variabel dan memberi nilai awal<br>
+    <span style="color:#C792EA">ubah skor</span> sebesar <span style="color:#F78C6C">+1</span>        ← menambahkan 1 ke nilai yang disimpan saat ini<br>
+    <span style="color:#C792EA">ubah skor</span> sebesar <span style="color:#F78C6C">-5</span>        ← mengurangi 5 dari nilai saat ini<br>
+    <span style="color:#FCD34D">katakan</span> skor               ← menampilkan nilai saat ini di obrolan (untuk pengujian)
+  </div>
+  <p style="margin-top:10px"><strong>Cakupan variabel di MakeCode:</strong> Semua variabel bersifat <em>global</em> — blok peristiwa mana pun dapat membaca dan menulis variabel mana pun. Tidak ada cakupan variabel lokal.</p>
+  <p style="margin-top:8px"><strong>Konvensi penamaan yang harus diajarkan:</strong> Gunakan nama deskriptif (<code>skor</code>, <code>langkah</code>, <code>batu</code>) daripada huruf tunggal. Ini memungkinkan siswa usia 8 tahun untuk men-debug kode mereka sendiri.</p>
+</div>
+
+<div class="anchor-target" id="conditionals">
+  <div class="section-head">4 · Kondisi — Logika Jika–Maka</div>
+</div>
+<div class="card">
+  <h4>Blok Jika–Maka dan Jika–Maka–Selain</h4>
+  <div class="code-block">
+    <span style="color:#C792EA">jika</span> skor <span style="color:#F78C6C">≥ 10</span> <span style="color:#C792EA">maka</span> {<br>
+    &nbsp;&nbsp;<span style="color:#FCD34D">katakan</span> <span style="color:#C3E88D">"Menang! Skor akhir: "</span> + skor<br>
+    &nbsp;&nbsp;<span style="color:#82AAFF">kembang api</span> di posisi pemain<br>
+    &nbsp;&nbsp;<span style="color:#C792EA">atur skor</span> ke <span style="color:#F78C6C">0</span>    ← reset untuk permainan baru<br>
+    }<br><br>
+    <span style="color:#C792EA">jika</span> skor <span style="color:#F78C6C">≥ 10</span> <span style="color:#C792EA">maka</span> {<br>
+    &nbsp;&nbsp;<span style="color:#FCD34D">katakan</span> <span style="color:#C3E88D">"Menang!"</span><br>
+    } <span style="color:#C792EA">selain</span> {<br>
+    &nbsp;&nbsp;<span style="color:#FCD34D">katakan</span> <span style="color:#C3E88D">"Terus! "</span> + (10 - skor) + <span style="color:#C3E88D">" langkah lagi"</span><br>
+    }
+  </div>
+  <div class="two-col" style="margin-top:12px">
+    <div class="card">
+      <h4>Operator Perbandingan</h4>
+      <p><code>=</code> sama dengan · <code>≠</code> tidak sama dengan<br><code>&gt;</code> lebih besar · <code>&lt;</code> lebih kecil<br><code>≥</code> lebih besar atau sama · <code>≤</code> lebih kecil atau sama</p>
+    </div>
+    <div class="card">
+      <h4>Operator Logika</h4>
+      <p><code>DAN</code> — kedua kondisi harus benar<br><code>ATAU</code> — kondisi mana saja benar<br><code>TIDAK</code> — membalikkan kondisi<br>Contoh: <code>skor ≥ 10 DAN nyawa &gt; 0</code></p>
+    </div>
+  </div>
+</div>
+
+<div class="anchor-target" id="minigame">
+  <div class="section-head">5 · Pembangunan Mini-Game — Contoh Lengkap</div>
+</div>
+<div class="card">
+  <h4>Mini-Game "Berlari ke 10" — Spesifikasi Teknis Lengkap</h4>
+  <div class="code-block">
+    <span style="color:#546E7A;font-style:italic">// Blok setup — berjalan sekali saat program dimuat</span><br>
+    saat mulai {<br>
+    &nbsp;&nbsp;<span style="color:#C792EA">atur skor</span> ke <span style="color:#F78C6C">0</span><br>
+    &nbsp;&nbsp;<span style="color:#FCD34D">katakan</span> <span style="color:#C3E88D">"Game dimulai! Jalan untuk mendapat poin. Capai 10!"</span><br>
+    }<br><br>
+    <span style="color:#546E7A;font-style:italic">// Blok peristiwa — terpicu setiap langkah</span><br>
+    <span style="color:#C792EA">saat pemain</span> berjalan {<br>
+    &nbsp;&nbsp;<span style="color:#82AAFF">ubah skor sebesar 1</span><br>
+    &nbsp;&nbsp;<span style="color:#C792EA">jika</span> skor <span style="color:#F78C6C">≥ 10</span> <span style="color:#C792EA">maka</span> {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#FCD34D">katakan</span> <span style="color:#C3E88D">"MENANG! Skor akhir: "</span> + skor<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#82AAFF">kembang api</span> di posisi pemain<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#C792EA">atur skor</span> ke <span style="color:#F78C6C">0</span><br>
+    &nbsp;&nbsp;}<br>
+    }
+  </div>
+</div>
+
+<div class="anchor-target" id="trouble">
+  <div class="section-head">6 · Katalog Pemecahan Masalah — Modul 3 (5 Skenario)</div>
+</div>
+<div style="overflow-x:auto">
+  <table class="trouble-table">
+    <thead><tr><th style="width:22%">Gejala</th><th style="width:27%">Akar Penyebab</th><th style="width:31%">Perbaikan</th><th style="width:20%">Skrip Pencegahan</th></tr></thead>
+    <tbody>
+      <tr><td class="mc">Variabel skor muncul sebagai 1 segera saat /code dijalankan, sebelum pemain berjalan</td><td>Blok 'atur skor ke 0' ada di dalam peristiwa Berjalan, bukan blok saat mulai terpisah</td><td>Pindahkan 'atur skor ke 0' ke blok Saat Mulai sehingga hanya berjalan sekali saat program dimuat.</td><td class="fc">"Kode setup masuk ke Saat Mulai. Kode game masuk ke peristiwa. Jangan pernah mencampur inisialisasi dengan kode respons."</td></tr>
+      <tr><td class="mc">Variabel skor tidak pernah naik di atas 1 — direset setiap langkah</td><td>'Atur skor ke 0' ditempatkan di dalam blok peristiwa Berjalan sehingga direset setiap langkah</td><td>Hapus 'atur skor ke 0' sepenuhnya dari dalam blok Berjalan. Inisialisasi hanya milik blok Saat Mulai.</td><td class="fc">"Baca kode keras: 'Setiap langkah: atur skor ke 0, lalu tambahkan 1.' Apa yang selalu terjadi?"</td></tr>
+      <tr><td class="mc">Kondisi Jika–Maka tidak pernah terpicu meskipun skor jelas melampaui target</td><td>Operator perbandingan salah (= digunakan alih-alih ≥); ATAU nama variabel di kondisi dieja berbeda dari yang dinaikkan</td><td>Periksa operator: jika target adalah mencapai 10 atau lebih, kondisi harus skor ≥ 10 bukan skor = 10. Periksa ejaan: MakeCode case-sensitive untuk nama variabel.</td><td class="fc">"Untuk kondisi menang, gunakan ≥ bukan = — pemain bisa melewati angka tepat."</td></tr>
+      <tr><td class="mc">Setelah skor mencapai 10, kondisi menang terpicu setiap langkah — kembang api terus berulang</td><td>Skor tidak direset di dalam blok kondisi menang; tetap ≥ 10 setelah menang pertama</td><td>Tambahkan 'atur skor ke 0' sebagai baris terakhir di dalam blok jika-maka menang. Alternatif: perkenalkan variabel boolean 'gameAktif', atur ke salah saat menang, bungkus seluruh peristiwa Berjalan dengan 'jika gameAktif = benar'.</td><td class="fc">"Apa yang terjadi pada skor setelah menang? Baik reset maupun matikan game. Tanpa reset, menang terpicu selamanya."</td></tr>
+      <tr><td class="mc">Siswa tidak mengerti mengapa 'katakan skor' menampilkan angka padahal mereka ingin teks + angka ("Skor Saat Ini: 7")</td><td>Kombinasi blok yang salah: 'katakan' hanya dengan blok variabel menghasilkan angka; membutuhkan blok 'gabung teks' untuk menggabungkan teks + variabel</td><td>Tunjukkan blok 'gabung teks' di MakeCode: [katakan [gabung ["Skor Saat Ini: "] [skor]]]. 'Katakan' hanya bisa menyimpan satu hal — untuk menampilkan teks DAN angka, gabungkan dulu.</td><td class="fc">"'Katakan' hanya bisa menyimpan satu hal. Gunakan 'gabung' untuk menggabungkan teks dan angka sebelum memberikannya ke 'Katakan'."</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="anchor-target" id="protips">
+  <div class="section-head">7 · Tips Pro &amp; Analogi Dunia Nyata</div>
+</div>
+<div class="tip-card"><p><strong>💡 Variabel = Analogi "Skor Video Game"</strong><br><em>"Pikirkan setiap video game yang pernah kamu mainkan. Mario punya penghitung koin. FIFA punya penghitung gol. Semua itu adalah variabel — kotak bernama yang menyimpan angka dan berubah saat kamu bermain. Hari ini kamu akan membangun kode di balik penghitung skormu sendiri."</em></p></div>
+<div class="tip-card"><p><strong>💡 Peristiwa = Analogi "Sistem Notifikasi"</strong><br><em>"Ponselmu tidak membaca setiap pesan yang dikirim saat itu juga. Ia diam menunggu — lalu memberi notifikasi saat pesan tiba. Notifikasi itu adalah peristiwa. Blok peristiwa MakeCode bekerja persis sama: tidur sampai sesuatu terjadi di Minecraft, lalu bangun dan jalankan kodenya."</em></p></div>
+<div class="tip-card"><p><strong>💡 Jika–Maka = Analogi "Termostat"</strong><br><em>"Termostat tidak terus memanaskan rumah — ia terus memeriksa: 'Apakah suhu di bawah 20°C?' Jika ya, pemanas menyala. Jika tidak, tetap mati. Blok Jika–Maka melakukan persis itu: memeriksa kondisi dan hanya bertindak jika kondisi benar."</em></p></div>
+<div class="tip-card"><p><strong>💡 Teknik "Visualisasi Batas Blok" untuk Mencegah Kesalahan Blok Luar</strong><br>Sebelum siswa mana pun menulis kode di Modul 3, minta mereka menggambar persegi panjang di kertas. Tulis "Saat Pemain Berjalan" di atasnya. Kemudian: "Instruksi mana yang masuk DI DALAM persegi panjang ini, mana yang di luar?" Siswa yang menggambar batas sebelum coding melakukan kesalahan ini ~70% lebih jarang.</p></div>
+
+<div style="background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:28px;text-align:center;box-shadow:var(--shadow-h);margin-top:28px">
+  <div style="font-size:40px;margin-bottom:12px">📝</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Siap untuk Kuis Pengetahuan Modul 3?</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+    6 pertanyaan murni dari konten Modul 3. Nilai <strong>70% atau lebih</strong> diperlukan untuk membuka Modul 4.
+  </p>
+  <div class="btn-row center">
+    <a href="IdModule3Test.html" class="btn-primary">Mulai Tes Modul 3 →</a>
+    <button class="btn-outline" onclick="goHome()">← Dasbor</button>
+  </div>
+</div>
+</div>
+<footer>© 2026 Kodland. Materi pelatihan tutor internal — tidak untuk distribusi eksternal.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+  if (!isModuleUnlocked(3)) { alert('Harap selesaikan modul sebelumnya terlebih dahulu.'); goHome(); }
+</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modül 3 Testi — Mantık Vahası | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .quiz-header{background:linear-gradient(135deg,#6D28D9,#8B5CF6);padding:24px 32px;color:#fff;text-align:center}
+  .quiz-header h2{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+  .quiz-header p{color:rgba(255,255,255,.8);font-size:13px}
+  .feedback-box{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:13.5px;line-height:1.6;border:2px solid}
+  .feedback-box.show{display:block}
+  .feedback-box.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+  .feedback-box.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Eğitimi</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="history.back()">← Modül 3</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="quiz-header">
+  <h2>📝 Modül 3 Bilgi Kontrolü</h2>
+  <p>🧩 Mantık Vahası · 6 Soru · Geçmek için %70</p>
+</div>
+<div id="quiz-screen" class="quiz-wrap">
+  <div class="q-progress">
+    <div class="q-prog-track"><div class="q-prog-fill" id="q-prog" style="width:0%"></div></div>
+    <span class="q-count" id="q-count">0 / 6</span>
+  </div>
+  <div id="question-area"></div>
+  <div id="feedback-area"></div>
+  <div class="btn-row" style="margin-top:16px">
+    <button class="btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Sonraki Soru →</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitQuiz()" style="display:none">Yanıtları Gönder</button>
+  </div>
+</div>
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" style="margin-top:20px" id="result-actions"></div>
+</div>
+<footer>© 2026 Kodland. Dahili tutor eğitim materyali.</footer>
+<script src="shared.js"></script>
+<script>
+const MODULE_ID = 3;
+const PASS_PCT  = 70;
+const QUESTIONS = [
+  {
+    q: "Bir öğrencinin 'skor' değişkeni, program başladığında oyuncu hiç yürümeden hemen 1 olarak görünüyor. Kesin neden nedir?",
+    opts: [
+      "Oyuncu Yürüdüğünde olayı program başlatmada otomatik olarak bir kez ateşleniyor",
+      "'Skoru 0'a ayarla' başlatma bloğu Oyuncu Yürüdüğünde olayının içinde — her yürüyüş adımında skor artmadan önce 0'a sıfırlanıyor, bu yüzden skor her zaman 1 oluyor",
+      "MakeCode değişkenleri, Başlangıçta bloğunda açıkça ayarlanmadıkça her zaman 1 ile başlar",
+      "'Skoru 1 artır' bloğu sonsuz bir arka plan döngüsünde çalışıyor"
+    ],
+    correct: 1,
+    feedback: "'Skoru 0'a ayarla' Yürüyüş olayının içindeyse, her adımdaki dizi şudur: (1) skoru 0'a ayarla, (2) skoru 1 artır — skor her zaman 1'e eşit olur. Düzeltme: 'Skoru 0'a ayarla'yı, yalnızca program başlangıcında bir kez çalışacağı bir Başlangıçta bloğuna taşıyın."
+  },
+  {
+    q: "Bir öğrenci, oyuncu 10 veya daha fazla taş topladığında kazanma koşulunun tetiklenmesini istiyor, ancak taş = 12 olduğunda bile koşul hiç tetiklenmiyor. Kod şunu okuyor: eğer taş = 10 ise { 'Kazandın!' söyle }. Sorun ve düzeltme nedir?",
+    opts: [
+      "Değişken 'skor' olarak adlandırılmalı, 'taş' değil — MakeCode yalnızca varsayılan değişken adlarını tanır",
+      "'Söyle' bloğu koşulların içinde 'yazdır' bloğuyla değiştirilmeli",
+      "Koşul ≥ (10 veya daha büyük) yerine = (tam olarak 10'a eşit) kullanıyor — oyuncu 12 taş toplarsa, taş hiçbir zaman tam olarak 10'a eşit olmaz, koşul asla doğru değil",
+      "Koşullar değişkenleri doğrudan okuyamaz — önce ayrı bir 'oku' bloğu eklenmeli"
+    ],
+    correct: 2,
+    feedback: "'Taş = 10' koşuluyla program, taşın tam olarak 10'a eşit olup olmadığını kontrol eder. Oyuncu taşları gruplar halinde (ör. +3) toplarsa, taş 9'dan 12'ye atlayabilir — tam 10'u atlayarak. Koşul asla doğru olmaz. Düzeltme: operatörü ≥ (büyük veya eşit) olarak değiştirin."
+  },
+  {
+    q: "Aşağıdakilerden hangisi MakeCode Education'daki değişkenlerin kapsamını doğru şekilde açıklar?",
+    opts: [
+      "Tüm değişkenler globaldir — programdaki herhangi bir olay bloğu herhangi bir değişkeni okuyup değiştirebilir",
+      "Değişkenler oluşturuldukları olay bloğuna yereldir — diğer bloklar erişemez",
+      "Değişkenler yalnızca oluşturan olay bloğu aktif olarak çalışırken var olur",
+      "MakeCode değişkenleri kullanılmadan önce bir tür (sayı, metin veya mantıksal) ile bildirilmelidir"
+    ],
+    correct: 0,
+    feedback: "MakeCode Education'da tüm değişkenler varsayılan olarak globaldir. Başlangıçta bloğunda oluşturulan bir değişken, Oyuncu Yürüdüğünde, Blok Kırıldığında ve diğer tüm olay bloklarında tamamen erişilebilir ve değiştirilebilir. Yerel değişken kapsamı yoktur."
+  },
+  {
+    q: "Kazanma koşuluna ulaştıktan sonra (skor ≥ 10), bir öğrencinin havai fişek animasyonu yalnızca bir kez değil her yürüyüş adımında tetikleniyor. En kesin teknik neden nedir?",
+    opts: [
+      "Havai fişek bloğunun 'sonsuz' olarak ayarlanmış dahili bir tekrar ayarı var",
+      "Oyuncu Yürüdüğünde olayı adım başına iki kez tetikleyen yerleşik bir çift-ateşleme hatası var",
+      "Koşulun yeniden tetiklenmesini önlemek için ≥ karşılaştırma operatörü = olarak değiştirilmeli",
+      "Skor, kazanma koşulu bloğunun içinde sıfırlanmıyor — kazandıktan sonra skor ≥ 10 olarak kalıyor, yani her sonraki yürüyüş adımı koşulu yeniden tetikliyor"
+    ],
+    correct: 3,
+    feedback: "Kazanma tetiklendikten sonra, skor 10'da (veya üzerinde) kalırsa, her sonraki yürüyüş adımı 'eğer skor ≥ 10' → doğru → havai fişek tekrar değerlendirir. Düzeltme: kazanma bloğunun son satırı olarak 'skoru 0'a ayarla' ekleyin, veya kazanışta yanlışa ayarlanan bir 'oyunAktif' boolean değişkeni tanıtın."
+  },
+  {
+    q: "Bir tutor öğrencinin kodu olay bloğunun dışına koymasını önlemek istiyor. Kodlamaya başlamadan önce en etkili pedagojik teknik hangisidir?",
+    opts: [
+      "Tutor programı inşa ederken öğrencinin ekranı izlemesini, ardından kopyalamasını isteyin",
+      "Öğrenciden kağıda bir dikdörtgen çizmesini, onu olay bloğunun adıyla etiketlemesini ve MakeCode'a dokunmadan önce hangi talimatların içinde ve dışında olduğuna fiziksel olarak karar vermesini isteyin",
+      "Sıfırdan inşa etmek yerine öğrenciye değiştirilecek önceden inşa edilmiş bir program verin",
+      "Blok yerleşimi konusunda emin değillerse MakeCode dokümantasyon sayfasını kontrol etmelerini söyleyin"
+    ],
+    correct: 1,
+    feedback: "'Blok sınırı çizme' tekniği, blok içeriğinin bilişsel görevini fiziksel olarak dışsallaştırır. Önce dikdörtgeni çizen öğrenciler, sınır doğrudan planlamadan kodlayan öğrencilerden yaklaşık %70 daha az bu hatayı yapar."
+  },
+  {
+    q: "Bir öğrenci, oyuncu yürüdüğünde 'Anlık Skor: 7' metnini görüntülemek istiyor. Yalnızca 'skor' değişken bloğunu içeren bir 'söyle' bloğu koyuyor. Çıktı '7' gösteriyor ancak etiket metni göstermiyor. Bu nasıl düzeltilmeli?",
+    opts: [
+      "Yalnızca etiket metni çıkaran ikinci ayrı bir 'söyle' bloğu ekleyin; MakeCode bunları birlikte görüntüler",
+      "Birleşik metni desteklediği için 'söyle' yerine 'yazdır' bloğu kullanın",
+      "\"Anlık Skor: \" metnini skor değişkeniyle birleştirmek için 'metin birleştir' bloğu kullanın, ardından birleştirilmiş sonucu tek bir 'söyle' bloğuna aktarın",
+      "Değişkenler 'söyle' kullanılarak oyun içinde görüntülenemez — yalnızca MakeCode konsolunda gösterilebilir"
+    ],
+    correct: 2,
+    feedback: "'Söyle' bloğu tek bir değer kabul eder. Metni ve değişkeni birleştirmek için öğrenciler 'metin birleştir' bloğunu kullanmalı: [birleştir [\"Anlık Skor: \"] [skor]] → \"Anlık Skor: 7\" birleşik dizesini üretir, ardından 'söyle'ye aktarılır."
+  }
+];
+let current = 0, answers = [], answered = false;
+const LETTERS = ['A','B','C','D'];
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-count').textContent = `${current} / ${QUESTIONS.length}`;
+  document.getElementById('q-prog').style.width = `${current / QUESTIONS.length * 100}%`;
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'none';
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('question-area').innerHTML = `
+    <div class="qnum">Soru ${current + 1} / ${QUESTIONS.length}</div>
+    <div class="qtext">${q.q}</div>
+    <div class="opt-list">${q.opts.map((o,i) => `<div class="opt" id="opt-${i}" onclick="selectOpt(${i})"><span class="opt-letter">${LETTERS[i]}</span><span>${o}</span></div>`).join('')}</div>`;
+}
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  answers[current] = i;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i) el.classList.add('wrong');
+  }
+  const isRight = i === q.correct;
+  const _fb = isRight ? '✅ Doğru! ' + q.feedback : '❌ Yanlış. Doğru yanıt: ' + q.opts[q.correct] + ' — ' + q.feedback;
+  document.getElementById('feedback-area').innerHTML = `<div class="feedback-box ${isRight?'ok':'bad'} show">${_fb}</div>`;
+  if (current < QUESTIONS.length - 1) document.getElementById('next-btn').style.display = 'inline-flex';
+  else document.getElementById('submit-btn').style.display = 'inline-flex';
+}
+function nextQuestion() { current++; renderQuestion(); window.scrollTo(0,0); }
+function submitQuiz() {
+  const score = answers.filter((a,i) => a === QUESTIONS[i].correct).length;
+  const pct = Math.round(score / QUESTIONS.length * 100);
+  const passed = pct >= PASS_PCT;
+  if (passed) { const prev = getModuleScore(MODULE_ID); if (!prev || pct > prev) markModulePassed(MODULE_ID, pct); }
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed?'🎉':'😅'}</div>
+    <div class="result-title">${passed?'Modül 3 Tamamlandı!':'Henüz Değil'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> soruyu doğru yanıtladınız.
+      ${passed?' Mükemmel — Modül 3 tamamlandı!':` İlerleme için <strong>${PASS_PCT}%</strong> gereklidir.`}</div>`;
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="TrModule4.html" class="btn-primary">Modül 4'e Devam →</a><button class="btn-outline" onclick="goHome()">← Panel</button>`
+    : `<button class="btn-primary" onclick="retake()">Testi Tekrarla</button><a href="TrModule3.html" class="btn-outline">← Modül 3'ü Gözden Geçir</a>`;
+  window.scrollTo(0,0);
+}
+function retake() {
+  current = 0; answers = [];
+  document.getElementById('quiz-screen').style.display = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  renderQuestion(); window.scrollTo(0,0);
+}
+initShared();
+if (!isModuleUnlocked(MODULE_ID)) { alert('Lütfen önce önceki modülleri tamamlayın.'); goHome(); }
+document.getElementById('top-progress').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

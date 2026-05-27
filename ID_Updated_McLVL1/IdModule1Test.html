@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Kuis Pengetahuan Modul 1 | Pelatihan Tutor Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.test-header{background:linear-gradient(135deg,#1a2e0a 0%,#2f5222 55%,#4a7830 100%);padding:36px 32px 28px;border-bottom:3px solid var(--lime);text-align:center}
+.test-header h2{font-family:'Nunito',sans-serif;font-size:clamp(20px,3.5vw,28px);font-weight:900;color:#fff;margin-bottom:6px}
+.test-header p{color:rgba(255,255,255,.72);font-size:13px}
+.test-header .badges{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.tbadge{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:var(--rpill);font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+.tbadge.lime{background:rgba(196,240,70,.2);border:2px solid rgba(196,240,70,.4);color:var(--lime)}
+.tbadge.pink{background:rgba(240,61,158,.2);border:2px solid rgba(240,61,158,.4);color:#F472B6}
+.q-feedback{display:none;margin-top:12px;border-radius:var(--rsm);padding:13px 16px;font-size:13px;line-height:1.6;border:2px solid}
+.q-feedback.show{display:block}
+.q-feedback.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+.q-feedback.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Pelatihan Tutor</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="window.location.href='IdModule1Tech.html'">← Modul 1 Teknis</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-bar" style="width:0%"></div></div>
+
+<div class="test-header">
+  <h2>📝 Kuis Pengetahuan Modul 1</h2>
+  <p>Dunia Batu Hijau yang Berani — Penilaian Teknis</p>
+  <div class="badges">
+    <span class="tbadge lime">6 Pertanyaan</span>
+    <span class="tbadge lime">≥ 70% untuk Lulus</span>
+    <span class="tbadge pink">Nol Tumpang Tindih DST</span>
+    <span class="tbadge lime">Umpan Balik Per Pertanyaan</span>
+  </div>
+</div>
+
+<div id="quiz-screen">
+  <div class="quiz-wrap">
+    <div class="q-progress">
+      <div class="q-prog-track"><div class="q-prog-fill" id="q-fill" style="width:0%"></div></div>
+      <span class="q-count" id="q-count">Pertanyaan 1 / 6</span>
+    </div>
+    <div id="q-num" class="qnum"></div>
+    <div id="q-text" class="qtext"></div>
+    <div id="q-opts" class="opt-list"></div>
+    <div id="q-feedback" class="q-feedback"></div>
+    <div class="btn-row" style="margin-top:20px">
+      <button class="btn-primary" id="btn-next" onclick="nextQ()" style="display:none">Sonraki Soru →</button>
+      <button class="btn-primary" id="btn-submit" onclick="submitQuiz()" style="display:none">Gönder &amp; Sonuçları Gör</button>
+    </div>
+  </div>
+</div>
+
+<div id="results-screen" style="display:none;padding:40px 24px">
+  <div class="result-card" id="result-card"></div>
+  <div class="btn-row center" id="result-actions" style="margin-top:20px"></div>
+</div>
+
+<footer>© 2026 Kodland · Materi pelatihan tutor internal — tidak untuk distribusi eksternal.</footer>
+
+<script src="shared.js"></script>
+<script>
+const MODULE_ID  = 1;
+const PASS_SCORE = 70;
+
+const QUESTIONS = [
+  {
+    text: "Seorang tutor perlu menteleportasi semua siswa ke X=200, mempertahankan posisi Z mereka saat ini, dan menyelaraskan mereka tepat ke Y=64 (permukaan laut). Sintaks perintah mana yang mencapai ini?",
+    opts: [
+      "A) /tp @a 200 64 200",
+      "B) /tp @a ~200 ~64 ~0",
+      "C) /tp @a 200 64 ~0",
+      "D) /tp @a ~0 64 ~0"
+    ],
+    correct: 2,
+    feedback: "✅ Pilihan C menggunakan sintaks campuran: 200 adalah nilai X absolut (selalu X=200), 64 adalah nilai Y absolut (selalu permukaan laut), dan ~0 adalah offset Z relatif nol (setiap pemain mempertahankan posisi Z-nya sendiri). Pilihan A juga memindahkan semua orang ke Z=200. Pilihan B menerapkan semua nilai sebagai offset relatif. Pilihan D mempertahankan X dan Z relatif, hanya mengunci Y."
+  },
+  {
+    text: "Apa fungsi tepat dari blok 'Pada Perintah Obrolan [kata]' di MakeCode, dan kapan kode yang ditempatkan di dalamnya benar-benar dijalankan?",
+    opts: [
+      "A) Ini adalah penanganan peristiwa: kode yang tertutup dijalankan tepat sekali setiap kali pemain mengetik kata spesifik tersebut di obrolan dalam game Minecraft.",
+      "B) Berjalan otomatis setiap 0,5 detik sebagai loop latar belakang.",
+      "C) Berjalan sekali saat editor MakeCode pertama kali dibuka.",
+      "D) Mengirim pesan ke semua pemain di server saat diaktifkan."
+    ],
+    correct: 0,
+    feedback: "✅ Benar. 'Pada Perintah Obrolan' adalah penanganan peristiwa — ia mendaftarkan pendengar yang menunggu secara pasif hingga kondisi pemicu terpenuhi. Kode di dalam hanya berjalan saat peristiwa terpicu; kode di luar blok ini hanya berjalan sekali saat program dimuat. Perbedaan ini kritis: kode yang ditempatkan di luar blok tidak akan merespons input obrolan."
+  },
+  {
+    text: "Seorang siswa menulis program Agen ini: [putar kanan] → [putar kanan] → [maju 3 langkah]. Agen mulai menghadap Utara. Setelah menjalankan seluruh urutan, ke arah mana dan berapa blok Agen telah bergerak?",
+    opts: [
+      "A) Utara 3 blok — dua putar kanan saling membatalkan",
+      "B) Timur 3 blok — satu putar kanan bersih dari Utara sama dengan Timur",
+      "C) Barat 3 blok — dua putar kanan dari Utara melewati Timur ke Selatan lalu Barat",
+      "D) Selatan 3 blok — putar kanan pertama menghadap Timur; putar kanan kedua dari Timur menghadap Selatan; maju 3 langkah menggerakkan Selatan 3 blok"
+    ],
+    correct: 3,
+    feedback: "✅ Benar. Mulai menghadap Utara: Putar kanan → sekarang menghadap Timur. Putar kanan lagi → sekarang menghadap Selatan. 'Maju 3' dari orientasi menghadap Selatan menggerakkan Agen 3 blok ke Selatan (arah +Z). Dua putar kanan berturut-turut = rotasi 180° = sekarang menghadap arah kardinal yang berlawanan tepat dari awal."
+  },
+  {
+    text: "Otomatik bambu çiftliğini inşa ederken, bir öğrenci Pistona doğru bakan oyma doku (yüz) ile Gözlemciyi yerleştirir. Gözlemci görsel olarak ateşleniyor ancak Piston hiç uzamıyor. Tam neden nedir?",
+    opts: [
+      "A) Piston harus berupa Piston Lengket, bukan Piston biasa, agar sirkuit berfungsi.",
+      "B) Muka Observer (tekstur ukiran) adalah sisi deteksi — harus menghadap bambu. Sisi belakang halus adalah output/pemancar yang harus menghadap Piston. Siswa telah membalik kedua sisi.",
+      "C) Tanaman bambu adalah jenis blok yang salah — bambu harus diganti dengan Bibit Bambu.",
+      "D) Sinyal Redstone memerlukan Tuas di Piston untuk memperkuat denyut Observer."
+    ],
+    correct: 1,
+    feedback: "✅ Benar. Gözlemcinin iki ayrı işlevsel tarafı vardır: yüz (oyma/göz dokusu) doğrudan baktığı bloktaki durum değişikliklerini izleyen sensördür — bambuya bakmalıdır. Arka (düz çıkış tarafı) Redstone darbesinin yayıldığı yerdir — Pistona veya bağlantı teline bakmalıdır. Taraflar ters çevrildiğinde, Gözlemci bambu yerine Pistonu izler, dolayısıyla hiç ateşlenmez veya yanlış nedenle ateşlenir."
+  },
+  {
+    text: "Bir öğrenci kopuk taş fabrikası inşa ediyor ancak Su kaynak bloğunu ve Lav kaynak bloğunu aralarında boşluk bırakmadan yan yana yerleştiriyor. Fabrika Kopuk Taş yerine Obsidyen üretiyor. Tam neden nedir ve doğru yapılandırma nedir?",
+    opts: [
+      "A) Dua blok sumber yang berdekatan menghasilkan Obsidian karena keduanya stasioner — tidak ada tabrakan fluida mengalir. Perbaikan: pastikan ada tepat satu celah blok kosong antara dua blok sumber sehingga kedua fluida harus mengalir sebelum bertemu di celah tengah, menghasilkan Batu Pecah.",
+      "B) Öğrenci yanlış Lav türünü kullandı — normal Lav Nether boyutundan Nether Lavıyla değiştirilmelidir.",
+      "C) Kopuk Taş oluşumu için Lav kaynağının Su kaynağının yanına değil üstüne yerleştirilmesi gerekir.",
+      "D) Obsidyen ve Kopuk Taş aynı şekilde üretilir — öğrencinin Obsidyeni Kopuk Taşa dönüştüren Taş Kazmasıyla çıkarması gerekir."
+    ],
+    correct: 0,
+    feedback: "✅ Benar. Saat blok sumber Lava ditempatkan langsung di sebelah blok sumber Air, keduanya stasioner — tidak ada yang mengalir. Aturan tabrakan: Air mengalir + Lava mengalir = Batu Pecah; sumber Lava stasioner + sumber Air berdekatan = Obsidian. Celah 1 blok memaksa kedua fluida mengalir ke tengah, menghasilkan Batu Pecah."
+  },
+  {
+    text: "Selama sesi langsung, seorang siswa mengetik '/code' di obrolan Minecraft dan tidak ada yang terjadi — antarmuka MakeCode tidak muncul dan tidak ada pesan kesalahan yang ditampilkan. Koneksi internet siswa dikonfirmasi berfungsi. Apa penyebab paling mungkin dan perbaikan tepatnya?",
+    opts: [
+      "A) Siswa menggunakan browser yang tidak kompatibel — MakeCode memerlukan Chrome versi 90 atau lebih tinggi.",
+      "B) Perintah /code bersifat case-sensitive — siswa harus mengetik '/Code' dengan C kapital.",
+      "C) Siswa harus berada di Mode Kreatif; /code tidak berfungsi di Mode Survival.",
+      "D) 'Aktifkan Code Builder' tidak diaktifkan di pengaturan dunia sebelum sesi dimulai. Perbaikan: tutup dunia, buka pengaturan dunia (ikon pensil pada thumbnail dunia), aktifkan toggle Code Builder, masuk kembali ke dunia, dan coba lagi /code."
+    ],
+    correct: 3,
+    feedback: "✅ Benar. 'Aktifkan Code Builder' adalah pengaturan per-dunia di Minecraft Education Edition yang harus diaktifkan secara eksplisit sebelum siswa mana pun memasuki dunia. Saat dimatikan, perintah /code berjalan tanpa suara — tidak ada pesan kesalahan, tidak ada respons. Ini adalah penyebab kegagalan /code yang paling umum saat konektivitas internet dikonfirmasi."
+  }
+];
+
+const LETTERS = ['A','B','C','D'];
+let current  = 0;
+let answers  = new Array(QUESTIONS.length).fill(null);
+let answered = false;
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  answered = false;
+  document.getElementById('q-fill').style.width    = `${(current / QUESTIONS.length) * 100}%`;
+  document.getElementById('q-count').textContent   = `Pertanyaan ${current + 1} / ${QUESTIONS.length}`;
+  document.getElementById('q-num').textContent     = `P${current + 1} / ${QUESTIONS.length}`;
+  document.getElementById('q-text').textContent    = q.text;
+  document.getElementById('btn-next').style.display   = 'none';
+  document.getElementById('btn-submit').style.display = 'none';
+  const fb = document.getElementById('q-feedback');
+  fb.className   = 'q-feedback';
+  fb.textContent = '';
+  const container = document.getElementById('q-opts');
+  container.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'opt';
+    btn.id = `opt-${i}`;
+    btn.innerHTML = `<span class="opt-letter">${LETTERS[i]}</span><span>${opt.slice(3)}</span>`;
+    btn.addEventListener('click', () => pickAnswer(i));
+    container.appendChild(btn);
+  });
+}
+
+function pickAnswer(i) {
+  if (answered) return;
+  answered = true;
+  answers[current] = i;
+  const q = QUESTIONS[current];
+  const isRight = i === q.correct;
+  for (let j = 0; j < q.opts.length; j++) {
+    const el = document.getElementById(`opt-${j}`);
+    el.classList.add('disabled');
+    if (j === q.correct) el.classList.add('correct');
+    else if (j === i)    el.classList.add('wrong');
+  }
+  const fb = document.getElementById('q-feedback');
+  fb.className = `q-feedback show ${isRight ? 'ok' : 'bad'}`;
+  const prefix = isRight ? '✅ Benar!' : '❌ Salah.';
+  const body = q.feedback.replace(/^[✅❌]\s*\w+[!\.]?\s*/, '');
+  fb.innerHTML = `<strong>${prefix}</strong><br>${body}`;
+  if (current < QUESTIONS.length - 1) {
+    document.getElementById('btn-next').style.display = 'inline-flex';
+  } else {
+    document.getElementById('btn-submit').style.display = 'inline-flex';
+  }
+}
+
+function nextQ() {
+  current++;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function submitQuiz() {
+  const score  = answers.filter((a, i) => a === QUESTIONS[i].correct).length;
+  const pct    = Math.round((score / QUESTIONS.length) * 100);
+  const passed = pct >= PASS_SCORE;
+  if (passed) {
+    const prev = getModuleScore(MODULE_ID);
+    if (!prev || pct > prev) markModulePassed(MODULE_ID, pct);
+  }
+  document.getElementById('quiz-screen').style.display    = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+
+  let reviewHtml = '<div style="margin-top:14px;text-align:left">';
+  QUESTIONS.forEach((q, i) => {
+    const correct = answers[i] === q.correct;
+    reviewHtml += `
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--text2)">
+        <span style="font-size:14px">${correct ? '✅' : '❌'}</span>
+        <span>S${i+1}: ${correct ? 'Benar' : `Salah — jawaban benar <strong style="color:var(--text)">${LETTERS[q.correct]}</strong> idi`}</span>
+      </div>`;
+  });
+  reviewHtml += '</div>';
+
+  document.getElementById('result-card').innerHTML = `
+    <div class="result-emoji">${passed ? '🎉' : '📚'}</div>
+    <div class="result-title">${passed ? 'Modul 1 Lulus!' : 'Terus Belajar'}</div>
+    <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+    <div class="result-sub">
+      <strong>${score} / ${QUESTIONS.length}</strong> pertanyaan dijawab dengan benar.
+      ${passed
+        ? ' Luar biasa — Anda telah menunjukkan pemahaman yang kuat tentang konten teknis Modul 1. Modul 2 sudah terbuka.'
+        : ` Nilai <strong>%${PASS_SCORE}</strong> atau lebih diperlukan untuk melanjutkan. Tinjau Teknis Mendalam Modul 1 dan coba lagi.`}
+    </div>
+    ${reviewHtml}
+  `;
+
+  document.getElementById('result-actions').innerHTML = passed
+    ? `<a href="IdModule2.html"     class="btn-primary">Lanjut ke Modul 2 →</a>
+       <button class="btn-outline"  onclick="goHome()">← Dasbor</button>`
+    : `<button class="btn-primary"  onclick="retake()">Ulangi Tes</button>
+       <a href="IdModule1Tech.html" class="btn-outline">← Tinjau Modul 1</a>`;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function retake() {
+  current  = 0;
+  answers  = new Array(QUESTIONS.length).fill(null);
+  answered = false;
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display    = 'block';
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+initShared();
+document.getElementById('top-bar').style.width = `${getOverallProgress() / 5 * 100}%`;
+renderQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perpustakaan Pelajaran Sukses &amp; Digital Skill Test | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.dst-banner{background:linear-gradient(135deg,#111111 0%,#1E2A18 60%,#2A3D22 100%);padding:44px 32px 36px;position:relative;overflow:hidden;border-bottom:3px solid var(--lime)}
+.dst-banner::before{content:'🏆';font-size:200px;position:absolute;right:-30px;top:-50px;opacity:.06;line-height:1;pointer-events:none}
+.dst-banner .meyebrow{color:var(--lime);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.dst-banner .mh1{color:#fff;font-family:'Nunito',sans-serif;font-size:clamp(22px,4vw,34px);font-weight:900;letter-spacing:-.5px;line-height:1.1;margin-bottom:10px}
+.dst-banner p{color:rgba(255,255,255,.74);font-size:14px;line-height:1.65;max-width:640px}
+.dst-banner .sub-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(196,240,70,.15);border:2px solid rgba(196,240,70,.3);border-radius:var(--rpill);padding:5px 14px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;color:var(--lime);margin-top:14px}
+.sec-nav{display:flex;flex-wrap:wrap;gap:6px;padding:12px 24px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90}
+.sec-pill{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:5px 12px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+.sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+.anchor-target{scroll-margin-top:128px}
+.video-outer{border-radius:var(--r);overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow-h);background:#000;margin:16px 0}
+.video-ratio{position:relative;width:100%;padding-bottom:56.25%}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{display:flex;align-items:center;gap:10px;background:var(--surface2);padding:10px 16px;border-top:1px solid var(--border)}
+.video-live-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(239,68,68,.12);border:1.5px solid rgba(239,68,68,.3);border-radius:var(--rpill);padding:3px 11px;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;color:#F87171;text-transform:uppercase;letter-spacing:.4px}
+.video-live-pill::before{content:'▶';font-size:8px}
+.video-meta-text{font-size:12px;color:var(--text-muted)}
+.timeline-list{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-direction:column;gap:0}
+.tl-card{display:flex;gap:0;position:relative}
+.tl-card::before{content:'';position:absolute;left:46px;top:0;bottom:0;width:2px;background:var(--border);z-index:0}
+.tl-card:last-child::before{bottom:auto;height:28px}
+.tl-left{flex-shrink:0;width:92px;padding-top:20px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1}
+.tl-dot{width:16px;height:16px;border-radius:50%;background:var(--lime);border:3px solid var(--lime-d);flex-shrink:0;margin-top:4px}
+.tl-time{font-family:'Nunito',sans-serif;font-weight:900;font-size:11.5px;color:var(--pink);background:var(--surface);border:1.5px solid var(--border);border-radius:6px;padding:3px 8px;text-align:center;line-height:1.3;white-space:nowrap;box-shadow:var(--shadow)}
+.tl-jump{display:inline-flex;align-items:center;justify-content:center;width:28px;height:18px;border-radius:4px;background:rgba(240,61,158,.12);border:1.5px solid rgba(240,61,158,.3);cursor:pointer;font-size:8px;color:var(--pink);transition:all .15s;text-decoration:none}
+.tl-jump:hover{background:var(--pink);color:#fff}
+.tl-right{flex:1;padding:18px 0 24px 20px}
+.tl-phase{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:4px}
+.tl-heading{font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;color:var(--text);margin-bottom:8px}
+.tl-action{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rsm);padding:12px 14px;margin-bottom:8px;font-size:13px;color:var(--text2);line-height:1.65;box-shadow:var(--shadow)}
+.tl-action-label{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:5px}
+.tl-qa{border-radius:var(--rsm);padding:13px 15px;font-size:13px;line-height:1.7}
+.tl-qa-label{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.tl-qa.pass{background:var(--callout-green-bg);border:1.5px solid var(--callout-green-b);color:var(--callout-green-t)}
+.tl-qa.pass .tl-qa-label{color:var(--callout-green-t)}
+.tl-qa.flag{background:var(--callout-warn-bg);border:1.5px solid var(--callout-warn-b);color:var(--callout-warn-t)}
+.tl-qa.flag .tl-qa-label{color:var(--callout-warn-t)}
+.verdict{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:4px;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.3px;margin-bottom:7px}
+.v-pass{background:var(--ok-bg);color:var(--ok-t);border:1.5px solid var(--ok-b)}
+.v-flag{background:var(--callout-warn-bg);color:var(--callout-warn-t);border:1.5px solid var(--callout-warn-b)}
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+@media(max-width:580px){.comp-grid{grid-template-columns:1fr}}
+.comp-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rsm);padding:12px 14px;display:flex;gap:10px;align-items:flex-start;box-shadow:var(--shadow)}
+.comp-check{width:20px;height:20px;border-radius:50%;background:var(--lime);border:2px solid var(--lime-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:10px;color:var(--ink);font-weight:900}
+.comp-text{font-size:13px;color:var(--text2);line-height:1.55}
+.comp-text strong{color:var(--text)}
+.dst-cta{background:linear-gradient(135deg,var(--surface),var(--surface2));border:2px solid var(--lime-d);border-radius:var(--r);padding:32px;text-align:center;box-shadow:var(--shadow-h);position:relative;overflow:hidden}
+.dst-cta::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;background:var(--lime);opacity:.06;pointer-events:none}
+.locked-banner{background:var(--callout-warn-bg);border:2px solid var(--callout-warn-b);border-radius:var(--r);padding:28px;text-align:center;margin:32px auto;max-width:520px}
+.locked-banner h3{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--callout-warn-t);margin-bottom:8px}
+.locked-banner p{font-size:13.5px;color:var(--callout-warn-t);line-height:1.6}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Pelatihan Tutor</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Dasbor</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="sec-nav">
+  <a href="#library"      class="sec-pill">3 · Sesi Referensi</a>
+  <a href="#qa-framework" class="sec-pill">Kerangka QA</a>
+  <a href="#dst-section"  class="sec-pill">4 · Digital Skill Test</a>
+  <a href="#competencies" class="sec-pill">Kompetensi</a>
+  <a href="#dst-form"     class="sec-pill">Ikuti Tes</a>
+</div>
+<div class="dst-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Bagian 3 &amp; 4 — Tahap Akhir</div>
+    <div class="mh1">Perpustakaan Pelajaran Sukses &amp; Digital Skill Test</div>
+    <p>Tinjau sesi referensi beranotasi di bawah ini, verifikasi kesiapan Anda terhadap daftar periksa kompetensi, kemudian lanjutkan ke Digital Skill Test. Nilai <strong>80% atau lebih</strong> diperlukan dalam tes untuk mengajar kelompok secara mandiri.</p>
+    <div class="sub-pill">🔒 Memerlukan semua 5 Tes Modul · 20 Pertanyaan · Nilai lulus: 80%</div>
+  </div>
+</div>
+
+<div id="locked-notice" style="display:none">
+  <div class="cbody">
+    <div class="locked-banner">
+      <h3>🔒 Selesaikan Semua 5 Modul Terlebih Dahulu</h3>
+      <p>Anda harus lulus kuis pengetahuan untuk semua lima modul sebelum mengakses Perpustakaan Pelajaran Sukses dan Digital Skill Test. Kembali ke dasbor untuk melihat modul mana yang belum selesai.</p>
+      <div class="btn-row center" style="margin-top:16px">
+        <button class="btn-primary" onclick="goHome()">← Kembali ke Dasbor</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="main-content" style="display:none">
+<div class="cbody">
+
+<div id="library" class="anchor-target">
+  <div class="section-head">3 · Perpustakaan Pelajaran Sukses</div>
+</div>
+<div class="card">
+  <h4>Tujuan Perpustakaan Ini</h4>
+  <p>Bagian ini berisi rekaman nyata sesi Kodland Level 1 yang dinilai oleh tim Jaminan Kualitas Senior. Tinjau setiap anotasi bertanda waktu dengan cermat — bukan untuk menghafal skrip, melainkan untuk menginternalisasi <em>alasan</em> di balik setiap keputusan pengajaran. Tutor yang memahami mengapa sebuah perilaku efektif dapat mengadaptasinya ke situasi kelas yang tidak terduga apa pun.</p>
+  <p style="margin-top:8px">Tonton video, kemudian baca kartu anotasi di bawahnya. Setiap kartu mengidentifikasi momen yang tepat, menjelaskan apa yang dilakukan tutor, dan menjelaskan prinsip pedagogis yang berhasil — atau celah yang perlu diperbaiki.</p>
+</div>
+
+<div id="qa-module1" class="anchor-target">
+  <div class="section-head">QA-001 · Modul 1, Pelajaran 1 — Sesi Referensi Beranotasi</div>
+</div>
+<div class="video-outer">
+  <div class="video-ratio">
+    <iframe id="qa-video-player"
+      src="https://www.youtube.com/embed/wDFSmWRABRg"
+      title="Kodland Minecraft Level 1 — Sesi Referensi QA"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy">
+    </iframe>
+  </div>
+  <div class="video-meta">
+    <span class="video-live-pill">Rekaman Sesi Langsung</span>
+    <span class="video-meta-text">Modul 1 · Minecraft Education Level 1 · Penilaian QA Senior</span>
+  </div>
+</div>
+<div class="callout ct" style="margin-bottom:20px">
+  <span class="ci">💡</span>
+  <div>Gunakan <strong>tombol ▶ lompat</strong> di setiap kartu anotasi di bawah untuk langsung melompat ke momen tersebut dalam video. Kartu hijau menyoroti praktik teladan; kartu kuning menunjukkan area yang perlu ditingkatkan.</div>
+</div>
+
+<ul class="timeline-list">
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:00:00</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=0&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Pembukaan Sesi</div>
+      <div class="tl-heading">Setup Teknis &amp; Pemeriksaan Audio</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Tutor melakukan pengujian audio dan koneksi selama sekitar delapan menit sebelum menyapa siswa mana pun secara langsung. Beberapa pemeriksaan audio verbal mengkonfirmasi stabilitas mikrofon dan platform sebelum instruksi dimulai.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Protokol Pra-Terbang</span><br>Proses setup yang panjang ini menunjukkan naluri yang benar: <strong>selesaikan semua masalah teknis sebelum memulai, bukan selama instruksi.</strong> Untuk siswa usia 8–9 tahun, memulai dengan audio yang putus langsung mengikis kepercayaan. Standarnya adalah menyelesaikan semua masalah secara diam-diam sebelum menit ke-5.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:10:28</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=628&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Pemanasan</div>
+      <div class="tl-heading">Sapaan Tulus &amp; Check-In Mingguan</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Tutor membuka dengan sapaan hangat dan membiarkan percakapan berkembang secara alami dengan bertanya pertanyaan tindak lanjut yang tulus saat seorang siswa bercerita tentang rumah portal Nether yang kreatif.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Pemanasan &amp; Rapport</span><br>Kedua persyaratan terpenuhi: sapaan yang tulus dan pertanyaan pribadi terbuka tentang kehidupan siswa di luar sesi. Untuk anak usia 8–9 tahun, momen koneksi sosial ini penting secara neurologis: pengakuan yang autentik mengaktifkan rasa memiliki dan mempersiapkan otak untuk keterlibatan aktif dengan konten teknis yang akan datang.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:12:43</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=763&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Arsitektur Sosial</div>
+      <div class="tl-heading">Menyambut Siswa Baru &amp; Perkenalan Kelompok</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Ada siswa baru yang bergabung untuk pertama kali. Tutor benar-benar menghentikan sesi, mengakui kedatangan tersebut, melakukan perkenalan penuh, dan memulai sendiri dengan berbagi minat pribadinya sebelum meminta siswa untuk berbagi.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Arsitektur Sosial Inklusif</span><br>Memperkenalkan siswa baru adalah salah satu momen sosial berisiko tertinggi dalam kelompok anak. Tutor menanganinya dengan dua langkah yang luar biasa: menghentikan sesi memberi bobot yang tepat pada perkenalan; memodelkan pengungkapan dirinya sendiri terlebih dahulu mengurangi kesulitan berbagi yang dirasakan.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:18:41</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=1121&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Pembingkaian Pelajaran</div>
+      <div class="tl-heading">Rencana Hari Ini &amp; Instruksi Impor Dunia</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Tutor menyatakan apa yang akan terjadi hari ini: "Kita akan mulai membangun — saya berbagi tautan dunia sekarang. Kita akan membangun rumah, belajar coding, dan mengerjakan kreativitas." Pemecahan masalah login siswa baru dilakukan secara paralel tanpa mengganggu kelompok.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Tujuan Pelajaran yang Jelas</span><br>Tujuan pelajaran dinyatakan menggunakan kata kerja tindakan yang terhubung ke hasil nyata — "bangun rumah", "belajar coding" — bukan bahasa akademis abstrak. Untuk pelajar tahap operasional konkret, pembingkaian ini esensial.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:31:42</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=1902&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Pembelajaran Penemuan</div>
+      <div class="tl-heading">Menemukan Pangkalan Tersembunyi &amp; Menjelajahi Persediaan</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Siswa menemukan pangkalan tersembunyi yang berisi sumber daya, blok perintah, tuas, dan pressure plate. Tutor memfasilitasi daripada mengarahkan: "Apa yang ada di dalamnya?" Saat seorang siswa menemukan tuas di sebelah blok perintah, tutor bertanya: "Di mana biasanya kamu meletakkan sesuatu yang dioperasikan dengan listrik?"</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Pembelajaran Berbasis Penemuan + Perancah Sokratis</span><br>Ini adalah penerapan model Co-Explorer. Pertanyaan Sokratis tentang listrik mengaktifkan pengetahuan sebelumnya (Redstone = listrik) dan memungkinkan siswa mencapai jawaban yang benar secara mandiri. Siswa yang menemukan melalui penalaran mereka sendiri mengingat informasi yang sama jauh lebih andal daripada mereka yang diberitahu secara langsung.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:39:10</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=2350&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Tantangan Bertenggat Waktu</div>
+      <div class="tl-heading">Peluncuran Tantangan Bangun 10 Menit</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Tutor meluncurkan tantangan membangun rumah bertenggat waktu dengan pembingkaian bertekanan rendah: "Bangun rumah dengan material yang kamu miliki — 10-15 menit, tidak peduli seperti apa tampilannya, cukup bangun saja." Pengingat hitung mundur diberikan pada menit ke-8, 4, 3, 2, dan 45 serta 10 detik tersisa.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Penguraian Instruksi + Kemandirian Terkelola</span><br>Tugas dibingkai dengan tujuan yang jelas, batas waktu, dan izin eksplisit untuk tidak sempurna ("tidak peduli seperti apa tampilannya"). Ini menghilangkan kecemasan performa sebelum tugas kreatif. Struktur hitung mundur adalah praktik terbaik manajemen kelas untuk usia 8–9 tahun.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:39:51</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=2391&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Arsitektur Narasi</div>
+      <div class="tl-heading">Gambaran Umum Lima Dunia &amp; Arc Pembelajaran</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Sementara siswa membangun secara mandiri, tutor mempresentasikan gambaran umum kurikulum makro: "Ada lima dunia. Setiap dunia semakin sulit, tetapi keterampilan kita berkembang. Dunia ini ditinggalkan — pada akhirnya kita akan menyelamatkannya dan membawa semua orang kembali. Kita akan menjadi pahlawan."</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Kesinambungan Narasi + Motivasi Jangka Panjang</span><br>Ini adalah salah satu momen berkualitas tertinggi dalam sesi ini. Kurikulum tidak didefinisikan secara abstrak — melainkan tertanam dalam cerita bersama yang emosional: dunia yang harus diselamatkan, pahlawan yang akan menjadi. Untuk usia 8–9 tahun, ini adalah arsitektur motivasional yang optimal.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:41:22</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=2482&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Latihan Ingatan Kembali</div>
+      <div class="tl-heading">Pengulangan Interaktif — Agen &amp; MakeCode</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Tutor meminta siswa mengingat apa itu Agen dari sesi sebelumnya: "Apa kalian ingat?" Siswa merespons — "robot kecil", "pada dasarnya membangun rumah untukmu." Tutor mengkonfirmasi, menambahkan detail, dan mengajukan pertanyaan tindak lanjut.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Keterlibatan Luas + Latihan Ingatan Kembali</span><br>Teknik yang digunakan di sini adalah latihan ingatan kembali — meminta siswa untuk merekonstruksi pengetahuan sebelumnya dari memori daripada menyajikannya kembali sebagai informasi baru. Ini menghasilkan retensi jangka panjang yang jauh lebih kuat, khususnya untuk kelompok usia 8–9 tahun di mana konsolidasi memori masih berkembang.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:44:18</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=2658&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Pemodelan Guru</div>
+      <div class="tl-heading">Demo Langsung — Perintah &amp; Teleportasi</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Tutor mendemonstrasikan mekanisme teleportasi blok perintah yang diaktifkan tuas secara langsung. Bernarasi: "Ini terlihat luar biasa — kita akan belajar melakukan ini sendiri dan kemudian bisa benar-benar teleportasi ke seluruh dunia."</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Pemodelan Efektif Sebelum Kemandirian</span><br>Demo mencapai tiga tujuan sekaligus: konsep abstrak menjadi nyata, ekspektasi ke depan diciptakan ("kita akan belajar melakukan ini sendiri"), dan demo ditempatkan setelah siswa sendiri mengalami tuas. Urutan amati-lalu-pahami adalah pola optimal untuk pelajar operasional konkret.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:47:49</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=2869&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Dukungan Real-Time</div>
+      <div class="tl-heading">Berbagi Layar Siswa &amp; Panduan Navigasi</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Tutor meminta siswa untuk berbagi layar selama tantangan membangun. Saat seorang siswa tersesat di dunia, tutor mengarahkan kembali dengan petunjuk arah verbal tanpa menyentuh keyboard siswa atau menyelesaikan navigasi untuk mereka.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Berbagi Layar + Petunjuk Bukan Solusi</span><br>Bantuan navigasi adalah contoh teladan: petunjuk verbal mempertahankan kemandirian siswa. Menyelesaikan tugas untuk siswa akan menciptakan ketidakmampuan untuk melakukannya secara mandiri. Prinsip petunjuk-bukan-solusi paling sering dilanggar saat berada di bawah tekanan waktu.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:55:44</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=3344&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Pameran &amp; Umpan Balik</div>
+      <div class="tl-heading">Pameran Proyek Siswa &amp; Pujian Spesifik</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Setiap siswa berbagi rumah yang sudah diselesaikan. Tutor memberikan umpan balik yang merujuk pada desain spesifik: "Ini benar-benar kreatif — seperti lampu plafon raksasa." "Saya suka kaca dan pintu jebakannya — ini benar-benar kreatif." "Menggabungkan kayu pinus dan ek biasanya terlihat kacau, tetapi di sini memberikan tampilan yang khas — kamu berhasil."</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Umpan Balik Spesifik Terkait Perilaku</span><br>Setiap umpan balik menyebut keputusan desain yang nyata, membingkainya secara arsitektural, dan mengatribusikan kualitas pada pilihan kreatif yang disengaja siswa — bukan keberuntungan atau bakat alami. Umpan balik tentang kayu campuran sangat kuat: tutor membingkai ulang penilaian negatif siswa sendiri sebagai hasil desain positif.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">01:05:14</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=3914&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Demo Aspirasional</div>
+      <div class="tl-heading">Demo Coding — Pembangunan Rumah Otomatis</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Tutor menampilkan program yang sudah ditulis sebelumnya yang membangun rumah lengkap dengan satu perintah obrolan. Menjelaskan: "Nantinya kita bisa menulis kode seperti ini dan hanya dengan mengetik kata seperti 'rumah' kita bisa membangun seluruh rumah." Seorang siswa secara spontan membuat analogi: "Seperti bilang 'buatkan aku es krim' dan seseorang membuatnya." Tutor mengkonfirmasi dan memformalkan.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Demo Gap Kemampuan + Validasi Analogi</span><br>Menampilkan keadaan akhir yang cemerlang menciptakan gap kemampuan yang terlihat dan menyediakan jalur yang jelas menuju penutupan. Analogi yang dihasilkan siswa secara spontan (perintah = pesanan makanan) adalah pencapaian metakognitif yang nyata: mereka secara mandiri memetakan konsep ilmu komputer ke skema dunia nyata.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">01:09:48</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=4188&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Penutupan Akuntabilitas</div>
+      <div class="tl-heading">Penugasan PR — Tantangan Dekorasi Survival</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>PR diberikan dengan spesifisitas penuh: "Habiskan lebih banyak waktu di rumahmu — dekorasi, tambahkan ruangan, panel kaca, lantai ekstra. Ubah menjadi hotel kalau mau. Lalu kirim foto ke grup WhatsApp." Pemahaman diverifikasi dengan pemeriksaan jempol ke atas.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ PR Spesifik + Verifikasi Pemahaman</span><br>Tiga tanda kualitas hadir: spesifisitas tugas (tambahan nyata — ruangan, kaca, lantai), saluran pengiriman (grup WhatsApp menutup loop visibilitas orang tua), dan verifikasi pemahaman (pemeriksaan jempol ke atas mengkonfirmasi setiap siswa memahami tugas).</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">01:14:17</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=4457&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Konsolidasi</div>
+      <div class="tl-heading">Refleksi Siswa &amp; Rangkuman Pelajaran</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Tutor bertanya: "Apa yang kalian pelajari hari ini?" Siswa merespons dengan ringkas — "membangun rumah dan melakukan lebih banyak hal di survival", "saya suka mencampurkan ek dan pinus." Tutor memfasilitasi tanpa menambahkan konten baru.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Rangkuman Dipimpin Tutor &amp; Siswa</span><br>Kedua persyaratan rangkuman terpenuhi secara bersamaan. Respons siswa menunjukkan konsolidasi yang nyata — bukan hanya ingatan permukaan tetapi wawasan metakognitif. Siswa yang secara spontan membuat tujuan perluasan ("saya mencoba membuat tempat tidur terapung") adalah sinyal yang sangat kuat.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">01:16:27</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=4587&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Kail Ke Depan</div>
+      <div class="tl-heading">Pratinjau Pelajaran Berikutnya — Koordinat &amp; Agen</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Tutor mempratinjau sesi berikutnya secara spesifik: "Kita akan mulai bekerja dengan koordinat, belajar mengontrol air, dan akhirnya kamu akan bertemu Agen. Kita akan mulai coding nyata dan maju menuju apa yang sudah kamu lihat — seperti sihir yang menciptakan rumah dari awal."</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Analisis QA Senior</div><span class="verdict v-pass">✅ Pratinjau Pelajaran Berikutnya yang Spesifik</span><br>Pratinjau berisi topik yang nyata daripada bahasa yang kabur ("koordinat", "air", "Agen"). Secara kritis, ini terhubung kembali ke demo coding aspirasional yang ditunjukkan di awal sesi. Kail ke depan yang kuat secara signifikan meningkatkan kemungkinan siswa kembali dengan terlibat dan menyelesaikan PR mereka.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">01:19:01</div><a class="tl-jump" title="Lompat ke momen ini" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/wDFSmWRABRg?start=4741&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Penutupan Profesional</div>
+      <div class="tl-heading">Perpisahan Akhir, T&amp;J Orang Tua &amp; Resolusi Masalah Teknis</div>
+      <div class="tl-action"><div class="tl-action-label">Apa yang Dilakukan Tutor</div>Perpisahan hangat dan individual. Orang tua bertanya tentang sesi yang terlewat — tutor merespons dengan benar: "Kita akan mengatur sesi susulan satu-satu pada tanggal yang nyaman." Kegagalan teknis yang terjadi sepanjang sesi diakui secara eksplisit: "Saya akan berbicara dengan tim teknis — ini akan diselesaikan sebelum minggu depan."</div>
+      <div class="tl-qa flag"><div class="tl-qa-label">Analisis QA Senior — Area Peningkatan</div><span class="verdict v-flag">⚠️ Permintaan Aktifkan Kamera Tidak Ada</span><br>Tiga perilaku berkualitas dilakukan dengan baik di sini: protokol sesi susulan dikomunikasikan dengan benar; masalah teknis diakui dengan garis waktu resolusi; perpisahan mempertahankan kehangatan yang dibangun di awal. Namun, sepanjang sesi, tutor tidak pernah secara eksplisit meminta siswa untuk mengaktifkan kamera mereka. <strong>Untuk setiap sesi mendatang: buat permintaan mengaktifkan kamera dalam lima menit pertama fase pemanasan — sebagai undangan yang tulus, bukan penegakan aturan.</strong></div>
+    </div>
+  </li>
+</ul>
+
+<div id="qa-framework" class="anchor-target">
+  <div class="section-head">Kerangka Penilaian QA — Cara Setiap Sesi Dievaluasi</div>
+</div>
+<div class="card">
+  <h4>Lima Dimensi Penilaian</h4>
+  <p>Setiap sesi Kodland dievaluasi berdasarkan lima dimensi. Memahaminya membantu Anda melakukan penilaian diri secara real-time selama pelajaran.</p>
+  <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+    <div class="card hi"><h4>Dimensi 1 — Disiplin Waktu</h4><p>Pemeriksaan Pra-Terbang selesai sebelum menit ke-5 · Batas intro dipatuhi (maks 20 menit) · Jeda wajib tanpa layar diberikan di menit ke-30 · Praktik mandiri di menit 35–55 · Refleksi diberikan di 5 menit terakhir. Sesi yang melanggar pagar pengaman waktu mana pun ditandai terlepas dari kualitas konten.</p></div>
+    <div class="card" style="background:var(--ok-bg);border-color:var(--ok-b)"><h4 style="color:var(--ok-t)">Dimensi 2 — Keselarasan Pedagogis</h4><p style="color:var(--ok-t)">Pembingkaian Co-Explorer digunakan secara konsisten · Normalisasi kesalahan diterapkan pada semua kesalahan siswa · Umpan balik spesifik terkait perilaku digunakan · Keterlibatan aktif diverifikasi di titik periksa kunci · Siswa yang cepat selesai segera diarahkan ke Tugas Ekstra yang sudah disiapkan.</p></div>
+    <div class="card" style="background:var(--callout-tip-bg);border-color:var(--callout-tip-b)"><h4 style="color:var(--callout-tip-t)">Dimensi 3 — Akurasi Teknis</h4><p style="color:var(--callout-tip-t)">Konsep yang diajarkan sesuai dengan tujuan modul · Penjelasan akurat — tidak ada kesalahan teknis yang diteruskan kepada siswa sebagai kebenaran · Terminologi yang benar digunakan.</p></div>
+    <div class="card"><h4>Dimensi 4 — Keterlibatan Siswa</h4><p>Semua siswa mencoba setiap tugas secara mandiri · Tidak ada siswa yang menganggur lebih dari dua menit · Tutor tidak menyelesaikan tugas atas nama siswa · Keterlibatan diverifikasi, tidak diasumsikan.</p></div>
+    <div class="card warn"><h4>Dimensi 5 — Penutupan Akuntabilitas</h4><p>Pertanyaan refleksi diajukan di akhir sesi · PR diberikan dengan kriteria keberhasilan spesifik · Tangkapan layar atau output nyata bertenggat waktu diminta · Saluran komunikasi orang tua digunakan bila diperlukan.</p></div>
+  </div>
+</div>
+<div class="card">
+  <h4>Pola Kegagalan Umum — Ketahui Ini Sebelum Sesi Langsung Pertama Anda</h4>
+  <ul style="margin-top:8px">
+    <li style="margin-bottom:6px"><strong>Kelebihan intro:</strong> Menjelaskan lebih dari 20 menit sebelum siswa membangun. Kegagalan paling umum. Hasil: siswa kehilangan minat dan sesi berakhir dengan bangunan yang tidak selesai.</li>
+    <li style="margin-bottom:6px"><strong>Jeda tanpa layar dilewati:</strong> "Mengejar ketinggalan" dengan melewati jeda menit ke-30. Hasil: perhatian siswa runtuh di menit 35–50, waktu yang diperoleh terbuang sia-sia.</li>
+    <li style="margin-bottom:6px"><strong>Solusi bukan petunjuk:</strong> Menyelesaikan tugas atas nama siswa daripada membimbing. Hasil: siswa tidak dapat mengulangi pekerjaan secara mandiri di sesi berikutnya.</li>
+    <li style="margin-bottom:6px"><strong>Pujian umum:</strong> "Bagus" tanpa spesifisitas. Hasil: nol penguatan — siswa tidak memiliki informasi tentang perilaku mana yang harus diulang.</li>
+    <li><strong>Tidak ada tugas perluasan yang disiapkan:</strong> Siswa yang cepat selesai menganggur. Hasil: gangguan dan pemborosan kapasitas pada siswa paling berbakat Anda.</li>
+  </ul>
+</div>
+
+<div id="dst-section" class="anchor-target">
+  <div class="section-head">4 · Digital Skill Test — Penilaian Kesiapan</div>
+</div>
+<div class="card">
+  <h4>Apa yang Dinilai Tes</h4>
+  <p>Digital Skill Test adalah gerbang kesiapan resmi yang menentukan apakah Anda siap untuk secara mandiri memimpin kelompok Minecraft Level 1 langsung. Ini mengukur dua dimensi:</p>
+  <ul style="margin-top:8px">
+    <li style="margin-bottom:5px"><strong>Keterampilan Teknis (10 pertanyaan):</strong> Pengetahuan teknis di lima modul — koordinat, mekanik Redstone, blok MakeCode, mekanik Hopper, perintah Agen, dan lainnya.</li>
+    <li><strong>Pedagogi &amp; Soft Skills (10 pertanyaan):</strong> Penerapan kerangka pengajaran — struktur sesi 60 menit, jeda wajib, normalisasi kesalahan, teknik keterlibatan aktif, pujian spesifik, dan manajemen multipemain kooperatif.</li>
+  </ul>
+  <div class="callout cw" style="margin-top:12px">
+    <span class="ci">⚠️</span>
+    <div><strong>Nilai lulus: 80% (16 dari 20).</strong> Digital Skill Test memiliki nilai lebih tinggi daripada kuis pengetahuan modul karena ini adalah gerbang profesional terakhir sebelum pengajaran mandiri. Ini memerlukan kemahiran yang terbukti di semua dimensi, bukan hanya keakraban umum.</div>
+  </div>
+</div>
+
+<div id="competencies" class="anchor-target">
+  <div class="section-head">Daftar Periksa Penilaian Diri Sebelum Tes</div>
+</div>
+<div class="card">
+  <h4>Sebelum Mengikuti Tes, Verifikasi Bahwa Anda Dapat Menjawab Hal-Hal Ini Tanpa Catatan</h4>
+</div>
+<div class="comp-grid">
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Koordinat:</strong> Nyatakan makna sumbu X, Y, dan Z; jelaskan awalan ~ relatif; tulis perintah recall darurat</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Pelemahan sinyal Redstone:</strong> Nyatakan jarak propagasi maksimum dan jelaskan bagaimana Repeater memperpanjangnya</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Blok Observer:</strong> Jelaskan apa yang dideteksinya, identifikasi orientasi muka yang benar, dan nyatakan jenis sinyal yang dipancarkannya</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Tombol dan Tuas:</strong> Jelaskan perbedaan jenis sinyal dan berikan satu skenario penggunaan untuk masing-masing</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Crafting Table:</strong> Nyatakan ukuran grid dan jelaskan mengapa posisi resep itu penting</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Koordinat relatif vs. absolut:</strong> Tulis perintah /tp yang mengunci ke ketinggian tertentu sambil mempertahankan X dan Z</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Perintah /clone:</strong> Nyatakan semua tiga argumen koordinat dan jelaskan kondisi kegagalan tumpang tindih</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Penempatan Hopper:</strong> Jelaskan tindakan tepat yang diperlukan untuk menghubungkan Hopper ke peti</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Pemrograman berbasis peristiwa:</strong> Jelaskan perbedaan antara kode di dalam dan di luar blok peristiwa</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Variabel di MakeCode:</strong> Jelaskan cakupan variabel dan jelaskan perbedaan antara atur dan ubah</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Struktur sesi 60 menit:</strong> Sebutkan semua fase dengan timing yang benar dari memori</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Jeda wajib tanpa layar:</strong> Nyatakan kapan terjadi, berapa lama berlangsung, dan alasan neurologisnya</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Normalisasi kesalahan:</strong> Kutip skrip respons lengkap dari hafalan dan jelaskan mengapa bahasa korektif dilarang</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Pemeriksaan keterlibatan aktif:</strong> Jelaskan mekanismenya dan nyatakan kapan memicunya</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Protokol Siswa Cepat Selesai:</strong> Jelaskan tiga kriteria untuk tugas perluasan yang valid</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Pujian spesifik:</strong> Tulis contoh pujian spesifik terkait perilaku untuk tugas otomasi Modul 4</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Respons konflik multipemain:</strong> Jelaskan respons restoratif (bukan hukuman) terhadap pelanggaran bangunan</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Fase Blueprint:</strong> Daftarkan empat item yang harus disepakati di Modul 5 sebelum pembangunan dimulai</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Fungsi MakeCode:</strong> Jelaskan perbedaan antara definisi Fungsi dan panggilan Fungsi</div></div>
+  <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Bangun → Debug → Dekorasi:</strong> Nyatakan mengapa urutannya ketat dan apa yang salah jika dekorasi datang sebelum debugging</div></div>
+</div>
+
+<div id="dst-form" class="anchor-target" style="margin-top:28px">
+  <div class="dst-cta">
+    <div style="font-size:52px;margin-bottom:14px">🎯</div>
+    <div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px">Siap untuk Digital Skill Test</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
+      Anda telah menyelesaikan semua lima modul pelatihan dan meninjau Perpustakaan Pelajaran Sukses. Tes berisi <strong>20 pertanyaan</strong> tentang keterampilan teknis dan pedagogi dengan nilai lulus <strong>80%</strong>. Hasilnya ditinjau oleh tim pelatihan Kodland.
+    </div>
+    <div style="background:var(--surface2);border:2px solid var(--border);border-radius:var(--rsm);padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--text2);text-align:left;max-width:480px;margin-left:auto;margin-right:auto">
+      <strong style="color:var(--text)">Sebelum memulai:</strong>
+      <ul style="padding-left:16px;margin-top:6px">
+        <li style="margin-bottom:4px">Temukan lingkungan yang tenang dan bebas gangguan</li>
+        <li style="margin-bottom:4px">Tes tidak dibatasi waktu — baca setiap pertanyaan dengan cermat</li>
+        <li style="margin-bottom:4px">Jangan membuka kembali catatan atau materi pelatihan selama tes</li>
+        <li>Nama dan email diperlukan dalam formulir untuk pelacakan hasil</li>
+      </ul>
+    </div>
+    <div class="btn-row center">
+      <a href="https://forms.gle/rtos7DTjdNxeo8tr7" target="_blank" rel="noopener"
+         class="btn-primary" style="font-size:16px;padding:15px 36px">
+        🎯 Ikuti Digital Skill Test →
+      </a>
+    </div>
+    <p style="margin-top:16px;font-size:12px;color:var(--text-muted)">
+      Terbuka di tab baru · Dihosting di Google Forms · Hasil ditinjau dalam 3 hari kerja
+    </p>
+  </div>
+</div>
+
+<div style="margin-top:20px;background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)" id="score-summary">
+  <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:12px">Skor Modul Anda</div>
+  <div id="score-grid" style="display:flex;gap:10px;flex-wrap:wrap"></div>
+</div>
+
+</div><!-- /.cbody -->
+</div><!-- /#main-content -->
+
+<footer>© 2026 Kodland. Materi pelatihan tutor internal — tidak untuk distribusi eksternal.</footer>
+<script src="shared.js"></script>
+<script>
+  initShared();
+  const progress  = getOverallProgress();
+  const allPassed = progress >= 5 || isDevMode();
+  document.getElementById('top-progress').style.width = `${progress / 5 * 100}%`;
+  if (!allPassed) {
+    document.getElementById('locked-notice').style.display = 'block';
+  } else {
+    document.getElementById('main-content').style.display = 'block';
+    const names = ['🌿 Modul 1','🏙️ Modul 2','🧩 Modul 3','🌲 Modul 4','🏰 Modul 5'];
+    const grid  = document.getElementById('score-grid');
+    for (let i = 1; i <= 5; i++) {
+      const sc  = getModuleScore(i);
+      const ok  = isModulePassed(i);
+      const div = document.createElement('div');
+      div.style.cssText = `background:${ok?'var(--ok-bg)':'var(--surface2)'};border:2px solid ${ok?'var(--ok-b)':'var(--border)'};border-radius:var(--rsm);padding:10px 14px;text-align:center;min-width:100px`;
+      div.innerHTML = `
+        <div style="font-size:13px;color:var(--text-muted);font-weight:600;margin-bottom:3px">${names[i-1]}</div>
+        <div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:${ok?'var(--ok-t)':'var(--text-muted)'}">${sc !== null ? sc + '%' : '—'}</div>
+        <div style="font-size:11px;color:${ok?'var(--ok-t)':'var(--text-muted)'};font-weight:700">${ok?'✅ Lulus':'⏳ Menunggu'}</div>`;
+      grid.appendChild(div);
+    }
+  }
+</script>
+</body>
+</html>

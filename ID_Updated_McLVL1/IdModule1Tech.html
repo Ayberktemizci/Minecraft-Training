@@ -93,7 +93,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
 <div class="cbody">
 
 <div id="sec-overview" class="anchor">
-  <div class="section-head">Modül 1 Gambaran Umumı — Kapsam ve Önkoşul Bağlamı</div>
+  <div class="section-head">Gambaran Umum Modul 1 — Cakupan &amp; Konteks Prasyarat</div>
 </div>
 
 <div class="card">
@@ -112,7 +112,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
 </div>
 
 <div id="sec-flow" class="anchor">
-  <div class="section-head">Adım Adım Alur Pengajaran — Modül 1 Oturumu</div>
+  <div class="section-head">Alur Pengajaran Langkah demi Langkah — Sesi Modul 1</div>
 </div>
 
 <div class="card">
@@ -170,7 +170,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
       <div class="flow-num">7</div>
       <div class="flow-body">
         <div class="flow-time">00:35 – 00:50</div>
-        <div class="flow-head">Redstone Teorisi + Kebun Bambu İnşası</div>
+        <div class="flow-head">Teori Redstone + Pembangunan Kebun Bambu</div>
         <div class="flow-desc">Perkenalkan Redstone melalui analogi "listrik rumah". Demo rantai Observer–Piston sekali. Siswa membangun secara mandiri. Tutor berkeliling hanya dengan petunjuk terarah. Siswa yang cepat selesai mendapat Tugas Ekstra (tambahkan Hopper di bawah kebun yang terhubung ke Peti).</div>
       </div>
     </li>
@@ -210,7 +210,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
     <span class="cm">Batas bangun langit</span> = Y 255 (edisi lama) / Y 320 (1.18+)<br><br>
     Cara membaca posisi saat ini:<br>
     · Java Edition: tekan <kbd>F3</kbd> — XYZ ditampilkan di kiri atas<br>
-    · Minecraft Education Edition: Ayarlar → Dünya → HUD'da "Koordinatı Göster"i etkinleştirin
+    · Minecraft Education Edition: Pengaturan → Dunia → aktifkan "Tampilkan Koordinat" di HUD
   </div>
 
   <h4 style="margin-top:14px">Mutlak Koordinat — Dünyadaki Sabit Adresler</h4>
@@ -256,7 +256,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
     <span class="com">// 1. PADA PERINTAH OBROLAN — Penanganan peristiwa. Berjalan saat pemain mengetik kata itu di obrolan MC.</span><br>
     <span class="ck">pada perintah obrolan</span> <span class="cs">"bangun"</span> {<br>
     &nbsp;&nbsp;<span class="com">// Kode di sini HANYA berjalan saat pemain mengetik "bangun" di obrolan Minecraft</span><br>
-    &nbsp;&nbsp;<span class="com">// Bu bloğun DIŞINDA kalan kod yalnızca program yüklemede bir kez çalışır</span><br>
+    &nbsp;&nbsp;<span class="com">// Kode DI LUAR blok ini hanya berjalan sekali saat program dimuat</span><br>
     }<br><br>
     <span class="com">// 2. LOOP ULANG — Menjalankan kode yang tertutup tepat N kali secara berurutan.</span><br>
     <span class="ck">ulangi</span> <span class="cn">5</span> <span class="ck">kali</span> {<br>
@@ -333,7 +333,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
 
 
 <div id="sec-bamboo" class="anchor">
-  <div class="section-head">Teknik Teori — Otomatik Kebun Bambu (İnşa Planı)</div>
+  <div class="section-head">Teori Teknis — Kebun Bambu Otomatis (Cetak Biru Bangunan)</div>
 </div>
 
 <div class="card">
@@ -378,7 +378,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
     <span class="cn">Sumber Lava</span>   + Air mengalir → <span class="cr">Obsidian</span>   ← permanen; membutuhkan Pickaxe Berlian<br>
     <span class="cn">Sumber Lava</span>   + Sumber Air  → <span class="cr">tidak ada blok baru</span> ← hanya batas fluida<br><br>
     <span class="cm">ATURAN KUNCI:</span> Untuk Batu Pecah, LAVA harus mengalir, bukan blok sumber.<br>
-    Kaynak bloklar arasında bir boş boşluk her ikisini de buluşmadan önce aklamaya zorlar.
+    Satu celah kosong antara blok sumber memaksa keduanya mengalir sebelum bertemu.
   </div>
 
   <h4 style="margin-top:14px">Tata Letak Bangunan</h4>
@@ -398,7 +398,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
 
 
 <div id="sec-trouble" class="anchor">
-  <div class="section-head">Pemecahan Masalah Kataloğu — 6 Operasyonel Senaryo</div>
+  <div class="section-head">Katalog Pemecahan Masalah — 6 Skenario Operasional</div>
 </div>
 
 <div style="overflow-x:auto">
@@ -414,18 +414,18 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
   <tbody>
     <tr>
       <td class="td-err">Siswa tersesat di medan kosong; tidak dapat menemukan dunia sesi atau siswa lain</td>
-      <td>Koordinatı öğrenmeden spawn'dan uzaklaştı; geri çağırma komutu mevcut değil</td>
+      <td>Menavigasi jauh dari spawn sebelum mempelajari koordinat; tidak ada perintah recall yang tersedia</td>
       <td>Guru menggunakan <code>/tp [nama] [X] [Y] [Z]</code> dengan koordinat spawn yang disematkan. Jika tidak ada akses admin, instruksikan siswa untuk mengetik <code>/kill</code> — mereka respawn di titik spawn dunia.</td>
       <td class="td-fix">"Langkah 1 setiap sesi: sematkan koordinat spawn di obrolan. Siswa menyalinnya sebelum menyentuh apa pun. Perintah darurat selalu siap."</td>
     </tr>
     <tr>
       <td class="td-err">Sirkuit Redstone bekerja di dekat sumber tetapi Piston di ujung jauh tidak merespons</td>
       <td>Kabel melebihi 15 blok — kekuatan sinyal mencapai 0 sebelum mencapai Piston</td>
-      <td>Güç kaynağından Piston'a blokları sayın. 15'ten büyükse, 14. bloğa (veya daha önce) bir Redstone Repeater yerleştirin.</td>
+      <td>Hitung blok dari sumber daya ke Piston. Jika >15, tempatkan Redstone Repeater pada blok ke-14 (atau lebih awal).</td>
       <td class="td-fix">"Aturan penguat sinyal: tempatkan Repeater setiap 14 blok. Hitung kabel Anda terlebih dahulu, lalu tempatkan."</td>
     </tr>
     <tr>
-      <td class="td-err">Gözlemci görünür biçimde ateşleniyor (doku titriyor) ancak Piston uzamıyor</td>
+      <td class="td-err">Observer memicu secara visual (tekstur berdenyut) tetapi Piston tidak memanjang</td>
       <td>Wajah belakang output Observer tidak diarahkan ke Piston atau kabel penghubung</td>
       <td>Pecahkan dan tempatkan kembali Observer. Konfirmasi: muka (ukiran) → bambu, belakang (halus) → Piston.</td>
       <td class="td-fix">"Hidung Observer = mengawasi; ekor Observer = mentransmisi. Hidung menghadap bambu. Ekor menghadap apa yang ingin Anda beri daya."</td>
@@ -444,7 +444,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
     </tr>
     <tr>
       <td class="td-err"><code>/code</code> yang diketik di obrolan tidak merespons — MakeCode tidak terbuka</td>
-      <td>Dünya ayarlarında "Code Builder'ı Etkinleştir" açık değil; veya öğrencinin cihazı çevrimdışı</td>
+      <td>"Aktifkan Code Builder" tidak diaktifkan di pengaturan dunia; atau perangkat siswa offline</td>
       <td>Tutup dunia. Buka pengaturan dunia (ikon pensil). Alihkan "Aktifkan Code Builder" ke HIDUP. Masuk kembali ke dunia. Coba lagi <code>/code</code>.</td>
       <td class="td-fix">"Langkah 1 Pra-Terbang: buka dunia, ketik /code. Jika editor terbuka = hijau. Jika tidak ada yang terjadi = periksa Code Builder di pengaturan dunia sebelum siswa bergabung."</td>
     </tr>
@@ -454,7 +454,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
 
 
 <div id="sec-analogies" class="anchor">
-  <div class="section-head">Kavram Analogii — 8–9 Yaş İçin Soyutlamayı Basitleştirme</div>
+  <div class="section-head">Analogi Konsep — Menyederhanakan Abstraksi untuk Usia 8–9</div>
 </div>
 
 <div class="analogy">
@@ -468,8 +468,8 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
 </div>
 
 <div class="analogy">
-  <p><strong>💡 Koordinat = "Şehir Sokak Adresi Sistemi"</strong><br>
-  <em>"Bir şehirdeki her binanın bir adresi vardır: Doğu 100, 5. Sokak, Kat 3. Minecraft'ta X Doğu-Batı sokak numaranızdır, Z Kuzey-Güney cadde numaranızdır ve Y bulunduğunuz kattır. Bambu çiftliğinizin bir adresi var — X=100, Y=64, Z=200 — ve tüm sonsuz dünyada başka hiçbir blok o adresi paylaşmaz."</em></p>
+  <p><strong>💡 Koordinat = "Sistem Alamat Jalan Kota"</strong><br>
+  <em>"Di setiap kota, setiap gedung memiliki alamat: 100 Jalan Timur ke-5, Lantai 3. Di Minecraft, X adalah nomor jalan Timur-Baratmu, Z adalah nomor jalan Utara-Selatanmu, dan Y adalah lantai yang kamu tempati. Kebun bambumu memiliki alamat — X=100, Y=64, Z=200 — dan tidak ada blok lain di seluruh dunia tak terbatas yang berbagi alamat itu."</em></p>
 </div>
 
 <div class="analogy">
@@ -483,7 +483,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
 </div>
 
 <div class="analogy">
-  <p><strong>💡 Göreceli ve Mutlak Koordinat — "GPS ve Kişisel Yol Tarifi"</strong><br>
+  <p><strong>💡 Koordinat Relatif dan Absolut — "GPS vs. Petunjuk Arah Pribadi"</strong><br>
   <em>"Koordinat absolut seperti GPS — Jalan Sudirman 100 selalu Jalan Sudirman 100, di mana pun kamu berada. Koordinat relatif seperti seseorang memberi petunjuk arah dari tempat kamu berdiri sekarang — '3 blok ke kirimu'. Tilde (~) berarti 'dari tempat aku berdiri sekarang'."</em></p>
 </div>
 

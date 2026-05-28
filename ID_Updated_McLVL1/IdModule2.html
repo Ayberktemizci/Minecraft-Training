@@ -93,7 +93,7 @@
 <div class="card">
   <h4>Panduan Sesi Langkah demi Langkah</h4>
   <ol style="padding-left:18px;margin-top:8px">
-    <li style="margin-bottom:8px"><strong>Es Pencair (00:00–00:05):</strong> "Gedung mana di kotamu yang ingin kamu redesain?" Bu mimari düşünceyi hazırlar ve bugünkü şehir inşa temasıyla kişisel bağlantı kurar.</li>
+    <li style="margin-bottom:8px"><strong>Es Pencair (00:00–00:05):</strong> "Gedung mana di kotamu yang ingin kamu redesain?" Ini mempersiapkan pemikiran arsitektural dan menciptakan koneksi personal dengan tema pembangunan kota hari ini.</li>
     <li style="margin-bottom:8px"><strong>Tinjauan Koordinat (00:05–00:12):</strong> Tinjauan cepat koordinat Modul 1. Minta siswa menyatakan makna sumbu X/Y/Z tanpa catatan. Kemudian perkenalkan koordinat tepat: "Hari ini kita akan menggunakan alamat koordinat nyata, bukan offset relatif."</li>
     <li style="margin-bottom:8px"><strong>Pengenalan Crafting Table (00:12–00:20):</strong> Demonstrasikan cara membuka Crafting Table (grid 3×3), menempatkan material dalam pola yang tepat untuk membuat pickaxe batu. Setiap siswa membuat satu alat.</li>
     <li style="margin-bottom:8px"><strong>Pembangunan Jebakan Redstone (00:20–00:30):</strong> Adım adım: (a) Gali lubang pressure plate 2×2. (b) Letakkan Pressure Plate di lantai. (c) Hubungkan via debu Redstone ke Dispenser yang dimuat dengan panah atau Splash Potion. (d) Uji dengan berjalan di atas plate.</li>
@@ -104,29 +104,29 @@
 </div>
 
 <div id="tech" class="anchor-target">
-  <div class="section-head">3 · Teknis Mendalam — Modül 2</div>
+  <div class="section-head">3 · Teknis Mendalam — Modul 2</div>
 </div>
 
 <div class="card">
   <h4>3.1 · Mekanik Crafting Table</h4>
-  <p>Crafting Table menyediakan <strong>grid 3×3</strong> (total 9 slot) dibandingkan grid 2×2 inventaris pemain (4 slot). Daha fazla slot = daha karmaşık, daha güçlü tarifler. Modül 2 temel tarifleri:</p>
+  <p>Crafting Table menyediakan <strong>grid 3×3</strong> (total 9 slot) dibandingkan grid 2×2 inventaris pemain (4 slot). Lebih banyak slot = resep yang lebih kompleks dan lebih kuat. Resep dasar Modul 2:</p>
   <div class="coord-box">
-    Taş Kazma:    [Taş][Taş][Taş] / [  ][Çubuk][  ] / [  ][Çubuk][  ]<br>
-    Dispenser:     [KopukTaş][KopukTaş][KopukTaş] / [KopukTaş][Yay][KopukTaş] / [KopukTaş][Redstone][KopukTaş]<br>
-    Pressure Plate (Taş): [Taş][Taş] / (herhangi bir sırada 2×1 ızgara)
+    Pickaxe Batu: [Batu][Batu][Batu] / [  ][Tongkat][  ] / [  ][Tongkat][  ]<br>
+    Dispenser:    [BatuPecah][BatuPecah][BatuPecah] / [BatuPecah][Busur][BatuPecah] / [BatuPecah][Redstone][BatuPecah]<br>
+    Pressure Plate (Batu): [Batu][Batu] / (grid 2×1 di baris mana pun)
   </div>
-  <p style="margin-top:8px"><strong>Poin pengajaran kunci:</strong> Resep bersifat posisional — susunan material di grid menentukan item yang diproduksi. Menempatkan material di posisi relatif yang salah tidak menghasilkan apa pun. Bu öğrencilerin konumsal veri yapılarıyla ilk karşılaşmasıdır.</p>
+  <p style="margin-top:8px"><strong>Poin pengajaran kunci:</strong> Resep bersifat posisional — susunan material di grid menentukan item yang diproduksi. Menempatkan material di posisi relatif yang salah tidak menghasilkan apa pun. Ini adalah perkenalan pertama siswa dengan struktur data posisional.</p>
 </div>
 
 <div class="card">
   <h4>3.2 · Koordinat Tepat vs. Koordinat Relatif</h4>
   <div class="coord-box">
     <span class="cm">Koordinat TEPAT</span> — posisi tetap di grid dunia:<br>
-    <span class="cy">/tp @s 100 64 200</span>  →  mevcut konumdan bağımsız olarak her zaman X=100, Y=64, Z=200'e ışınlar<br><br>
+    <span class="cy">/tp @s 100 64 200</span>  →  selalu ke X=100, Y=64, Z=200 terlepas dari posisi saat ini<br><br>
     <span class="cm">Koordinat RELATIF</span> — offset dari posisi saat ini:<br>
-    <span class="cy">/tp @s ~5 ~0 ~0</span>   →  şu an bulunduğunuz yerden 5 blok Doğuya ışınlar<br><br>
+    <span class="cy">/tp @s ~5 ~0 ~0</span>   →  5 blok Timur dari posisi saat ini<br><br>
     <span class="cm">Sintaks campuran (valid):</span><br>
-    <span class="cy">/tp @s ~0 64 ~0</span>   →  aynı X ve Z; yüksekliği tam Y=64'e sabitle<br><br>
+    <span class="cy">/tp @s ~0 64 ~0</span>   →  pertahankan X dan Z yang sama; kunci ketinggian tepat ke Y=64<br><br>
     <span style="color:#F87171">Tes kritis:</span> /tp @a 0 64 0  (tilde yok) her zaman TÜM oyuncuları dünya orijinine gönderir.<br>
     <span style="color:#F87171">Bandingkan:</span>    /tp @a ~0 ~0 ~0 (tüm tildeler) kimseyi hareket ettirmez — uzaklıklar sıfır.
   </div>
@@ -141,13 +141,13 @@
   <p>Perintah /clone menyalin region 3D yang terdefinisi ke lokasi baru:</p>
   <div class="coord-box">
     Sözdizimi:  /clone [x1 y1 z1] [x2 y2 z2] [hedef-x hedef-y hedef-z]<br><br>
-    [x1 y1 z1] = kaynak bölgenin bir köşesi<br>
-    [x2 y2 z2] = kaynak bölgenin karşı köşesi (tam 3B kutuyu tanımlar)<br>
-    [hedef-x hedef-y hedef-z] = kopyanın görüneceği köşe<br><br>
+    [x1 y1 z1] = sudut pertama region sumber<br>
+    [x2 y2 z2] = sudut berlawanan region sumber (mendefinisikan kotak 3D penuh)<br>
+    [tujuan-x tujuan-y tujuan-z] = sudut tempat salinan akan muncul<br><br>
     Contoh — salin rumah 5×5×5 yang dimulai di 100,64,200 ke 120,64,200:<br>
     <span class="cy">/clone 100 64 200  104 68 204  120 64 200</span>
   </div>
-  <p style="margin-top:10px"><strong>Aplikasi arsitektural:</strong> Bir kule bölümü inşa edin, ardından yolun karşı tarafında mükemmel simetrik bir kopya oluşturmak için /clone kullanın. Bu modüler mimarinin arkasındaki ilkedir — bir öğeyi iyi tasarlayın, ardından çoğaltın.</p>
+  <p style="margin-top:10px"><strong>Aplikasi arsitektural:</strong> Bangun satu bagian menara, lalu gunakan /clone untuk menciptakan salinan simetris sempurna di sisi jalan yang berlawanan. Inilah prinsip di balik arsitektur modular — desain satu elemen dengan baik, lalu duplikasi.</p>
   <div class="callout cw" style="margin-top:8px">
     <span class="ci">⚠️</span>
     <div><strong>Kesalahan tumpang tindih:</strong> Region sumber dan tujuan tidak boleh tumpang tindih. Jika ya, perintah error tanpa suara. Selalu pastikan koordinat tujuan cukup jauh dari batas region sumber.</div>
@@ -159,7 +159,7 @@
   <div class="two-col" style="margin-top:8px">
     <div class="card">
       <h4>Pressure Plate</h4>
-      <p>Memancarkan sinyal Redstone terus-menerus saat pemain, mob, atau tumpukan item berdiri di atasnya. Sinyal berhenti begitu entitas pergi. İki çeşit: <strong>Batu</strong> (hanya mob/pemain yang memicu) dan <strong>Kayu</strong> (item juga memicu). Untuk jebakan Modul 2, Batu yang lebih disukai.</p>
+      <p>Memancarkan sinyal Redstone terus-menerus saat pemain, mob, atau tumpukan item berdiri di atasnya. Sinyal berhenti begitu entitas pergi. Dua jenis: <strong>Batu (hanya mob/pemain yang memicu) dan <strong>Kayu</strong> (item juga memicu). Untuk jebakan Modul 2, Batu yang lebih disukai.</p>
     </div>
     <div class="card">
       <h4>Dispenser</h4>
@@ -167,11 +167,11 @@
     </div>
     <div class="card">
       <h4>TNT</h4>
-      <p>Redstone sinyali veya ateşle aktive edilen TNT 4 tıklık fitil süresine sahiptir (0.2 saniye) ardından patlar. Patlama yarıçapı ~4 blok. Modül 2 tuzaklarında TNT'yi Dispenser çıkışına zincirleme bağlayın.</p>
+      <p>TNT yang diaktifkan oleh sinyal Redstone atau api memiliki sumbu 4 tick (0,2 detik) lalu meledak. Radius ledakan ~4 blok. Di jebakan Modul 2, rantai TNT ke output Dispenser.</p>
     </div>
     <div class="card">
       <h4>Logika Sirkuit Jebakan</h4>
-      <p><strong>Standart tuzak kablolaması:</strong> Pressure Plate → Redstone tozu (1–15 blok) → Dispenser. Oyuncu Plaka üzerinde durduğunda sinyal tel boyunca seyahat eder ve Dispenseryı aktive eder. <strong>Zamanlama notu:</strong> Redstone sinyalleri tik başına 1 blok hızla seyahat eder.</p>
+      <p><strong>Standart tuzak kablolaması:</strong> Pressure Plate → debu Redstone (1–15 blok) → Dispenser. Saat pemain menginjak Plate, sinyal merambat sepanjang kabel dan mengaktifkan Dispenser. <strong>Catatan timing:</strong> Sinyal Redstone merambat dengan kecepatan 1 blok per tick.</p>
     </div>
   </div>
 </div>
@@ -182,7 +182,7 @@
 
 <div class="card">
   <h4>Penugasan Peran Tim</h4>
-  <p>Bagi kelas menjadi 2–3 tim dengan tanggung jawab yang tidak tumpang tindih. Her ekibin çakışmayı önlemek için belirli bir koordinat bölgesi vardır:</p>
+  <p>Bagi kelas menjadi 2–3 tim dengan tanggung jawab yang tidak tumpang tindih. Setiap tim memiliki zona koordinat tertentu untuk mencegah tumpang tindih:</p>
   <ul style="margin-top:8px">
     <li><strong>Pembangun Jembatan:</strong> Membangun jalur yang menghubungkan zona distrik. Harus menggunakan koordinat tepat untuk memastikan jembatan mereka sejajar dengan titik akhir di zona tim lain.</li>
     <li><strong>Penjaga Mercusuar:</strong> Membangun landmark tinggi (tinggi 15+ blok) dengan lampu Redstone di atas yang terhubung ke Sensor Siang untuk aktif/nonaktif otomatis.</li>
@@ -201,7 +201,7 @@
 </div>
 
 <div id="trouble" class="anchor-target">
-  <div class="section-head">5 · Pemecahan Masalah Kataloğu — Modül 2 (5 Senaryo)</div>
+  <div class="section-head">5 · Katalog Pemecahan Masalah — Modul 2 (5 Skenario)</div>
 </div>
 
 <div style="overflow-x:auto">
@@ -222,10 +222,10 @@
         <td class="fc">"Tulis semua tiga koordinat sudut sebelum mengetik perintah. Satu angka salah = kegagalan diam."</td>
       </tr>
       <tr>
-        <td class="mc">Pressure Plate aktive oluyor ancak Dispenser ateşlemiyor</td>
-        <td>Redstone tozu teli kırık; VEYA Dispenser yanlış yöne bakıyor; VEYA Dispenser envanteri boş</td>
-        <td>Teli izleyin: hangi segmentin güçsüz olduğunu kontrol etmek için her Redstone tozu bloğuna geçici bir meşale yerleştirin. Boşlukları düzeltin. Dispensernın doğru yöne baktığını doğrulayın.</td>
-        <td class="fc">"Üç adımlı tuzak kontrolü: tel sürekli mi? Dispenser stoklu mu? Dispenser doğru yönde mi? Test etmeden önce her üçünü kontrol edin."</td>
+        <td class="mc">Pressure Plate mengaktifkan tetapi Dispenser tidak menembak</td>
+        <td>Kabel debu Redstone terputus; ATAU Dispenser menghadap arah yang salah; ATAU inventaris Dispenser kosong</td>
+        <td>Lacak kabel: tempatkan obor sementara pada setiap blok debu Redstone untuk memeriksa segmen mana yang tidak diberi daya. Perbaiki celah apa pun. Konfirmasi Dispenser menghadap arah yang benar.</td>
+        <td class="fc">"Pemeriksaan jebakan tiga langkah: kabel kontinu? Dispenser terisi? Dispenser menghadap arah yang benar? Periksa ketiganya sebelum menguji dengan siswa."</td>
       </tr>
       <tr>
         <td class="mc">Siswa kesulitan menyelaraskan tujuan /clone dengan struktur tim lain — jembatan tidak terhubung</td>

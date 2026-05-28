@@ -108,11 +108,11 @@ function injectRegionSwitcher() {
   };
 
   const REGIONS = [
-    { key:"en", label:"ENG", path:"../ENG_Updated_McLVL1/En.html",   msg: "İngilizce eğitime geçmek üzeresiniz.\n\nYou are about to switch to the English training." },
-    { key:"it", label:"IT",  path:"../IT_Updated_McLVL1/it.html",    msg: "İtalyanca eğitime geçmek üzeresiniz.\n\nStai per passare alla formazione italiana." },
-    { key:"es", label:"ES",  path:"../LATAM_Updated_McLVL1/es.html", msg: "İspanyolca eğitime geçmek üzeresiniz.\n\nEstás a punto de cambiar a la formación en español." },
-    { key:"pl", label:"PL",  path:"../POL_Updated_McLVL1/pol.html",  msg: "Lehçe eğitime geçmek üzeresiniz.\n\nZamierzasz przejść do szkolenia polskiego." },
-    { key:"pt", label:"PT",  path:"../PT_Updated_McLVL1/pt.html",    msg: "Portekizce eğitime geçmek üzeresiniz.\n\nVocê está prestes a mudar para o treinamento em português." },
+    { key:"en", label:"ENG", path:"../ENG_Updated_McLVL1/En.html",   msg: "Anda akan beralih ke jalur pelatihan Bahasa Inggris.\n\nYou are about to switch to the English training." },
+    { key:"it", label:"IT",  path:"../IT_Updated_McLVL1/it.html",    msg: "Anda akan beralih ke jalur pelatihan Bahasa Italia.\n\nStai per passare alla formazione italiana." },
+    { key:"es", label:"ES",  path:"../LATAM_Updated_McLVL1/es.html", msg: "Anda akan beralih ke jalur pelatihan Bahasa Spanyol.\n\nEstás a punto de cambiar a la formación en español." },
+    { key:"pl", label:"PL",  path:"../POL_Updated_McLVL1/pol.html",  msg: "Anda akan beralih ke jalur pelatihan Bahasa Polandia.\n\nZamierzasz przejść do szkolenia polskiego." },
+    { key:"pt", label:"PT",  path:"../PT_Updated_McLVL1/pt.html",    msg: "Anda akan beralih ke jalur pelatihan Bahasa Portugis.\n\nVocê está prestes a mudar para o treinamento em português." },
     { key:"tr", label:"TR",  path:"../TR_Updated_McLVL1/Tr.html",    msg: "Anda akan beralih ke pelatihan Bahasa Turki.\n\nTürkiye bölgesi eğitimine geçmek üzeresiniz." },
     { key:"id", label:"ID",  path:"../ID_Updated_McLVL1/Id.html",    msg: null },
   ];

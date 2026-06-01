@@ -1,8 +1,300 @@
-edildi · Ebeveyn iletişim kanalı gerektiğinde kullanıldı.</p>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Başarılı Dersler Kütüphanesi &amp; Dijital Beceri Testi | Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.dst-banner{background:linear-gradient(135deg,#111111 0%,#1E2A18 60%,#2A3D22 100%);padding:44px 32px 36px;position:relative;overflow:hidden;border-bottom:3px solid var(--lime)}
+.dst-banner::before{content:'🏆';font-size:200px;position:absolute;right:-30px;top:-50px;opacity:.06;line-height:1;pointer-events:none}
+.dst-banner .meyebrow{color:var(--lime);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.dst-banner .mh1{color:#fff;font-family:'Nunito',sans-serif;font-size:clamp(22px,4vw,34px);font-weight:900;letter-spacing:-.5px;line-height:1.1;margin-bottom:10px}
+.dst-banner p{color:rgba(255,255,255,.74);font-size:14px;line-height:1.65;max-width:640px}
+.dst-banner .sub-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(196,240,70,.15);border:2px solid rgba(196,240,70,.3);border-radius:var(--rpill);padding:5px 14px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;color:var(--lime);margin-top:14px}
+.sec-nav{display:flex;flex-wrap:wrap;gap:6px;padding:12px 24px;background:var(--surface2);border-bottom:2px solid var(--border);position:sticky;top:62px;z-index:90}
+.sec-pill{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:5px 12px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);text-decoration:none;transition:all .15s;white-space:nowrap}
+.sec-pill:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+.anchor-target{scroll-margin-top:128px}
+.video-outer{border-radius:var(--r);overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow-h);background:#000;margin:16px 0}
+.video-ratio{position:relative;width:100%;padding-bottom:56.25%}
+.video-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.video-meta{display:flex;align-items:center;gap:10px;background:var(--surface2);padding:10px 16px;border-top:1px solid var(--border)}
+.video-live-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(239,68,68,.12);border:1.5px solid rgba(239,68,68,.3);border-radius:var(--rpill);padding:3px 11px;font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;color:#F87171;text-transform:uppercase;letter-spacing:.4px}
+.video-live-pill::before{content:'▶';font-size:8px}
+.video-meta-text{font-size:12px;color:var(--text-muted)}
+.timeline-list{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-direction:column;gap:0}
+.tl-card{display:flex;gap:0;position:relative}
+.tl-card::before{content:'';position:absolute;left:46px;top:0;bottom:0;width:2px;background:var(--border);z-index:0}
+.tl-card:last-child::before{bottom:auto;height:28px}
+.tl-left{flex-shrink:0;width:92px;padding-top:20px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1}
+.tl-dot{width:16px;height:16px;border-radius:50%;background:var(--lime);border:3px solid var(--lime-d);flex-shrink:0;margin-top:4px}
+.tl-time{font-family:'Nunito',sans-serif;font-weight:900;font-size:11.5px;color:var(--pink);background:var(--surface);border:1.5px solid var(--border);border-radius:6px;padding:3px 8px;text-align:center;line-height:1.3;white-space:nowrap;box-shadow:var(--shadow)}
+.tl-jump{display:inline-flex;align-items:center;justify-content:center;width:28px;height:18px;border-radius:4px;background:rgba(240,61,158,.12);border:1.5px solid rgba(240,61,158,.3);cursor:pointer;font-size:8px;color:var(--pink);transition:all .15s;text-decoration:none}
+.tl-jump:hover{background:var(--pink);color:#fff}
+.tl-right{flex:1;padding:18px 0 24px 20px}
+.tl-phase{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:4px}
+.tl-heading{font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;color:var(--text);margin-bottom:8px}
+.tl-action{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rsm);padding:12px 14px;margin-bottom:8px;font-size:13px;color:var(--text2);line-height:1.65;box-shadow:var(--shadow)}
+.tl-action-label{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:5px}
+.tl-qa{border-radius:var(--rsm);padding:13px 15px;font-size:13px;line-height:1.7}
+.tl-qa-label{font-family:'Nunito',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.tl-qa.pass{background:var(--callout-green-bg);border:1.5px solid var(--callout-green-b);color:var(--callout-green-t)}
+.tl-qa.pass .tl-qa-label{color:var(--callout-green-t)}
+.tl-qa.flag{background:var(--callout-warn-bg);border:1.5px solid var(--callout-warn-b);color:var(--callout-warn-t)}
+.tl-qa.flag .tl-qa-label{color:var(--callout-warn-t)}
+.verdict{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:4px;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.3px;margin-bottom:7px}
+.v-pass{background:var(--ok-bg);color:var(--ok-t);border:1.5px solid var(--ok-b)}
+.v-flag{background:var(--callout-warn-bg);color:var(--callout-warn-t);border:1.5px solid var(--callout-warn-b)}
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+@media(max-width:580px){.comp-grid{grid-template-columns:1fr}}
+.comp-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rsm);padding:12px 14px;display:flex;gap:10px;align-items:flex-start;box-shadow:var(--shadow)}
+.comp-check{width:20px;height:20px;border-radius:50%;background:var(--lime);border:2px solid var(--lime-d);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:10px;color:var(--ink);font-weight:900}
+.comp-text{font-size:13px;color:var(--text2);line-height:1.55}
+.comp-text strong{color:var(--text)}
+.dst-cta{background:linear-gradient(135deg,var(--surface),var(--surface2));border:2px solid var(--lime-d);border-radius:var(--r);padding:32px;text-align:center;box-shadow:var(--shadow-h);position:relative;overflow:hidden}
+.dst-cta::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;background:var(--lime);opacity:.06;pointer-events:none}
+.locked-banner{background:var(--callout-warn-bg);border:2px solid var(--callout-warn-b);border-radius:var(--r);padding:28px;text-align:center;margin:32px auto;max-width:520px}
+.locked-banner h3{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--callout-warn-t);margin-bottom:8px}
+.locked-banner p{font-size:13.5px;color:var(--callout-warn-t);line-height:1.6}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer">
+    <span class="logo-mark">Kodland</span><div class="logo-div"></div>
+    <span class="logo-sub">Tutor Eğitimi</span>
+  </div>
+  <div class="nav-r">
+    <button class="nav-back" onclick="goHome()">← Panel</button>
+    <button class="icon-btn" id="theme-toggle">🌙</button>
+  </div>
+</nav>
+<div class="progress-strip"><div class="progress-fill" id="top-progress" style="width:0%"></div></div>
+<div class="sec-nav">
+  <a href="#library"      class="sec-pill">3 · Referans Oturum</a>
+  <a href="#qa-framework" class="sec-pill">KG Çerçevesi</a>
+  <a href="#dst-section"  class="sec-pill">4 · Dijital Beceri Testi</a>
+  <a href="#competencies" class="sec-pill">Yeterlilikler</a>
+  <a href="#dst-form"     class="sec-pill">Testi Al</a>
+</div>
+<div class="dst-banner">
+  <div style="max-width:860px;margin:0 auto;position:relative">
+    <div class="meyebrow">Bölüm 3 &amp; 4 — Final Aşaması</div>
+    <div class="mh1">Başarılı Dersler Kütüphanesi &amp; Dijital Beceri Testi</div>
+    <p>Aşağıdaki açıklamalı referans oturumunu inceleyin, yeterlilik kontrol listesine göre hazırlığınızı doğrulayın, ardından Dijital Beceri Testine geçin. Bağımsız olarak grup yönetmek için testte <strong>%80 veya üzeri</strong> gereklidir.</p>
+    <div class="sub-pill">🔒 Tüm 5 Modül Testi gerektirir · 20 Soru · Geçme notu: %80</div>
+  </div>
+</div>
+
+<div id="locked-notice" style="display:none">
+  <div class="cbody">
+    <div class="locked-banner">
+      <h3>🔒 Önce 5 Modülün Tamamını Tamamlayın</h3>
+      <p>Başarılı Dersler Kütüphanesi'ne ve Dijital Beceri Testine erişmeden önce beş modülün tamamı için bilgi kontrolünü geçmelisiniz. Hangi modüllerin eksik olduğunu görmek için panele dönün.</p>
+      <div class="btn-row center" style="margin-top:16px">
+        <button class="btn-primary" onclick="goHome()">← Panele Dön</button>
+      </div>
     </div>
   </div>
 </div>
 
+<div id="main-content" style="display:none">
+<div class="cbody">
+
+<div id="library" class="anchor-target">
+  <div class="section-head">3 · Başarılı Dersler Kütüphanesi</div>
+</div>
+<div class="card">
+  <h4>Bu Kütüphanenin Amacı</h4>
+  <p>Bu bölüm, Kıdemli Kalite Güvencesi ekibi tarafından değerlendirilen gerçek bir kayıtlı Kodland Seviye 1 oturumu içermektedir. Her zaman damgalı açıklamayı dikkatlice inceleyin — komut dosyalarını ezberlemek için değil, her öğretim kararının arkasındaki <em>gerekçeyi</em> içselleştirmek için. Bir davranışın neden etkili olduğunu anlayan tutor, onu beklenmedik herhangi bir sınıf durumuna uyarlayabilir.</p>
+  <p style="margin-top:8px">Videoyu izleyin, ardından altındaki açıklama kartlarını okuyun. Her kart tam anı tanımlar, tutorun ne yaptığını açıklar ve işe yaratan pedagojik ilkeyi — ya da düzeltilmesi gereken boşluğu — açıklar.</p>
+</div>
+
+<div id="qa-module1" class="anchor-target">
+  <div class="section-head">KG-001 · Modül 1, Ders 1 — Açıklamalı Referans Oturumu</div>
+</div>
+<div class="video-outer">
+  <div class="video-ratio">
+    <iframe id="qa-video-player"
+      src="https://www.youtube.com/embed/5NnWZbh8tMI"
+      title="Kodland Minecraft Seviye 1 — KG Referans Oturumu"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy">
+    </iframe>
+  </div>
+  <div class="video-meta">
+    <span class="video-live-pill">Canlı Oturum Kaydı</span>
+    <span class="video-meta-text">Modül 1 · Minecraft Education Seviye 1 · Kıdemli KG Değerlendirmesi</span>
+  </div>
+</div>
+<div class="callout ct" style="margin-bottom:20px">
+  <span class="ci">💡</span>
+  <div>Videodaki o ana doğrudan atlamak için aşağıdaki her açıklama kartındaki <strong>▶ atlama düğmelerini</strong> kullanın. Yeşil kartlar mükemmel uygulamayı vurgular; sarı kartlar iyileştirme gereken bir alanı belirtir.</div>
+</div>
+
+<ul class="timeline-list">
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:00:00</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=0&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Oturum Açılışı</div>
+      <div class="tl-heading">Teknik Kurulum &amp; Ses Kontrolleri</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Tutor, herhangi bir öğrenciye doğrudan hitap etmeden önce yaklaşık sekiz dakika boyunca ses ve bağlantı testleri yapar. Birden fazla sözlü ses kontrolü, öğretim başlamadan önce mikrofon ve platform kararlılığını doğrular.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Uçuş Öncesi Protokol</span><br>Bu uzun kurulum süreci doğru içgüdüyü gösteriyor: <strong>öğretim sırasında değil, başlamadan önce tüm teknik sorunları çözün.</strong> 8–9 yaşındaki öğrenciler için ses düşmeleri veya eksik öğrencilerle başlamak anında güven erozyonu yaratır. Standart, tüm sorunları 5. dakikadan önce sessizce çözmektir.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:10:28</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=628&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Isınma</div>
+      <div class="tl-heading">Samimi Karşılama &amp; Haftalık Check-In</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Tutor sıcak bir "Merhaba, nasılsınız? Haftanız nasıldı?" ile açılır ve bir öğrenci yaratıcı bir Nether portal evi anlattığında gerçek takip soruları sorarak konuşmanın doğal biçimde gelişmesine izin verir.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Isınma &amp; Rapport</span><br>Her iki gereklilik de karşılandı: samimi bir karşılama ve öğrencilerin oturum dışındaki hayatları hakkında açık kişisel soru. 8–9 yaşındaki çocuklar için bu sosyal bağlantı anı nörolojik olarak önemlidir: gerçek tanınma bir aidiyet duygusu aktive eder ve beyin gelecek teknik içeriğe aktif katılım için hazırlanır.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:12:43</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=763&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Sosyal Mimari</div>
+      <div class="tl-heading">Yeni Öğrenci Karşılama &amp; Grup Tanışmaları</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>İlk kez katılan yeni bir öğrenci var. Tutor oturumu tamamen durdurur, varışı kabul eder, tam bir tanışma turu düzenler ve öğrencilerden paylaşmalarını istemeden önce kişisel ilgi alanlarını açıklayarak kendisi başlar.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Kapsayıcı Sosyal Mimari</span><br>Yeni öğrenci tanıtmak, çocuk grubundaki en yüksek riskli sosyal anlardır. Tutor bunu iki mükemmel hamleyle ele alıyor: oturumu durdurmak tanıtıma uygun ağırlık verir; önce kendi öz-açıklamasını modellemek paylaşmanın algılanan güçlüğünü azaltır.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:18:41</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=1121&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Ders Çerçeveleme</div>
+      <div class="tl-heading">Bugünün Planı &amp; Dünya İçe Aktarma Talimatları</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Tutor bugün ne olacağını belirtir: "İnşa etmeye başlayacağız — dünya bağlantısını şimdi paylaşıyorum. Ev inşa edeceğiz, kodlamayı öğreneceğiz ve yaratıcılık üzerinde çalışacağız." Yeni öğrencinin giriş sorun giderme işlemi grubu kesintiye uğratmadan paralel olarak yapılır.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Net Ders Hedefleri</span><br>Ders hedefleri somut sonuçlara bağlı eylem fiilleri kullanılarak belirtilir — "ev inşa et", "kodlamayı öğren" — soyut akademik dil değil. Somut işlemler aşamasındaki öğrenciler için bu çerçeveleme esastır.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:31:42</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=1902&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Keşif Öğrenimi</div>
+      <div class="tl-heading">Gizli Üs Bulma &amp; Depoyu Keşfetme</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Öğrenciler kaynaklar, bir komut bloğu, kaldıraç ve basınç plakası içeren gizli bir üs keşfeder. Tutor yönlendirmek yerine kolaylaştırır: "İçinde ne var?" Bir öğrenci komut bloğunun yanında kaldıraç bulduğunda, tutor sorar: "Elektrikle çalışması gereken bir şeyi genellikle nereye koyarsunuz?"</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Keşif Tabanlı Öğrenme + Sokrates İskelesi</span><br>Bu Ortak Kaşif modelinin uygulamasıdır. Elektrik hakkındaki Sokratik soru önceki bilgiyi (Redstone = elektrik) aktive eder ve öğrencinin doğru yanıta bağımsız olarak ulaşmasına izin verir. Kendi akıl yürütmeleri aracılığıyla keşfeden öğrenciler aynı bilgiyi doğrudan söylenenden çok daha güvenilir biçimde hatırlar.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:39:10</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=2350&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Zamanlı Meydan Okuma</div>
+      <div class="tl-heading">10 Dakikalık İnşa Meydan Okuma Lansmanı</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Tutor zamanlı ev inşa meydan okumasını net, düşük baskılı çerçevelemeyle başlatır: "Sahip olduğunuz malzemelerle bir ev inşa edin — 10–15 dakika, nasıl göründüğü önemli değil, sadece inşa edin." Geri sayım hatırlatıcıları 8, 4, 3, 2. dakikalarda ve 45 ile 10 saniye kaldığında verilir.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Talimat Parçalama + Yönetilen Bağımsızlık</span><br>Görev net bir hedefle, zaman sınırıyla ve kusurlu olmak için açık izinle çerçevelenir ("nasıl göründüğü önemli değil"). Bu yaratıcı bir görevden önce performans kaygısını kaldırır. Geri sayım yapısı, 8–9 yaş için sınıf yönetiminin en iyi uygulamasıdır.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:39:51</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=2391&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Anlatı Mimarisi</div>
+      <div class="tl-heading">Beş Dünya Kurs Genel Bakışı &amp; Öğrenme Yayı</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Öğrenciler bağımsız olarak inşa ederken tutor makro kurs genel bakışını sunar: "Beş dünya var. Her biri daha zor, ama becerilerimiz gelişiyor. Dünya terk edilmiş — sonunda onu kurtaracak ve herkesi geri getireceğiz. Kahramanlar olacağız."</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Anlatı Sürekliliği + Uzun Vadeli Motivasyon</span><br>Bu oturumdaki en yüksek kaliteli anlardan biridir. Müfredat soyut olarak tanımlanmıyor — duygusal paylaşımlı bir hikayenin içine gömülüyor: kurtarılacak bir dünya, kahraman olunacak. 8–9 yaşındakiler için bu optimal motivasyonel mimarisidir.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:41:22</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=2482&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Geri Çağırma Pratiği</div>
+      <div class="tl-heading">İnteraktif Tekrar — Ajan &amp; MakeCode</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Tutor öğrencilerden önceki oturumdan Ajanın ne olduğunu hatırlamalarını ister: "Hatırlıyor musunuz?" Öğrenciler yanıt verir — "küçük bir robot", "temelde sizin için ev yapıyor." Tutor onaylar, ayrıntı ekler ve takip soruları sorar.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Geniş Katılım + Geri Çağırma Pratiği</span><br>Burada kullanılan teknik geri çağırma pratiğidir — öğrencilerden yeni bilgi olarak yeniden sunmak yerine bellekten önceki bilgiyi yeniden oluşturmalarını istemek. Bu özellikle hafıza pekiştirmesinin hâlâ geliştiği 8–9 yaş grubunda ölçülebilir biçimde daha güçlü uzun vadeli tutma üretir.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:44:18</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=2658&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Öğretmen Modelleme</div>
+      <div class="tl-heading">Canlı Demo — Komutlar &amp; Işınlanma</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Tutor kaldıraçla aktive edilen komut bloğu ışınlanma mekaniğini canlı olarak gösterir. Anlatır: "Bu harika görünüyordu — bunu kendimiz yapmayı öğreneceğiz ve ardından kelimenin tam anlamıyla dünya genelinde ışınlanabilirsiniz."</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Bağımsızlıktan Önce Etkili Modelleme</span><br>Demo aynı anda üç hedefi başarır: soyut bir kavram somut hale gelir, ileriye yönelik beklenti yaratılır ("bunu kendimiz öğreneceğiz") ve demo öğrencilerin kendileri kaldıraçla deneyimledikten sonra yerleştirilir. Somut operasyonel öğrenciler için gözlemle-anla sıralaması en uygun desendir.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:47:49</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=2869&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Gerçek Zamanlı Destek</div>
+      <div class="tl-heading">Öğrenci Ekran Paylaşımı &amp; Navigasyon Rehberliği</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Tutor, inşa zorluğu sırasında öğrencilerin ekran paylaşmasını ister. Bir öğrenci dünyada kaybolduğunda, tutor öğrencinin klavyesine dokunmadan sözlü yön ipuçlarıyla geri yönlendirir.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Ekran Paylaşım + İpucu-Çözüm Değil</span><br>Navigasyon yardımı örnek niteliktedir: sözlü ipuçları öğrencinin bağımsızlığını korur. Görevi öğrenci için tamamlamak bağımsız olarak yapamamasına neden olurdu. İpucu-çözüm değil ilkesi, zaman baskısı altında en sık ihlal edilir.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">00:55:44</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=3344&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Vitrin &amp; Geri Bildirim</div>
+      <div class="tl-heading">Öğrenci Proje Vitrinleri &amp; Belirli Övgü</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Her öğrenci tamamladığı evi paylaşır. Tutor belirli tasarıma atıfta bulunan geri bildirim verir: "Bu gerçekten yaratıcı — neredeyse bir zindan gibi devasa bir tavan ışığı gibi." "Camı ve kapak kapısını seviyorum." "Çam ve meşeyi birleştirmek genellikle dağınık görünür, ama burada karakteristik bir görünüm veriyor — başardınız."</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Belirli, Davranışa Bağlı Geri Bildirim</span><br>Her geri bildirim somut bir tasarım kararını adlandırır, mimari olarak çerçeveler ve kaliteyi öğrencinin kasıtlı yaratıcı seçimine atfeder. Karışık ahşap türleri hakkındaki geri bildirim özellikle güçlüdür: tutor öğrencinin kendi olumsuz öz değerlendirmesini olumlu bir tasarım sonucu olarak yeniden çerçeveler.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">01:05:14</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=3914&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Özlemsel Demo</div>
+      <div class="tl-heading">Kodlama Demosu — Otomatik Ev İnşası</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Tutor, bir sohbet komutuyla tam bir ev inşa eden önceden yazılmış bir programı gösterir. Açıklar: "İleride böyle kod yazabiliriz ve sadece 'ev' gibi bir kelime yazarak tüm evi inşa edebiliriz." Bir öğrenci kendiliğinden benzetme yapar: "Bir komut, 'bana dondurma yap' diyip birisinin yapması gibi." Tutor doğrular ve resmileştirir.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Yetenek Boşluğu Demosu + Analoji Doğrulaması</span><br>Parlak bir bitiş durumu göstermek görünür yetenek boşluğu yaratır ve kapanışa net bir yol sunar. Öğrencinin kendiliğinden ürettiği analoji gerçek bir üstbilişsel başarıdır: bilgisayar bilimi kavramını bağımsız olarak gerçek dünya şemasına eşleştirdiler.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">01:09:48</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=4188&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Hesap Verebilirlik Kapanışı</div>
+      <div class="tl-heading">Ödev Ataması — Survival Dekorasyon Meydan Okuması</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Ödev tam özgüllükle verilir: "Evinizde daha fazla zaman harcayın — onu dekore edin, odalar, cam paneller, ekstra katlar ekleyin. İsterseniz otele dönüştürün. Ardından WhatsApp grubuna fotoğraf gönderin." Anlama baş parmak yukarı kontrolüyle doğrulanır.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Belirli Ödev + Anlama Doğrulaması</span><br>Üç kalite işareti mevcut: görev özgüllüğü (somut eklemeler — odalar, cam, katlar), teslim kanalı (WhatsApp grubu ebeveyn görünürlük döngüsünü kapatır) ve anlama doğrulaması (baş parmak yukarı kontrolü her öğrencinin görevi anladığını onaylar).</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">01:14:17</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=4457&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Pekiştirme</div>
+      <div class="tl-heading">Öğrenci Yansıması &amp; Ders Özeti</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Tutor sorar: "Bugün ne öğrendiniz?" Öğrenciler özlü yanıt verir — "ev inşa etmeyi ve survival'da daha fazla şey yapmayı", "meşe ve çamı karıştırmayı sevdim." Tutor yeni içerik eklemeden kolaylaştırır.</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Tutor Liderliğinde &amp; Öğrenci Liderliğinde Özet</span><br>Her iki özet gereksinimi aynı anda karşılandı. Öğrenci yanıtları gerçek pekiştirmeyi gösteriyor — yalnızca yüzeysel hatırlama değil üstbilişsel içgörü. Kendiliğinden uzatma hedefi oluşturan bir öğrenci özellikle güçlü bir sinyaldir.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">01:16:27</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=4587&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">İleri Kanca</div>
+      <div class="tl-heading">Sonraki Ders Önizlemesi — Koordinatlar &amp; Ajan</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Tutor bir sonraki oturumu spesifik olarak önizler: "Koordinatlarla çalışmaya başlayacağız, suyu kontrol etmeyi öğreneceğiz ve sonunda Ajanla tanışacaksınız. Gerçek kodlamaya başlayacağız ve daha önce gördüğünüze doğru ilerleyeceğiz — sıfırdan bir ev yaratan sihir gibi."</div>
+      <div class="tl-qa pass"><div class="tl-qa-label">Kıdemli KG Analizi</div><span class="verdict v-pass">✅ Belirli Sonraki Ders Önizlemesi</span><br>Önizleme belirsiz dil yerine somut konular içeriyor ("koordinatlar", "su", "Ajan"). Güçlü bir ileri kanca öğrencilerin ödevlerini tamamlama ve meşgul döneceği olasılığını önemli ölçüde artırır.</div>
+    </div>
+  </li>
+  <li class="tl-card">
+    <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">01:19:01</div><a class="tl-jump" title="Bu ana atla" onclick="document.getElementById('qa-video-player').src='https://www.youtube.com/embed/5NnWZbh8tMI?start=4741&autoplay=1'">▶</a></div>
+    <div class="tl-right">
+      <div class="tl-phase">Profesyonel Kapanış</div>
+      <div class="tl-heading">Final Vedaları, Ebeveyn S&amp;A &amp; Teknik Sorun Çözümü</div>
+      <div class="tl-action"><div class="tl-action-label">Tutor Ne Yaptı</div>Vedalar sıcak ve bireysel. Bir ebeveyn kaçırılan oturum hakkında soru sorar — tutor doğru yanıt verir: "Uygun bir tarihte bire bir telafi oturumu düzenleyeceğiz." Oturum genelindeki teknik başarısızlık açıkça sahiplenilir: "Teknik ekiple konuşacağım — önümüzdeki haftaya kadar bu çözülecek."</div>
+      <div class="tl-qa flag"><div class="tl-qa-label">Kıdemli KG Analizi — İyileştirme Alanı</div><span class="verdict v-flag">⚠️ Kamera Açma İsteği Eksik</span><br>Üç kaliteli davranış iyi uygulama yapılıyor: telafi oturum protokolü doğru iletildi; teknik sorun çözüm zaman çizelgesiyle sahiplenildi; veda açılışta kurulan sıcaklığı korur. Ancak tüm oturum boyunca tutor öğrencilerden kameralarını açmalarını hiçbir zaman açıkça istemedi. <strong>Her gelecek oturum için: kamera açma isteğini ısınma aşamasının ilk beş dakikasında yapın — kural uygulama olarak değil, samimi davet olarak.</strong></div>
+    </div>
+  </li>
+</ul>
+
+<div id="qa-framework" class="anchor-target">
+  <div class="section-head">KG Değerlendirme Çerçevesi — Her Oturumun Nasıl Değerlendirildiği</div>
+</div>
+<div class="card">
+  <h4>Beş Değerlendirme Boyutu</h4>
+  <p>Her Kodland oturumu beş boyuta göre değerlendirilir. Bunları anlamak gerçek zamanlı olarak dersler sırasında öz değerlendirme yapmanıza yardımcı olur.</p>
+  <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+    <div class="card hi"><h4>Boyut 1 — Zamanlama Disiplini</h4><p>5. dakikaya kadar tamamlanan Uçuş Öncesi Kontrol · Giriş tavanına uyuldu (maksimum 20 dakika) · 30. dakikada zorunlu ekransız mola verildi · Bağımsız pratik 35–55. dakikalarda · Yansıma son beş dakikada verildi. Herhangi bir zamanlama güvenlik rayını ihlal eden oturum içerik kalitesinden bağımsız olarak işaretlenir.</p></div>
+    <div class="card" style="background:var(--ok-bg);border-color:var(--ok-b)"><h4 style="color:var(--ok-t)">Boyut 2 — Pedagojik Hizalama</h4><p style="color:var(--ok-t)">Ortak Kaşif çerçeveleme tutarlı biçimde kullanıldı · Hata normalleştirme tüm öğrenci hatalarına uygulandı · Belirli, davranışa bağlı geri bildirim kullanıldı · Aktif katılım kilit kontrol noktalarında doğrulandı · Hızlı bitirenler hemen hazırlanmış uzatma görevlerine yönlendirildi.</p></div>
+    <div class="card" style="background:var(--callout-tip-bg);border-color:var(--callout-tip-b)"><h4 style="color:var(--callout-tip-t)">Boyut 3 — Teknik Doğruluk</h4><p style="color:var(--callout-tip-t)">Öğretilen kavramlar modülün hedefleriyle eşleşiyor · Açıklamalar doğru — öğrencilere gerçek olarak aktarılan teknik hata yok · Doğru terminoloji kullanılıyor.</p></div>
+    <div class="card"><h4>Boyut 4 — Öğrenci Katılımı</h4><p>Tüm öğrenciler her görevi bağımsız olarak deniyor · Hiçbir öğrenci iki dakikadan fazla boşta değil · Tutor öğrenciler adına görev tamamlamıyor · Katılım varsayılmıyor, doğrulanıyor.</p></div>
+    <div class="card warn"><h4>Boyut 5 — Hesap Verebilirlik Kapanışı</h4><p>Oturumun sonunda yansıma soruları soruldu · Belirli başarı kriterleriyle ödev verildi · Somut son tarihli ekran görüntüsü veya çıktı talep edildi · Ebeveyn iletişim kanalı gerektiğinde kullanıldı.</p></div>
+  </div>
+</div>
 <div class="card">
   <h4>Yaygın Başarısızlık Kalıpları — İlk Canlı Oturumunuzdan Önce Bunları Bilin</h4>
   <ul style="margin-top:8px">
@@ -14,11 +306,9 @@ edildi · Ebeveyn iletişim kanalı gerektiğinde kullanıldı.</p>
   </ul>
 </div>
 
-
 <div id="dst-section" class="anchor-target">
   <div class="section-head">4 · Dijital Beceri Testi — Hazırlık Değerlendirmesi</div>
 </div>
-
 <div class="card">
   <h4>Test Neyi Değerlendirir</h4>
   <p>Dijital Beceri Testi, bağımsız olarak canlı bir Minecraft Seviye 1 grubuna liderlik etmeye hazır olup olmadığınızı belirleyen resmi hazırlık kapısıdır. İki boyutu ölçer:</p>
@@ -35,11 +325,9 @@ edildi · Ebeveyn iletişim kanalı gerektiğinde kullanıldı.</p>
 <div id="competencies" class="anchor-target">
   <div class="section-head">Test Öncesi Öz Değerlendirme Kontrol Listesi</div>
 </div>
-
 <div class="card">
   <h4>Testi Almadan Önce, Bunları Notssuz Yanıtlayabileceğinizi Doğrulayın</h4>
 </div>
-
 <div class="comp-grid">
   <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Koordinatlar:</strong> X, Y ve Z eksen anlamlarını belirtin; ~ göreceli önekini açıklayın; acil durum geri çağırma komutunu yazın</div></div>
   <div class="comp-item"><div class="comp-check">✓</div><div class="comp-text"><strong>Redstone sinyal azalması:</strong> Maksimum yayılım mesafesini belirtin ve Tekrarlayıcının bunu nasıl genişlettiğini açıklayın</div></div>
@@ -66,8 +354,8 @@ edildi · Ebeveyn iletişim kanalı gerektiğinde kullanıldı.</p>
 <div id="dst-form" class="anchor-target" style="margin-top:28px">
   <div class="dst-cta">
     <div style="font-size:52px;margin-bottom:14px">🎯</div>
-    <div class="dst-cta-title">Dijital Beceri Testine Hazırsınız</div>
-    <div class="dst-cta-sub">
+    <div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px">Dijital Beceri Testine Hazırsınız</div>
+    <div style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
       Beş eğitim modülünün tamamını tamamladınız ve Başarılı Dersler Kütüphanesi'ni incelediniz. Test teknik beceriler ve pedagoji genelinde <strong>20 soru</strong> içerir ve geçme notu <strong>%80</strong>'dir. Sonuçlar Kodland eğitim ekibi tarafından incelenir.
     </div>
     <div style="background:var(--surface2);border:2px solid var(--border);border-radius:var(--rsm);padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--text2);text-align:left;max-width:480px;margin-left:auto;margin-right:auto">
@@ -100,21 +388,16 @@ edildi · Ebeveyn iletişim kanalı gerektiğinde kullanıldı.</p>
 </div><!-- /#main-content -->
 
 <footer>© 2026 Kodland. Dahili tutor eğitim materyali — harici dağıtım için değildir.</footer>
-
 <script src="shared.js"></script>
 <script>
   initShared();
-
   const progress  = getOverallProgress();
   const allPassed = progress >= 5 || isDevMode();
-
   document.getElementById('top-progress').style.width = `${progress / 5 * 100}%`;
-
   if (!allPassed) {
     document.getElementById('locked-notice').style.display = 'block';
   } else {
     document.getElementById('main-content').style.display = 'block';
-
     const names = ['🌿 Modül 1','🏙️ Modül 2','🧩 Modül 3','🌲 Modül 4','🏰 Modül 5'];
     const grid  = document.getElementById('score-grid');
     for (let i = 1; i <= 5; i++) {

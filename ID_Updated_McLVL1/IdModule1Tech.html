@@ -122,7 +122,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
       <div class="flow-num">1</div>
       <div class="flow-body">
         <div class="flow-time">00:00 – 00:05</div>
-        <div class="flow-head">Pra-Terbang + Es Pencair (paralel)</div>
+        <div class="flow-head">Pra-Terbang + Pencair Suasana (paralel)</div>
         <div class="flow-desc">Verifikasi diam atas pemuatan dunia, login, dan audio. Sematkan koordinat spawn di obrolan: <code>/tp @a [X] [Y] [Z]</code>. Es pencair berjalan bersamaan.</div>
       </div>
     </li>
@@ -178,7 +178,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
       <div class="flow-num">8</div>
       <div class="flow-body">
         <div class="flow-time">00:50 – 00:55</div>
-        <div class="flow-head">Pabrik Batu Pecah Demosu (5 dk uzantı)</div>
+        <div class="flow-head">Demo Pabrik Batu Pecah (ekstensi 5 menit)</div>
         <div class="flow-desc">Demo cepat saluran Air+Lava. Siswa mengamati dan mereplikasi jika waktu memungkinkan. Ini adalah bangunan tambahan — jangan korbankan waktu penyelesaian kebun bambu untuk ini.</div>
       </div>
     </li>
@@ -213,7 +213,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
     · Minecraft Education Edition: Pengaturan → Dunia → aktifkan "Tampilkan Koordinat" di HUD
   </div>
 
-  <h4 style="margin-top:14px">Mutlak Koordinat — Dünyadaki Sabit Adresler</h4>
+  <h4 style="margin-top:14px">Koordinat Absolut — Alamat Tetap di Dunia</h4>
   <div class="coord-box">
     <span class="com">// Absolut — teleportasi ke alamat dunia tetap terlepas dari posisi saat ini</span><br>
     <span class="cg">/tp @s  100  64  200</span>   → diri sendiri ke X=100, Y=64, Z=200 (selalu)<br>
@@ -221,7 +221,7 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
     <span class="cg">/tp @a  [X] [Y]  [Z]</span>  → semua orang ke koordinat spawn hari ini
   </div>
 
-  <h4 style="margin-top:14px">Göreceli Koordinat — <code>~</code> Tilde Öneki</h4>
+  <h4 style="margin-top:14px">Koordinat Relatif — Awalan Tilde <code>~</code></h4>
   <p>Tilde berarti <em>"offset dari posisi saya saat ini"</em>. Dievaluasi secara dinamis pada saat perintah berjalan — bukan alamat tetap.</p>
   <div class="coord-box">
     <span class="com">// ~ = "dari posisi saya sekarang"</span><br>
@@ -300,8 +300,8 @@ kbd{background:var(--surface2);border:1.5px solid var(--border);border-radius:4p
   <p>Setiap sumber daya Redstone memancarkan sinyal pada <strong>kekuatan 15</strong>. Setiap blok debu Redstone yang dilalui sinyal mengurangi kekuatan tepat 1. Pada kekuatan 0, sinyal mati — sirkuit terputus.</p>
   <div class="coord-box">
     <span class="com">// Kekuatan sinyal vs. jarak (tanpa Repeater)</span><br>
-    Toz[1]: güç=15 → Toz[5]: güç=11 → Toz[10]: güç=6<br>
-    → Toz[14]: güç=2 → Toz[15]: güç=1 → <span class="cr">Toz[16]: güç=0 → ÖLÜ</span><br><br>
+    Debu[1]: kekuatan=15 → Debu[5]: kekuatan=11 → Debu[10]: kekuatan=6<br>
+    → Debu[14]: kekuatan=2 → Debu[15]: kekuatan=1 → <span class="cr">Debu[16]: kekuatan=0 → MATI</span><br><br>
     Panjang kabel maksimum sebelum Repeater: <span class="cg">15 blok</span><br><br>
     <span class="cm">Perbaikan:</span> Tempatkan Redstone Repeater pada atau sebelum blok ke-15.<br>
     Repeater mereset kekuatan sinyal ke 15 terlepas dari kekuatan yang masuk.<br>

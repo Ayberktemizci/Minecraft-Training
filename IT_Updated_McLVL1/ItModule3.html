@@ -321,7 +321,7 @@
 
         <div class="card">
             <h4>Cos'è una Variabile?</h4>
-            <p>Una <strong>variabile</strong> è uno spazio di archiviazione nominato nella memoria che contiene un valore (un numero, una stringa di testo o un valore booleano vero/falso). Il valore può essere letto, scritto e aggiornato. Per il Modulo 3, tutte las variabili saranno numeriche — conterranno punteggi, contatori e timer.</p>
+            <p>Una <strong>variabile</strong> è uno spazio di archiviazione nominato nella memoria che contiene un valore (un numero, una stringa di testo o un valore booleano vero/falso). Il valore può essere letto, scritto e aggiornato. Per il Modulo 3, tutte le variabili saranno numeriche — conterranno punteggi, contatori e timer.</p>
             <div class="code-block">
                 <span class="ck">imposta</span> score = <span class="cn">0</span>      ← crea la variabile e le assegna un valore iniziale<br>
                 <span class="ck">cambia</span>  score <span class="cn">di +1</span>   ← aggiunge 1 a qualsiasi valore sia attualmente memorizzato<br>
@@ -339,7 +339,7 @@
 
         <div class="card">
             <h4>Blocchi If–Then e If–Then–Else</h4>
-            <p>Un <strong>condizionale</strong> consente al programma di prendere una decisione: se una condizione è vera, esegue il blocco A; altrimenti, esegue il blocco B (la branca "else"). Senza i condizionali, il programma non ha capacità decisionali — fa sempre la stessa cosa indipendentemente dallo stato del gioco.</p>
+            <p>Un <strong>condizionale</strong> consente al programma di prendere una decisione: se una condizione è vera, esegue il blocco A; altrimenti, esegue il blocco B (il ramo "else"). Senza i condizionali, il programma non ha capacità decisionali — fa sempre la stessa cosa indipendentemente dallo stato del gioco.</p>
             <div class="code-block">
                 <span class="ck">se</span> score <span class="cn">≥ 10</span> <span class="ck">allora</span> {<br>
                 &nbsp;&nbsp;<span class="cm">say</span> <span class="cs">"Hai Vinto! Punteggio finale: "</span> + score<br>
@@ -409,7 +409,7 @@
                     <tr>
                         <td class="mc">Il punteggio parte da 1 immediatamente all'avvio di /code, prima ancora che il giocatore cammini</td>
                         <td>Il blocco "imposta score = 0" si trova all'interno dell'evento "Al camminare del giocatore" invece che in un blocco indipendente "Al via" o di inizializzazione.</td>
-                        <td>Sposta il blocco "imposta score = 0" fuori dall'evento del camminare in un blocco "Al via" (o direttamente sul mazzo se non si usa un evento di avvio). L'evento del camminare deve contenere solo "cambia score di 1" e la verifica condizionale.</td>
+                        <td>Sposta il blocco "imposta score = 0" fuori dall'evento del camminare in un blocco "Al via" (o direttamente sull'area di lavoro se non si usa un evento di avvio). L'evento del camminare deve contenere solo "cambia score di 1" e la verifica condizionale.</td>
                         <td class="fc">"Il codice di configurazione va in 'Al via'. Il codice di gioco va negli eventi. Non mescolare mai l'inizializzazione con il codice di risposta."</td>
                     </tr>
                     <tr>
@@ -447,28 +447,28 @@
         <div class="tip-card">
             <p>
                 <strong>💡 Variabili = L'Analogia del "Punteggio dei Videogiochi" (Gancio Principale del Modulo 3)</strong><br>
-                *"Pensa a ogni videogioco a cui hai giocato. Mario ha un contatore di monete. FIFA ha un contatore di gol. Minecraft ha una barra dei PE. Tutti questi sono variabili — una scatola con un nome che memorizza un numero, e quel numero cambia mentre giochi. Oggi progetterete il codice dietro il vostro contatore del punteggio."*
+                <em>"Pensa a ogni videogioco a cui hai giocato. Mario ha un contatore di monete. FIFA ha un contatore di gol. Minecraft ha una barra dei PE. Tutti questi sono variabili — una scatola con un nome che memorizza un numero, e quel numero cambia mentre giochi. Oggi progetterete il codice dietro il vostro contatore del punteggio."</em>
             </p>
         </div>
 
         <div class="tip-card">
             <p>
                 <strong>💡 Eventi = L'Analogia del "Sistema di Notifica"</strong><br>
-                *"Il tuo telefono non legge ogni messaggio non appena viene inviato. Aspetta in silenzio — e quando arriva un messaggio, ti avvisa. Quella notifica È un evento. I blocchi evento di MakeCode funzionano esattamente allo stesso modo: dormono finché non succede qualcosa in Minecraft, poi si svegliano ed eseguono il loro codice."*
+                <em>"Il tuo telefono non legge ogni messaggio non appena viene inviato. Aspetta in silenzio — e quando arriva un messaggio, ti avvisa. Quella notifica È un evento. I blocchi evento di MakeCode funzionano esattamente allo stesso modo: dormono finché non succede qualcosa in Minecraft, poi si svegliano ed eseguono il loro codice."</em>
             </p>
         </div>
 
         <div class="tip-card">
             <p>
                 <strong>💡 If–Then = L'Analogia del "Termostato"</strong><br>
-                *"Un termostato non riscalda la casa continuamente — controlla costantemente: 'La temperatura è inferiore a 20°C?' Se sì, il riscaldamento si accende. Se no, rimane spento. Questo è esattamente ciò che fa un blocco If–Then: controlla una condizione e agisce solo quando quella condizione è vera."*
+                <em>"Un termostato non riscalda la casa continuamente — controlla costantemente: 'La temperatura è inferiore a 20°C?' Se sì, il riscaldamento si accende. Se no, rimane spento. Questo è esattamente ciò che fa un blocco If–Then: controlla una condizione e agisce solo quando quella condizione è vera."</em>
             </p>
         </div>
 
         <div class="tip-card">
             <p>
                 <strong>💡 Il Trucco della "Visualizzazione dei Confini del Blocco" per Evitare Errori Fuori dal Blocco</strong><br>
-                Prima che gli studenti inizino a programmare nel Modulo 3, chiedi loro di disegnare un rettangolo su un foglio di carta. Nominalo "Al camminare del giocatore". Poi chiedi: "¿Quale delle tue istruzioni va DENTRO questo rettangolo e quale va fuori?". Gli studenti che disegnano fisicamente il confine prima di programmare commettono questo errore circa il 70% in meno rispetto a chi programma direttamente senza pianificare.
+                Prima che gli studenti inizino a programmare nel Modulo 3, chiedi loro di disegnare un rettangolo su un foglio di carta. Nominalo "Al camminare del giocatore". Poi chiedi: "Quale delle tue istruzioni va DENTRO questo rettangolo e quale va fuori?". Gli studenti che disegnano fisicamente il confine prima di programmare commettono questo errore circa il 70% in meno rispetto a chi programma direttamente senza pianificare.
             </p>
         </div>
 
@@ -480,7 +480,7 @@
             <div style="font-size:40px;margin-bottom:12px">📝</div>
             <div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:8px">Sei pronto per la Verifica delle Conoscenze del Modulo 3?</div>
             <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto">
-                6 domande basate esclusivamente sul contenuto del Modulo 3. Unpunto del <strong>70% o superiore</strong> sblocca il Modulo 4. Tutti i quesiti sono completamente distinti dai Moduli 1-2 e dal DST finale.
+                6 domande basate esclusivamente sul contenuto del Modulo 3. Un punteggio del <strong>70% o superiore</strong> sblocca il Modulo 4. Tutti i quesiti sono completamente distinti dai Moduli 1-2 e dal DST finale.
             </p>
             <div class="btn-row center">
                 <a href="ItModule3Test.html" class="btn-primary">Inizia il Test del Modulo 3 →</a>

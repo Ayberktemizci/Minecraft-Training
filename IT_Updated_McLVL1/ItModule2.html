@@ -269,7 +269,7 @@
 
         <div class="card">
             <h4>Nota sulla Personalizzazione Regionale</h4>
-            <p>La logica di MakeCode e le meccaniche di Minecraft sono universali. Tuttavia, i ganci narrativi e i rompighiaccio possono essere adattati alla cultura locale — usa come analogie punti di riferimento locali familiari, cartoni animati o esempi di città reali. **Gli obiettivi tecnici fondamentali non devono mai essere modificati**. Un tutor a Milano può fare riferimento alla struttura di quella città; un tutor a Roma può fare riferimento alla disposizione delle strade romane. La lezione sulle coordinate rimane identica indipendentemente dalla città presa come riferimento.</p>
+            <p>La logica di MakeCode e le meccaniche di Minecraft sono universali. Tuttavia, i ganci narrativi e i rompighiaccio possono essere adattati alla cultura locale — usa come analogie punti di riferimento locali familiari, cartoni animati o esempi di città reali. <strong>Gli obiettivi tecnici fondamentali non devono mai essere modificati</strong>. Un tutor a Milano può fare riferimento alla struttura di quella città; un tutor a Roma può fare riferimento alla disposizione delle strade romane. La lezione sulle coordinate rimane identica indipendentemente dalla città presa come riferimento.</p>
         </div>
 
         <div id="flow" class="anchor-target">
@@ -329,7 +329,7 @@
                 Esempio — copia una casa 5×5×5 che inizia a 100,64,200 verso 120,64,200:<br>
                 <span class="cy">/clone 100 64 200  104 68 204  120 64 200</span>
             </div>
-            <p style="margin-top:10px"><strong>Applicazione architettonica:</strong> Costruire la sezione de una torre, quindi clonarla tramite <code>/clone</code> per creare un duplicato perfettamente simmetrico sul lato opposto di una strada. Questo è il principio alla base dell'architettura modulare: progettare bene un elemento e poi replicarlo.</p>
+            <p style="margin-top:10px"><strong>Applicazione architettonica:</strong> Costruire la sezione di una torre, quindi clonarla tramite <code>/clone</code> per creare un duplicato perfettamente simmetrico sul lato opposto di una strada. Questo è il principio alla base dell'architettura modulare: progettare bene un elemento e poi replicarlo.</p>
             <div class="callout cw" style="margin-top:8px">
                 <span class="ci">⚠️</span>
                 <div><strong>Errore di sovrapposizione:</strong> Le regioni di sorgente e destinazione non possono sovrapporsi. Se si sovrappongono, il comando fallisce in modo silenzioso. Assicurati sempre che le coordinate di destinazione siano a una distanza sufficiente dai confini della regione sorgente.</div>
@@ -375,8 +375,8 @@
         <div class="callout cw">
             <span class="ci">⚠️</span>
             <div>
-                <strong>Il rischio N.° 1 in multiplayer: Gli studenti che distruggono le costruzioni altrui</strong><br>
-                Questo problema deve essere prevenuto, no affrontato a posteriori. Stabilisci le "Reglas del Vicinato" nei primi 5 minuti di ogni sessione multiplayer, prima che gli studenti facciano ingresso nel mondo condiviso.
+                <strong>Il rischio N. 1 in multiplayer: Gli studenti che distruggono le costruzioni altrui</strong><br>
+                Questo problema deve essere prevenuto, non affrontato a posteriori. Stabilisci le "Regole del Vicinato" nei primi 5 minuti di ogni sessione multiplayer, prima che gli studenti facciano ingresso nel mondo condiviso.
                 <div class="script-box" style="margin-top:8px">"Prima di entrare in città, quali sono le regole che ogni buon vicino segue? Non rompere le case dei vicini! Non prendere oggetti dalle casse altrui! Se rompi qualcosa per errore, devi ricostruirlo — questa è la Regola del Vicinato."</div>
                 <strong>Quando si verifica una violazione:</strong> Non rimuovere lo studente dalla sessione. Fai riferimento alla Regola del Vicinato per nome ("Ricordi la Regola del Vicinato che abbiamo concordato?") e guidalo ad aiutare nella ricostruzione. Le risposte punitive generano risentimento; le risposte ristorative consolidano gli standard della comunità.
             </div>
@@ -400,7 +400,7 @@
                     <tr>
                         <td class="mc">Il comando /clone restituisce un errore in modo silenzioso — non appare nulla a destinazione</td>
                         <td>Le regioni sorgente e destinazione si sovrappongono; OPPURE le coordinate di destinazione sono state inserite nell'ordine errato (la destinazione deve essere l'angolo inferiore-sinistro-frontale)</td>
-                        <td>Verifica: (1) Che la destinazione sia al di fuori del box di collisione di origine. (2) Che il primo angolo [x1,y1,z1] e il secondo angolo [x2,y2,z2] siano angoli opposti della sorgente — cammina verso ciascun angolo e leggi le coordinate. (3) Che la destinazione [dest-x, dest-y, dest-z] sia l'equivalente del primo angolo ma nella nuova posizione.</td>
+                        <td>Verifica: (1) Che la destinazione sia al di fuori del riquadro di delimitazione della sorgente. (2) Che il primo angolo [x1,y1,z1] e il secondo angolo [x2,y2,z2] siano angoli opposti della sorgente — cammina verso ciascun angolo e leggi le coordinate. (3) Che la destinazione [dest-x, dest-y, dest-z] sia l'equivalente del primo angolo ma nella nuova posizione.</td>
                         <td class="fc">"Annota le coordinate di tutti e tre gli angoli prima di digitare il comando. Un solo numero errato causerà un fallimento silenzioso."</td>
                     </tr>
                     <tr>

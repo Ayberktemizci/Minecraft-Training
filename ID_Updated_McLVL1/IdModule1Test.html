@@ -57,7 +57,7 @@
     <div id="q-feedback" class="q-feedback"></div>
     <div class="btn-row" style="margin-top:20px">
       <button class="btn-primary" id="btn-next" onclick="nextQ()" style="display:none">Pertanyaan Berikutnya →</button>
-      <button class="btn-primary" id="btn-submit" onclick="submitQuiz()" style="display:none">Gönder &amp; Sonuçları Gör</button>
+      <button class="btn-primary" id="btn-submit" onclick="submitQuiz()" style="display:none">Kirim &amp; Lihat Hasil</button>
     </div>
   </div>
 </div>
@@ -83,7 +83,7 @@ const QUESTIONS = [
       "C) /tp @a 200 64 ~0",
       "D) /tp @a ~0 64 ~0"
     ],
-    correct: "C",
+    correct: 2,
     feedback: "Pilihan C menggunakan sintaks campuran: 200 adalah nilai X absolut (selalu X=200), 64 adalah nilai Y absolut (selalu permukaan laut), dan ~0 adalah offset Z relatif nol (setiap pemain mempertahankan posisi Z-nya sendiri). Pilihan A juga memindahkan semua orang ke Z=200. Pilihan B menerapkan semua nilai sebagai offset relatif. Pilihan D mempertahankan X dan Z relatif, hanya mengunci Y."
   },
   {
@@ -94,7 +94,7 @@ const QUESTIONS = [
       "C) Berjalan sekali saat editor MakeCode pertama kali dibuka.",
       "D) Mengirim pesan ke semua pemain di server saat diaktifkan."
     ],
-    correct: "A",
+    correct: 0,
     feedback: "'Pada Perintah Obrolan' adalah penanganan peristiwa — ia mendaftarkan pendengar yang menunggu secara pasif hingga kondisi pemicu terpenuhi. Kode di dalam hanya berjalan saat peristiwa terpicu; kode di luar blok ini hanya berjalan sekali saat program dimuat. Perbedaan ini kritis: kode yang ditempatkan di luar blok tidak akan merespons input obrolan."
   },
   {
@@ -105,7 +105,7 @@ const QUESTIONS = [
       "C) Barat 3 blok — dua putar kanan dari Utara melewati Timur ke Selatan lalu Barat",
       "D) Selatan 3 blok — putar kanan pertama menghadap Timur; putar kanan kedua dari Timur menghadap Selatan; maju 3 langkah menggerakkan Selatan 3 blok"
     ],
-    correct: "D",
+    correct: 3,
     feedback: "Mulai menghadap Utara: Putar kanan → sekarang menghadap Timur. Putar kanan lagi → sekarang menghadap Selatan. 'Maju 3' dari orientasi menghadap Selatan menggerakkan Agen 3 blok ke Selatan (arah +Z). Dua putar kanan berturut-turut = rotasi 180° = sekarang menghadap arah kardinal yang berlawanan tepat dari awal."
   },
   {
@@ -116,7 +116,7 @@ const QUESTIONS = [
       "C) Tanaman bambu adalah jenis blok yang salah — bambu harus diganti dengan Bibit Bambu.",
       "D) Sinyal Redstone memerlukan Tuas di Piston untuk memperkuat denyut Observer."
     ],
-    correct: "B",
+    correct: 1,
     feedback: "Observer mempunyai dua sisi fungsional yang berbeda: muka (tekstur ukiran/mata) adalah sensor yang mengawasi perubahan status blok di blok yang langsung dihadapinya — harus menghadap bambu. Bagian belakang (sisi output halus) adalah tempat denyut Redstone dipancarkan — harus menghadap Piston atau kabel penghubung. Dengan sisi yang tertukar, Observer mengawasi Piston (yang tidak berubah status) alih-alih bambu."
   },
   {
@@ -127,7 +127,7 @@ const QUESTIONS = [
       "C) Untuk pembentukan Batu Pecah, Lava harus ditempatkan di atas, bukan di samping blok sumber Air.",
       "D) Obsidian dan Batu Pecah dihasilkan dengan cara yang sama — siswa perlu menambangnya dengan Pickaxe Batu."
     ],
-    correct: "A",
+    correct: 0,
     feedback: "Saat blok sumber Lava ditempatkan langsung di sebelah blok sumber Air (celah nol), keduanya stasioner — tidak ada yang mengalir. Aturan tabrakan: Air mengalir + Lava mengalir = Batu Pecah; sumber Lava stasioner + sumber Air berdekatan = Obsidian. Celah 1 blok memaksa kedua fluida mengalir ke tengah, menghasilkan Batu Pecah."
   },
   {
@@ -138,10 +138,11 @@ const QUESTIONS = [
       "C) Siswa harus berada di Mode Kreatif; /code tidak berfungsi di Mode Survival.",
       "D) 'Aktifkan Code Builder' tidak diaktifkan di pengaturan dunia sebelum sesi dimulai. Perbaikan: tutup dunia, buka pengaturan dunia (ikon pensil), aktifkan toggle Code Builder, masuk kembali ke dunia, dan coba lagi /code."
     ],
-    correct: "D",
+    correct: 3,
     feedback: "'Aktifkan Code Builder' adalah pengaturan per-dunia di Minecraft Education Edition yang harus diaktifkan secara eksplisit sebelum siswa mana pun memasuki dunia. Saat dimatikan, perintah /code berjalan tanpa suara — tidak ada pesan kesalahan, tidak ada respons. Ini adalah penyebab kegagalan /code yang paling umum saat konektivitas internet dikonfirmasi."
   }
 ];
+const LETTERS = ['A','B','C','D'];
 let current  = 0;
 let answers  = new Array(QUESTIONS.length).fill(null);
 let answered = false;
@@ -217,7 +218,7 @@ function submitQuiz() {
     reviewHtml += `
       <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--text2)">
         <span style="font-size:14px">${correct ? '✅' : '❌'}</span>
-        <span>S${i+1}: ${correct ? 'Benar' : `Salah — jawaban benar <strong style="color:var(--text)">${LETTERS[q.correct]}</strong> idi`}</span>
+        <span>S${i+1}: ${correct ? 'Benar' : `Salah — jawaban benar <strong style="color:var(--text)">${LETTERS[q.correct]}</strong>`}</span>
       </div>`;
   });
   reviewHtml += '</div>';
@@ -230,7 +231,7 @@ function submitQuiz() {
       <strong>${score} / ${QUESTIONS.length}</strong> pertanyaan dijawab dengan benar.
       ${passed
         ? ' Luar biasa — Anda telah menunjukkan pemahaman yang kuat tentang konten teknis Modul 1. Modul 2 sudah terbuka.'
-        : ` Nilai <strong>%${PASS_SCORE}</strong> atau lebih diperlukan untuk melanjutkan. Tinjau Teknis Mendalam Modul 1 dan coba lagi.`}
+        : ` Nilai <strong>${PASS_SCORE}%</strong> atau lebih diperlukan untuk melanjutkan. Tinjau Teknis Mendalam Modul 1 dan coba lagi.`}
     </div>
     ${reviewHtml}
   `;

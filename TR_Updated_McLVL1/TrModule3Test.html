@@ -66,15 +66,15 @@ const QUESTIONS = [
     feedback: "'Skoru 0'a ayarla' Yürüyüş olayının içindeyse, her adımdaki dizi şudur: (1) skoru 0'a ayarla, (2) skoru 1 artır — skor her zaman 1'e eşit olur. Düzeltme: 'Skoru 0'a ayarla'yı, yalnızca program başlangıcında bir kez çalışacağı bir Başlangıçta bloğuna taşıyın."
   },
   {
-    q: "Bir öğrenci, oyuncu 10 veya daha fazla taş topladığında kazanma koşulunun tetiklenmesini istiyor, ancak taş = 12 olduğunda bile koşul hiç tetiklenmiyor. Kod şunu okuyor: eğer taş = 10 ise { 'Kazandın!' söyle }. Sorun ve düzeltme nedir?",
+    q: "Bir öğrenci, oyuncu 10 veya daha fazla mücevher topladığında kazanma koşulunun tetiklenmesini istiyor, ancak mücevher = 12 olduğunda bile koşul hiç tetiklenmiyor. Kod şöyle: eğer mücevher = 10 ise { 'Kazandın!' söyle }. Sorun ve düzeltme nedir?",
     opts: [
-      "Değişken 'skor' olarak adlandırılmalı, 'taş' değil — MakeCode yalnızca varsayılan değişken adlarını tanır",
+      "Değişken 'skor' olarak adlandırılmalı, 'mücevher' değil — MakeCode yalnızca varsayılan değişken adlarını tanır",
       "'Söyle' bloğu koşulların içinde 'yazdır' bloğuyla değiştirilmeli",
-      "Koşul ≥ (10 veya daha büyük) yerine = (tam olarak 10'a eşit) kullanıyor — oyuncu 12 taş toplarsa, taş hiçbir zaman tam olarak 10'a eşit olmaz, koşul asla doğru değil",
+      "Koşul ≥ (10 veya daha büyük) yerine = (tam olarak 10'a eşit) kullanıyor — oyuncu 12 mücevher toplarsa, mücevher sayısı hiçbir zaman tam olarak 10'a eşit olmaz, koşul asla doğru değil",
       "Koşullar değişkenleri doğrudan okuyamaz — önce ayrı bir 'oku' bloğu eklenmeli"
     ],
     correct: 2,
-    feedback: "'Taş = 10' koşuluyla program, taşın tam olarak 10'a eşit olup olmadığını kontrol eder. Oyuncu taşları gruplar halinde (ör. +3) toplarsa, taş 9'dan 12'ye atlayabilir — tam 10'u atlayarak. Koşul asla doğru olmaz. Düzeltme: operatörü ≥ (büyük veya eşit) olarak değiştirin."
+    feedback: "'Mücevher = 10' koşuluyla program, mücevher sayısının tam olarak 10'a eşit olup olmadığını kontrol eder. Oyuncu mücevherleri gruplar halinde (ör. +3) toplarsa, mücevher sayısı 9'dan 12'ye atlayabilir — tam 10'u atlayarak. Koşul asla doğru olmaz. Düzeltme: operatörü ≥ (büyük veya eşit) olarak değiştirin."
   },
   {
     q: "Aşağıdakilerden hangisi MakeCode Education'daki değişkenlerin kapsamını doğru şekilde açıklar?",
@@ -96,7 +96,7 @@ const QUESTIONS = [
       "Skor, kazanma koşulu bloğunun içinde sıfırlanmıyor — kazandıktan sonra skor ≥ 10 olarak kalıyor, yani her sonraki yürüyüş adımı koşulu yeniden tetikliyor"
     ],
     correct: 3,
-    feedback: "Kazanma tetiklendikten sonra, skor 10'da (veya üzerinde) kalırsa, her sonraki yürüyüş adımı 'eğer skor ≥ 10' → doğru → havai fişek tekrar değerlendirir. Düzeltme: kazanma bloğunun son satırı olarak 'skoru 0'a ayarla' ekleyin, veya kazanışta yanlışa ayarlanan bir 'oyunAktif' boolean değişkeni tanıtın."
+    feedback: "Kazanma tetiklendikten sonra, skor 10'da (veya üzerinde) kalırsa, her sonraki yürüyüş adımında 'eğer skor ≥ 10' koşulu yeniden değerlendirilir → doğru → havai fişekler yeniden tetiklenir. Düzeltme: kazanma bloğunun son satırı olarak 'skoru 0'a ayarla' ekleyin, veya kazanıldığında 'yanlış' değerine ayarlanan bir 'oyunAktif' boole değişkeni ekleyin."
   },
   {
     q: "Bir tutor öğrencinin kodu olay bloğunun dışına koymasını önlemek istiyor. Kodlamaya başlamadan önce en etkili pedagojik teknik hangisidir?",
@@ -107,7 +107,7 @@ const QUESTIONS = [
       "Blok yerleşimi konusunda emin değillerse MakeCode dokümantasyon sayfasını kontrol etmelerini söyleyin"
     ],
     correct: 1,
-    feedback: "'Blok sınırı çizme' tekniği, blok içeriğinin bilişsel görevini fiziksel olarak dışsallaştırır. Önce dikdörtgeni çizen öğrenciler, sınır doğrudan planlamadan kodlayan öğrencilerden yaklaşık %70 daha az bu hatayı yapar."
+    feedback: "'Blok sınırı çizme' tekniği, blok içeriğinin bilişsel görevini fiziksel olarak dışsallaştırır. Önce dikdörtgeni çizen öğrenciler, doğrudan kodlamaya geçen öğrencilerden bu hatayı yaklaşık %70 daha az yapar, çünkü sınır soyut bir yapısal kural yerine somut bir mekânsal kavram haline gelir."
   },
   {
     q: "Bir öğrenci, oyuncu yürüdüğünde 'Anlık Skor: 7' metnini görüntülemek istiyor. Yalnızca 'skor' değişken bloğunu içeren bir 'söyle' bloğu koyuyor. Çıktı '7' gösteriyor ancak etiket metni göstermiyor. Bu nasıl düzeltilmeli?",
@@ -163,10 +163,10 @@ function submitQuiz() {
   document.getElementById('results-screen').style.display = 'block';
   document.getElementById('result-card').innerHTML = `
     <div class="result-emoji">${passed?'🎉':'😅'}</div>
-    <div class="result-title">${passed?'Modül 3 Tamamlandı!':'Henüz Değil'}</div>
-    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-title">${passed?'Modül 3 Tamamlandı!':'Henüz Olmadı'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">%${pct}</div>
     <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> soruyu doğru yanıtladınız.
-      ${passed?' Mükemmel — Modül 3 tamamlandı!':` İlerleme için <strong>${PASS_PCT}%</strong> gereklidir.`}</div>`;
+      ${passed?' Mükemmel — Modül 3 tamamlandı!':` İlerleme için <strong>%${PASS_PCT}</strong> gereklidir.`}</div>`;
   document.getElementById('result-actions').innerHTML = passed
     ? `<a href="TrModule4.html" class="btn-primary">Modül 4'e Devam →</a><button class="btn-outline" onclick="goHome()">← Panel</button>`
     : `<button class="btn-primary" onclick="retake()">Testi Tekrarla</button><a href="TrModule3.html" class="btn-outline">← Modül 3'ü Gözden Geçir</a>`;

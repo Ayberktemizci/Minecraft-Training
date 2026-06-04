@@ -475,7 +475,7 @@
                 <li>Otwórz świat sesji i wpisz <code>/code</code> na czacie. Jeśli nakładka MakeCode się nie pojawi, przejdź do ustawień świata i włącz opcję „Code Builder” (Kreator kodu), zanim uczniowie dołączą.</li>
                 <li>Potwierdź, że strefa budowy farmy bambusa ma co najmniej 3×3 wolne kafelki na ziemi i 5 bloków wolnej przestrzeni w pionie. Przygotuj wcześniej jeden Obserwator i jeden Tłok jako odniesienie do demonstracji.</li>
                 <li>Przygotuj rów o szerokości 3 bloków do demonstracji generatora bruku. Umieść źródło Wody na jednym końcu, aby uczniowie musieli jedynie postawić Lawę.</li>
-                <li>Przypnij dzisiejsze współrzędne spawnu w swoim oknie czatu oraz na czacie Zoom/Meet, zanim uczniowie się pojawi m.</li>
+                <li>Przypnij dzisiejsze współrzędne spawnu w swoim oknie czatu oraz na czacie Zoom/Meet, zanim uczniowie się pojawią.</li>
             </ol>
         </div>
 
@@ -516,7 +516,7 @@
                     <div class="flow-body">
                         <div class="flow-time">00:15 – 00:20</div>
                         <div class="flow-head">Wprowadzenie do MakeCode + Przywołanie Agenta</div>
-                        <div class="flow-desc">Wpiszcie wspólnie <code>/code</code>. Jeden pokaz układu edytora przez udostępnianie ekranu. Przedstaw Agenta jako postać: „Czy to dinozaur? Kurczak? Nie — to Twój nowy najlepszy przyjaciel. Nazwijmy go!” Uczniowie przywołują swojego Agenta za pomocą bloku „Al comando di chat” (Przy poleceniu czatu).</div>
+                        <div class="flow-desc">Wpiszcie wspólnie <code>/code</code>. Jeden pokaz układu edytora przez udostępnianie ekranu. Przedstaw Agenta jako postać: „Czy to dinozaur? Kurczak? Nie — to Twój nowy najlepszy przyjaciel. Nazwijmy go!” Uczniowie przywołują swojego Agenta za pomocą bloku „on chat command” (Przy poleceniu czatu).</div>
                     </div>
                 </li>
                 <li class="flow-item">
@@ -524,7 +524,7 @@
                     <div class="flow-body">
                         <div class="flow-time">00:20 – 00:30</div>
                         <div class="flow-head">Kierowana praktyka z Agentem — Pętla powtórzeń</div>
-                        <div class="flow-desc">Uczniowie piszą pętlę powtórzeń, aby przesunąć Agenta do przodu o 5 bloków. Tutor monitoruje pracę wywołując po imieniu. Reguła Panda po każdym potwierdzonym ruchu Agenta. Typowy błąd: uczniowie piszą kod poza blokiem „Al comando de chat” — patrz Rozwiązywanie problemów poniżej.</div>
+                        <div class="flow-desc">Uczniowie piszą pętlę powtórzeń, aby przesunąć Agenta do przodu o 5 bloków. Tutor monitoruje pracę wywołując po imieniu. Reguła Panda po każdym potwierdzonym ruchu Agenta. Typowy błąd: uczniowie piszą kod poza blokiem „on chat command” — patrz Rozwiązywanie problemów poniżej.</div>
                     </div>
                 </li>
                 <li class="flow-item">
@@ -540,7 +540,7 @@
                     <div class="flow-body">
                         <div class="flow-time">00:35 – 00:50</div>
                         <div class="flow-head">Teoria Redstone + Budowa farmy bambusa</div>
-                        <div class="flow-desc">Wprowadź Redstone poprzez analogię do „domowej instalacji elektrycznej” (patrz sekcja Analogie). Zdemonstruj łańcuch Obserwator–Tłok jeden raz. Uczniowie budują samostatnie. Tutor pomaga wyłącznie za pomocą ukierunkowanych podpowiedzi. Szybcy uczniowie otrzymują zadanie dodatkowe (dodaj Lej pod farmą połączony ze Skrzynią).</div>
+                        <div class="flow-desc">Wprowadź Redstone poprzez analogię do „domowej instalacji elektrycznej” (patrz sekcja Analogie). Zdemonstruj łańcuch Obserwator–Tłok jeden raz. Uczniowie budują samodzielnie. Tutor pomaga wyłącznie za pomocą ukierunkowanych podpowiedzi. Szybcy uczniowie otrzymują zadanie dodatkowe (dodaj Lej pod farmą połączony ze Skrzynią).</div>
                     </div>
                 </li>
                 <li class="flow-item">
@@ -613,7 +613,7 @@
 
 
         <div id="sec-makecode" class="anchor">
-            <div class="section-head">Teoria Techniczna — Interfaccia del Pannello MakeCode</div>
+            <div class="section-head">Teoria Techniczna — Interfejs nakładki MakeCode</div>
         </div>
 
         <div class="card">
@@ -633,7 +633,7 @@
                 </div>
             </div>
 
-            <h4 style="margin-top:14px">Tani bloku i funkcje — Wiedza wymagana w Module 1</h4>
+            <h4 style="margin-top:14px">Podstawowe typy bloków — Wiedza wymagana w Module 1</h4>
             <div class="code-block">
                 <span class="com">// 1. PRZY POLECENIU CZATU — Rejestrator zdarzeń. Uruchamia wewnętrzny kod, gdy gracz wpisze dane słowo na czacie MC.</span><br>
                 <span class="ck">on chat command</span> <span class="cs">"build"</span> {<br>
@@ -667,11 +667,11 @@
             </div>
             <div class="callout cw" style="margin-top:10px">
                 <span class="ci">⚠️</span>
-                <div><strong>Wymg p rzed kodowaniem:</strong> Zanim jakikolwiek uczeń napisze kod ruchu Agenta ze zwrotami, poproś go o narysowanie mapy od góry pokazującej: (a) pozycję startową Agenta, (b) początkową strzałkę zwrotu, (c) każdy zwrot ze zaktualizowaną strzałką. Uczniowie, którzy najpierw rysują, piszą kod poprawnie w ~75% przypadków; ci, którzy kodują bezpośrednio, generują błędy w ~65% przypadków.</div>
+                <div><strong>Wymóg przed kodowaniem:</strong> Zanim jakikolwiek uczeń napisze kod ruchu Agenta ze zwrotami, poproś go o narysowanie mapy od góry pokazującej: (a) pozycję startową Agenta, (b) początkową strzałkę zwrotu, (c) każdy zwrot ze zaktualizowaną strzałką. Uczniowie, którzy najpierw rysują, piszą kod poprawnie w ~75% przypadków; ci, którzy kodują bezpośrednio, generują błędy w ~65% przypadków.</div>
             </div>
 
             <h4 style="margin-top:14px">Ekwipunek Agenta</h4>
-            <p>Agent posiada ekwipunek składający się z 27 slotów (siatka 3×9), identyczny pod względem pojemności ze skrzynią. Przedmioty muszą być załadowane do Agenta, zanim będzie mógł je umieścić. Ładowanie: stań obok Agenta i kliknij na niego prawym przyciskiem myszy, aby open interfejs ekwipunku, a następnie przeciągnij przedmioty ze swojego ekwipunku lub pobliskiej skrzyni.</p>
+            <p>Agent posiada ekwipunek składający się z 27 slotów (siatka 3×9), identyczny pod względem pojemności ze skrzynią. Przedmioty muszą być załadowane do Agenta, zanim będzie mógł je umieścić. Ładowanie: stań obok Agenta i kliknij na niego prawym przyciskiem myszy, aby otworzyć interfejs ekwipunku, a następnie przeciągnij przedmioty ze swojego ekwipunku lub pobliskiej skrzyni.</p>
             <div class="code-block">
                 <span class="com">// Agent umieszcza blok — wymaga wcześniejszego załadowania przedmiotów do ekwipunku Agenta</span><br>
                 <span class="cf">agent place on move</span> down    <span class="com">// umieszcza przedmiot pod Agentem podczas ruchu (do obsiewania rzędów)</span><br>
@@ -704,13 +704,13 @@
             <div class="two-col" style="margin-top:8px">
                 <div class="card">
                     <h4>Blok Obserwatora</h4>
-                    <p>Wykrywa <em>zmiany stanu bloku</em> w pojedynczym bloku, na który bezpośrednio patrzy jego <strong>twarz</strong> (strona z wyrzeźbioną teksturą). Emituje impuls Redstone o długości 1 ticka, gdy wykryje zmianę stanu. W przypadku bambusa: wzrost z jednej fazy do drugiej to zmiana stanu bloku. Obserwator no emituje sygnału ciągłego — jedynie krótki impuls.</p>
-                    <p style="margin-top:8px"><strong>Dwie strony do zapamiętania:</strong> Twarz (wyrzeźbiona tekstura) musi być skierowana na bambus. Tył (wyjście, gładka strona) musi być skierowany na Tłok lub przewód łączący. Pomylenie którejkolwiek z tych stron przerywa obwód w sposób silencjalny.</p>
+                    <p>Wykrywa <em>zmiany stanu bloku</em> w pojedynczym bloku, na który bezpośrednio patrzy jego <strong>twarz</strong> (strona z wyrzeźbioną teksturą). Emituje impuls Redstone o długości 1 ticka, gdy wykryje zmianę stanu. W przypadku bambusa: wzrost z jednej fazy do drugiej to zmiana stanu bloku. Obserwator nie emituje sygnału ciągłego — jedynie krótki impuls.</p>
+                    <p style="margin-top:8px"><strong>Dwie strony do zapamiętania:</strong> Twarz (wyrzeźbiona tekstura) musi być skierowana na bambus. Tył (wyjście, gładka strona) musi być skierowany na Tłok lub przewód łączący. Pomylenie którejkolwiek z tych stron przerywa obwód po cichu.</p>
                 </div>
                 <div class="card">
                     <h4>Tłok (Zwykły)</h4>
-                    <p>Wysuwa się o 1 blok po podłączeniu zasilania; cofa się czysto po odłączeniu zasilania. Używany do łamania bambusa: głowica Tłoka wysuwa się w blok bambusa, łamiąc go i powodując spadanie przedmiotów jako entit.</p>
-                    <p style="margin-top:8px"><strong>Zwykły a Lepki:</strong> Lepki Tłok przyciąga sąsiedni blok z powrotem po odłączeniu zasilania. Do zbioru bambusa używaj <em>zwykłego</em> Tłoka — łamie bambus przy wysunięciu i cofa się pozostawiając wolną przestręń, gotową do kolejnego cyklu wzrostu.</p>
+                    <p>Wysuwa się o 1 blok po podłączeniu zasilania; cofa się czysto po odłączeniu zasilania. Używany do łamania bambusa: głowica Tłoka wysuwa się w blok bambusa, łamiąc go i powodując spadanie przedmiotów jako encje.</p>
+                    <p style="margin-top:8px"><strong>Zwykły a Lepki:</strong> Lepki Tłok przyciąga sąsiedni blok z powrotem po odłączeniu zasilania. Do zbioru bambusa używaj <em>zwykłego</em> Tłoka — łamie bambus przy wysunięciu i cofa się pozostawiając wolną przestrzeń, gotową do kolejnego cyklu wzrostu.</p>
                 </div>
                 <div class="card">
                     <h4>Przycisk a Dźwignia</h4>
@@ -833,7 +833,7 @@
                         <td class="td-err">Generator bruku produkuje Obsydian zamiast Bruku</td>
                         <td>Blok źródła Lawy został umieszczony bezpośrednio obok bloku źródła Wody — zerowy odstęp oznacza styk dwóch stacjonarnych źródeł, co generuje Obsydian</td>
                         <td>Usuń blok źródła Lawy. Potwierdź, że pomiędzy dwoma blokami źródłowymi znajduje się dokładnie 1 pusty blok. Ponownie umieść Lawę na właściwym końcu. Płynąca Lawa musi przebyć 1 blok przed spotkaniem z płynącą Wodą.</td>
-                        <td class="td-fix">„Jeden pusty blok odstępu między blokami źródłowymi — zawsze. Powiedz to przed umieszczcem Lawy: 'Jeden odstęp'. Płynące rzeki w odstępie = Bruk.”</td>
+                        <td class="td-fix">„Jeden pusty blok odstępu między blokami źródłowymi — zawsze. Powiedz to przed umieszczeniem Lawy: 'Jeden odstęp'. Płynące rzeki w odstępie = Bruk.”</td>
                     </tr>
                     <tr>
                         <td class="td-err">Komenda /code wpisana na czacie nie daje żadnej odpowiedzi — MakeCode się nie otwiera</td>

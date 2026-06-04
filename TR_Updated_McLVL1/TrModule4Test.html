@@ -55,15 +55,15 @@ const MODULE_ID = 4;
 const PASS_PCT  = 70;
 const QUESTIONS = [
   {
-    q: "Bir öğrenci Ajanı iç içe döngülerle 5×5 ızgara ekmek için programlıyor, ancak sonuç ızgara yerine çapraz tohum şeridi oluyor. Satır 1 tamamlanıp dış döngü kodu 'ajan sağa 1 hareket et' çalıştırdıktan sonra, Ajan 'ajan geri 5 hareket et' çalıştırıyor. Bu diziyle ne yanlış?",
+    q: "Bir öğrenci Ajanı iç içe döngülerle 5×5'lik bir ızgaraya tohum ekmek için programlıyor, ancak sonuç ızgara yerine çapraz tohum şeridi oluyor. Satır 1 tamamlanıp dış döngü kodu 'ajan sağa 1 hareket et' çalıştırdıktan sonra, Ajan 'ajan geri 5 hareket et' çalıştırıyor. Bu dizide yanlış olan nedir?",
     opts: [
       "Dış döngü iç döngüyle eşleşmek için 5 kez çalışmalı — her ikisi de aynı sayıma sahip olmalı",
       "'Ajan sağa 1 hareket et' ve 'ajan geri 5 hareket et' tek bir 'ajan tp' komutuyla değiştirilmeli",
-      "Satır 1'i ileri giderek tamamladıktan sonra Ajan 5 blok ilerdedir. 'Geri 5 hareket' onu orijinal sütun başına döndürür. Ancak 'etrafını dön' da eksik — ters yöne bakmadan, Satır 2 aynı yönde Satır 1'i yeniden ekmekle başlar, bitişik satır değil",
+      "Satır 1'i ileri giderek tamamladıktan sonra Ajan 5 blok ileridedir. 'Geri 5 hareket' onu orijinal sütun başına döndürür. Ancak 'etrafını dön' da eksik — ters yöne bakmadan Ajan, Satır 2'ye bitişik bir satıra geçmek yerine Satır 1'i aynı doğrultuda yeniden ekerek başlar",
       "İç döngü sayısı çok yüksek — 4'e düşürmek çapraz deseni düzeltir"
     ],
     correct: 2,
-    feedback: "Satır 1'den sonra Ajan 5 blok öndedir ve başlangıç sütununa dönmesi gerekir. 'Geri 5 hareket' bunu doğru yapar. Ancak 'etrafını dön' olmadan (iki sağa dönüş veya eşdeğeri), Ajan Satır 2'ye başlarken Satır 1 ile aynı yönde bakar — o zaman özgün konumdan aynı yönde Satır 2'yi eker, çapraz veya örtüşen desen oluşturur."
+    feedback: "Satır 1'den sonra Ajan 5 blok öndedir ve başlangıç sütununa dönmesi gerekir. 'Geri 5 hareket' bunu doğru yapar. Ancak 'etrafını dön' olmadan (iki sağa dönüş veya eşdeğeri), Ajan Satır 2'ye başlarken Satır 1 ile aynı yönde bakar — o zaman başlangıç konumundan aynı yönde Satır 2'yi eker, çapraz veya örtüşen desen oluşturur."
   },
   {
     q: "Ajanın 'hareket ederken aşağı yerleştir' komutunun tohum bırakmak yerine başarıyla mahsul ekmesi için karşılanması gereken kritik önkoşul nedir?",
@@ -74,7 +74,7 @@ const QUESTIONS = [
       "Tarım arazisi tam Y=63'te olmalı — diğer yüksekliklerde ekim tohumların düşmesine neden olur"
     ],
     correct: 0,
-    feedback: "Her iki koşulun da karşılanması gerekir: (1) zemin işlenmiş tarım arazisi olmalı — onu oluşturmak için toprak veya çime Çapa kullanın. (2) Tarım arazisi sulanmalı — tarım arazisinin (yatay olarak) 4 blok içinde bir su kaynağı bloğu olmalı. Kuru tarım arazisi (açık ten rengi) koyduğunuz mahsulleri toprak formuna döndürür ve atar."
+    feedback: "Her iki koşulun da karşılanması gerekir: (1) zemin işlenmiş tarım arazisi olmalı — onu oluşturmak için toprak veya çime Çapa kullanın. (2) Tarım arazisi sulanmalı — tarım arazisinin (yatay olarak) 4 blok içinde bir su kaynağı bloğu olmalı. Kuru tarım arazisi (açık ten rengi) toprağa geri döner ve üzerine ekilen mahsulleri dışarı atar."
   },
   {
     q: "Bir öğrencinin Hunisi doğrudan çiftliğin düşme bölgesinin altında ve dünyada görünür, ancak hasat edilen öğeler yerde birikiyor ve asla toplanmıyor. 5 dakika sonra öğeler kayboluyor. En olası neden nedir?",
@@ -107,10 +107,10 @@ const QUESTIONS = [
       "Yalnızca akış şeması dili — herhangi bir blok yerleştirmeden önce beyaz tahtaya boru hattı çizin"
     ],
     correct: 2,
-    feedback: "Eğer–O Zaman dili kullanmak Modüller 3 ve 4 arasındaki kasıtlı pedagojik köprüdür. Öğrenciler MakeCode koşullarından 'eğer koşul ise eylem' anlayışına zaten sahiptir. Redstone hasat devresini aynı dilde tanımlayarak ('EĞER buğday tam büyüdüyse O ZAMAN Gözlemci ateşler'), tutor donanım devresini tanıdık mantık gibi hissettiren bir şeye dönüştürür."
+    feedback: "Eğer–O Zaman dili kullanmak Modüller 3 ve 4 arasındaki kasıtlı pedagojik köprüdür. Öğrenciler MakeCode koşullarından 'eğer koşul ise eylem' anlayışına zaten sahiptir. Redstone hasat devresini aynı dilde tanımlayarak ('EĞER buğday tam büyüdüyse O ZAMAN Gözlemci ateşler'), tutor, donanım devresini tamamen yeni bir kavram yerine tanıdık bir mantık gibi hissettirir."
   },
   {
-    q: "Bir öğrenci Modül 1'de başarıyla tek sıralı bambu çiftliği inşa etmiştir. Modül 4'te bunu çok satırlı, çok mahsullü otomatik çiftliğe yükseltmek istiyor. Hangi yeni Modül 4 kavramı özellikle Ajanın satırlar arasında öğrenci tarafından manuel olarak yeniden konumlandırılmadan çok satır ekmesini sağlar?",
+    q: "Bir öğrenci Modül 1'de başarıyla tek sıralı bambu çiftliği inşa etmiştir. Modül 4'te bunu çok satırlı, çok mahsullü otomatik çiftliğe yükseltmek istiyor. Öğrencinin Ajanı satırlar arasında elle yeniden konumlandırmasına gerek kalmadan birden çok satıra ekim yapılmasını özellikle hangi yeni Modül 4 kavramı sağlar?",
     opts: [
       "İç içe döngüler — dış döngü satırlar üzerinde iterasyon yaparken iç döngü her satırdaki sütun ekimini yönetir, dış döngünün iterasyonları arasında yeniden konumlandırma koduyla",
       "Modül 2'den /clone komutu — çok satır oluşturmak için tek satır devresini çoğaltın",
@@ -163,10 +163,10 @@ function submitQuiz() {
   document.getElementById('results-screen').style.display = 'block';
   document.getElementById('result-card').innerHTML = `
     <div class="result-emoji">${passed?'🎉':'😅'}</div>
-    <div class="result-title">${passed?'Modül 4 Tamamlandı!':'Henüz Değil'}</div>
-    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-title">${passed?'Modül 4 Tamamlandı!':'Henüz Olmadı'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">%${pct}</div>
     <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> soruyu doğru yanıtladınız.
-      ${passed?' Olağanüstü — Modül 4 tamamlandı! Artık Modül 5'e erişebilirsiniz.':` İlerleme için <strong>${PASS_PCT}%</strong> gereklidir.`}</div>`;
+      ${passed?" Olağanüstü — Modül 4 tamamlandı! Artık Modül 5'e erişebilirsiniz.":` İlerleme için <strong>%${PASS_PCT}</strong> gereklidir.`}</div>`;
   document.getElementById('result-actions').innerHTML = passed
     ? `<a href="TrModule5.html" class="btn-primary">Modül 5'e Devam →</a><button class="btn-outline" onclick="goHome()">← Panel</button>`
     : `<button class="btn-primary" onclick="retake()">Testi Tekrarla</button><a href="TrModule4.html" class="btn-outline">← Modül 4'ü Gözden Geçir</a>`;

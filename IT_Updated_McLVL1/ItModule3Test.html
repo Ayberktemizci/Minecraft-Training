@@ -104,7 +104,7 @@
 
         const QUESTIONS = [
             {
-                q: "La variabile 'score' di uno studente mostra sempre il valore 1 immediatamente all'avvio del programma, prima ancora que il giocatore abbia camminato. Qual è la causa precisa?",
+                q: "La variabile 'score' di uno studente mostra sempre il valore 1 immediatamente all'avvio del programma, prima ancora che il giocatore abbia camminato. Qual è la causa precisa?",
                 opts: [
                     "L'evento 'Al camminare del giocatore' si attiva automaticamente una volta all'inizializzazione del programma",
                     "Il blocco di inizializzazione 'imposta score = 0' si trova all'interno dell'evento 'Al camminare del giocatore', quindi ogni passo azzera il punteggio a 0 prima dell'incremento — facendo sì che lo score rimanga sempre a 1",
@@ -134,15 +134,15 @@
                     "Le variabili di MakeCode devono essere dichiarate con un tipo (numero, testo o booleano) prima di poter essere utilizzate"
                 ],
                 correct: 0,  // A
-                feedback: "Corretto. In MakeCode Education, tutte le variabili sono globali per impostazione predefinita. Una variable creata in un blocco 'Al via' è completamente accessibile e modificabile all'interno di 'Al camminare del giocatore', 'Al rompere di un blocco' e in tutti gli altri blocchi evento. Non esistono ambiti locali per le variabili. Questo semplifica la programmazione per i giovani studenti, ma richiede attenzione — qualsiasi evento può accidentalmente sovrascrivere una variabile."
+                feedback: "Corretto. In MakeCode Education, tutte le variabili sono globali per impostazione predefinita. Una variabile creata in un blocco 'Al via' è completamente accessibile e modificabile all'interno di 'Al camminare del giocatore', 'Al rompere di un blocco' e in tutti gli altri blocchi evento. Non esistono ambiti locali per le variabili. Questo semplifica la programmazione per i giovani studenti, ma richiede attenzione — qualsiasi evento può accidentalmente sovrascrivere una variabile."
             },
             {
                 q: "Dopo aver raggiunto la condizione di vittoria (score ≥ 10), l'animazione dei fuochi d'artificio di uno studente si attiva a ogni singolo passo, non una volta sola. Qual è la causa tecnica più precisa?",
                 opts: [
-                    "Il blocco dei fuochi d'artificio ha un'impostazione de ripetizione interna impostata su 'infinito'",
+                    "Il blocco dei fuochi d'artificio ha un'impostazione di ripetizione interna impostata su 'infinito'",
                     "L'evento 'Al camminare del giocatore' presenta un bug di doppio avvio integrato che si attiva due volte per passo",
                     "L'operatore di confronto ≥ dovrebbe essere modificato in = per evitare che la condizione si riattivi",
-                    "Il punteggio non viene resettato a 0 (or lo stato del gioco non viene modificato) all'interno del blocco della condizione di vittoria — score rimane ≥ 10 dopo la prima vittoria, quindi ogni passo di camminata successivo riattiva la condizione"
+                    "Il punteggio non viene resettato a 0 (o lo stato del gioco non viene modificato) all'interno del blocco della condizione di vittoria — score rimane ≥ 10 dopo la prima vittoria, quindi ogni passo di camminata successivo riattiva la condizione"
                 ],
                 correct: 3,  // D
                 feedback: "Corretto. Dopo l'attivazione della vittoria, se score rimane a 10 (o superiore), ogni passo successivo valuterà 'se score ≥ 10' → vero → ripartono i fuochi d'artificio. Soluzione: aggiungi 'imposta score = 0' come ultima riga all'interno del blocco di vittoria (resetta per rigiocare), oppure introduci una variabile booleana 'gameActive' impostata su falso al momento della vittoria, racchiudendo poi l'intero blocco del camminare in 'se gameActive = vero'."

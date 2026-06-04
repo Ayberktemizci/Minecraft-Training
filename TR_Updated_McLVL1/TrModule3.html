@@ -102,7 +102,7 @@
   <span class="ci">⚠️</span>
   <div>
     <strong>Kritik Hata: Olay Bloğunun Dışına Yerleştirilen Kod</strong><br>
-    Bu Modül 3'teki en yaygın kodlama hatasıdır. Öğrenciler "değişkeni 1 değiştir" bloğunu olay bloğunun dışına koyar. Olduğunda, değişken değişimi olay her ateşlendiğinde değil yalnızca program yüklendiğinde çalışır.<br>
+    Bu Modül 3'teki en yaygın kodlama hatasıdır. Öğrenciler "değişkeni 1 değiştir" bloğunu olay bloğunun dışına koyar. Bu olduğunda, değişken değişikliği olay her ateşlendiğinde değil, yalnızca program yüklendiğinde bir kez çalışır.<br>
     <div class="code-block" style="margin-top:8px;background:#2a0000;border-color:#B91C1C">
       <span style="color:#F87171">YANLIŞ — skor yürüyüşte değil program başlangıcında değişir:</span><br>
       <span class="ck">oyuncu</span> yürüdüğünde { ← boş olay bloğu<br>
@@ -115,7 +115,7 @@
       &nbsp;&nbsp;<span class="cf">skor'u 1 artır</span>  ← İÇERİDE<br>
       }
     </div>
-    <strong>Öğretim düzeltmesi:</strong> Öğrenciler kodlamadan önce bir kağıda dikdörtgen çizmelerini ve her talimatı içine veya dışına yerleştirmelerini isteyin.
+    <strong>Öğretim düzeltmesi:</strong> Öğrencilerden kodlamadan önce bir kağıda dikdörtgen çizmelerini ve her talimatı içine veya dışına yerleştirmelerini isteyin.
   </div>
 </div>
 
@@ -218,15 +218,15 @@
         <td class="fc">"Kazanma koşulları için = (tam eşit) değil ≥ (büyük veya eşit) kullanın — oyuncu tam sayıyı atlayabilir."</td>
       </tr>
       <tr>
-        <td class="mc">Skor 10'a ulaştıktan sonra kazanma koşulu her adımda tetikleniyor — havai fişekler tekrar tekrar çalıyor</td>
+        <td class="mc">Skor 10'a ulaştıktan sonra kazanma koşulu her adımda tetikleniyor — havai fişekler tekrar tekrar tetikleniyor</td>
         <td>Skor, kazanma koşulu bloğunun içinde sıfırlanmıyor; kazandıktan sonra ≥ 10 olarak kalıyor</td>
-        <td>Eğer-o zaman kazanma bloğunun son satırı olarak "skoru 0'a ayarla" ekleyin. Alternatif olarak "oyunAktif" boolean değişkeni ekleyin: kazanışta yanlış yapın ve tüm Yürüyüş olayını "eğer oyunAktif = doğru ise" içine sarın.</td>
+        <td>Eğer-o zaman kazanma bloğunun son satırı olarak "skoru 0'a ayarla" ekleyin. Alternatif olarak "oyunAktif" boole değişkeni ekleyin: kazanıldığında "yanlış" değerine ayarlayın ve tüm Yürüyüş olayını "eğer oyunAktif = doğru ise" içine sarın.</td>
         <td class="fc">"Kazandıktan sonra skora ne olmalı? Ya sıfırlayın ya da oyunu kapatın. Sıfırlamazsanız kazanma sonsuza kadar tetiklenir."</td>
       </tr>
       <tr>
-        <td class="mc">Öğrenci "söyle skoru" neden bir sayı gösterdiğini anlayamıyor, onlar metin + sayı ("Skor: 5") görmek istiyordu</td>
+        <td class="mc">Öğrenci, "söyle skor" bloğunun neden yalnızca bir sayı gösterdiğini anlamıyor; metin + sayı ("Skor: 5") görmek istiyordu</td>
         <td>Yanlış blok kombinasyonu: yalnızca değişken bloğu içeren "söyle" sayıyı üretir; metin + değişkeni birleştirmek için "birleştir" bloğu gerekir</td>
-        <td>Öğrencilere MakeCode'daki "metin birleştir" bloğunu gösterin: [söyle [birleştir ["Skor: "] [skor]]]. "Söyle" bir şeyi tutabilir — metin VE sayı göstermek için önce birleştirmeniz gerekir.</td>
+        <td>Öğrencilere MakeCode'daki "metin birleştir" bloğunu gösterin: [söyle [birleştir ["Skor: "] [skor]]]. "Söyle" yalnızca tek bir şey tutabilir — metin VE sayı göstermek için önce birleştirmeniz gerekir.</td>
         <td class="fc">"'Söyle' yalnızca bir şey tutabilir. Onu 'Söyle'ye vermeden önce metin ve sayıları birleştirmek için 'birleştir' kullanın."</td>
       </tr>
     </tbody>
@@ -234,18 +234,18 @@
 </div>
 
 <div id="protips" class="anchor-target">
-  <div class="section-head">7 · Tutor Uzman İpuçları ve Gerçek Dünya Analogileri</div>
+  <div class="section-head">7 · Tutor Uzman İpuçları ve Gerçek Dünya Analojileri</div>
 </div>
 <div class="tip-card">
-  <p><strong>💡 Değişkenler = "Video Oyunu Skoru" Analogisi (Modül 3 Birincil Kancası)</strong><br>
+  <p><strong>💡 Değişkenler = "Video Oyunu Skoru" Analojisi (Modül 3 Birincil Kancası)</strong><br>
   <em>"Oynadığınız her video oyununu düşünün. Mario'nun jeton sayacı var. FIFA'nın gol sayacı var. Minecraft'ın XP çubuğu var. Bunların hepsi değişken — bir sayı depolayan ve oynandıkça değişen, adlandırılmış bir kutu. Bugün kendi skor sayacınızın arkasındaki kodu inşa edeceksiniz."</em></p>
 </div>
 <div class="tip-card">
-  <p><strong>💡 Olaylar = "Bildirim Sistemi" Analogisi</strong><br>
-  <em>"Telefonunuz gönderilen her mesajı hemen okumaz. Sessizce bekler — bir mesaj geldiğinde sizi bildirir. Bu bildirim bir olaydır. MakeCode olay blokları tam olarak aynı şekilde çalışır: Minecraft'ta bir şey olana kadar uyur, ardından uyanır ve kodunu çalıştırır."</em></p>
+  <p><strong>💡 Olaylar = "Bildirim Sistemi" Analojisi</strong><br>
+  <em>"Telefonunuz gönderilen her mesajı hemen okumaz. Sessizce bekler — bir mesaj geldiğinde size bildirir. Bu bildirim bir olaydır. MakeCode olay blokları tam olarak aynı şekilde çalışır: Minecraft'ta bir şey olana kadar uyur, ardından uyanır ve kodunu çalıştırır."</em></p>
 </div>
 <div class="tip-card">
-  <p><strong>💡 Eğer–O Zaman = "Termostat" Analogisi</strong><br>
+  <p><strong>💡 Eğer–O Zaman = "Termostat" Analojisi</strong><br>
   <em>"Termostat sürekli evi ısıtmaz — sürekli kontrol eder: 'Sıcaklık 20°C'nin altında mı?' Evet ise ısıtıcı açılır. Hayır ise kapalı kalır. Eğer–O Zaman bloğu tam olarak bunu yapar: bir koşulu kontrol eder ve yalnızca koşul doğru olduğunda hareket eder."</em></p>
 </div>
 <div class="tip-card">

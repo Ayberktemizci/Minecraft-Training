@@ -78,7 +78,7 @@ const QUESTIONS = [
     q: "Yapılandırılmış Plan Aşaması neden öğrencilerin anlaşmayı el kaldırarak veya sözlü onaylayarak değil, sohbete yazarak ('Bu planı kabul ediyorum: [ad]') onaylamasını gerektirir?",
     opts: [
       "Yazma sözel onaydan daha hızlıdır ve oturumda zaman kazandırır",
-      "Yazma, sohbet günlüğünde görünür, kalıcı bir sosyal taahhüt oluşturur — bir öğrenci daha sonra inşa ortasında yön değiştirmeye çalışırsa tutor kendi yazılı anlaşmasına atıfta bulunabilir; bu mid-inşa yön değişikliklerini ve kapsam kaymasını dramatik biçimde azaltır",
+      "Yazma, sohbet günlüğünde görünür, kalıcı bir sosyal taahhüt oluşturur — bir öğrenci daha sonra inşa ortasında yön değiştirmeye çalışırsa tutor kendi yazılı anlaşmasına atıfta bulunabilir; bu, inşa ortasındaki yön değişikliklerini ve kapsam kaymasını dramatik biçimde azaltır",
       "Oyunun sohbeti yazılan anlaşmaları otomatik olarak resmi bağlayıcı sözleşme olarak kaydeder",
       "Ses kalitesi nedeniyle oturumlarda sözel onaya izin verilmez"
     ],
@@ -88,7 +88,7 @@ const QUESTIONS = [
   {
     q: "İnşa → Hata Ayıkla → Dekore Et döngüsünde, bir öğrenci köprü projesinin gerçekten açılıp açılmadığını test etmeden önce renkli pankartlar ve özel zemin desenleri eklemek istiyor. Tutor ne yapmalıdır?",
     opts: [
-      "Öğrenciyi hemen Hata Ayıklama aşamasına yönlendirin: dekorasyondan önce hata ayıklamanın bir hata bulmadan önce devreye erişmek için dekorasyonun kırılmasını gerektireceğini açıklayın — döngü sırası bu yüzden katıdır. Pankartlar 'Hata Ayıklamadan Sonra' görev listesine gider.",
+      "Öğrenciyi hemen Hata Ayıklama aşamasına yönlendirin: hata ayıklamadan önce dekore etmenin, sonradan bulunan bir hatada devreye erişmek için dekorasyonun kırılmasını gerektireceğini açıklayın — döngü sırası bu yüzden katıdır. Pankartlar 'Hata Ayıklamadan Sonra' görev listesine gider.",
       "İzin verin — dekorasyon ayrı bir sistemdir ve altındaki Redstone devresini etkileyemez",
       "Öğrencinin karar vermesine izin verin — döngü sırası kural değil, bir kılavuzdur",
       "Dersi durdurun ve herhangi bir öğrencinin devam etmesine izin vermeden önce öğrencinin köprünün çalıştığını göstermesini sağlayın"
@@ -113,10 +113,10 @@ const QUESTIONS = [
       "Daha uzun isim öğrencilere sunum içeriklerini hazırlamak için daha fazla zaman verir",
       "Ebeveynler 'stüdyo' kelimesine 'göster ve anlat'tan daha olumlu tepki verir",
       "Kodland marka yönergeleriyle uyumlu endüstri terminolojisi kullanır",
-      "Dil davranışı ve beklentileri şekillendirir — 'Oyun Stüdyosu Lansmanı', öğrencilerin teknik açıklama, canlı demo ve çalışmalarının kamuoyu sahipliği gerektiren bir profesyonel standart olarak içselleştirdiği bir standart belirler; oysa 'göster ve anlat' gayri resmi bir sınıf aktivitesi çağrışımı yapar"
+      "Dil davranışı ve beklentileri şekillendirir — 'Oyun Stüdyosu Lansmanı', öğrencilerin profesyonel bir standart olarak içselleştirdiği bir çıta belirler — teknik açıklama, canlı demo ve çalışmalarını herkesin önünde sahiplenmeyi gerektirir; oysa 'göster ve anlat' gayri resmi bir sınıf aktivitesi çağrışımı yapar"
     ],
     correct: 3,
-    feedback: "Bir aktiviteyi çerçevelemek için kullanılan dil, öğrencilerin ona yatırım yaptığı çaba ve kaliteyi doğrudan etkiler. 'Göster ve anlat' kültürel olarak geçici, düşük riskli çocukluk aktiviteleriyle ilişkilendirilir. 'Oyun Stüdyosu Lansmanı' profesyonel ürün lansmanlarıyla ilişkilendirilir — açıklama, canlı demo ve kamuoyu hesap verebilirliği gerektirir."
+    feedback: "Bir aktiviteyi çerçevelemek için kullanılan dil, öğrencilerin ona yatırım yaptığı çaba ve kaliteyi doğrudan etkiler. 'Göster ve anlat' kültürel olarak geçici, düşük riskli çocukluk aktiviteleriyle ilişkilendirilir. 'Oyun Stüdyosu Lansmanı' profesyonel ürün lansmanlarıyla ilişkilendirilir — açıklama, canlı demo ve herkese açık hesap verebilirlik gerektirir."
   },
   {
     q: "Üç öğrencili bir ekip Modül 5'e başlamak üzere. Plan Aşaması dört rol atar: Mimar, Programcı, Dekoratör ve Sunucu. Tutor bu uyumsuzluğu nasıl ele almalıdır?",
@@ -172,8 +172,8 @@ function submitQuiz() {
   document.getElementById('results-screen').style.display = 'block';
   document.getElementById('result-card').innerHTML = `
     <div class="result-emoji">${passed?'🏆':'😅'}</div>
-    <div class="result-title">${passed?'5 Modülün Tamamı Tamamlandı!':'Henüz Değil'}</div>
-    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-title">${passed?'5 Modülün Tamamı Tamamlandı!':'Henüz Olmadı'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">%${pct}</div>
     <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> soruyu doğru yanıtladınız.
       ${passed?' Olağanüstü — beş eğitim modülünün tamamını tamamladınız.':` İlerleme için <strong>${PASS_PCT}%</strong> veya üzeri gereklidir. Modül 5'i gözden geçirin ve tekrar deneyin.`}</div>`;
   if (passed) {

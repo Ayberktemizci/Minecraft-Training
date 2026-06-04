@@ -651,7 +651,7 @@
 
         <div class="card">
             <h4>Mecánicas del Agente — Orientación, Inventario y el Concepto más Crítico</h4>
-            <p>Cada comando de movimiento del Agente se evalúa en relación con la **orientación actual del Agente**, no en relación con la brújula del mundo. Esta orientación cambia después de cada comando de Girar. Los estudiantes que no realicen un seguimiento explícito de esto producirán caminos diagonales o incorrectos en todo momento.</p>
+            <p>Cada comando de movimiento del Agente se evalúa en relación con la <strong>orientación actual del Agente</strong>, no en relación con la brújula del mundo. Esta orientación cambia después de cada comando de Girar. Los estudiantes que no realicen un seguimiento explícito de esto producirán caminos diagonales o incorrectos en todo momento.</p>
             <div class="coord-box">
                 <span class="com">// El Agente comienza mirando hacia el NORTE (dirección −Z)</span><br>
                 <span class="cf">agent move</span> forward <span class="cn">3</span>  → se mueve al NORTE 3 bloques     (Z disminuye en 3)<br>
@@ -686,7 +686,7 @@
 
         <div class="card">
             <h4>Fuerza de la Señal, Propagación y Decaimiento de 15 Bloques</h4>
-            <p>Cada fuente de energía de Redstone emite una señal con una **fuerza de 15**. Cada bloque de polvo de Redstone que recorre la señal disminuye la fuerza en exactamente 1. Con fuerza 0, la señal muere: el circuito se interrumpe.</p>
+            <p>Cada fuente de energía de Redstone emite una señal con una <strong>fuerza de 15</strong>. Cada bloque de polvo de Redstone que recorre la señal disminuye la fuerza en exactamente 1. Con fuerza 0, la señal muere: el circuito se interrumpe.</p>
             <div class="coord-box">
                 <span class="com">// Fuerza de la señal frente a distancia (sin Repetidor)</span><br>
                 Polvo[1]:  fza=15 → Polvo[5]:  fza=11 → Polvo[10]: fza=6<br>
@@ -701,7 +701,7 @@
             <div class="two-col" style="margin-top:8px">
                 <div class="card">
                     <h4>Bloque Observador</h4>
-                    <p>Detecta *cambios de estado de los bloques* en el bloque único al que apunta directamente su **cara** (lado con textura tallada). Emite un pulso de Redstone de 1 tick cuando detecta un cambio de estado. Para el bambú: crecer de una etapa a la siguiente es un cambio de estado del bloque. El Observador no emite una señal sostenida, solo un breve pulso.</p>
+                    <p>Detecta <em>cambios de estado de los bloques</em> en el bloque único al que apunta directamente su <strong>cara</strong> (lado con textura tallada). Emite un pulso de Redstone de 1 tick cuando detecta un cambio de estado. Para el bambú: crecer de una etapa a la siguiente es un cambio de estado del bloque. El Observador no emite una señal sostenida, solo un breve pulso.</p>
                     <p style="margin-top:8px"><strong>Dos lados que debes conocer:</strong> La cara (textura tallada) debe apuntar al bambú. La parte trasera (salida, lado liso) debe apuntar hacia el Pistón o el cable de conexión. Equivocarse en cualquiera de los dos interrumpe el circuito de forma silenciosa.</p>
                 </div>
                 <div class="card">
@@ -775,7 +775,7 @@
             <ol class="steps">
                 <li>Cava una zanja de <strong>3 bloques de ancho y 1 bloque de profundidad</strong> en cualquier área plana.</li>
                 <li>Coloca un <strong>bloque de origen de Agua</strong> en el extremo izquierdo de la zanja (cubeta con agua, clic derecho en el suelo).</li>
-                <li>Coloca un <strong>bloque de origen de Lava</strong> en el extremo derecho. Debe haber **exactamente 1 espacio de bloque vacío** entre los dos bloques de origen; esto no es negociable.
+                <li>Coloca un <strong>bloque de origen de Lava</strong> en el extremo derecho. Debe haber <strong>exactamente 1 espacio de bloque vacío</strong> entre los dos bloques de origen; esto no es negociable.
                 <li>El Agua fluye hacia la derecha; la Lava fluye hacia la izquierda. Se encuentran en el espacio central vacío, y la Lava en movimiento se solidifica al contacto con el flujo de Agua, produciendo Piedra base.</li>
                 <li>Pica el bloque de Piedra base con cualquier Pico. Los dos flujos se vuelven a encontrar de inmediato en el espacio ahora vacío y generan un nuevo bloque de Piedra base. Este ciclo es infinito.</li>
             </ol>

@@ -55,7 +55,7 @@ const MODULE_ID = 4;
 const PASS_PCT  = 70;
 const QUESTIONS = [
   {
-    q: "Loop nested Agen menghasilkan pola diagonal, bukan grid 5×5. Setelah loop dalam selesai baris 1, kode jalankan 'agen bergerak ke kanan 1' lalu 'agen bergerak mundur 5'. Apa yang salah?",
+    q: "Loop nested Agen menghasilkan pola diagonal, bukan grid 5×5. Setelah loop dalam selesai baris 1, kode menjalankan 'agen bergerak ke kanan 1' lalu 'agen bergerak mundur 5'. Apa yang salah?",
     opts: [
       "Loop luar harus berjalan 5 kali untuk cocok dengan loop dalam",
       "Dua perintah tersebut harus diganti dengan satu perintah 'agen tp'",
@@ -112,13 +112,13 @@ const QUESTIONS = [
   {
     q: "Siswa sudah membangun kebun bambu satu baris di Modul 1. Di Modul 4, mereka ingin membuatnya jadi kebun multi-baris otomatis. Konsep Modul 4 mana yang memungkinkan Agen menanam beberapa baris tanpa repositioning manual?",
     opts: [
-      "Nested loop — loop luar beritasi pada baris, loop dalam menangani kolom dalam setiap baris, dengan kode repositioning di antara iterasi loop luar",
+      "Nested loop — loop luar beriterasi pada baris, loop dalam menangani kolom dalam setiap baris, dengan kode repositioning di antara iterasi loop luar",
       "Perintah /clone dari Modul 2 — duplikasi sirkuit satu baris",
       "Peristiwa Saat Blok Dihancurkan dari Modul 3 — pemicu penanaman ulang otomatis",
       "Redstone Repeater — penundaan timing di antara baris"
     ],
     correct: 0,
-    feedback: "Nested loop adalah konsep Modul 4 yang memungkinkan penanaman multi-baris otomatis. Loop luar beritasi pada baris; loop dalam menanam dalam setiap baris. Kode repositioning (bergerak ke kanan 1, berbalik arah) di antara iterasi loop luar menggeser Agen ke awal baris berikutnya."
+    feedback: "Nested loop adalah konsep Modul 4 yang memungkinkan penanaman multi-baris otomatis. Loop luar beriterasi pada baris; loop dalam menanam dalam setiap baris. Kode repositioning (bergerak ke kanan 1, berbalik arah) di antara iterasi loop luar menggeser Agen ke awal baris berikutnya."
   }
 ];
 let current = 0, answers = [], answered = false;

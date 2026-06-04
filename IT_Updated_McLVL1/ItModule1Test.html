@@ -204,12 +204,12 @@
                     "D) Sud di 3 blocchi — la prima svolta a destra lo rivolge a Est; la seconda svolta a destra da Est lo rivolge a Sud; muovi in avanti 3 sposta l'Agente a Sud di 3 blocchi"
                 ],
                 correct: 3,
-                feedback: "✅ Corretto. Partendo rivolto a Nord: Gira a destra → ora è rivolto a Est. Gira di nuovo a destra → ora è rivolto a Sud. 'Muovi in avanti 3' da un orientamento rivolto a Sud sposta l'Agente di 3 blocchi a Sud (direzione +Z). Due svolte a destra consecutive = rotazione di 180° = ora è rivolto nella direzione cardinale esattamente opposta rispetto all'inizio. Questa domanda mette alla prova la competenza principale di tracking dell'orientamento dell'Agente que previene i bug dei percorsi diagonali."
+                feedback: "✅ Corretto. Partendo rivolto a Nord: Gira a destra → ora è rivolto a Est. Gira di nuovo a destra → ora è rivolto a Sud. 'Muovi in avanti 3' da un orientamento rivolto a Sud sposta l'Agente di 3 blocchi a Sud (direzione +Z). Due svolte a destra consecutive = rotazione di 180° = ora è rivolto nella direzione cardinale esattamente opposta rispetto all'inizio. Questa domanda mette alla prova la competenza principale di tracking dell'orientamento dell'Agente che previene i bug dei percorsi diagonali."
             },
 
             // ── Q4 — Corretta: B (index 1) ──
             {
-                text: "Durante il posizionamento di un blocco Osservatore per costruire la fattoria di bambù automatizzata, uno studente lo posiziona in modo che la texture scolpita (faccia) punti lontano dal bambù e verso il Pistone. L'Osservatore si attiva visibilmente ma el Pistone non si estende mai. Qual è la causa esatta?",
+                text: "Durante il posizionamento di un blocco Osservatore per costruire la fattoria di bambù automatizzata, uno studente lo posiziona in modo che la texture scolpita (faccia) punti lontano dal bambù e verso il Pistone. L'Osservatore si attiva visibilmente ma il Pistone non si estende mai. Qual è la causa esatta?",
                 opts: [
                     "A) Il Pistone deve essere un Pistone Appiccicoso, non un Pistone normale, affinché il circuito funzioni.",
                     "B) La faccia dell'Osservatore (texture scolpita) è il lato di rilevamento — deve puntare VERSO il bambù. Il lato posteriore liscio è l'uscita/trasmettitore che deve essere rivolto verso il Pistone. Lo studente ha invertito i due lati.",
@@ -217,7 +217,7 @@
                     "D) Il segnale di Redstone richiede una Leva sul Pistone per amplificare l'impulso dell'Osservatore."
                 ],
                 correct: 1,
-                feedback: "✅ Corretto. L'Osservatore ha due lati funzionali distinti: la faccia (texture scolpita/occhi) è il sensore che controlla i cambiamenti di stato nel blocco che guarda direttamente — deve puntare VERSO il bambù. Il retro (lato di uscita liscio) è il punto in cui viene emesso l'impulso de Redstone — deve puntare verso il Pistone o il cavo di collegamento. Con i lati invertiti, l'Osservatore sta controllando il Pistone (porzione che non cambia stato) anziché il bambù, quindi non si attiva mai o lo fa per il motivo errato."
+                feedback: "✅ Corretto. L'Osservatore ha due lati funzionali distinti: la faccia (texture scolpita/occhi) è il sensore che controlla i cambiamenti di stato nel blocco che guarda direttamente — deve puntare VERSO il bambù. Il retro (lato di uscita liscio) è il punto in cui viene emesso l'impulso di Redstone — deve puntare verso il Pistone o il cavo di collegamento. Con i lati invertiti, l'Osservatore sta controllando il Pistone (che non cambia stato) anziché il bambù, quindi non si attiva mai o lo fa per il motivo errato."
             },
 
             // ── Q5 — Corretta: A (index 0) ──

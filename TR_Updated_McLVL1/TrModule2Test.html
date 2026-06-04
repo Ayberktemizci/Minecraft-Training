@@ -77,15 +77,15 @@ const QUESTIONS = [
     feedback: "Minecraft karma koordinat sözdizimine izin verir. ~0 mevcut X'i değiştirmeden tutar; 64 (tilde yok) yüksekliği tam Y=64'e ayarlar; ~0 mevcut Z'yi tutar. Bu 'deniz seviyesine sabitle' komutları için kullanışlıdır."
   },
   {
-    q: "İşleme Masasında bir öğrenci üst sıraya iki Taş bloğunu yan yana koyuyor ve hiçbir şey alamıyor. Sorun nedir?",
+    q: "Çalışma Masasında bir öğrenci üst sıraya iki Taş bloğunu yan yana koyuyor ve hiçbir şey alamıyor. Sorun nedir?",
     opts: [
       "Taş Basınç Plakaları iki değil üç Taş bloğu gerektirir",
-      "İşleme Masasının tariflerin çalışması için zemine yerleştirilmesi gerekir",
-      "Taş Basınç Plakası tarifi herhangi bir sırada yatay bitişik slotlarda iki Taş bloğu gerektirir — öğrenci 1 ve 2 yerine 1 ve 3. slotlara, ortadaki slotu atlayarak yerleştirmiş olabilir",
-      "Taş, İşleme Masasında kullanılamaz — Kopuk Taş gerektirir"
+      "Çalışma Masasının tariflerin çalışması için zemine yerleştirilmesi gerekir",
+      "Taş Basınç Plakası tarifi herhangi bir satırda yatay bitişik slotlarda iki Taş bloğu gerektirir — öğrenci 1 ve 2 yerine 1 ve 3. slotlara, ortadaki slotu atlayarak yerleştirmiş olabilir",
+      "Taş, Çalışma Masasında kullanılamaz — Arnavut Taşı gerektirir"
     ],
     correct: 2,
-    feedback: "Taş Basınç Plakası tarifi herhangi bir sırada yatay bitişik slotlarda iki Taş bloğu gerektirir. Öğrenci ortadaki slotu atladıysa — 1 ve 2 yerine 1 ve 3 konumlarına koyduysa — ızgara deseni hiçbir tarifte eşleşmez ve hiçbir şey üretilmez."
+    feedback: "Taş Basınç Plakası tarifi herhangi bir satırda yatay bitişik slotlarda iki Taş bloğu gerektirir. Öğrenci ortadaki slotu atladıysa — 1 ve 2 yerine 1 ve 3 konumlarına koyduysa — ızgara deseni hiçbir tarifte eşleşmez ve hiçbir şey üretilmez."
   },
   {
     q: "Kooperatif şehir inşasında bir öğrenci başka ekibin köprüsünden 10 blok yıkıyor. Komşuluk Kuralları çerçevesine göre doğru tutor yanıtı nedir?",
@@ -110,7 +110,7 @@ const QUESTIONS = [
     feedback: "Redstone sinyal yayılım hızı tik başına 1 bloktur ve bir tik 0.05 saniyeye eşittir. 20 blokluk tel 20 tik gecikme = 1 saniye getirir. Bu normal Minecraft fiziğidir, düzeltilecek bir hata değil."
   },
   {
-    q: "Bugünkü kooperatif oturumunun ardından bir tutor Köprü Yapıcılar ekibine övgü vermek istiyor. Aşağıdakilerden hangisi en etkili örnektir?",
+    q: "Bugünkü kooperatif oturumunun ardından bir tutor Köprü Yapıcılar ekibine belirli, davranışa bağlı bir övgü vermek istiyor. Aşağıdakilerden hangisi en etkili örnektir?",
     opts: [
       "\"Mükemmel iş, Köprü Yapıcılar — köprü uç noktalarını her iki bölgeyle hizalamak için tam koordinatları kullandınız ve kemer tasarımınız simetri düşündüğünüzü gösteriyor. Bu profesyonel mimari düşünce.\"",
       "\"Harika iş bugün, ekip — çok güzel bir köprü inşa ettiniz!\"",
@@ -165,10 +165,10 @@ function submitQuiz() {
   document.getElementById('results-screen').style.display = 'block';
   document.getElementById('result-card').innerHTML = `
     <div class="result-emoji">${passed?'🎉':'😅'}</div>
-    <div class="result-title">${passed?'Modül 2 Tamamlandı!':'Henüz Değil'}</div>
-    <div class="result-pct ${passed?'pass':'fail'}">${pct}%</div>
+    <div class="result-title">${passed?'Modül 2 Tamamlandı!':'Henüz Olmadı'}</div>
+    <div class="result-pct ${passed?'pass':'fail'}">%${pct}</div>
     <div class="result-sub"><strong>${score} / ${QUESTIONS.length}</strong> soruyu doğru yanıtladınız.
-      ${passed?' Harika iş — Modül 2 tamamlandı!':` İlerleme için <strong>${PASS_PCT}%</strong> gereklidir. Materyali gözden geçirin ve tekrar deneyin.`}
+      ${passed?' Harika iş — Modül 2 tamamlandı!':` İlerleme için <strong>%${PASS_PCT}</strong> gereklidir. Materyali gözden geçirin ve tekrar deneyin.`}
     </div>`;
   document.getElementById('result-actions').innerHTML = passed
     ? `<a href="TrModule3.html" class="btn-primary">Modül 3'e Devam →</a><button class="btn-outline" onclick="goHome()">← Panel</button>`

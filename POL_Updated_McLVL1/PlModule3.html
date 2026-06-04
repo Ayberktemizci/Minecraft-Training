@@ -281,7 +281,7 @@
 
         <div class="card">
             <h4>Czym Jest Zdarzenie?</h4>
-            <p>An <strong>zdarzenie</strong> (event) to sygnał, że coś wydarzyło się w świecie gry. Blok zdarzenia w MakeCode rejestruje słuchacza (listener): kod wewnątrz bloku wykonuje się <em>tylko i dokładnie</em> wtedy, gdy to zdarzenie zostanie wywołane. Kod nie działa w sposób ciągły — czeka w ciszy, a następnie reaguje.</p>
+            <p><strong>zdarzenie</strong> (event) to sygnał, że coś wydarzyło się w świecie gry. Blok zdarzenia w MakeCode rejestruje słuchacza (listener): kod wewnątrz bloku wykonuje się <em>tylko i dokładnie</em> wtedy, gdy to zdarzenie zostanie wywołane. Kod nie działa w sposób ciągły — czeka w ciszy, a następnie reaguje.</p>
             <div class="code-block">
                 <span class="ck">przy chodzeniu gracza</span> {                   ← blok zdarzenia: aktywuje się przy każdym kroku chodzenia<br>
                 &nbsp;&nbsp;<span class="cf">zmień</span> score <span class="cn">o 1</span>          ← ten kod uruchamia się za każdym razem, gdy zdarzenie zostanie wywołane<br>
@@ -323,7 +323,7 @@
 
         <div class="card">
             <h4>Czym Jest Zmienna?</h4>
-            <p>A <strong>zmienna</strong> (variable) to nazwana komórka pamięci, która przechowuje wartość (liczbę, ciąg tekstowy lub wartość logiczną prawda/fałsz). Wartość tę można odczytywać, zapisywać i aktualizować. W Module 3 wszystkie zmienne będą numeryczne — przechowują wyniki, liccniki i zegary.</p>
+            <p><strong>zmienna</strong> (variable) to nazwana komórka pamięci, która przechowuje wartość (liczbę, ciąg tekstowy lub wartość logiczną prawda/fałsz). Wartość tę można odczytywać, zapisywać i aktualizować. W Module 3 wszystkie zmienne będą numeryczne — przechowują wyniki, liczniki i zegary.</p>
             <div class="code-block">
                 <span class="ck">ustaw</span>   score = <span class="cn">0</span>      ← tworzy zmienną i nadaje jej wartość początkową<br>
                 <span class="ck">zmień</span>   score <span class="cn">o +1</span>   ← dodaje 1 do wartości, która jest aktualnie przechowywana<br>
@@ -341,7 +341,7 @@
 
         <div class="card">
             <h4>Bloki Jeśli–To oraz Jeśli–To–W przeciwnym razie</h4>
-            <p>A <strong>instrukcja warunkowa</strong> pozwala programowi podjąć decyzję: jeśli warunek jest prawdziwy, wykonaj blok A; w przeciwnym razie wykonaj blok B (gałąź „w przeciwnym razie”). Bez instrukcji warunkowych program nie ma zdolności podejmowania decyzji — zawsze robi to samo, niezależnie od stanu gry.</p>
+            <p><strong>instrukcja warunkowa</strong> pozwala programowi podjąć decyzję: jeśli warunek jest prawdziwy, wykonaj blok A; w przeciwnym razie wykonaj blok B (gałąź „w przeciwnym razie”). Bez instrukcji warunkowych program nie ma zdolności podejmowania decyzji — zawsze robi to samo, niezależnie od stanu gry.</p>
             <div class="code-block">
                 <span class="ck">jeśli</span> score <span class="cn">≥ 10</span> <span class="ck">to</span> {<br>
                 &nbsp;&nbsp;<span class="cm">say</span> <span class="cs">"Wygrałeś! Wynik końcowy: "</span> + score<br>
@@ -393,7 +393,7 @@
             <p style="margin-top:10px"><strong>Rozszerzenia, które uczniowie mogą dodać samodzielnie (Zadania Dodatkowe):</strong></p>
             <ul style="margin-top:6px">
                 <li><strong>Dodaj system żyć:</strong> Ustaw <code>lives = 3</code> na starcie. Jeśli gracz spadnie poniżej Y=60, odejmij 1 życie. Jeśli lives = 0, koniec gry.</li>
-                <li><strong>Dodaj stoper (timer):</strong> Używuj zmiennej odliczającej. Zmniejszaj jej wartość poprzez powtarzające się zdarzenie. Jeśli stoper osiągnie 0, zanim wynik wyniesie 10, wyświetl „Czas minął!”.</li>
+                <li><strong>Dodaj stoper (timer):</strong> Używaj zmiennej odliczającej. Zmniejszaj jej wartość poprzez powtarzające się zdarzenie. Jeśli stoper osiągnie 0, zanim wynik wyniesie 10, wyświetl „Czas minął!”.</li>
                 <li><strong>Dodaj ulepszenia (power-upy):</strong> Przy zniszczeniu bloku (Ruda diamentu) → zmień wynik o +5 w ramach bonusu.</li>
             </ul>
         </div>
@@ -434,7 +434,7 @@
                     </tr>
                     <tr>
                         <td class="mc">Uczeń nie rozumie, dlaczego „say score” wyświetla samą liczbę, podczas gdy chciał wyświetlić tekst + liczbę (np. „Wynik: 5”)</td>
-                        <td>Błędna kombinacja bloków: „say” z samym blokiem zmiennej daje liczbę; aby połączyć tekst + zmienną, uczniowie muszą użyć bloku „unisci testo” (połącz) lub operatora konkatenacji ciągów.</td>
+                        <td>Błędna kombinacja bloków: „say” z samym blokiem zmiennej daje liczbę; aby połączyć tekst + zmienną, uczniowie muszą użyć bloku „join” (połącz) lub operatora konkatenacji ciągów.</td>
                         <td>Pokaż uczniom blok „połącz tekst” w MakeCode: [say [join ["Wynik: "] [score]]]. Wyjaśnij: „Say” wyświetla jedną rzecz — aby pokazać tekst I liczbę, musisz najpierw połączyć je w jeden wspólny ciąg.</td>
                         <td class="fc">„Blok 'Say' może pomieścić tylko jedną rzecz. Użyj bloku 'połącz', aby złączyć tekst i liczby przed przekazaniem ich do Say”.</td>
                     </tr>
@@ -456,7 +456,7 @@
         <div class="tip-card">
             <p>
                 <strong>💡 Zdarzenia = Analogia „Systemu Powiadomień”</strong><br>
-                *„Twój telefon nie czyta każdej wiadomości, gdy tylko zostanie wysłana. Czeka w ciszy — a gdy wiadomość dotrze, powiadamia Cię. To powiadomienie TO właśnie zdarzenie. Bloki zdarzeń MakeCode działają dokładnie tak samo: śpią, dopóki coś nie wydarzy się w Minecrafte, a potem budzą się i uruchamiają swój kod”.*
+                *„Twój telefon nie czyta każdej wiadomości, gdy tylko zostanie wysłana. Czeka w ciszy — a gdy wiadomość dotrze, powiadamia Cię. To powiadomienie TO właśnie zdarzenie. Bloki zdarzeń MakeCode działają dokładnie tak samo: śpią, dopóki coś nie wydarzy się w Minecrafcie, a potem budzą się i uruchamiają swój kod”.*
             </p>
         </div>
 

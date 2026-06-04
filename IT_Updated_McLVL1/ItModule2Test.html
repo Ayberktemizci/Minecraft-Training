@@ -109,15 +109,15 @@
                     "La destinazione è troppo lontana — /clone ha una portata massima di 10 blocchi",
                     "La coordinata Y della destinazione deve essere sempre 0",
                     "Il comando è stato digitato correttamente — il clone appare sempre dopo un ritardo di 5 secondi",
-                    "Le regioni sorgente e destinazione si sovrappongono — le coordinate di destinazione devono essere esterne al box di collisione di origine"
+                    "Le regioni sorgente e destinazione si sovrappongono — le coordinate di destinazione devono essere esterne al riquadro di delimitazione della sorgente"
                 ],
                 correct: 3,  // D
-                feedback: "Corretto. La destinazione di /clone [100 64 200] è identica al primo angolo della sorgente — le regioni si sovrappongono completamente, causando un fallimento silenzioso. La destinazione deve essere una coppia di coordinate che si trova interamente al di fuori del box di collisione di origine (es. /clone 100 64 200  104 68 204  120 64 200)."
+                feedback: "Corretto. La destinazione di /clone [100 64 200] è identica al primo angolo della sorgente — le regioni si sovrappongono completamente, causando un fallimento silenzioso. La destinazione deve essere una coppia di coordinate che si trova interamente al di fuori del riquadro di delimitazione della sorgente (es. /clone 100 64 200  104 68 204  120 64 200)."
             },
             {
                 q: "Uno studente digita /tp @s ~0 64 ~0. Cosa fa questo comando di diverso sia da /tp @s ~0 ~0 ~0 sia da /tp @s 0 64 0?",
                 opts: [
-                    "Mantiene les posizioni X e Z correnti dello studente ma imposta l'altitudine esattamente a Y=64, combinando un valore assoluto con due scostamenti relativi",
+                    "Mantiene le posizioni X e Z correnti dello studente ma imposta l'altitudine esattamente a Y=64, combinando un valore assoluto con due scostamenti relativi",
                     "Teletrasporta lo studente all'origine del mondo esattamente al livello del mare",
                     "Teletrasporta tutti i giocatori (~0) al piano 64 — @s è il selettore per tutti gli studenti",
                     "È una sintassi non valida — non è possibile combinare la tilde e i valori assoluti in un singolo comando /tp"
@@ -141,7 +141,7 @@
                 opts: [
                     "Rimuovere temporaneamente lo studente dalla sessione come chiara conseguenza della violazione",
                     "Fare riferimento alla Regola del Vicinato per nome, guidare lo studente ad aiutare a ricostruire i blocchi danneggiati e sfruttare il momento per rafforzare gli standard della comunità senza usare un linguaggio punitivo",
-                    "Ignorare l'accaduto a meno che lo studente colpito non si lamenti, per evitar di peggiorare la situazione",
+                    "Ignorare l'accaduto a meno che lo studente colpito non si lamenti, per evitare di peggiorare la situazione",
                     "Mettere in pausa l'intera sessione e ripristinare il mondo a prima che si verificasse il danno"
                 ],
                 correct: 1,  // B
@@ -153,10 +153,10 @@
                     "Il Distributore ha bisogno di un Ripetitore di Redstone accanto ad esso per attivarsi alla velocità normale",
                     "C'è un'interruzione nel cavo di Redstone che sta rallentando il segnale",
                     "La pedana a pressione si attiva solo al secondo passaggio, non al primo",
-                    "I segnali di Redstone viaggiano a 1 blocco per tick (0.05 secondi); attraverso 20 blocchi di polvere, the segnale impiega 20 tick = 1 secondo per raggiungere il Distributore — questo è il normale comportamento fisico, non un bug"
+                    "I segnali di Redstone viaggiano a 1 blocco per tick (0.05 secondi); attraverso 20 blocchi di polvere, il segnale impiega 20 tick = 1 secondo per raggiungere il Distributore — questo è il normale comportamento fisico, non un bug"
                 ],
                 correct: 3,  // D
-                feedback: "Corretto. La velocità di propagazione del segnale di Redstone è di 1 blocco per tick, e un tick equivale a 0.05 seconds. Un cavo di 20 blocchi introduce quindi un ritardo di 20 tick = 1 secondo. Questo è il normale comportamento fisico di Minecraft. Se è necessaria una risposta più rapida, accorcia il cavo o usa un Comparatore di Redstone per amplificare senza ritardi. Importante: questa è un'opportunità didattica sulla propagazione del segnale, non un errore da 'aggiustare'."
+                feedback: "Corretto. La velocità di propagazione del segnale di Redstone è di 1 blocco per tick, e un tick equivale a 0.05 secondi. Un cavo di 20 blocchi introduce quindi un ritardo di 20 tick = 1 secondo. Questo è il normale comportamento fisico di Minecraft. Se è necessaria una risposta più rapida, accorcia il cavo o usa un Comparatore di Redstone per amplificare senza ritardi. Importante: questa è un'opportunità didattica sulla propagazione del segnale, non un errore da 'aggiustare'."
             },
             {
                 q: "Dopo la sessione cooperativa di oggi, un tutor desidera fornire un elogio specifico e legato al comportamento alla squadra dei Costruttori di Ponti. Quale dei seguenti è l'esempio più efficace?",

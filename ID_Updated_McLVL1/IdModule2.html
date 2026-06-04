@@ -93,10 +93,10 @@
 <div class="card">
   <h4>Panduan Sesi Langkah demi Langkah</h4>
   <ol style="padding-left:18px;margin-top:8px">
-    <li style="margin-bottom:8px"><strong>Es Pencair (00:00–00:05):</strong> "Gedung mana di kotamu yang ingin kamu redesain?" Ini mempersiapkan pemikiran arsitektural dan menciptakan koneksi personal dengan tema pembangunan kota hari ini.</li>
+    <li style="margin-bottom:8px"><strong>Pencair Suasana (00:00–00:05):</strong> "Gedung mana di kotamu yang ingin kamu redesain?" Ini mempersiapkan pemikiran arsitektural dan menciptakan koneksi personal dengan tema pembangunan kota hari ini.</li>
     <li style="margin-bottom:8px"><strong>Tinjauan Koordinat (00:05–00:12):</strong> Tinjauan cepat koordinat Modul 1. Minta siswa menyatakan makna sumbu X/Y/Z tanpa catatan. Kemudian perkenalkan koordinat tepat: "Hari ini kita akan menggunakan alamat koordinat nyata, bukan offset relatif."</li>
     <li style="margin-bottom:8px"><strong>Pengenalan Crafting Table (00:12–00:20):</strong> Demonstrasikan cara membuka Crafting Table (grid 3×3), menempatkan material dalam pola yang tepat untuk membuat pickaxe batu. Setiap siswa membuat satu alat.</li>
-    <li style="margin-bottom:8px"><strong>Pembangunan Jebakan Redstone (00:20–00:30):</strong> Adım adım: (a) Gali lubang pressure plate 2×2. (b) Letakkan Pressure Plate di lantai. (c) Hubungkan via debu Redstone ke Dispenser yang dimuat dengan panah atau Splash Potion. (d) Uji dengan berjalan di atas plate.</li>
+    <li style="margin-bottom:8px"><strong>Pembangunan Jebakan Redstone (00:20–00:30):</strong> Langkah demi langkah: (a) Gali lubang pressure plate 2×2. (b) Letakkan Pressure Plate di lantai. (c) Hubungkan via debu Redstone ke Dispenser yang dimuat dengan panah atau Splash Potion. (d) Uji dengan berjalan di atas plate.</li>
     <li style="margin-bottom:8px"><strong>Jeda Kognitif (00:30–00:35):</strong> Wajib. Aktivitas fisik atau kuis tanpa layar.</li>
     <li style="margin-bottom:8px"><strong>Perintah Clone + Perencanaan Kota (00:35–00:55):</strong> Ajarkan /clone untuk menduplikasi struktur. Tetapkan peran tim (Pembangun Jembatan, Penjaga Mercusuar, Perencana Kota). Siswa membangun distrik kota mereka menggunakan koordinat tepat untuk menyelaraskan struktur.</li>
     <li><strong>Refleksi (00:55–01:00):</strong> Setiap tim mempresentasikan distriknya. Satu kalimat masing-masing: "Kami membangun [X] dan menggunakan [teknik Y]."</li>
@@ -127,8 +127,8 @@
     <span class="cy">/tp @s ~5 ~0 ~0</span>   →  5 blok Timur dari posisi saat ini<br><br>
     <span class="cm">Sintaks campuran (valid):</span><br>
     <span class="cy">/tp @s ~0 64 ~0</span>   →  pertahankan X dan Z yang sama; kunci ketinggian tepat ke Y=64<br><br>
-    <span style="color:#F87171">Tes kritis:</span> /tp @a 0 64 0  (tilde yok) her zaman TÜM oyuncuları dünya orijinine gönderir.<br>
-    <span style="color:#F87171">Bandingkan:</span>    /tp @a ~0 ~0 ~0 (tüm tildeler) kimseyi hareket ettirmez — uzaklıklar sıfır.
+    <span style="color:#F87171">Tes kritis:</span> /tp @a 0 64 0  (tanpa tilde) selalu mengirim SEMUA pemain ke titik asal dunia.<br>
+    <span style="color:#F87171">Bandingkan:</span>    /tp @a ~0 ~0 ~0 (semua tilde) tidak memindahkan siapa pun — semua offset nol.
   </div>
   <div class="callout ct" style="margin-top:10px">
     <span class="ci">💡</span>
@@ -140,7 +140,7 @@
   <h4>3.3 · Perintah /clone — Duplikasi Struktural</h4>
   <p>Perintah /clone menyalin region 3D yang terdefinisi ke lokasi baru:</p>
   <div class="coord-box">
-    Sözdizimi:  /clone [x1 y1 z1] [x2 y2 z2] [hedef-x hedef-y hedef-z]<br><br>
+    Sintaks:  /clone [x1 y1 z1] [x2 y2 z2] [tujuan-x tujuan-y tujuan-z]<br><br>
     [x1 y1 z1] = sudut pertama region sumber<br>
     [x2 y2 z2] = sudut berlawanan region sumber (mendefinisikan kotak 3D penuh)<br>
     [tujuan-x tujuan-y tujuan-z] = sudut tempat salinan akan muncul<br><br>
@@ -171,7 +171,7 @@
     </div>
     <div class="card">
       <h4>Logika Sirkuit Jebakan</h4>
-      <p><strong>Standart tuzak kablolaması:</strong> Pressure Plate → debu Redstone (1–15 blok) → Dispenser. Saat pemain menginjak Plate, sinyal merambat sepanjang kabel dan mengaktifkan Dispenser. <strong>Catatan timing:</strong> Sinyal Redstone merambat dengan kecepatan 1 blok per tick.</p>
+      <p><strong>Pengkabelan jebakan standar:</strong> Pressure Plate → debu Redstone (1–15 blok) → Dispenser. Saat pemain menginjak Plate, sinyal merambat sepanjang kabel dan mengaktifkan Dispenser. <strong>Catatan timing:</strong> Sinyal Redstone merambat dengan kecepatan 1 blok per tick — kabel 15 blok menambahkan penundaan efektif 15 tick (0,75 detik) sebelum Dispenser menembak.</p>
     </div>
   </div>
 </div>
@@ -209,9 +209,9 @@
     <thead>
       <tr>
         <th style="width:22%">Kesalahan / Gejala</th>
-        <th style="width:27%">Kök Neden</th>
-        <th style="width:31%">Tam Düzeltme</th>
-        <th style="width:20%">Önleme Komut Dosyası</th>
+        <th style="width:27%">Akar Penyebab</th>
+        <th style="width:31%">Perbaikan Tepat</th>
+        <th style="width:20%">Skrip Pencegahan</th>
       </tr>
     </thead>
     <tbody>

@@ -85,7 +85,7 @@
     <span class="hero-icon">⛏️</span>
     <div class="eyebrow">🎓 Tutor Eğitim Programı</div>
     <h1>Minecraft <span class="h-pill">Education</span><br>Seviye 1 — Tutor Hazırlığı</h1>
-    <p>Seviye 1 müfredatına hazırlanmak için beş eğitim modülünü tamamlayın. Her modül kısa bir bilgi sorusuyla biter — bir sonraki modüle geçmek için <strong>%70 veya üzeri</strong> puan gereklidir.</p>
+    <p>Seviye 1 müfredatına hazırlanmak için beş eğitim modülünü tamamlayın. Her modül kısa bir bilgi kontrolüyle biter — bir sonraki modüle geçmek için <strong>%70 veya üzeri</strong> puan gereklidir.</p>
     <div class="prog-widget">
       <span class="prog-num" id="prog-num">0/5</span>
       <div class="prog-track"><div class="prog-fill-bar" id="prog-bar" style="width:0%"></div></div>
@@ -99,7 +99,7 @@
   <div id="all-done-banner" class="all-done-banner">
     <h3>🏆 Beş Modülün Tamamı Bitti!</h3>
     <p>
-      Son Dijital Beceri Testine girmeden önce, Başarılı Dersler Kütüphanesi'ndeki açıklamalı referans dersi inceleyin. Gerçek bir değerlendirilen oturumu çalışmak, öğrendiklerinizi uygulamanızı keskinleştirecektir.
+      Son Dijital Beceri Testine girmeden önce, Başarılı Dersler Kütüphanesi'ndeki açıklamalı referans dersi inceleyin. Değerlendirilmiş gerçek bir oturumu incelemek, öğrendiklerinizi uygulama becerinizi keskinleştirecektir.
     </p>
     <div class="btn-row">
       <a href="TrDST.html#library" class="btn-library">📖 Başarılı Ders Referansını Gör →</a>
@@ -117,7 +117,7 @@
 
 </section>
 
-<footer>© 2026 Kodland. Dahili tutor eğitim amaçlı tasarlanmıştır. Bu materyal Kodland'ın özel mülkidir ve harici olarak dağıtılamaz.</footer>
+<footer>© 2026 Kodland. Dahili tutor eğitim amaçlı tasarlanmıştır. Bu materyal Kodland'ın özel mülküdür ve harici olarak dağıtılamaz.</footer>
 
 <script src="shared.js"></script>
 <script>
@@ -153,7 +153,7 @@ function renderModules() {
     else if (!unlocked) badgeHtml = `<span class="badge bl">🔒 Kilitli</span>`;
     else                badgeHtml = `<span class="badge bs">▶ Başla</span>`;
     const scoreStr = score !== null
-      ? `<span class="score-tag">En iyi: <b>${score}%</b></span>`
+      ? `<span class="score-tag">En iyi: <b>%${score}</b></span>`
       : `<span class="score-tag"><b>${m.mins} dk okuma</b></span>`;
     return `<a href="TrModule${m.id}.html"
               class="mc${done?' done':''}${!unlocked?' locked':''}"
@@ -184,7 +184,7 @@ function renderModules() {
       <div class="phase-body">
         <div class="phase-label">Aşama 6 — Çalışma</div>
         <div class="phase-title">Başarılı Dersler Kütüphanesi</div>
-        <div class="phase-desc">16 zaman damgalı açıklama ve ayrıntılı öğretim analiziyle gerçek bir değerlendirilen oturumu izleyin ve inceleyin.</div>
+        <div class="phase-desc">16 zaman damgalı açıklama ve ayrıntılı öğretim analiziyle değerlendirilmiş gerçek bir oturumu izleyin ve inceleyin.</div>
         <div class="phase-status ${libraryReady ? 'ps-ready' : 'ps-locked'}">
           ${libraryReady ? '▶ Referans Oturumunu Gör' : '🔒 Önce tüm modülleri tamamlayın'}
         </div>
@@ -197,7 +197,7 @@ function renderModules() {
         <div class="phase-title">Dijital Beceri Testi</div>
         <div class="phase-desc">Teknik beceriler ve pedagojiyi kapsayan 20 soruluk hazırlık sınavı. Bağımsız öğretim için %80 veya üzeri gereklidir.</div>
         <div class="phase-status ${dstReady ? 'ps-ready' : 'ps-locked'}">
-          ${dstReady ? '▶ Testi Al' : '🔒 Önce tüm modülleri tamamlayın'}
+          ${dstReady ? '▶ Teste Gir' : '🔒 Önce tüm modülleri tamamlayın'}
         </div>
       </div>
     </a>`;

@@ -214,20 +214,20 @@
         <td class="fc">"Ajan ekmeden önce zemin işlenmeli ve sulanmalı. Toprak rengini kontrol edin — koyu kahverengi = ekime hazır."</td>
       </tr>
       <tr>
-        <td class="mc">Huni öğelerle dolup taşıyor ama sandığa aktarmıyor</td>
+        <td class="mc">Huni öğelerle doluyor ama sandığa aktarmıyor</td>
         <td>Huninin çıkış ucu sandığa bakmıyor — Shift'siz yerleştirildi, bu yüzden Huni aşağıya hava içine bakıyor.</td>
         <td>Huniyi kırın ve yeniden yerleştirin: Shift tuşunu basılı tutun, ardından doğrudan sandık bloğuna sağ tıklayın. Huninin ucunun görsel olarak sandık tarafına bağlandığını doğrulayın.</td>
-        <td class="fc">"Huniyi sandığa yerleştirirken her zaman Shift'i basılı tutun. Shift yok = sandık açılır = Huni yanlış iner."</td>
+        <td class="fc">"Huniyi sandığa yerleştirirken her zaman Shift'i basılı tutun. Shift yok = sandık açılır = Huni yanlış yerleşir."</td>
       </tr>
       <tr>
         <td class="mc">Gözlemci mahsuller büyüdüğünde ateşleniyor ama Piston uzanmıyor — mahsuller asla hasat edilmiyor</td>
         <td>Gözlemci çıkış yüzü Pistona bağlı değil. Bu Modül 1 ile aynı yönelim sorunudur ancak çiftlik düzeni daha karmaşık olduğu için genellikle daha kafa karıştırıcıdır.</td>
-        <td>Ayrı test edin: Gözlemciyi çiftlik devresinden ayırın. Gözlemci çıkış yüzünün hemen arkasına bir Redstone Lambası yerleştirin. Mahsul büyüdüğünde Lamba yanıyorsa Gözlemci doğru çalışıyor ve sorun akıştadır. Boşluğu düzeltin veya Pistonu doğru yönde yeniden yerleştirin.</td>
+        <td>Ayrı test edin: Gözlemciyi çiftlik devresinden ayırın. Gözlemci çıkış yüzünün hemen arkasına bir Redstone Lambası yerleştirin. Mahsul büyüdüğünde Lamba yanıyorsa Gözlemci doğru çalışıyor ve sorun zincirin devamındadır (tel boşluğu veya Piston yönelimi). Boşluğu düzeltin veya Pistonu doğru yönde yeniden yerleştirin.</td>
         <td class="fc">"Her aşamayı ayrı test edin. Gözlemci çalışıyor mu? O zaman teli kontrol edin. Tel çalışıyor mu? O zaman Piston yönelimini kontrol edin."</td>
       </tr>
       <tr>
-        <td class="mc">Ajanın iç içe satır ekim döngüsü ızgara yerine spiral veya rastgele desen ekiyor</td>
-        <td>Ajanın "etrafını dön" sonrasındaki yön tam olarak hizalanmamış — "sola dön" iki kez garip sayıda "sağa dön" sonrası her durumda 180° dönüşe eşit değil. Veya dönüş hareketindeki adım sayısı yanlış.</td>
+        <td class="mc">Ajanın iç içe döngülü satır ekimi ızgara yerine spiral veya rastgele desen ekiyor</td>
+        <td>Ajanın "etrafını dön" sonrasındaki yönü doğru hizalanmamış — öğrenci iki kez "sola dön" kullanmış, ancak tek sayıda "sağa dön" komutundan sonra "sola dön + sola dön"ün her durumda 180° dönüşe eşit olmadığını unutmuş. Veya geri dönüş hareketindeki adım sayısı yanlış.</td>
         <td>Kodlamadan önce Ajanın yolunu kağıda çizin. Her dönüşü açıkça işaretleyin. Satır 1 tamamlandıktan sonra Ajan ters yöne mi bakıyor? "Geri 5 hareket" tam olarak satır başına döndürüyor mu? Önce 1 satırla test edin, gözlemleyin, ardından 5 satıra genişletin.</td>
         <td class="fc">"Kodlamadan önce yolu çizin. 1. dönüşten sonra hangi yön? 2. dönüşten sonra? Ajan 'gitmesi gereken' yeri değil, kodun gittiği yeri bilir."</td>
       </tr>
@@ -242,19 +242,19 @@
 </div>
 
 <div id="protips" class="anchor-target">
-  <div class="section-head">7 · Tutor Uzman İpuçları ve Gerçek Dünya Analogileri</div>
+  <div class="section-head">7 · Tutor Uzman İpuçları ve Gerçek Dünya Analojileri</div>
 </div>
 <div class="tip-card">
-  <p><strong>💡 Huni Sıralama = "Geri Dönüşüm Tesisi" Analogisi</strong><br>
-  <em>"Bir geri dönüşüm tesisini düşünün: farklı konveyör bantları camı bir kaba, kağıdı diğerine, metali diğerine yönlendirir. Huni sıralama sisteminiz dijital geri dönüşüm tesisinizdir. Buğday sola, tohumlar sağa — otomatik olarak, her seferinde, kimse manuel sıralamadan."</em></p>
+  <p><strong>💡 Huni Sıralama = "Geri Dönüşüm Tesisi" Analojisi</strong><br>
+  <em>"Bir geri dönüşüm tesisini düşünün: farklı konveyör bantları camı bir kaba, kağıdı diğerine, metali diğerine yönlendirir. Huni sıralama sisteminiz dijital geri dönüşüm tesisinizdir. Buğday sola, tohumlar sağa — otomatik olarak, her seferinde, kimse elle sıralamadan."</em></p>
 </div>
 <div class="tip-card">
-  <p><strong>💡 Dört Aşamalı Boru Hattı = "Amazon Deposu" Analogisi</strong><br>
+  <p><strong>💡 Dört Aşamalı Boru Hattı = "Amazon Deposu" Analojisi</strong><br>
   <em>"Amazon'dan bir şey sipariş ettiğinizde: (1) Bir sensör siparişinizi algılar [Gözlemci]. (2) Bir robot kolu öğeyi raftan alır [Piston]. (3) Bir konveyör bandı ambalaj istasyonuna taşır [Huni]. (4) Deponun doğru bölümündeki etiketli kutuya gider [Sandık]. Çiftliğimiz aynı dört aşama — sadece paket yerine buğday."</em></p>
 </div>
 <div class="tip-card">
-  <p><strong>💡 İç İçe Döngüler = 2D Izgaralar İçin "Yazıcı Analogisi"</strong><br>
-  <em>"Bir yazıcı bir sayfa yazdırırken, bir nokta satırı boyunca hareket eder (iç döngü), ardından bir satır düşer (dış döngü), ardından bir sonraki satırı yazdırır. Ajan satırlarda ekim tıpatıp aynı çalışır: iç döngü = bir sıra tohum, dış döngü = bir sonraki satıra geçme."</em></p>
+  <p><strong>💡 İç İçe Döngüler = 2D Izgaralar İçin "Yazıcı Analojisi"</strong><br>
+  <em>"Bir yazıcı bir sayfa yazdırırken, bir nokta satırı boyunca hareket eder (iç döngü), ardından bir satır düşer (dış döngü), ardından bir sonraki satırı yazdırır. Ajanın satır satır ekimi tıpatıp aynı şekilde çalışır: iç döngü = bir sıra tohum, dış döngü = bir sonraki satıra geçme."</em></p>
 </div>
 <div class="tip-card">
   <p><strong>💡 Ayrı Test Etme — "Her Seferinde Bir Aşama Hata Ayıkla" Kuralı</strong><br>

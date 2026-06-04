@@ -137,7 +137,7 @@
                 feedback: "Poprawnie. W MakeCode Education wszystkie zmienne są domyślnie globalne. Zmienna utworzona w bloku „Na starcie” jest w pełni dostępna i modyfikowalna wewnątrz bloków „Przy chodzeniu gracza”, „Przy zniszczeniu bloku” oraz wszystkich innych bloków zdarzeń. Nie ma lokalnych zakresów zmiennych. Upraszcza to kodowanie młodszym uczniom, ale oznacza, że muszą oni zachować ostrożność — dowolne zdarzenie może przypadkowo nadpisać zmienną."
             },
             {
-                q: "Po osiągnięciu warunku wygranej (score ≥ 10) animacja fajerwerków ucznia uruchamia się przy każdym kroku chodzenia, a no tylko raz. Jaka jest najdokładniejsza przyczyna techniczna?",
+                q: "Po osiągnięciu warunku wygranej (score ≥ 10) animacja fajerwerków ucznia uruchamia się przy każdym kroku chodzenia, a nie tylko raz. Jaka jest najdokładniejsza przyczyna techniczna?",
                 opts: [
                     "Blok fajerwerków ma wewnętrzne ustawienie powtarzania, które jest ustawione jako „nieskończone”",
                     "Zdarzenie „Przy chodzeniu gracza” ma wbudowany błąd podwójnego wyzwalania, który aktywuje się dwukrotnie przy każdym kroku",
@@ -145,7 +145,7 @@
                     "Wynik nie jest resetowany do 0 (lub stan gry nie jest zmieniany) wewnątrz bloku warunku wygranej — score pozostaje ≥ 10 po pierwszej wygranej, więc każdy kolejny krok chodzenia ponownie uruchamia warunek"
                 ],
                 correct: 3,  // D
-                feedback: "Poprawnie. Po wyzwoleniu wygranej, jeśli wynik pozostaje na poziomie 10 (or wyższym), każdy kolejny krok chodzenia ewaluuje „jeśli score ≥ 10” → prawda → ponownie odpalają się fajerwerki. Rozwiązanie: albo dodaj „ustaw score = 0” jako ostatnią linię wewnątrz bloku wygranej (reset do ponownej gry), albo wprowadź zmienną logiczną „gameActive” ustawianą na fałsz przy wygranej, a następnie owiń cały blok chodzenia w „jeśli gameActive = prawda”."
+                feedback: "Poprawnie. Po wyzwoleniu wygranej, jeśli wynik pozostaje na poziomie 10 (lub wyższym), każdy kolejny krok chodzenia ewaluuje „jeśli score ≥ 10” → prawda → ponownie odpalają się fajerwerki. Rozwiązanie: albo dodaj „ustaw score = 0” jako ostatnią linię wewnątrz bloku wygranej (reset do ponownej gry), albo wprowadź zmienną logiczną „gameActive” ustawianą na fałsz przy wygranej, a następnie owiń cały blok chodzenia w „jeśli gameActive = prawda”."
             },
             {
                 q: "Tutor chce pomóc uczniowi uniknąć umieszczania kodu poza blokiem zdarzenia. Która technika pedagogiczna jest najskuteczniejsza, zanim uczeń zacznie kodować?",

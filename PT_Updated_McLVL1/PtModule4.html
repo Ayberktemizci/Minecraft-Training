@@ -298,12 +298,12 @@
             <ol style="padding-left:18px;margin-top:6px">
                 <li style="margin-bottom:6px">As sementes devem ser carregadas no inventário do Agente antes que o comando de chat dispare.</li>
                 <li style="margin-bottom:6px">O Agente deve estar posicionado no primeiro local de plantio, virado para a direção correta da fileira.</li>
-                <li style="margin-bottom:6px">O solo deve ser terra arada (use uma Enxada na terra/grama, depois molhe-a em um raio de até 4 blocks).</li>
+                <li style="margin-bottom:6px">O solo deve ser terra arada (use uma Enxada na terra/grama, depois molhe-a em um raio de até 4 blocos).</li>
                 <li>O plantio do Agente usa "colocar ao mover para baixo", o que coloca o item no bloco diretamente abaixo do Agente à medida que ele avança.</li>
             </ol>
             <div class="callout cw" style="margin-top:10px">
                 <span class="ci">⚠️</span>
-                <div><strong>Falha mais comum no plantio do Agente:</strong> O Agente joga as sementes no chão em vez de plantá-las. Isso acontece quando o solo não é terra arada — sementes colocadas em blocos de terra comuns son tratadas como itens dropados, não como plantações semeadas. Sempre confirme se o solo está arado e a até 4 blocos de uma fonte de água antes de executar o comando de plantio.</div>
+                <div><strong>Falha mais comum no plantio do Agente:</strong> O Agente joga as sementes no chão em vez de plantá-las. Isso acontece quando o solo não é terra arada — sementes colocadas em blocos de terra comuns são tratadas como itens dropados, não como plantações semeadas. Sempre confirme se o solo está arado e a até 4 blocos de uma fonte de água antes de executar o comando de plantio.</div>
             </div>
         </div>
 
@@ -434,7 +434,7 @@
                         <td class="mc">O Observador dispara quando as plantações crescem, mas o Pistão não se estende — as plantações nunca são colhidas</td>
                         <td>A face de saída do Observador não está conectada ao Pistão. Esse é o mesmo problema de orientação do Módulo 1, mas costuma ser mais confuso porque o layout da fazenda é mais complexo.</td>
                         <td>Teste em isolamento: desconecte o Observador do circuito da fazenda. Coloque uma Lâmpada de Redstone diretamente atrás da face de saída do Observador. Se a Lâmpada acender com o crescimento da plantação, o Observador funciona corretamente e o problema está adiante (lacuna no fio ou orientação do Pistão). Corrija a lacuna ou recoloque o Pistão voltado para a direção correta.</td>
-                        <td class="fc">"Teste cada etapa separadamente. O Observador funciona? Então verifique o fio. O fio funciona? Then check the Piston orientation."</td>
+                        <td class="fc">"Teste cada etapa separadamente. O Observador funciona? Então verifique o fio. O fio funciona? Então verifique a orientação do Pistão."</td>
                     </tr>
                     <tr>
                         <td class="mc">O loop aninhado de plantio em fileiras do Agente planta as culturas em espiral ou padrão aleatório em vez de uma grade</td>

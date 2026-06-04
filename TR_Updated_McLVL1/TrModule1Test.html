@@ -76,7 +76,7 @@ const PASS_SCORE = 70;
 
 const QUESTIONS = [
   {
-    text: "Bir tutor tüm öğrencileri X=200'e ışınlaması, mevcut Z konumlarını koruması ve onları tam Y=64'e (deniz seviyesi) sabitlemesi gerekiyor. Hangi komut sözdizimi bunu başarır?",
+    text: "Bir tutorun tüm öğrencileri X=200'e ışınlaması, mevcut Z konumlarını koruması ve onları tam Y=64'e (deniz seviyesi) sabitlemesi gerekiyor. Hangi komut sözdizimi bunu başarır?",
     opts: [
       "A) /tp @a 200 64 200",
       "B) /tp @a ~200 ~64 ~0",
@@ -120,15 +120,15 @@ const QUESTIONS = [
     feedback: "✅ Doğru. Gözlemcinin iki ayrı işlevsel tarafı vardır: yüz (oyma/göz dokusu) doğrudan baktığı bloktaki durum değişikliklerini izleyen sensördür — bambuya bakmalıdır. Arka (düz çıkış tarafı) Redstone darbesinin yayıldığı yerdir — Pistona veya bağlantı teline bakmalıdır. Taraflar ters çevrildiğinde, Gözlemci bambu yerine Pistonu izler, dolayısıyla hiç ateşlenmez veya yanlış nedenle ateşlenir."
   },
   {
-    text: "Bir öğrenci kopuk taş fabrikası inşa ediyor ancak Su kaynak bloğunu ve Lav kaynak bloğunu aralarında boşluk bırakmadan yan yana yerleştiriyor. Fabrika Kopuk Taş yerine Obsidyen üretiyor. Tam neden nedir ve doğru yapılandırma nedir?",
+    text: "Bir öğrenci arnavut taşı fabrikası inşa ediyor ancak Su kaynak bloğunu ve Lav kaynak bloğunu aralarında boşluk bırakmadan yan yana yerleştiriyor. Fabrika Arnavut Taşı yerine Obsidyen üretiyor. Tam neden nedir ve doğru yapılandırma nedir?",
     opts: [
-      "A) İki bitişik kaynak blok her ikisi de durağan olduğundan Obsidyen üretir — akan sıvı çarpışması yoktur. Düzeltme: her iki sıvının da ortadaki boşlukta buluşmadan önce akması için iki kaynak blok arasında tam olarak bir boş blok boşluk olduğundan emin olun, böylece Kopuk Taş üretilir.",
+      "A) İki bitişik kaynak blok her ikisi de durağan olduğundan Obsidyen üretir — akan sıvı çarpışması yoktur. Düzeltme: her iki sıvının da ortadaki boşlukta buluşmadan önce akması için iki kaynak blok arasında tam olarak bir boş blok boşluk olduğundan emin olun, böylece Arnavut Taşı üretilir.",
       "B) Öğrenci yanlış Lav türünü kullandı — normal Lav Nether boyutundan Nether Lavıyla değiştirilmelidir.",
-      "C) Kopuk Taş oluşumu için Lav kaynağının Su kaynağının yanına değil üstüne yerleştirilmesi gerekir.",
-      "D) Obsidyen ve Kopuk Taş aynı şekilde üretilir — öğrencinin Obsidyeni Kopuk Taşa dönüştüren Taş Kazmasıyla çıkarması gerekir."
+      "C) Arnavut Taşı oluşumu için Lav kaynağının Su kaynağının yanına değil üstüne yerleştirilmesi gerekir.",
+      "D) Obsidyen ve Arnavut Taşı aynı şekilde üretilir — öğrencinin Obsidyeni Arnavut Taşına dönüştüren Taş Kazmasıyla çıkarması gerekir."
     ],
     correct: 0,
-    feedback: "✅ Doğru. Bir Lav kaynak bloğu doğrudan bir Su kaynak bloğunun yanına yerleştirildiğinde, her ikisi de durağandır — hiçbiri akmıyor. Çarpışma kuralı: akan Su + akan Lav = Kopuk Taş; durağan Lav kaynağı + bitişik Su kaynağı = Obsidyen. 1 blokluk boşluk her iki sıvıyı da merkeze doğru akmaya zorlar ve Kopuk Taş üretir."
+    feedback: "✅ Doğru. Bir Lav kaynak bloğu doğrudan bir Su kaynak bloğunun yanına yerleştirildiğinde, her ikisi de durağandır — hiçbiri akmıyor. Çarpışma kuralı: akan Su + akan Lav = Arnavut Taşı; durağan Lav kaynağı + bitişik Su kaynağı = Obsidyen. 1 blokluk boşluk her iki sıvıyı da merkeze doğru akmaya zorlar ve Arnavut Taşı üretir."
   },
   {
     text: "Canlı bir oturum sırasında, bir öğrenci Minecraft sohbetine '/code' yazıyor ve hiçbir şey olmuyor — MakeCode arayüzü açılmıyor ve hata mesajı gösterilmiyor. Öğrencinin internet bağlantısının çalıştığı doğrulanmış. En olası neden ve tam düzeltme nedir?",
@@ -139,7 +139,7 @@ const QUESTIONS = [
       "D) Oturum başlamadan önce dünya ayarlarında 'Code Builder'ı Etkinleştir' AÇIK konumuna getirilmemişti. Düzeltme: dünyayı kapatın, dünya ayarlarını açın (dünya küçük resmindeki kalem simgesi), Code Builder geçişini etkinleştirin, dünyaya yeniden girin ve /code'u yeniden deneyin."
     ],
     correct: 3,
-    feedback: "✅ Doğru. 'Code Builder'ı Etkinleştir', herhangi bir öğrenci dünyaya girmeden önce açıkça etkinleştirilmesi gereken Minecraft Education Edition'daki dünyaya özel bir ayardır. Kapalıyken, /code komutu sessizce çalışır — hata mesajı yok, yanıt yok. Bu, internet bağlantısı onaylandığında /code başarısızlığının en yaygın nedenidir."
+    feedback: "✅ Doğru. 'Code Builder'ı Etkinleştir', herhangi bir öğrenci dünyaya girmeden önce açıkça etkinleştirilmesi gereken Minecraft Education Edition'daki dünyaya özel bir ayardır. Kapalıyken, /code komutu sessizce başarısız olur — hata mesajı yok, yanıt yok. Bu, internet bağlantısı onaylandığında /code başarısızlığının en yaygın nedenidir."
   }
 ];
 
@@ -227,7 +227,7 @@ function submitQuiz() {
   document.getElementById('result-card').innerHTML = `
     <div class="result-emoji">${passed ? '🎉' : '📚'}</div>
     <div class="result-title">${passed ? 'Modül 1 Geçildi!' : 'Çalışmaya Devam Et'}</div>
-    <div class="result-pct ${passed ? 'pass' : 'fail'}">${pct}%</div>
+    <div class="result-pct ${passed ? 'pass' : 'fail'}">%${pct}</div>
     <div class="result-sub">
       <strong>${score} / ${QUESTIONS.length}</strong> soruyu doğru yanıtladınız.
       ${passed

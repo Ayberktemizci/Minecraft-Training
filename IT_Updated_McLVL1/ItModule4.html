@@ -373,7 +373,7 @@
             <p>Velocità di trasferimento tecnica: una Tramoggia elabora un oggetto ogni <strong>4 tick di gioco</strong> (0.2 secondi). A un ritmo standard di 20 tick al secondo, equivale a <strong>2.5 oggetti al secondo</strong>. Per una fattoria su larga scala che produce grandi volumi, una singola catena di Tramogge può diventare un collo di bottiglia. Soluzioni:</p>
             <ul style="margin-top:8px">
                 <li>Utilizzare <strong>catene di Tramogge in parallelo</strong> — più punti di raccolta ciascuno collegato alla propria cassa indipendente.</li>
-                <li>Utilizzare una <strong>Vagoneta con tramoggia</strong> su una rotaia di raccolta — i vagonetti con tramoggia trasferiscono gli oggetti a una velocità doppia rispetto alle Tramogge fisse.</li>
+                <li>Utilizzare un <strong>Carrello da miniera con tramoggia</strong> su una rotaia di raccolta — i carrelli con tramoggia trasferiscono gli oggetti a una velocità doppia rispetto alle Tramogge fisse.</li>
             </ul>
         </div>
 
@@ -404,7 +404,7 @@
             </div>
             <div class="callout cg" style="margin-top:14px">
                 <span class="ci">✅</span>
-                <div><strong>Momento didattico importante:</strong> Una prima volta che tutte e quattro le fasi sono costruite e testate, chiedi agli studenti di descrivere la pipeline con parole proprie senza guardare il codice: "Cosa rileva? Cosa attiva? Cosa raccoglie? Cosa archivia?" Questa rielaborazione verbale consolida il framework concettuale e li prepara per il lavoro di progettazione del Modulo 5.</div>
+                <div><strong>Momento didattico importante:</strong> Una volta che tutte e quattro le fasi sono costruite e testate, chiedi agli studenti di descrivere la pipeline con parole proprie senza guardare il codice: "Cosa rileva? Cosa attiva? Cosa raccoglie? Cosa archivia?" Questa rielaborazione verbale consolida il framework concettuale e li prepara per il lavoro di progettazione del Modulo 5.</div>
             </div>
         </div>
 
@@ -421,7 +421,7 @@
                     <tr>
                         <td class="mc">L'Agente fa cadere i semi a terra invece di piantarli</td>
                         <td>Il terreno sotto l'Agente è terra normale o erba non zappata, non un terreno da coltivazione. I semi posizionati su blocchi di terra non adatti vengono espulsi come oggetti entità sciolti.</td>
-                        <td>Prima di eseguire il comando di semina: (1) Usa una Zappa su ciascun blocco di terra per trasformarlo in terreno da coltivazione. (2) Posiziona una sorgente d'acqua entro 4 blocchi dal terreno per idratarlo (marrone scuro = idratato, ocre chiaro = secco). (3) Verifica eseguendo un test iniziale dell'Agente su un'area già zappata.</td>
+                        <td>Prima di eseguire il comando di semina: (1) Usa una Zappa su ciascun blocco di terra per trasformarlo in terreno da coltivazione. (2) Posiziona una sorgente d'acqua entro 4 blocchi dal terreno per idratarlo (marrone scuro = idratato, ocra chiaro = secco). (3) Verifica eseguendo un test iniziale dell'Agente su un'area già zappata.</td>
                         <td class="fc">"Prima che l'Agente possa seminare, il terreno deve essere zappato e idratato. Controlla il colore del suolo — marrone scuro = pronto per la semina."</td>
                     </tr>
                     <tr>
@@ -459,21 +459,21 @@
         <div class="tip-card">
             <p>
                 <strong>💡 Smistamento Tramogge = L'Analogia dell' "Impianto di Riciclaggio"</strong><br>
-                *“Pensate a un impianto di riciclaggio automatizzato: diversi nastri trasportatori indirizzano le bottiglie di vetro in un contenitore, la carta in un altro e il metallo in un altro ancora. Il sistema di Tramogge della vostra fattoria è il vostro impianto di riciclaggio digitale. Il grano si sposta a sinistra e i semi a destra, automaticamente, ogni volta, senza che nessuno debba separarli a mano”.*
+                <em>“Pensate a un impianto di riciclaggio automatizzato: diversi nastri trasportatori indirizzano le bottiglie di vetro in un contenitore, la carta in un altro e il metallo in un altro ancora. Il sistema di Tramogge della vostra fattoria è il vostro impianto di riciclaggio digitale. Il grano si sposta a sinistra e i semi a destra, automaticamente, ogni volta, senza che nessuno debba separarli a mano”.</em>
             </p>
         </div>
 
         <div class="tip-card">
             <p>
                 <strong>💡 La Pipeline a Quattro Fasi = L'Analogia del "Centro di Distribuzione Amazon"</strong><br>
-                *“Quando ordinate qualcosa su Amazon: (1) Un sensore digitale rileva il vostro ordine [Osservatore]. (2) Un braccio robotico preleva l'oggetto dallo scaffale [Pistone]. (3) Un nastro trasportatore lo trasporta alla stazione di imballaggio [Tramoggia]. (4) Il pacco viene riposto in un contenitore etichettato nella sezione corretta del magazzino [Cassa]. La nostra fattoria funziona con le stesse quattro fasi, ma elaborando grano al posto dei pacchi”.*
+                <em>“Quando ordinate qualcosa su Amazon: (1) Un sensore digitale rileva il vostro ordine [Osservatore]. (2) Un braccio robotico preleva l'oggetto dallo scaffale [Pistone]. (3) Un nastro trasportatore lo trasporta alla stazione di imballaggio [Tramoggia]. (4) Il pacco viene riposto in un contenitore etichettato nella sezione corretta del magazzino [Cassa]. La nostra fattoria funziona con le stesse quattro fasi, ma elaborando grano al posto dei pacchi”.</em>
             </p>
         </div>
 
         <div class="tip-card">
             <p>
                 <strong>💡 Cicli Annidati = L'Analogia della "Stampante da Scrivania" per Griglie 2D</strong><br>
-                *“Quando una stampante stampa una pagina di testo, la testina si sposta in orizzontale stampando una riga di punti (ciclo interno), poi scende di una riga (ciclo esterno) e avanza stampando la riga successiva, ripetendo il processo fino a completare il foglio. La semina a file dell'Agente funziona allo stesso modo: il ciclo interno semina una fila e il ciclo esterno esegue il cambio di fila”.*
+                <em>“Quando una stampante stampa una pagina di testo, la testina si sposta in orizzontale stampando una riga di punti (ciclo interno), poi scende di una riga (ciclo esterno) e avanza stampando la riga successiva, ripetendo il processo fino a completare il foglio. La semina a file dell'Agente funziona allo stesso modo: il ciclo interno semina una fila e il ciclo esterno esegue il cambio di fila”.</em>
             </p>
         </div>
 

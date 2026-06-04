@@ -508,7 +508,7 @@
                     <div class="flow-body">
                         <div class="flow-time">00:08 – 00:15</div>
                         <div class="flow-head">Ensino do Sistema de Coordenadas (7 min)</div>
-                        <div class="flow-desc">Assim que todos os alunos estiverem na zona de construção, pause a missão. Abra a tela F3 (or o HUD do MC Education) e percorra os eixos X/Y/Z ao vivo. Demonstre um comando /tp. Cada aluno pratica a digitação do comando de recall uma vez. Regra do Panda após cada teletransporte bem-sucedido.</div>
+                        <div class="flow-desc">Assim que todos os alunos estiverem na zona de construção, pause a missão. Abra a tela F3 (ou o HUD do MC Education) e percorra os eixos X/Y/Z ao vivo. Demonstre um comando /tp. Cada aluno pratica a digitação do comando de recall uma vez. Regra do Panda após cada teletransporte bem-sucedido.</div>
                     </div>
                 </li>
                 <li class="flow-item">
@@ -548,7 +548,7 @@
                     <div class="flow-body">
                         <div class="flow-time">00:50 – 00:55</div>
                         <div class="flow-head">Demonstração da Fábrica de Pedregulho (extensão de 5 min)</div>
-                        <div class="flow-desc">Demonstração rápida do canal de Água+Lava. O alunos observam e replicam se houver tempo. Esta é uma construção complementar — não sacrifique o tempo de conclusão da fazenda de bambu por ela.</div>
+                        <div class="flow-desc">Demonstração rápida do canal de Água+Lava. Os alunos observam e replicam se houver tempo. Esta é uma construção complementar — não sacrifique o tempo de conclusão da fazenda de bambu por ela.</div>
                     </div>
                 </li>
                 <li class="flow-item">
@@ -596,10 +596,10 @@
                 <span class="com">// ~ = "a partir de onde estou agora"</span><br>
                 <span class="cg">/tp @s ~0  ~0  ~0</span>   → deslocamento zero = nenhum movimento (permanece no lugar)<br>
                 <span class="cg">/tp @s ~3  ~0  ~0</span>   → 3 blocos a Leste da posição X atual<br>
-                <span class="cg">/tp @s ~0  ~5  ~0</span>   → 5 blos para cima direto<br>
+                <span class="cg">/tp @s ~0  ~5  ~0</span>   → 5 blocos para cima direto<br>
                 <span class="cg">/tp @s ~0  ~-3 ~0</span>   → 3 blocos para BAIXO<br><br>
                 <span class="com">// Sintaxe mista — válida e frequentemente útil:</span><br>
-                <span class="cg">/tp @s ~0  64  ~0</span>   → mantém o X and Z atuais; ajusta a altitude para Y=64 exatamente<br>
+                <span class="cg">/tp @s ~0  64  ~0</span>   → mantém o X e Z atuais; ajusta a altitude para Y=64 exatamente<br>
                 <span class="cg">/tp @s 100 ~0  ~0</span>   → ajusta para X=100; mantém o Y e Z atuais<br><br>
                 <span class="cr">EQUÍVOCO COMUM:</span> "/tp @a ~0 ~0 ~0 move todos os jogadores para o mesmo ponto."<br>
                 <span class="cy">CORRETO:</span>            "~0 ~0 ~0 = zero deslocamento a partir da posição de CADA jogador = ninguém se move."
@@ -621,7 +621,7 @@
             <p><strong>Caminho de acesso:</strong> Pressione <kbd>T</kbd> para abrir o chat do Minecraft → digite <code>/code</code> → pressione Enter. O editor do MakeCode se abre como uma sobreposição em tela cheia. O código é persistente entre as aberturas — fechar e reabrir mostra o mesmo estado do programa.</p>
             <p style="margin-top:8px"><strong>Pré-condição crítica:</strong> "Enable Code Builder" (Habilitar Criador de Código) deve estar ATIVADO nas configurações do mundo (o ícone de lápis na miniatura do mundo na lista de Mundos) antes que qualquer aluno entre no mundo. Se essa opção estiver DESATIVADA, o comando <code>/code</code> roda silenciosamente sem resposta — os alunos não veem nada e nenhuma mensagem de erro aparece. Esta é a falha mais comum antes do início da sessão.</p>
 
-            <h4 style="margin-top:14px">Zonas da Interface do MakeCode — O que os Alunos Precisan Saber no Módulo 1</h4>
+            <h4 style="margin-top:14px">Zonas da Interface do MakeCode — O que os Alunos Precisam Saber no Módulo 1</h4>
             <div class="two-col" style="margin-top:8px">
                 <div class="card">
                     <h4>Painel Esquerdo — Paleta de Blocos</h4>
@@ -671,7 +671,7 @@
             </div>
 
             <h4>Inventário do Agente</h4>
-            <p>O Agente possui um inventário de 27 slots (grade 3×9), idêntico em capacidade a um baú. Os itens devem ser carregados no Agente antes que ele possa colocá-los. Carregando: fique ao lado do Agente e clique com o botão direito nele para abrir a interface gráfica do inventório, depois arraste os itens do seu próprio inventário ou de um baú próximo.</p>
+            <p>O Agente possui um inventário de 27 slots (grade 3×9), idêntico em capacidade a um baú. Os itens devem ser carregados no Agente antes que ele possa colocá-los. Carregando: fique ao lado do Agente e clique com o botão direito nele para abrir a interface gráfica do inventário, depois arraste os itens do seu próprio inventário ou de um baú próximo.</p>
             <div class="code-block">
                 <span class="com">// Agente coloca bloco — requer itens pré-carregados no inventário do Agente</span><br>
                 <span class="cf">agent place on move</span> down    <span class="com">// coloca o item abaixo do Agente enquanto ele se move (para fileiras de cultivo)</span><br>
@@ -746,7 +746,7 @@
                 <li><strong>Plante o bambu</strong> em um bloco de grama ou terra. Garanta ≥ 3 blocos de espaço vertical livre acima — o bambu cresce 1 bloco por vez até 16 blocos no máximo.</li>
                 <li><strong>Posicione o Pistão</strong> diretamente acima do bloco de bambu na altura Y+2, voltado <em>para baixo</em>. Quando acionado, ele se estenderá para baixo no bambu na altura 2, quebrando-o.</li>
                 <li><strong>Posicione o Observador</strong> adjacente ao caule do bambu na altura Y+1. A <em>face</em> (textura esculpida) deve apontar para o bloco de bambu. A <em>traseira</em> (lado liso) deve apontar para o Pistão — ou para o pó de Redstone que se conecta a ele.</li>
-                <li><strong>Conecte o Observador ao Pistão</strong> com pó de Redstone se eles não estiverem diretamente adjacentes. Lembre-se do máximo de 15 blocos — adicione un Repetidor se o fio for mais longo.</li>
+                <li><strong>Conecte o Observador ao Pistão</strong> com pó de Redstone se eles não estiverem diretamente adjacentes. Lembre-se do máximo de 15 blocos — adicione um Repetidor se o fio for mais longo.</li>
                 <li><strong>Verifique a orientação:</strong> Clique com o botão direito no Observador e verifique se o indicador de saída dele se alinha com o fio. Uma verificação comum: coloque uma Lâmpada de Redstone temporária no fio e confirme se ela pulsa quando o bambu cresce.</li>
                 <li><strong>Adicione a coleta por Funil:</strong> Segure <kbd>Shift</kbd> e clique com o botão direito no bloco abaixo da raiz do bambu para colocar um Funil voltado para um Baú na lateral. O Funil coleta automaticamente os itens que caem e os deposita no Baú.</li>
                 <li><strong>Teste:</strong> Aguarde o bambu crescer um estágio. Sequência: o bambu cresce → o Observador detecta a mudança de estado → emite um pulso de 1 tick → o Pistão se estende → o bambu na altura 2 se quebra → solta os itens → o Funil coleta → os itens aparecem no Baú.</li>
@@ -785,7 +785,7 @@
 
             <div class="callout cw" style="margin-top:10px">
                 <span class="ci">⚠️</span>
-                <div><strong>Erro da Obsidiana:</strong> Os alunos colocam a fonte de Lava diretamente adjacente alla fonte de Água (espaço zero). Isso produz Obsidiana, não Pedregulho, porque ambas são agora fontes estacionárias se tocando diretamente. A Obsidiana requer uma Picareta de Diamante para ser minerada e não pode ser quebrada no estágio do Módulo 1. Sempre reforce a regra do espaço de 1 bloco antes de os alunos colocarem a Lava.</div>
+                <div><strong>Erro da Obsidiana:</strong> Os alunos colocam a fonte de Lava diretamente adjacente à fonte de Água (espaço zero). Isso produz Obsidiana, não Pedregulho, porque ambas são agora fontes estacionárias se tocando diretamente. A Obsidiana requer uma Picareta de Diamante para ser minerada e não pode ser quebrada no estágio do Módulo 1. Sempre reforce a regra do espaço de 1 bloco antes de os alunos colocarem a Lava.</div>
             </div>
         </div>
 
@@ -839,7 +839,7 @@
                         <td class="td-err">O comando <code>/code</code> digitado no chat não produz resposta — o MakeCode não abre</td>
                         <td>"Enable Code Builder" não foi ativado nas configurações do mundo; ou o dispositivo do aluno está offline (o editor do MakeCode carrega a partir de uma CDN remota)</td>
                         <td>Feche o mundo. Abra as configurações do mundo (ícone de lápis). Alterne "Enable Code Builder" para ON. Reentre no mundo. Tente novamente <code>/code</code>. Se ainda assim falhar, verifique a conectividade com a internet no dispositivo do aluno — o MakeCode não pode carregar sem uma conexão.</td>
-                        <td class="td-fix">"Passo 1 do Check de Pré-Voo: abra o mundo, digite /code. If edittor opens = green. Se der em nada = verifique o Code Builder nas configurações do mundo antes de os alunos entrarem."</td>
+                        <td class="td-fix">"Passo 1 do Check de Pré-Voo: abra o mundo, digite /code. Se o editor abrir = sinal verde. Se der em nada = verifique o Code Builder nas configurações do mundo antes de os alunos entrarem."</td>
                     </tr>
                 </tbody>
             </table>

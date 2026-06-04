@@ -271,7 +271,7 @@
 
         <div class="card">
             <h4>Por que o Módulo 3 é o Ponto de Virada Conceitual</h4>
-            <p>Os Módulos 1 and 2 usaram o MakeCode para automatizar construções físicas — o programa rodava uma vez e produzia um resultado estático. O Módulo 3 introduz a <strong>programação reativa e interativa</strong>: código que espera algo acontecer no mundo do jogo para então responder. Esse é o paradigma fundamental de praticamente todos os softwares do mundo real, desde aplicativos móveis até motores de jogos. Os alunos não estão mais apenas construindo máquinas — eles estão construindo <em>experiências</em>.</p>
+            <p>Os Módulos 1 e 2 usaram o MakeCode para automatizar construções físicas — o programa rodava uma vez e produzia um resultado estático. O Módulo 3 introduz a <strong>programação reativa e interativa</strong>: código que espera algo acontecer no mundo do jogo para então responder. Esse é o paradigma fundamental de praticamente todos os softwares do mundo real, desde aplicativos móveis até motores de jogos. Os alunos não estão mais apenas construindo máquinas — eles estão construindo <em>experiências</em>.</p>
             <p style="margin-top:8px">Os três conceitos introduzidos — eventos, variáveis e condicionais — são suficientes para construir qualquer jogo simples. Até o final deste módulo, os alunos terão escrito seu primeiro programa interativo completo.</p>
         </div>
 
@@ -300,7 +300,7 @@
             <span class="ci">⚠️</span>
             <div>
                 <strong>Erro Crítico: Código Posicionado Fora do Bloco de Evento</strong><br>
-                Este é o erro de programação mais comum no Módulo 3. O alunos colocam o bloco "alterar variável por 1" FORA do invólucro do bloco de evento. Quando isso acontece, a alteração da variável é executada uma única vez no carregamento do programa (quando o comando /code roda), e não a cada vez que o evento dispara.<br>
+                Este é o erro de programação mais comum no Módulo 3. Os alunos colocam o bloco "alterar variável por 1" FORA do invólucro do bloco de evento. Quando isso acontece, a alteração da variável é executada uma única vez no carregamento do programa (quando o comando /code roda), e não a cada vez que o evento dispara.<br>
                 <div class="code-block" style="margin-top:8px;background:#2a0000;border-color:#B91C1C">
                     <span style="color:#F87171">ERRADO — a pontuação muda apenas no início do programa, não ao caminhar:</span><br>
                     <span class="ck">ao caminhar do jogador</span> { ← bloco de evento vazio<br>
@@ -423,13 +423,13 @@
                     <tr>
                         <td class="mc">A condição Se–Então nunca é acionada, mesmo quando a pontuação claramente ultrapassa a meta</td>
                         <td>O operador de comparação está incorreto (usando = em vez de ≥); OU o nome da variável na condição está escrito de forma diferente da variável que está sendo incrementada (o MakeCode diferencia maiúsculas de minúsculas nos nomes das variáveis)</td>
-                        <td>Verifique o operador: se a meta é a pontuação chegar a 10 ou mais, a condição deve ser score ≥ 10, não score = 10 (que só dispara exatamente no 10). Verifique a grafia: "Score" and "score" são variáveis diferentes no MakeCode.</td>
+                        <td>Verifique o operador: se a meta é a pontuação chegar a 10 ou mais, a condição deve ser score ≥ 10, não score = 10 (que só dispara exatamente no 10). Verifique a grafia: "Score" e "score" são variáveis diferentes no MakeCode.</td>
                         <td class="fc">"Use ≥ (maior ou igual) para condições de vitória, não = (exatamente igual) — o jogador pode passar direto pelo número exato."</td>
                     </tr>
                     <tr>
                         <td class="mc">A condição de vitória do minijogo dispara a cada passo assim que a pontuação chega a 10 — os fogos de artifício tocam repetidamente</td>
                         <td>A pontuação não está sendo resetada para 0 dentro do bloco da condição de vitória; após vencer, a pontuação permanece ≥ 10, de modo que cada passo subsequente reativa a condição de vitória</td>
-                        <td>Adicione "definir score = 0" como a última linha dentro do bloco se-então de vitória. Alternativamente, introduza uma variável booleana "gameActive": defina-as como falso na vitória e envolva todo o evento Ao Caminhar em "se gameActive = verdadeiro então".</td>
+                        <td>Adicione "definir score = 0" como a última linha dentro do bloco se-então de vitória. Alternativamente, introduza uma variável booleana "gameActive": defina-a como falso na vitória e envolva todo o evento Ao Caminhar em "se gameActive = verdadeiro então".</td>
                         <td class="fc">"Depois de vencer, o que deve acontecer com a pontuação? Ou resete para 0 ou desligue o jogo. Se você não resetar, a vitória disparará para sempre."</td>
                     </tr>
                     <tr>

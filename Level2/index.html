@@ -3,16 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Minecraft Education — Tutor Training | Kodland</title>
+<title>Minecraft Education Level 2 — Tutor Training | Kodland</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Minecraft Education palette — deep forest greens, creeper lime, stone */
   --lime:#7EC845;--lime-d:#68A836;--lime-glow:rgba(126,200,69,.25);
-  --accent:#4CAF50;--accent-d:#388E3C;
-  --stone:#8B9B7A;--stone-d:#6B7A5A;
-  --dirt:#6B4F2A;--dirt-d:#5A3E1F;
-  --sky:#2A4A3A;
+  --pink:#F03D9E;--pink-d:#C0307A;
   --ink:#0D1F0A;--ink2:#2A3D1F;--muted:#6B8A5A;
   --bg:#E8F5D8;--surface:#FFFFFF;--surface2:#F0F9E4;--border:#C8E8A0;
   --text:var(--ink);--text2:var(--ink2);--text-muted:var(--muted);
@@ -36,8 +32,6 @@ body{
   transition:background .25s,color .25s;
   display:flex;flex-direction:column;
 }
-
-/* ── PIXEL GRID TEXTURE ───────────────────────────────── */
 body::before{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background-image:
@@ -45,8 +39,6 @@ body::before{
     linear-gradient(90deg,rgba(126,200,69,.04) 1px,transparent 1px);
   background-size:32px 32px;
 }
-
-/* ── NAV ──────────────────────────────────────────────── */
 .nav{
   display:flex;align-items:center;justify-content:space-between;
   padding:0 28px;height:62px;
@@ -61,6 +53,7 @@ body::before{
 .logo-sub{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--lime-d)}
 [data-theme="dark"] .logo-sub{color:var(--lime)}
 .logo-div{width:1px;height:16px;background:var(--border);margin:0 4px}
+.nav-r{display:flex;align-items:center;gap:10px}
 .tbtn{
   width:38px;height:38px;border-radius:var(--rpill);
   background:var(--surface);border:2px solid var(--border);
@@ -68,8 +61,13 @@ body::before{
   font-size:16px;cursor:pointer;transition:all .15s;
 }
 .tbtn:hover{background:var(--lime);border-color:var(--lime-d)}
-
-/* ── HERO ─────────────────────────────────────────────── */
+.back-btn{
+  display:flex;align-items:center;gap:5px;padding:8px 14px;
+  border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);
+  color:var(--text2);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;
+  text-decoration:none;transition:all .15s;
+}
+.back-btn:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
 .hero{
   padding:72px 40px 56px;text-align:center;
   position:relative;flex:1;
@@ -80,25 +78,18 @@ body::before{
   background:radial-gradient(ellipse 80% 60% at 50% -10%,var(--lime-glow) 0%,transparent 70%);
   pointer-events:none;
 }
-/* Minecraft grass block accent bars */
 .hero::after{
   content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,var(--lime-d),var(--lime),var(--lime-d));
-  opacity:.6;
+  background:linear-gradient(90deg,var(--pink-d),var(--pink),var(--pink-d));
+  opacity:.7;
 }
-.hero-inner{position:relative;max-width:680px;margin:0 auto;width:100%;}
-
-/* Minecraft pickaxe + creeper icon */
+.hero-inner{position:relative;max-width:720px;margin:0 auto;width:100%;}
 .hero-icon{
   font-size:64px;display:block;margin-bottom:16px;
-  filter:drop-shadow(0 4px 12px rgba(126,200,69,.3));
+  filter:drop-shadow(0 4px 12px rgba(240,61,158,.3));
   animation:float 3s ease-in-out infinite;
 }
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
-}
-
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .eyebrow{
   display:inline-flex;align-items:center;gap:6px;
   background:var(--surface);border:2px solid var(--border);
@@ -107,6 +98,13 @@ body::before{
   color:var(--text2);margin-bottom:20px;
   text-transform:uppercase;letter-spacing:.8px;
 }
+.lv2-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--pink);color:#fff;border:2px solid var(--pink-d);
+  border-radius:var(--rpill);padding:3px 12px;
+  font-family:'Nunito',sans-serif;font-size:11px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.8px;margin-left:6px;
+}
 .hero h1{
   font-family:'Nunito',sans-serif;
   font-size:clamp(28px,5vw,48px);
@@ -114,35 +112,15 @@ body::before{
   color:var(--text);margin-bottom:16px;
 }
 .h-pill{
-  display:inline-block;background:var(--lime);color:var(--ink);
+  display:inline-block;background:var(--pink);color:#fff;
   border-radius:var(--rpill);padding:1px 18px;margin:0 2px;
-  font-size:.93em;border:2px solid var(--lime-d);
+  font-size:.93em;border:2px solid var(--pink-d);
 }
-[data-theme="dark"] .h-pill{background:var(--lime);color:var(--ink)}
-
 .hero-notice{
   font-size:13px;color:var(--text2);
   margin-top:20px;margin-bottom:0;
-  line-height:1.6;max-width:520px;margin-left:auto;margin-right:auto;
+  line-height:1.6;max-width:540px;margin-left:auto;margin-right:auto;
 }
-
-/* ── VIDEO TOGGLE ─────────────────────────────────────── */
-.video-wrap{width:100%;max-width:680px;margin:28px auto 0;}
-.video-toggle-btn{
-  display:flex;align-items:center;gap:8px;margin:0 auto;
-  background:var(--surface);border:2px solid var(--border);
-  border-radius:40px;padding:10px 22px;
-  font-family:'Nunito',sans-serif;font-weight:900;font-size:14px;
-  color:var(--text);cursor:pointer;transition:all .2s;
-  box-shadow:var(--shadow);
-}
-.video-toggle-btn:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
-.video-frame{
-  display:none;margin-top:14px;border-radius:14px;overflow:hidden;
-  box-shadow:0 6px 32px rgba(0,0,0,.18);border:2px solid var(--border);background:#000;
-}
-
-/* ── REGION GRID ──────────────────────────────────────── */
 .region-grid{
   display:grid;grid-template-columns:repeat(2,1fr);
   gap:16px;max-width:720px;margin:32px auto 0;width:100%;
@@ -157,43 +135,26 @@ body::before{
   outline:1.5px solid var(--border);outline-offset:-5px;
   position:relative;overflow:hidden;
 }
-/* Minecraft dirt/grass stripe at bottom */
 .region-card::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,var(--lime-d),var(--lime),var(--lime-d));
+  background:linear-gradient(90deg,var(--pink-d),var(--pink),var(--pink-d));
   opacity:0;transition:opacity .2s;
 }
 .region-card:hover::after{opacity:1}
 .region-card:hover{
   transform:translateY(-3px);
   box-shadow:0 8px 28px rgba(0,0,0,.18),inset 0 2px 8px rgba(0,0,0,.06);
-  border-color:var(--lime-d);
+  border-color:var(--pink-d);
 }
-[data-theme="dark"] .region-card:hover{border-color:var(--lime)}
-
-.region-flag{
-  font-size:40px;line-height:1;
-  filter:drop-shadow(0 1px 3px rgba(0,0,0,.15));
-}
-.region-name{
-  font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;
-  color:var(--text);text-align:center;
-  text-shadow:0 1px 3px rgba(0,0,0,.08);
-}
-.region-desc{
-  font-size:13px;color:var(--text2);line-height:1.5;text-align:center;
-  text-shadow:0 1px 2px rgba(0,0,0,.06);
-}
-[data-theme="dark"] .region-flag{filter:none}
-[data-theme="dark"] .region-name,.region-desc{text-shadow:none}
-
+[data-theme="dark"] .region-card:hover{border-color:var(--pink)}
+.region-flag{font-size:40px;line-height:1;filter:drop-shadow(0 1px 3px rgba(0,0,0,.15));}
+.region-name{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--text);text-align:center;}
+.region-desc{font-size:13px;color:var(--text2);line-height:1.5;text-align:center;}
 .region-cta{
   font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;
-  color:var(--lime-d);display:flex;align-items:center;gap:4px;margin-top:4px;
+  color:var(--pink-d);display:flex;align-items:center;gap:4px;margin-top:4px;
 }
-[data-theme="dark"] .region-cta{color:var(--lime)}
-
-/* ── MODAL ────────────────────────────────────────────── */
+[data-theme="dark"] .region-cta{color:var(--pink)}
 .modal-overlay{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.50);backdrop-filter:blur(4px);
@@ -206,19 +167,16 @@ body::before{
   width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);
 }
 .modal-icon{font-size:40px;margin-bottom:12px}
-.modal h3{
-  font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;
-  color:var(--text);margin-bottom:10px;
-}
+.modal h3{font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:10px;}
 .modal p{font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:24px}
 .modal-btns{display:flex;gap:10px}
 .modal-yes{
-  flex:1;padding:13px;background:var(--lime);color:var(--ink);
+  flex:1;padding:13px;background:var(--pink);color:#fff;
   border:none;border-radius:var(--rpill);
   font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;
   cursor:pointer;transition:all .15s;
 }
-.modal-yes:hover{background:var(--lime-d);transform:translateY(-1px)}
+.modal-yes:hover{background:var(--pink-d);transform:translateY(-1px)}
 .modal-no{
   flex:1;padding:13px;background:var(--surface2);color:var(--text2);
   border:2px solid var(--border);border-radius:var(--rpill);
@@ -226,14 +184,11 @@ body::before{
   cursor:pointer;transition:all .15s;
 }
 .modal-no:hover{background:var(--border);color:var(--text)}
-
-/* ── FOOTER ───────────────────────────────────────────── */
 footer{
   text-align:center;padding:20px 24px;font-size:11px;
   color:var(--text2);border-top:1px solid var(--border);
   margin-top:auto;line-height:1.7;opacity:0.7;
 }
-
 @media(max-width:640px){
   .hero{padding-left:18px;padding-right:18px}
   .region-grid{grid-template-columns:1fr}
@@ -249,96 +204,88 @@ footer{
     <div class="logo-div"></div>
     <span class="logo-sub">Minecraft Education Training</span>
   </a>
-  <button class="tbtn" id="theme-btn" title="Toggle dark mode" onclick="toggleTheme()">🌙</button>
+  <div class="nav-r">
+    <a class="back-btn" href="../index.html">← Level 1</a>
+    <button class="tbtn" id="theme-btn" title="Toggle dark mode" onclick="toggleTheme()">🌙</button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <span class="hero-icon">⛏️</span>
-    <div class="eyebrow">🎓 Tutor Training Programme</div>
-    <h1>Choose Your<br><span class="h-pill">Region</span><br>To Get Started</h1>
+    <span class="hero-icon">🚀</span>
+    <div class="eyebrow">🎮 Tutor Training Programme <span class="lv2-badge">Level 2</span></div>
+    <h1>Choose Your<br><span class="h-pill">Region</span><br>For Level 2 Training</h1>
 
-    <p class="hero-notice">⚠️ Each region has its own training track and class schedule. Make sure you select the region you applied for — your progress is saved per browser.</p>
+    <p class="hero-notice">⚠️ This is the <strong>Level 2</strong> training track. Select your region below to continue your Minecraft Education tutor preparation — building on everything you learned in Level 1.</p>
 
     <!-- REGION CARDS -->
     <div class="region-grid" style="margin-top:32px;">
 
-      <a class="region-card" onclick="confirmNav('ENG_Updated_McLVL1/En.html')" href="#">
+      <a class="region-card" onclick="confirmNav('EnLv2.html')" href="#">
         <div class="region-flag">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="5"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="13"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="8"/></svg>
         </div>
         <div class="region-name">English</div>
-        <div class="region-desc">For tutors in the <strong>English-speaking regions</strong> — includes the English training track and class schedule.</div>
-        <div class="region-cta">Open English training →</div>
+        <div class="region-desc">For tutors in <strong>English-speaking regions</strong> — Level 2 training track with DST assessment.</div>
+        <div class="region-cta">Open English Level 2 →</div>
       </a>
 
-      <a class="region-card" onclick="confirmNav('IT_Updated_McLVL1/it.html')" href="#">
+      <a class="region-card" onclick="confirmNav('ItLv2.html')" href="#">
         <div class="region-flag">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg>
         </div>
         <div class="region-name">Italiano</div>
-        <div class="region-desc">Per i tutor nella <strong>regione italiana</strong> — include il percorso di formazione italiano e il programma delle lezioni.</div>
-        <div class="region-cta">Apri formazione italiana →</div>
+        <div class="region-desc">Per i tutor nella <strong>regione italiana</strong> — percorso di formazione Livello 2 con valutazione DST.</div>
+        <div class="region-cta">Apri Livello 2 italiano →</div>
       </a>
 
-      <a class="region-card" onclick="confirmNav('LATAM_Updated_McLVL1/Es.html')" href="#">
+      <a class="region-card" onclick="confirmNav('EsLv2.html')" href="#">
         <div class="region-flag">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg>
         </div>
         <div class="region-name">Español</div>
-        <div class="region-desc">Para tutores en la <strong>región de habla hispana</strong> — incluye el programa de formación en español y el programa de clases.</div>
-        <div class="region-cta">Abrir formación en español →</div>
+        <div class="region-desc">Para tutores en la <strong>región de habla hispana</strong> — programa de Nivel 2 con evaluación DST.</div>
+        <div class="region-cta">Abrir Nivel 2 en español →</div>
       </a>
 
-      <a class="region-card" onclick="confirmNav('POL_Updated_McLVL1/Pl.html')" href="#">
+      <a class="region-card" onclick="confirmNav('PlLv2.html')" href="#">
         <div class="region-flag">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="60" height="20" fill="#fff"/><rect y="20" width="60" height="20" fill="#DC143C"/></svg>
         </div>
         <div class="region-name">Polski</div>
-        <div class="region-desc">Dla korepetytorów w <strong>regionie polskim</strong> — zawiera polską ścieżkę szkoleniową i harmonogram zajęć.</div>
-        <div class="region-cta">Otwórz szkolenie polskie →</div>
+        <div class="region-desc">Dla korepetytorów w <strong>regionie polskim</strong> — program szkoleniowy Poziom 2 z oceną DST.</div>
+        <div class="region-cta">Otwórz Poziom 2 po polsku →</div>
       </a>
 
-      <a class="region-card" onclick="confirmNav('PT_Updated_McLVL1/Pt.html')" href="#">
+      <a class="region-card" onclick="confirmNav('PtLv2.html')" href="#">
         <div class="region-flag">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="60" height="40" fill="#009C3B"/><polygon points="30,4 56,20 30,36 4,20" fill="#FFDF00"/><circle cx="30" cy="20" r="9" fill="#002776"/></svg>
         </div>
         <div class="region-name">Português</div>
-        <div class="region-desc">Para tutores na <strong>região de língua portuguesa</strong> — inclui o programa de formação em português e o programa de aulas.</div>
-        <div class="region-cta">Abrir formação em português →</div>
+        <div class="region-desc">Para tutores na <strong>região de língua portuguesa</strong> — programa de Nível 2 com avaliação DST.</div>
+        <div class="region-cta">Abrir Nível 2 em português →</div>
       </a>
 
-      <a class="region-card" onclick="confirmNav('TR_Updated_McLVL1/Tr.html')" href="#">
+      <a class="region-card" onclick="confirmNav('TrLv2.html')" href="#">
         <div class="region-flag">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="60" height="40" fill="#E30A17"/><circle cx="22" cy="20" r="11" fill="#fff"/><circle cx="26" cy="20" r="8.5" fill="#E30A17"/><polygon points="35,20 43,14 41,20 43,26" fill="#fff"/><polygon points="38.5,20 45,17 44,20 45,23" fill="#fff"/></svg>
         </div>
         <div class="region-name">Türkiye</div>
-        <div class="region-desc">Türkiye'deki tutorlar için <strong>Türkçe bölge</strong> — Türkçe eğitim programını ve ders programını içerir.</div>
-        <div class="region-cta">Türkçe eğitimi aç →</div>
+        <div class="region-desc">Türkiye'deki tutorlar için <strong>Türkçe bölge</strong> — DST değerlendirmesiyle Seviye 2 eğitim programı.</div>
+        <div class="region-cta">Türkçe Seviye 2'yi aç →</div>
       </a>
 
-      <a class="region-card" onclick="confirmNav('ID_Updated_McLVL1/Id.html')" href="#">
+      <a class="region-card" onclick="confirmNav('IdLv2.html')" href="#">
         <div class="region-flag">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="40" height="27" style="vertical-align:middle;border-radius:3px"><rect width="60" height="20" fill="#CE1126"/><rect y="20" width="60" height="20" fill="#fff"/></svg>
         </div>
         <div class="region-name">Indonesia</div>
-        <div class="region-desc">Untuk tutor di <strong>wilayah Indonesia</strong> — termasuk program pelatihan Bahasa Indonesia dan jadwal kelas.</div>
-        <div class="region-cta">Buka pelatihan Bahasa Indonesia →</div>
+        <div class="region-desc">Untuk tutor di <strong>wilayah Indonesia</strong> — program Level 2 dengan penilaian DST.</div>
+        <div class="region-cta">Buka Level 2 Bahasa Indonesia →</div>
       </a>
 
     </div><!-- /region-grid -->
-
-    <!-- LEVEL 2 DIRECT ACCESS -->
-    <div style="margin-top:32px;padding-top:24px;border-top:2px solid var(--border);text-align:center;">
-      <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">Already completed Minecraft Level 1?</p>
-      <a href="Level2/index.html"
-         style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:999px;background:#F03D9E;color:#fff;font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;border:2px solid #C0307A;text-decoration:none;transition:all .15s;letter-spacing:.2px;"
-         onmouseover="this.style.background='#C0307A';this.style.transform='translateY(-2px)'"
-         onmouseout="this.style.background='#F03D9E';this.style.transform='translateY(0)'">
-        🚀 Go Directly to Minecraft Level 2
-      </a>
-    </div>
 
   </div><!-- /hero-inner -->
 </section>
@@ -346,9 +293,9 @@ footer{
 <!-- CONFIRMATION MODAL -->
 <div class="modal-overlay" id="nav-modal">
   <div class="modal">
-    <div class="modal-icon" id="modal-flag">⛏️</div>
-    <h3 id="modal-title">Open Training</h3>
-    <p id="modal-body">This will open the training for your region. Make sure you applied for this region before proceeding.</p>
+    <div class="modal-icon" id="modal-flag">🚀</div>
+    <h3 id="modal-title">Open Level 2 Training</h3>
+    <p id="modal-body">This will open the Level 2 training for your region.</p>
     <div class="modal-btns">
       <button class="modal-no" onclick="document.getElementById('nav-modal').classList.remove('show')">Cancel</button>
       <button class="modal-yes" id="modal-confirm-btn">Open →</button>
@@ -362,7 +309,6 @@ footer{
 </footer>
 
 <script>
-// ── Theme ────────────────────────────────────────────────
 const saved = localStorage.getItem('kl-mc-theme');
 if(saved) document.documentElement.setAttribute('data-theme', saved);
 function toggleTheme(){
@@ -374,42 +320,28 @@ function toggleTheme(){
 }
 if(saved === 'dark') document.getElementById('theme-btn').textContent = '☀️';
 
-// ── Video toggle ─────────────────────────────────────────
-function toggleIntroVideo(btn){
-  const wrap = document.getElementById('intro-video-wrap');
-  const video = document.getElementById('intro-video');
-  const label = btn.querySelector('.intro-btn-label');
-  const icon = btn.querySelector('span:first-child');
-  const open = wrap.style.display === 'none' || wrap.style.display === '';
-  wrap.style.display = open ? 'block' : 'none';
-  label.textContent = open ? 'Hide Intro Video' : 'Watch Before Starting';
-  icon.textContent = open ? '✕' : '▶';
-  if(!open) video.pause();
-}
-
-// ── Region navigation modal ──────────────────────────────
 const regionData = {
-  'ENG_Updated_McLVL1/En.html': { flag:'[GB]', title:'Open English Training',
-    body:'This will open the English-region training track with its own schedule. Make sure you applied for the English region before proceeding.' },
-  'IT_Updated_McLVL1/it.html': { flag:'[IT]', title:'Apri Formazione Italiana',
-    body:'Questo aprirà il percorso di formazione per la regione italiana con il proprio programma. Assicurati di aver fatto domanda per la regione italiana prima di procedere.' },
-  'LATAM_Updated_McLVL1/Es.html': { flag:'[ES]', title:'Abrir Formación en Español',
-    body:'Esto abrirá la ruta de formación para la región de habla hispana con su propio programa. Asegúrate de haber solicitado la región en español antes de continuar.' },
-  'POL_Updated_McLVL1/Pl.html': { flag:'[PL]', title:'Otwórz Szkolenie Polskie',
-    body:'To otworzy ścieżkę szkoleniową dla regionu polskiego z własnym harmonogramem. Upewnij się, że złożyłeś aplikację do regionu polskiego przed kontynuowaniem.' },
-  'PT_Updated_McLVL1/Pt.html': { flag:'[PT]', title:'Abrir Formação em Português',
-    body:'Isso abrirá a trilha de formação para a região de língua portuguesa com seu próprio cronograma. Certifique-se de ter se inscrito para a região em português antes de prosseguir.' },
-  'TR_Updated_McLVL1/Tr.html': { flag:'🇹🇷', title:'Türkçe Eğitimi Aç',
-    body:'Bu, Türkiye bölgesi için kendi ders programıyla birlikte Türkçe eğitim rotasını açacaktır. Devam etmeden önce Türkiye bölgesine başvurduğunuzdan emin olun.' },
-  'ID_Updated_McLVL1/Id.html': { flag:'🇮🇩', title:'Buka Pelatihan Indonesia',
-    body:'Ini akan membuka jalur pelatihan untuk wilayah Indonesia dengan jadwal tersendiri. Pastikan Anda telah mendaftar untuk wilayah Indonesia sebelum melanjutkan.' },
+  'EnLv2.html': { flag:'🇬🇧', title:'Open English Level 2',
+    body:'This will open the Level 2 English training track, including all 9 modules and the Demonstration Skills Test. Make sure you have completed Level 1 before proceeding.' },
+  'ItLv2.html': { flag:'🇮🇹', title:'Apri Livello 2 Italiano',
+    body:'Questo aprirà il percorso di formazione Livello 2 italiano, con tutti i 9 moduli e la valutazione DST. Assicurati di aver completato il Livello 1 prima di procedere.' },
+  'EsLv2.html': { flag:'🇪🇸', title:'Abrir Nivel 2 en Español',
+    body:'Esto abrirá el programa de Nivel 2 en español, con los 9 módulos y la evaluación DST. Asegúrate de haber completado el Nivel 1 antes de continuar.' },
+  'PlLv2.html': { flag:'🇵🇱', title:'Otwórz Poziom 2 po Polsku',
+    body:'To otworzy ścieżkę szkoleniową Poziom 2 w języku polskim, z wszystkimi 9 modułami i oceną DST. Upewnij się, że ukończyłeś Poziom 1 przed kontynuowaniem.' },
+  'PtLv2.html': { flag:'🇧🇷', title:'Abrir Nível 2 em Português',
+    body:'Isso abrirá o programa de Nível 2 em português, com todos os 9 módulos e a avaliação DST. Certifique-se de ter concluído o Nível 1 antes de prosseguir.' },
+  'TrLv2.html': { flag:'🇹🇷', title:'Türkçe Seviye 2\'yi Aç',
+    body:'Bu, 9 modül ve DST değerlendirmesiyle Türkçe Seviye 2 eğitim rotasını açacaktır. Devam etmeden önce Seviye 1\'i tamamladığınızdan emin olun.' },
+  'IdLv2.html': { flag:'🇮🇩', title:'Buka Level 2 Bahasa Indonesia',
+    body:'Ini akan membuka jalur pelatihan Level 2 dalam Bahasa Indonesia, dengan semua 9 modul dan penilaian DST. Pastikan Anda telah menyelesaikan Level 1 sebelum melanjutkan.' },
 };
 
 let pendingUrl = '';
 function confirmNav(url){
   event.preventDefault();
   pendingUrl = url;
-  const d = regionData[url] || { flag:'⛏️', title:'Open Training', body:'Open this region\'s training?' };
+  const d = regionData[url] || { flag:'🚀', title:'Open Level 2 Training', body:'Open this region\'s Level 2 training?' };
   document.getElementById('modal-flag').textContent = d.flag;
   document.getElementById('modal-title').textContent = d.title;
   document.getElementById('modal-body').textContent = d.body;

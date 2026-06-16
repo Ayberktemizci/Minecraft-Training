@@ -16,8 +16,8 @@
   .all-done-banner .btn-row{justify-content:center;position:relative}
   .all-done-banner .btn-library{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--rpill);background:var(--lime);color:var(--ink);font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;border:2px solid var(--lime-d);text-decoration:none;transition:all .15s;letter-spacing:.2px}
   .all-done-banner .btn-library:hover{background:var(--lime-d);transform:translateY(-2px);box-shadow:0 6px 20px rgba(196,240,70,.4)}
-  .all-done-banner .btn-dst{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--rpill);background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;border:2px solid rgba(255,255,255,.2);text-decoration:none;transition:all .15s}
-  .all-done-banner .btn-dst:hover{background:rgba(255,255,255,.2);color:#fff}
+  .all-done-banner .btn-lvl2{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--rpill);background:#F03D9E;color:#fff;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;border:2px solid #C0307A;text-decoration:none;transition:all .15s;letter-spacing:.2px}
+  .all-done-banner .btn-lvl2:hover{background:#C0307A;transform:translateY(-2px);box-shadow:0 6px 20px rgba(240,61,158,.4)}
   .phase-strip{margin-top:24px;padding-top:20px;border-top:2px solid var(--border)}
   .phase-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
   @media(max-width:560px){.phase-grid{grid-template-columns:1fr}}
@@ -64,10 +64,10 @@
 <section class="module-section">
   <div id="all-done-banner" class="all-done-banner">
     <h3>🏆 Kelima Modul Selesai!</h3>
-    <p>Sebelum mengikuti Digital Skill Test, tinjau pelajaran referensi beranotasi di Perpustakaan Pelajaran Sukses. Mempelajari sesi nyata yang dinilai akan mengasah kemampuan Anda menerapkan semua yang telah dipelajari.</p>
+    <p>Anda telah menyelesaikan semua modul pelatihan Level 1. Tinjau Perpustakaan Pelajaran Sukses, lalu lanjutkan perjalanan Anda dengan Minecraft Level 2.</p>
     <div class="btn-row">
       <a href="IdDST.html#library" class="btn-library">📖 Lihat Referensi Pelajaran Sukses →</a>
-      <a href="IdDST.html#dst-section" class="btn-dst">Lewati ke Digital Skill Test</a>
+      <a href="LEVEL_2_URL_PLACEHOLDER" class="btn-lvl2">🚀 Lanjutkan ke Minecraft Level 2 →</a>
     </div>
   </div>
   <div class="section-label">Modul Pelatihan</div>
@@ -130,7 +130,6 @@ function renderModules() {
   document.getElementById('top-progress').style.width  = `${passed / 5 * 100}%`;
   if (allDone) document.getElementById('all-done-banner').classList.add('show');
   const libraryReady = allDone;
-  const dstReady     = allDone;
   document.getElementById('phase-grid').innerHTML = `
     <a href="IdDST.html#library" class="phase-card${libraryReady ? '' : ' locked-card'}">
       <div class="phase-icon">📖</div>
@@ -143,14 +142,15 @@ function renderModules() {
         </div>
       </div>
     </a>
-    <a href="IdDST.html#dst-section" class="phase-card${dstReady ? '' : ' locked-card'}">
-      <div class="phase-icon">🎯</div>
+    <!-- LEVEL_2_URL_PLACEHOLDER — replace with actual Level 2 URL when available -->
+    <a href="LEVEL_2_URL_PLACEHOLDER" class="phase-card">
+      <div class="phase-icon">🚀</div>
       <div class="phase-body">
-        <div class="phase-label">Fase 7 — Penilaian Akhir</div>
-        <div class="phase-title">Digital Skill Test</div>
-        <div class="phase-desc">Ujian kesiapan 20 pertanyaan yang mencakup keterampilan teknis dan pedagogi. Nilai 80% atau lebih diperlukan untuk mengajar secara mandiri.</div>
-        <div class="phase-status ${dstReady ? 'ps-ready' : 'ps-locked'}">
-          ${dstReady ? '▶ Ikuti Tes' : '🔒 Selesaikan semua modul dulu'}
+        <div class="phase-label">Fase 7 — Lanjutkan</div>
+        <div class="phase-title">Minecraft Level 2</div>
+        <div class="phase-desc">Anda telah menyelesaikan Level 1. Lanjutkan pelatihan di Minecraft Level 2, di mana Digital Skill Test menanti di akhir.</div>
+        <div class="phase-status ps-ready">
+          ▶ Lanjutkan ke Level 2
         </div>
       </div>
     </a>`;

@@ -169,7 +169,7 @@ function submitQuiz() {
       ${passed?' Luar biasa — Modul 5 selesai!':` Nilai <strong>${PASS_PCT}%</strong> diperlukan. Tinjau materi dan coba lagi.`}
     </div>`;
   document.getElementById('result-actions').innerHTML = passed
-    ? `<a href="IdDST.html#library" class="btn-primary">Lihat Referensi Pelajaran Sukses →</a><button class="btn-outline" onclick="goHome()">← Dasbor</button>`
+    ? `<a href="IdDST.html#library" class="btn-primary">📖 Lihat Referensi Pelajaran Sukses →</a><a href="LEVEL_2_URL_PLACEHOLDER" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:999px;background:#F03D9E;color:#fff;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;border:2px solid #C0307A;text-decoration:none;">🚀 Lanjutkan ke Minecraft Level 2 →</a><button class="btn-outline" onclick="goHome()">← Dasbor</button>`
     : `<button class="btn-primary" onclick="retake()">Ulangi Tes</button><a href="IdModule5.html" class="btn-outline">← Tinjau Modul 5</a>`;
   window.scrollTo(0,0);
 }

@@ -121,25 +121,27 @@
                 box-shadow: 0 6px 20px rgba(196,240,70,.35);
             }
 
-        .btn-skip-dst {
+        .btn-lvl2 {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 10px 20px;
+            gap: 8px;
+            padding: 12px 28px;
             border-radius: var(--rpill);
-            background: rgba(255,255,255,.08);
-            color: rgba(255,255,255,.7);
+            background: #F03D9E;
+            color: #fff;
             font-family: 'Nunito',sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            border: 2px solid rgba(255,255,255,.18);
+            font-size: 14px;
+            font-weight: 900;
+            border: 2px solid #C0307A;
             text-decoration: none;
             transition: all .15s;
+            letter-spacing: .2px;
         }
 
-            .btn-skip-dst:hover {
-                background: rgba(255,255,255,.18);
-                color: #fff;
+            .btn-lvl2:hover {
+                background: #C0307A;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(240,61,158,.4);
             }
     </style>
 </head>
@@ -330,14 +332,13 @@
         </div>`;
 
             if (passed) {
-                // Redirección guiada a través de la biblioteca antes del examen práctico final (DST)
                 document.getElementById('result-actions').innerHTML = `
           <div class="next-step-card">
-            <h4>📖 Un paso más antes del examen final</h4>
-            <p>Revisa la Biblioteca de Lecciones Exitosas: una sesión real calificada con anotaciones cronometradas. Estudiarla agudizará tu capacidad para aplicar todo lo que has aprendido antes de presentar el Digital Skill Test.</p>
+            <h4>🏆 Nivel 1 Completado — La Formación Continúa en el Nivel 2</h4>
+            <p>Has completado los cinco módulos del Nivel 1. Revisa la Biblioteca de Lecciones Exitosas, luego continúa tu camino con Minecraft Nivel 2, donde te espera el Digital Skill Test final.</p>
             <div class="btn-row">
-              <a href="EsDST.html#library" class="btn-library-cta">Ver sesión de referencia exitosa →</a>
-              <a href="EsDST.html#dst-section" class="btn-skip-dst">Omitir e ir al Digital Skill Test</a>
+              <a href="EsDST.html#library" class="btn-library-cta">📖 Ver sesión de referencia exitosa →</a>
+              <a href="LEVEL_2_URL_PLACEHOLDER" class="btn-lvl2">🚀 Continuar con Minecraft Nivel 2 →</a>
             </div>
           </div>
           <div class="btn-row center" style="margin-top:14px">

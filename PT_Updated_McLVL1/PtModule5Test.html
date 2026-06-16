@@ -121,25 +121,27 @@
                 box-shadow: 0 6px 20px rgba(196,240,70,.35);
             }
 
-        .btn-skip-dst {
+        .btn-lvl2 {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 10px 20px;
+            gap: 8px;
+            padding: 12px 28px;
             border-radius: var(--rpill);
-            background: rgba(255,255,255,.08);
-            color: rgba(255,255,255,.7);
+            background: #F03D9E;
+            color: #fff;
             font-family: 'Nunito',sans-serif;
-            font-size: 12px;
-            font-weight: 700;
-            border: 2px solid rgba(255,255,255,.18);
+            font-size: 14px;
+            font-weight: 900;
+            border: 2px solid #C0307A;
             text-decoration: none;
             transition: all .15s;
+            letter-spacing: .2px;
         }
 
-            .btn-skip-dst:hover {
-                background: rgba(255,255,255,.18);
-                color: #fff;
+            .btn-lvl2:hover {
+                background: #C0307A;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(240,61,158,.4);
             }
     </style>
 </head>
@@ -330,14 +332,13 @@
         </div>`;
 
             if (passed) {
-                // Rota através da Biblioteca antes do DST
                 document.getElementById('result-actions').innerHTML = `
           <div class="next-step-card">
-            <h4>📖 Mais Um Passo Antes do Teste Final</h4>
-            <p>Revise a Biblioteca de Aulas de Sucesso — uma sessão real avaliada com 16 anotações com marcação de tempo. Estudá-la aprimorará sua habilidade de aplicar tudo o que aprendeu antes de fazer o Digital Skill Test.</p>
+            <h4>🏆 Nível 1 Concluído — O Treinamento Continua no Nível 2</h4>
+            <p>Você concluiu todos os cinco módulos do Nível 1. Revise a Biblioteca de Aulas de Sucesso, depois continue sua jornada com o Minecraft Nível 2, onde o Digital Skill Test final aguarda.</p>
             <div class="btn-row">
-              <a href="PtDST.html#library" class="btn-library-cta">Ver Referência de Aula de Sucesso →</a>
-              <a href="PtDST.html#dst-section" class="btn-skip-dst">Pular para o Digital Skill Test</a>
+              <a href="PtDST.html#library" class="btn-library-cta">📖 Ver Referência de Aula de Sucesso →</a>
+              <a href="LEVEL_2_URL_PLACEHOLDER" class="btn-lvl2">🚀 Continuar com o Minecraft Nível 2 →</a>
             </div>
           </div>
           <div class="btn-row center" style="margin-top:14px">

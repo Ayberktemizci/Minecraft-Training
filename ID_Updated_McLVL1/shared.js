@@ -91,7 +91,6 @@ function initShared() {
 function goHome() { window.location.href = 'Id.html'; }
 function goModule(n) { window.location.href = `IdModule${n}.html`; }
 function goTest(n) { window.location.href = `IdModule${n}Test.html`; }
-function goDST() { window.location.href = 'IdDST.html'; }
 
 function injectRegionSwitcher() {
   const navR = document.querySelector('.nav-r');

@@ -33,14 +33,14 @@
     transition:all .15s; letter-spacing:.2px;
   }
   .all-done-banner .btn-library:hover{ background:var(--lime-d); transform:translateY(-2px); box-shadow:0 6px 20px rgba(196,240,70,.4); }
-  .all-done-banner .btn-dst{
+  .all-done-banner .btn-lvl2{
     display:inline-flex; align-items:center; gap:8px;
-    padding:10px 22px; border-radius:var(--rpill);
-    background:rgba(255,255,255,.1); color:rgba(255,255,255,.8);
-    font-family:'Nunito',sans-serif; font-size:13px; font-weight:700;
-    border:2px solid rgba(255,255,255,.2); text-decoration:none; transition:all .15s;
+    padding:12px 28px; border-radius:var(--rpill);
+    background:#F03D9E; color:#fff;
+    font-family:'Nunito',sans-serif; font-size:14px; font-weight:900;
+    border:2px solid #C0307A; text-decoration:none; transition:all .15s; letter-spacing:.2px;
   }
-  .all-done-banner .btn-dst:hover{ background:rgba(255,255,255,.2); color:#fff; }
+  .all-done-banner .btn-lvl2:hover{ background:#C0307A; transform:translateY(-2px); box-shadow:0 6px 20px rgba(240,61,158,.4); }
   .phase-strip{ margin-top:24px; padding-top:20px; border-top:2px solid var(--border); }
   .phase-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px; }
   @media(max-width:560px){ .phase-grid{ grid-template-columns:1fr; } }
@@ -99,11 +99,11 @@
   <div id="all-done-banner" class="all-done-banner">
     <h3>🏆 Beş Modülün Tamamı Bitti!</h3>
     <p>
-      Son Dijital Beceri Testine girmeden önce, Başarılı Dersler Kütüphanesi'ndeki açıklamalı referans dersi inceleyin. Değerlendirilmiş gerçek bir oturumu incelemek, öğrendiklerinizi uygulama becerinizi keskinleştirecektir.
+      Tüm Seviye 1 eğitim modüllerini tamamladınız. Başarılı Dersler Kütüphanesi'ni inceleyin, ardından Minecraft Seviye 2 ile yolculuğunuza devam edin.
     </p>
     <div class="btn-row">
       <a href="TrDST.html#library" class="btn-library">📖 Başarılı Ders Referansını Gör →</a>
-      <a href="TrDST.html#dst-section" class="btn-dst">Dijital Beceri Testine Geç</a>
+      <a href="LEVEL_2_URL_PLACEHOLDER" class="btn-lvl2">🚀 Minecraft Seviye 2'ye Devam Et →</a>
     </div>
   </div>
 
@@ -176,7 +176,6 @@ function renderModules() {
   if (allDone) document.getElementById('all-done-banner').classList.add('show');
 
   const libraryReady = allDone;
-  const dstReady     = allDone;
 
   document.getElementById('phase-grid').innerHTML = `
     <a href="TrDST.html#library" class="phase-card${libraryReady ? '' : ' locked-card'}">
@@ -190,14 +189,15 @@ function renderModules() {
         </div>
       </div>
     </a>
-    <a href="TrDST.html#dst-section" class="phase-card${dstReady ? '' : ' locked-card'}">
-      <div class="phase-icon">🎯</div>
+    <!-- LEVEL_2_URL_PLACEHOLDER — replace with actual Level 2 URL when available -->
+    <a href="LEVEL_2_URL_PLACEHOLDER" class="phase-card">
+      <div class="phase-icon">🚀</div>
       <div class="phase-body">
-        <div class="phase-label">Aşama 7 — Final Değerlendirmesi</div>
-        <div class="phase-title">Dijital Beceri Testi</div>
-        <div class="phase-desc">Teknik beceriler ve pedagojiyi kapsayan 20 soruluk hazırlık sınavı. Bağımsız öğretim için %80 veya üzeri gereklidir.</div>
-        <div class="phase-status ${dstReady ? 'ps-ready' : 'ps-locked'}">
-          ${dstReady ? '▶ Teste Gir' : '🔒 Önce tüm modülleri tamamlayın'}
+        <div class="phase-label">Aşama 7 — Devam</div>
+        <div class="phase-title">Minecraft Seviye 2</div>
+        <div class="phase-desc">Seviye 1'i tamamladınız. Dijital Beceri Testinin sizi beklediği Minecraft Seviye 2 ile eğitiminize devam edin.</div>
+        <div class="phase-status ps-ready">
+          ▶ Seviye 2'ye Devam Et
         </div>
       </div>
     </a>`;

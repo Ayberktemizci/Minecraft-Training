@@ -98,7 +98,6 @@ function initShared() {
 function goHome() { window.location.href = 'En.html'; }
 function goModule(n) { window.location.href = `EnModule${n}.html`; }
 function goTest(n) { window.location.href = `EnModule${n}Test.html`; }
-function goDST() { window.location.href = 'EnDST.html'; }
 
 // ── Region Switcher ─────────────────────────────────────────────────────────
 function injectRegionSwitcher() {

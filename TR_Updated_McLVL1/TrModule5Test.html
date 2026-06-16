@@ -21,8 +21,8 @@
   .next-step-card .btn-row{justify-content:center;position:relative}
   .btn-library-cta{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--rpill);background:var(--lime);color:var(--ink);font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;border:2px solid var(--lime-d);text-decoration:none;transition:all .15s;letter-spacing:.2px}
   .btn-library-cta:hover{background:var(--lime-d);transform:translateY(-2px);box-shadow:0 6px 20px rgba(196,240,70,.35)}
-  .btn-skip-dst{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--rpill);background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;border:2px solid rgba(255,255,255,.18);text-decoration:none;transition:all .15s}
-  .btn-skip-dst:hover{background:rgba(255,255,255,.18);color:#fff}
+  .btn-lvl2{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--rpill);background:#F03D9E;color:#fff;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;border:2px solid #C0307A;text-decoration:none;transition:all .15s;letter-spacing:.2px}
+  .btn-lvl2:hover{background:#C0307A;transform:translateY(-2px);box-shadow:0 6px 20px rgba(240,61,158,.4)}
 </style>
 </head>
 <body>
@@ -179,11 +179,11 @@ function submitQuiz() {
   if (passed) {
     document.getElementById('result-actions').innerHTML = `
       <div class="next-step-card">
-        <h4>📖 Final Testinden Önce Bir Adım Daha</h4>
-        <p>Başarılı Dersler Kütüphanesi'ni gözden geçirin — 16 zaman damgalı açıklamayla gerçek, değerlendirilmiş bir oturum. Onu incelemek, Dijital Beceri Testine girmeden önce öğrendiklerinizi uygulamanızı keskinleştirecektir.</p>
+        <h4>🏆 Seviye 1 Tamamlandı — Eğitim Seviye 2'de Devam Ediyor</h4>
+        <p>Tüm beş Seviye 1 modülünü tamamladınız. Başarılı Dersler Kütüphanesi'ni inceleyin, ardından Dijital Beceri Testinin sizi beklediği Minecraft Seviye 2 ile yolculuğunuza devam edin.</p>
         <div class="btn-row">
-          <a href="TrDST.html#library" class="btn-library-cta">Başarılı Ders Referansını Gör →</a>
-          <a href="TrDST.html#dst-section" class="btn-skip-dst">Dijital Beceri Testine Geç</a>
+          <a href="TrDST.html#library" class="btn-library-cta">📖 Başarılı Ders Referansını Gör →</a>
+          <a href="LEVEL_2_URL_PLACEHOLDER" class="btn-lvl2">🚀 Minecraft Seviye 2'ye Devam Et →</a>
         </div>
       </div>
       <div class="btn-row center" style="margin-top:14px">

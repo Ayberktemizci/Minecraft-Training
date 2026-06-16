@@ -84,25 +84,27 @@
                     box-shadow: 0 6px 20px rgba(196,240,70,.4);
                 }
 
-            .all-done-banner .btn-dst {
+            .all-done-banner .btn-lvl2 {
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
-                padding: 10px 22px;
+                padding: 12px 28px;
                 border-radius: var(--rpill);
-                background: rgba(255,255,255,.1);
-                color: rgba(255,255,255,.8);
+                background: #F03D9E;
+                color: #fff;
                 font-family: 'Nunito',sans-serif;
-                font-size: 13px;
-                font-weight: 700;
-                border: 2px solid rgba(255,255,255,.2);
+                font-size: 14px;
+                font-weight: 900;
+                border: 2px solid #C0307A;
                 text-decoration: none;
                 transition: all .15s;
+                letter-spacing: .2px;
             }
 
-                .all-done-banner .btn-dst:hover {
-                    background: rgba(255,255,255,.2);
-                    color: #fff;
+                .all-done-banner .btn-lvl2:hover {
+                    background: #C0307A;
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(240,61,158,.4);
                 }
 
         /* ── Franja de etapas finales debajo de los módulos ── */
@@ -256,11 +258,11 @@
         <div id="all-done-banner" class="all-done-banner">
             <h3>🏆 ¡Los cinco módulos están completos!</h3>
             <p>
-                Antes de presentar tu Digital Skill Test final, revisa la lección de referencia anotada en la Biblioteca de Lecciones Exitosas. Estudiar una sesión real calificada agudizará tu capacidad para aplicar todo lo que has aprendido.
+                Has completado todos los módulos de formación del Nivel 1. Revisa la Biblioteca de Lecciones Exitosas, luego continúa tu camino con Minecraft Nivel 2.
             </p>
             <div class="btn-row">
                 <a href="EsDST.html#library" class="btn-library">📖 Ver Clase de Referencia Comentada →</a>
-                <a href="EsDST.html#dst-section" class="btn-dst">Omitir e ir al Digital Skill Test</a>
+                <a href="LEVEL_2_URL_PLACEHOLDER" class="btn-lvl2">🚀 Continuar con Minecraft Nivel 2 →</a>
             </div>
         </div>
 
@@ -344,9 +346,8 @@
             // Banner final
             if (allDone) document.getElementById('all-done-banner').classList.add('show');
 
-            // Distribución de etapas finales — Biblioteca de Lecciones Exitosas + DST
+            // Distribución de etapas finales — Biblioteca de Lecciones Exitosas + continuación Nivel 2
             const libraryReady = allDone;
-            const dstReady = allDone;
 
             document.getElementById('phase-grid').innerHTML = `
         <a href="EsDST.html#library" class="phase-card${libraryReady ? '' : ' locked-card'}">
@@ -360,14 +361,15 @@
             </div>
           </div>
         </a>
-        <a href="EsDST.html#dst-section" class="phase-card${dstReady ? '' : ' locked-card'}">
-          <div class="phase-icon">🎯</div>
+        <!-- LEVEL_2_URL_PLACEHOLDER — replace with actual Level 2 URL when available -->
+        <a href="LEVEL_2_URL_PLACEHOLDER" class="phase-card">
+          <div class="phase-icon">🚀</div>
           <div class="phase-body">
-            <div class="phase-label">Fase 7 — Evaluación Final</div>
-            <div class="phase-title">Digital Skill Test</div>
-            <div class="phase-desc">Examen de idoneidad de 20 preguntas que cubre habilidades duras y pedagogía. Se requiere una puntuación de 80% o más para enseñar de forma independiente.</div>
-            <div class="phase-status ${dstReady ? 'ps-ready' : 'ps-locked'}">
-              ${dstReady ? '▶ Realizar el Examen' : '🔒 Completa todos los módulos primero'}
+            <div class="phase-label">Fase 7 — Continuar</div>
+            <div class="phase-title">Minecraft Nivel 2</div>
+            <div class="phase-desc">Has completado el Nivel 1. Continúa tu formación con Minecraft Nivel 2, donde el Digital Skill Test te espera al final.</div>
+            <div class="phase-status ps-ready">
+              ▶ Continuar al Nivel 2
             </div>
           </div>
         </a>`;

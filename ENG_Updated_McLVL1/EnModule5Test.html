@@ -58,15 +58,15 @@
     background:var(--lime-d); transform:translateY(-2px);
     box-shadow:0 6px 20px rgba(196,240,70,.35);
   }
-  .btn-skip-dst{
-    display:inline-flex; align-items:center; gap:6px;
-    padding:10px 20px; border-radius:var(--rpill);
-    background:rgba(255,255,255,.08); color:rgba(255,255,255,.7);
-    font-family:'Nunito',sans-serif; font-size:12px; font-weight:700;
-    border:2px solid rgba(255,255,255,.18); text-decoration:none;
-    transition:all .15s;
+  .btn-lvl2{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 28px; border-radius:var(--rpill);
+    background:#F03D9E; color:#fff;
+    font-family:'Nunito',sans-serif; font-size:14px; font-weight:900;
+    border:2px solid #C0307A; text-decoration:none;
+    transition:all .15s; letter-spacing:.2px;
   }
-  .btn-skip-dst:hover{ background:rgba(255,255,255,.18); color:#fff; }
+  .btn-lvl2:hover{ background:#C0307A; transform:translateY(-2px); box-shadow:0 6px 20px rgba(240,61,158,.4); }
 </style>
 </head>
 <body>
@@ -258,14 +258,13 @@ function submitQuiz() {
     </div>`;
 
   if (passed) {
-    // Route through the Library before the DST
     document.getElementById('result-actions').innerHTML = `
       <div class="next-step-card">
-        <h4>📖 One More Step Before the Final Test</h4>
-        <p>Review the Library of Successful Lessons — a real, rated session with 16 timestamped annotations. Studying it will sharpen your ability to apply everything you have learned before you sit the Digital Skill Test.</p>
+        <h4>🏆 Level 1 Complete — Training Continues in Level 2</h4>
+        <p>You have completed all five Level 1 modules. Review the Library of Successful Lessons, then continue your journey with Minecraft Level 2, where the final Digital Skill Test awaits.</p>
         <div class="btn-row">
-          <a href="EnDST.html#library" class="btn-library-cta">View Successful Lesson Reference →</a>
-          <a href="EnDST.html#dst-section" class="btn-skip-dst">Skip to Digital Skill Test</a>
+          <a href="EnDST.html#library" class="btn-library-cta">📖 View Successful Lesson Reference →</a>
+          <a href="../Level2/EnLv2.html" class="btn-lvl2">🚀 Continue to Minecraft Level 2 →</a>
         </div>
       </div>
       <div class="btn-row center" style="margin-top:14px">

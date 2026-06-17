@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minecraft Education LVL2 Pelatihan Tutor — Kodland</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lime:#C4F046;--lime-d:#AEDD2E;--pink:#F03D9E;--pink-d:#D4308A;
+  --ink:#111111;--ink2:#3A3A3A;--muted:#7A7A8A;
+  --bg:#E8FABD;--surface:#FFFFFF;--surface2:#F4FCD3;--border:#D8F07A;
+  --text:var(--ink);--text2:var(--ink2);--text-muted:var(--muted);
+  --nav-bg:rgba(255,255,255,0.94);--nav-b:#DDFAA0;
+  --shadow:0 2px 12px rgba(0,0,0,.07);--shadow-h:0 8px 28px rgba(0,0,0,.13);
+  --code-bg:#111820;--code-text:#C9E4FF;
+  --cw-bg:#FFF7F0;--cw-b:#FED7AA;--cw-t:#9A3412;
+  --ct-bg:#F0F9FF;--ct-b:#BAE6FD;--ct-t:#0C4A6E;
+  --cg-bg:#F0FDF4;--cg-b:#BBF7D0;--cg-t:#14532D;
+  --hi-bg:#FFF0F8;--hi-b:#F9A8D4;--hi-t:#831843;
+  --opt-h:#F4FCD3;
+  --ok-bg:#F0FDF4;--ok-b:#86EFAC;--ok-t:#15803D;
+  --no-bg:#FEF2F2;--no-b:#FECACA;--no-t:#B91C1C;
+  --r:14px;--rsm:8px;--rpill:999px;
+}
+[data-theme="dark"]{
+  --bg:#0E1210;--surface:#181F15;--surface2:#1E2A18;--border:#2A3D22;
+  --text:#F0FAD8;--text2:#B8D89A;--text-muted:#6B8A5A;
+  --nav-bg:rgba(14,18,16,0.94);--nav-b:#2A3D22;
+  --shadow:0 2px 16px rgba(0,0,0,.5);--shadow-h:0 8px 28px rgba(0,0,0,.5);
+  --cw-bg:rgba(249,115,22,.1);--cw-b:rgba(249,115,22,.3);--cw-t:#FB923C;
+  --ct-bg:rgba(14,165,233,.1);--ct-b:rgba(14,165,233,.3);--ct-t:#38BDF8;
+  --cg-bg:rgba(34,197,94,.1);--cg-b:rgba(34,197,94,.3);--cg-t:#4ADE80;
+  --hi-bg:rgba(240,61,158,.08);--hi-b:rgba(240,61,158,.3);--hi-t:#F472B6;
+  --opt-h:#1E2A18;
+  --ok-bg:rgba(34,197,94,.1);--ok-b:rgba(34,197,94,.4);--ok-t:#4ADE80;
+  --no-bg:rgba(239,68,68,.1);--no-b:rgba(239,68,68,.4);--no-t:#F87171;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .25s,color .25s}
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:62px;background:var(--nav-bg);backdrop-filter:blur(14px);border-bottom:2px solid var(--nav-b);position:sticky;top:0;z-index:100;transition:background .25s,border-color .25s}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.logo-mark{font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;letter-spacing:-.5px;color:var(--ink);line-height:1;white-space:nowrap}
+[data-theme="dark"] .logo-mark{color:var(--lime)}
+.logo-sub{font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;color:var(--pink);white-space:nowrap;line-height:1}
+.logo-div{width:1px;height:16px;background:var(--border);margin:0 4px}
+.nav-r{display:flex;align-items:center;gap:8px}
+.tbtn{width:38px;height:38px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:all .15s;flex-shrink:0}
+.tbtn:hover{background:var(--lime);border-color:var(--lime-d)}
+.pbtn{display:flex;align-items:center;gap:5px;padding:8px 16px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);color:var(--text2);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+.pbtn:hover{background:var(--lime);border-color:var(--lime-d);color:var(--ink)}
+.lang-trigger{width:36px;height:36px;border-radius:var(--rpill);background:var(--surface);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;transition:all .15s;flex-shrink:0;position:relative}
+.lang-trigger:hover{background:var(--surface2);border-color:var(--lime-d)}
+.lang-trigger.open{background:var(--surface2);border-color:var(--lime-d)}
+.lang-dropdown{position:fixed;background:var(--surface);border:2px solid var(--border);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.15);z-index:500;min-width:130px;padding:6px;display:none;flex-direction:column;gap:2px}
+.lang-dropdown.open{display:flex}
+.lang-option{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;color:var(--text2);transition:all .12s;white-space:nowrap;border:none;background:transparent;width:100%;text-align:left}
+.lang-option:hover{background:var(--surface2);color:var(--text)}
+.lang-option.active{background:var(--opt-h);color:var(--text)}
+.lang-option .flag{font-size:18px;line-height:1}
+.lang-option .check{margin-left:auto;font-size:12px;color:var(--lime-d);opacity:0}
+.lang-option.active .check{opacity:1}
+[data-theme="dark"] .lang-option.active{background:var(--surface2)}
+[data-theme="dark"] .lang-option.active .check{color:var(--lime)}
+/* HERO */
+.hero{padding:52px 40px 36px;text-align:center;position:relative}
+.hero::before{content:'';position:absolute;inset:0;bottom:30%;background:radial-gradient(ellipse 70% 55% at 50% 0%,var(--lime) 0%,transparent 70%);opacity:.45;pointer-events:none}
+[data-theme="dark"] .hero::before{background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(196,240,70,.15) 0%,transparent 70%);opacity:1}
+.hero-inner{position:relative;max-width:600px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:2px solid var(--border);border-radius:var(--rpill);padding:5px 14px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;color:var(--text2);margin-bottom:20px;text-transform:uppercase;letter-spacing:.5px}
+.hero h1{font-family:'Nunito',sans-serif;font-size:clamp(28px,5vw,46px);font-weight:900;line-height:1.1;letter-spacing:-1px;color:var(--text);margin-bottom:14px}
+.h-pill{display:inline-block;background:var(--pink);color:#fff;border-radius:var(--rpill);padding:1px 18px;margin:0 2px;font-size:.93em}
+[data-theme="dark"] .h-pill{background:var(--lime);color:var(--ink)}
+.hero p{color:var(--text2);font-size:15px;line-height:1.65;margin-bottom:28px}
+.prog-strip{display:inline-flex;align-items:center;gap:14px;background:var(--surface);border:2px solid var(--border);border-radius:var(--rpill);padding:10px 20px;box-shadow:var(--shadow);max-width:360px;width:100%}
+.pnum{font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:var(--text);line-height:1;flex-shrink:0}
+.ptrack{flex:1;height:8px;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--rpill);overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,var(--lime),var(--pink));border-radius:var(--rpill);transition:width .6s cubic-bezier(.34,1.56,.64,1)}
+.plbl{font-size:12px;color:var(--text-muted);font-weight:600;flex-shrink:0}
+/* GRID */
+.msec{padding:8px 32px 70px;max-width:1060px;margin:0 auto;width:100%}
+.slbl{font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:16px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.mc{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;box-shadow:var(--shadow)}
+.mc:hover:not(.locked){transform:translateY(-4px);box-shadow:var(--shadow-h)}
+.mc.locked{opacity:.45;cursor:not-allowed}
+.mc.done{border-color:var(--lime-d)}
+[data-theme="dark"] .mc.done{border-color:rgba(196,240,70,.4)}
+.mc-stripe{height:6px}
+.mc-body{padding:20px}
+.mc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.mc-num{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted)}
+.mc-em{font-size:22px}
+.mc-title{font-family:'Nunito',sans-serif;font-size:17px;font-weight:900;letter-spacing:-.2px;color:var(--text);margin-bottom:5px}
+.mc-desc{font-size:13px;color:var(--text2);line-height:1.55}
+.mc-foot{margin-top:15px;display:flex;align-items:center;justify-content:space-between}
+.badge{font-family:'Nunito',sans-serif;font-size:11px;font-weight:900;letter-spacing:.3px;padding:4px 12px;border-radius:var(--rpill);text-transform:uppercase}
+.bd{background:var(--lime);color:var(--ink);border:1.5px solid var(--lime-d)}
+.bs{background:var(--pink);color:#fff;border:1.5px solid var(--pink-d)}
+.bl{background:var(--surface2);color:var(--text-muted);border:1.5px solid var(--border)}
+.btr{background:#FFF7E6;color:#B45309;border:1.5px solid #FDE68A}
+[data-theme="dark"] .bd{background:rgba(196,240,70,.18);color:var(--lime);border-color:rgba(196,240,70,.4)}
+[data-theme="dark"] .bs{background:rgba(240,61,158,.18);color:var(--pink);border-color:rgba(240,61,158,.4)}
+[data-theme="dark"] .btr{background:rgba(245,158,11,.1);color:#FBB040;border-color:rgba(245,158,11,.3)}
+.stag{font-size:12px;color:var(--text-muted);font-weight:600}
+.stag b{color:var(--text)}
+/* CONTENT */
+.cbody{padding:36px 40px 60px;max-width:800px;margin:0 auto;width:100%;flex:1}
+.meyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px}
+.mh1{font-family:'Nunito',sans-serif;font-size:clamp(24px,4vw,34px);font-weight:900;letter-spacing:-.6px;line-height:1.12;color:var(--text);margin-bottom:14px}
+.mobj{background:var(--surface);border:2px solid var(--border);border-left:5px solid var(--acc,var(--lime));border-radius:0 var(--rsm) var(--rsm) 0;padding:12px 16px;font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:32px}
+.mobj strong{color:var(--text)}
+.sch{font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;margin:28px 0 12px;color:var(--text);display:flex;align-items:center;gap:8px}
+.sch::after{content:'';flex:1;height:2px;background:var(--border);border-radius:2px}
+.card{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:10px;box-shadow:var(--shadow)}
+.card h4{font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:var(--text);margin-bottom:7px}
+.card p,.card li{font-size:14px;color:var(--text2);line-height:1.7}
+.card ul{padding-left:17px}
+.card li{margin-bottom:4px}
+.card p strong,.card li strong{color:var(--text)}
+.card code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:5px;padding:2px 7px;color:var(--pink);font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+[data-theme="dark"] .card code{color:var(--lime)}
+.card.hi{background:var(--hi-bg);border-color:var(--hi-b)}
+.card.hi h4{color:var(--hi-t)}
+.card.hi p,.card.hi li{color:var(--hi-t);opacity:.88}
+.card.hi code{background:rgba(240,61,158,.1);border-color:rgba(240,61,158,.25);color:var(--pink)}
+.codecard{background:var(--code-bg)!important;border-color:rgba(255,255,255,.06)!important}
+.clbl{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#4A5C70;margin-bottom:9px}
+.codecard pre{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--code-text);line-height:1.75;overflow-x:auto;white-space:pre;font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+.ck{color:#C792EA}.cf{color:#82AAFF}.cs{color:#C3E88D}.cn{color:#F78C6C}.cc{color:#546E7A}
+.callout{display:flex;gap:10px;border-radius:var(--rsm);padding:12px 15px;margin-bottom:10px;font-size:13.5px;line-height:1.65;border:1.5px solid}
+.ci{font-size:15px;flex-shrink:0;margin-top:1px}
+.cw{background:var(--cw-bg);border-color:var(--cw-b);color:var(--cw-t)}
+.ct{background:var(--ct-bg);border-color:var(--ct-b);color:var(--ct-t)}
+.cg{background:var(--cg-bg);border-color:var(--cg-b);color:var(--cg-t)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.two-col{grid-template-columns:1fr}}
+.divider{border:none;border-top:2px solid var(--border);margin:28px 0}
+.ctabtn{display:block;width:100%;padding:16px;background:var(--ink);color:#fff;border:none;border-radius:var(--rpill);font-family:'Nunito',sans-serif;font-size:17px;font-weight:900;cursor:pointer;transition:all .15s;margin-bottom:40px;margin-top:4px;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.ctabtn:hover{background:var(--pink);transform:translateY(-2px);box-shadow:0 6px 20px rgba(240,61,158,.35)}
+[data-theme="dark"] .ctabtn{background:var(--lime);color:var(--ink)}
+[data-theme="dark"] .ctabtn:hover{background:var(--pink);color:#fff}
+@media(max-width:640px){.cbody,.msec,.hero{padding-left:18px;padding-right:18px}}
+/* QUIZ */
+.qbody{padding:36px 40px;max-width:680px;margin:0 auto;width:100%;flex:1}
+.qpt{height:7px;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--rpill);margin-bottom:36px;overflow:hidden}
+.qpf{height:100%;background:linear-gradient(90deg,var(--lime),var(--pink));border-radius:var(--rpill);transition:width .4s ease}
+.qctr{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:10px}
+.qtxt{font-family:'Nunito',sans-serif;font-size:21px;font-weight:900;letter-spacing:-.3px;line-height:1.35;margin-bottom:26px;color:var(--text)}
+.qopts{display:flex;flex-direction:column;gap:10px}
+.qopt{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:14px 18px;cursor:pointer;font-size:14px;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s;text-align:left;line-height:1.5;box-shadow:var(--shadow)}
+.qopt:hover:not(.answered){background:var(--opt-h);border-color:var(--lime-d)}
+.qopt.correct{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+.qopt.wrong{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+.qopt.answered{cursor:default}
+.qfb{display:none;margin-top:14px;border-radius:var(--rsm);padding:13px 16px;font-size:14px;line-height:1.6;border:2px solid}
+.qfb.show{display:block}
+.qfb.ok{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t)}
+.qfb.bad{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+.qnxt{display:none;margin-top:18px;width:100%;padding:14px;background:var(--ink);color:#fff;border:none;border-radius:var(--rpill);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;transition:all .15s}
+.qnxt.show{display:block}
+.qnxt:hover{background:var(--lime);color:var(--ink)}
+[data-theme="dark"] .qnxt{background:var(--lime);color:var(--ink)}
+[data-theme="dark"] .qnxt:hover{background:var(--pink);color:#fff}
+/* RESULTS */
+.rbody{padding:60px 40px;max-width:520px;margin:0 auto;text-align:center;flex:1}
+.remi{font-size:64px;margin-bottom:14px}
+.rtitle{font-family:'Nunito',sans-serif;font-size:30px;font-weight:900;letter-spacing:-.4px;color:var(--text)}
+.rpct{font-family:'Nunito',sans-serif;font-size:62px;font-weight:900;line-height:1;margin:14px 0 6px}
+.rpct.pass{color:var(--lime-d)}
+.rpct.fail{color:var(--pink)}
+[data-theme="dark"] .rpct.pass{color:var(--lime)}
+.rsub{color:var(--text2);font-size:15px;line-height:1.65;margin-bottom:30px}
+.bdark{display:block;width:100%;padding:14px 24px;margin-bottom:10px;background:var(--ink);color:#fff;border:none;border-radius:var(--rpill);font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;transition:all .15s}
+.bdark:hover{background:var(--pink)}
+[data-theme="dark"] .bdark{background:var(--lime);color:var(--ink)}
+[data-theme="dark"] .bdark:hover{background:var(--pink);color:#fff}
+.bline{display:block;width:100%;padding:13px 24px;margin-bottom:10px;background:transparent;color:var(--text2);border:2px solid var(--border);border-radius:var(--rpill);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s}
+.bline:hover{background:var(--surface2);color:var(--text);border-color:var(--lime-d)}
+/* CERT */
+.compbody{padding:60px 40px;max-width:600px;margin:0 auto;text-align:center;flex:1}
+.cert{background:var(--surface);border:3px solid var(--lime-d);border-radius:20px;padding:32px 28px;margin:28px 0;box-shadow:0 0 40px rgba(196,240,70,.18);position:relative;overflow:hidden}
+.cert::before{content:'';position:absolute;top:-60px;right:-60px;width:160px;height:160px;border-radius:50%;background:var(--lime);opacity:.1;pointer-events:none}
+.clbl2{font-family:'Nunito',sans-serif;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:2px;color:var(--pink);margin-bottom:12px}
+.cert h2{font-family:'Nunito',sans-serif;font-size:24px;font-weight:900;letter-spacing:-.3px;color:var(--text)}
+.cert p{color:var(--text2);margin-top:6px;font-size:14px}
+.cmods{display:flex;justify-content:center;gap:8px;margin-top:20px;flex-wrap:wrap}
+.cmod{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px}
+/* DST */
+.dst-body{padding:40px 40px 60px;max-width:780px;margin:0 auto;flex:1}
+.dst-badge{display:inline-flex;align-items:center;gap:6px;background:var(--lime);color:var(--ink);border:2px solid var(--lime-d);border-radius:var(--rpill);padding:5px 14px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+[data-theme="dark"] .dst-badge{background:rgba(196,240,70,.18);color:var(--lime);border-color:rgba(196,240,70,.4)}
+.dst-h1{font-family:'Nunito',sans-serif;font-size:clamp(22px,4vw,32px);font-weight:900;letter-spacing:-.6px;line-height:1.12;color:var(--text);margin-bottom:10px}
+.dst-sub{font-size:15px;color:var(--text2);line-height:1.7}
+.dst-stage-header{display:flex;align-items:center;gap:12px;margin:36px 0 18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.dst-stage-pill{font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;padding:5px 14px;border-radius:var(--rpill);background:var(--lime);color:var(--ink);flex-shrink:0}
+[data-theme="dark"] .dst-stage-pill{background:rgba(196,240,70,.2);color:var(--lime)}
+.dst-stage-title{font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text)}
+.dst-section-label{font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:24px 0 14px}
+.dst-task{display:flex;gap:16px;margin-bottom:24px;align-items:flex-start}
+.dst-task-num{width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+[data-theme="dark"] .dst-task-num{background:var(--lime);color:var(--ink)}
+.dst-task-body{flex:1;background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
+.dst-task-body h3{font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;color:var(--text);margin-bottom:6px}
+.dst-task-body p,.dst-task-body .dst-task-text{font-size:14px;color:var(--text2);line-height:1.65}
+.dst-task-body p strong,.dst-task-body .dst-task-text strong{color:var(--text)}
+.dst-task-body ul{padding-left:18px;margin-top:8px}
+.dst-task-body li{font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:4px}
+.dst-link-btn{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:10px 18px;background:var(--ink);color:#fff;border:none;border-radius:var(--rpill);font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;cursor:pointer;text-decoration:none;transition:all .15s}
+.dst-link-btn:hover{background:var(--pink);transform:translateY(-1px)}
+[data-theme="dark"] .dst-link-btn{background:var(--lime);color:var(--ink)}
+[data-theme="dark"] .dst-link-btn:hover{background:var(--pink);color:#fff}
+.dst-warn{background:var(--cw-bg);border:2px solid var(--cw-b);border-radius:var(--rsm);padding:12px 16px;color:var(--cw-t);font-size:13.5px;line-height:1.6;margin-bottom:24px;display:flex;gap:10px}
+.dst-submit-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:24px 24px;box-shadow:var(--shadow)}
+.dst-submit-title{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--text);margin-bottom:10px}
+.dst-submit-also{background:var(--surface2);border:2px solid var(--border);border-radius:var(--rsm);padding:16px 18px}
+.dst-submit-also-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:12px}
+.dst-submit-item{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:10px}
+.dst-submit-item:last-child{margin-bottom:0}
+.dst-submit-item strong{color:var(--text)}
+.dst-submit-num{width:24px;height:24px;border-radius:50%;background:var(--lime);color:var(--ink);font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+[data-theme="dark"] .dst-submit-num{background:rgba(196,240,70,.2);color:var(--lime)}
+.dst-example-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin:10px 0 6px}
+.dst-img{max-width:100%;border-radius:var(--rsm);border:1.5px solid var(--border);margin-top:4px}
+.mod-img{max-width:100%;border-radius:var(--rsm);border:1.5px solid var(--border);margin:10px 0 4px;display:block}
+.dst-subtask{display:flex;gap:10px;margin-bottom:12px;font-size:14px;color:var(--text2);line-height:1.6}
+.dst-subtask-label{font-family:'Nunito',sans-serif;font-weight:900;color:var(--text);flex-shrink:0}
+.dst-inline-link{color:var(--pink);text-decoration:underline}
+/* skip & modals */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:var(--surface);border:2px solid var(--border);border-radius:20px;padding:32px 28px;max-width:440px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal h3{font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:10px}
+.modal p{font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:24px}
+.modal-btns{display:flex;gap:10px}
+.modal-yes{flex:1;padding:13px;background:var(--pink);color:#fff;border:none;border-radius:var(--rpill);font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:all .15s}
+.modal-yes:hover{background:var(--pink-d)}
+.modal-no{flex:1;padding:13px;background:var(--surface2);color:var(--text2);border:2px solid var(--border);border-radius:var(--rpill);font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s}
+.modal-no:hover{background:var(--border);color:var(--text)}
+.skip-row{text-align:center;padding:0 32px 48px}
+.skip-btn{background:none;border:none;color:var(--text-muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:color .15s}
+.skip-btn:hover{color:var(--text2)}
+@media(max-width:640px){.dst-body{padding-left:18px;padding-right:18px}.dst-task{flex-direction:column}.dst-task-num{margin-bottom:-8px}}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="screen-home" class="screen active">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome()">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" id="nav-sub-home">Minecraft Education Training</span>
+    </a>
+    <div class="nav-r">
+      <span id="ntag" style="font-size:13px;color:var(--text-muted);font-weight:600;display:none"></span>
+      <button class="lang-trigger" id="lang-btn-home" onclick="toggleLangDropdown(event)" title="Change region / Bölge değiştir">🌐</button>
+      <button class="tbtn" id="tb0" onclick="toggleTheme()"></button>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow" id="hero-eyebrow">🎮 Tutor Training Program</div>
+      <h1 id="hero-title">Prepare to teach<br><span class="h-pill">Minecraft Education</span><br>Python to kids</h1>
+      <p id="hero-sub">Complete all 9 modules and pass each quiz to finish your tutor preparation. Get 70%+ to unlock the next module.</p>
+      <div class="prog-strip">
+        <div class="pnum" id="pnum">0/6</div>
+        <div class="ptrack"><div class="pfill" id="pfill" style="width:0%"></div></div>
+        <div class="plbl" id="plbl">modules completed</div>
+      </div>
+    </div>
+  </div>
+  <div class="msec">
+    <div class="slbl" id="slbl">Your modules</div>
+    <div class="grid" id="mgrid"></div>
+  </div>
+  <div class="skip-row">
+    <button class="skip-btn" id="skip-btn" onclick="document.getElementById('skip-modal').classList.add('show')">Skip training and go to DST →</button>
+  </div>
+</div>
+
+<!-- SKIP MODAL -->
+<div class="modal-overlay" id="skip-modal">
+  <div class="modal">
+    <div style="font-size:40px;margin-bottom:12px">⚡</div>
+    <h3 id="skip-title">Skip the training?</h3>
+    <p id="skip-body">Are you sure you want to skip the training materials and go directly to the Demonstration Skills Test?</p>
+    <div class="modal-btns">
+      <button class="modal-no" onclick="document.getElementById('skip-modal').classList.remove('show')" id="skip-no">No, keep studying</button>
+      <button class="modal-yes" onclick="document.getElementById('skip-modal').classList.remove('show');showDST()" id="skip-yes">Yes, go to DST</button>
+    </div>
+  </div>
+</div>
+
+<!-- REGION SWITCH MODAL -->
+<div class="modal-overlay" id="lang-modal">
+  <div class="modal">
+    <div style="font-size:36px;margin-bottom:12px">🌐</div>
+    <h3 id="lang-modal-title">Switch Region</h3>
+    <p id="lang-modal-body" style="white-space:pre-line"></p>
+    <div class="modal-btns">
+      <button class="modal-no" id="lang-modal-cancel" onclick="document.getElementById('lang-modal').classList.remove('show')">Cancel</button>
+      <button class="modal-yes" id="lang-modal-confirm" onclick="confirmLangSwitch()">Yes, switch</button>
+    </div>
+  </div>
+</div>
+<!-- CONTENT -->
+<div id="screen-content" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome()">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" id="nav-sub-content">Minecraft Education Training</span>
+    </a>
+    <div class="nav-r">
+      <button class="pbtn" onclick="goHome()" id="back-btn-content">← Modüller</button>
+      <button class="lang-trigger" id="lang-btn-content" onclick="toggleLangDropdown(event)" title="Change region / Bölge değiştir">🌐</button>
+      <button class="tbtn" onclick="toggleTheme()"></button>
+    </div>
+  </nav>
+  <div class="cbody" id="cbody"></div>
+</div>
+
+<!-- QUIZ -->
+<div id="screen-quiz" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome()">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" id="nav-sub-quiz">Minecraft Education Training</span>
+    </a>
+    <div class="nav-r">
+      <button class="pbtn" onclick="exitQuiz()" id="exit-quiz-btn">← Sınavdan Çık</button>
+      <button class="lang-trigger" id="lang-btn-quiz" onclick="toggleLangDropdown(event)" title="Change region / Bölge değiştir">🌐</button>
+      <button class="tbtn" onclick="toggleTheme()"></button>
+    </div>
+  </nav>
+  <div class="qbody">
+    <div class="qpt"><div class="qpf" id="qfill"></div></div>
+    <div class="qctr" id="qcount"></div>
+    <div class="qtxt" id="qtext"></div>
+    <div class="qopts" id="qopts"></div>
+    <div class="qfb" id="qfb"></div>
+    <button class="qnxt" id="qnxt" onclick="nextQ()">Devam →</button>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="screen-results" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome()">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" id="nav-sub-results">Minecraft Education Training</span>
+    </a>
+    <div class="nav-r">
+      <button class="pbtn" onclick="goHome()" id="back-btn-results">← Modüller</button>
+      <button class="lang-trigger" id="lang-btn-results" onclick="toggleLangDropdown(event)" title="Change region / Bölge değiştir">🌐</button>
+      <button class="tbtn" onclick="toggleTheme()"></button>
+    </div>
+  </nav>
+  <div class="rbody" id="rbody"></div>
+</div>
+
+<!-- COMPLETE (EN only) -->
+<div id="screen-complete" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome()">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub">Minecraft Education Training</span>
+    </a>
+    <div class="nav-r">
+      <button class="pbtn" onclick="goHome()">← Dashboard</button>
+      <button class="lang-trigger" id="lang-btn-complete" onclick="toggleLangDropdown(event)" title="Change region / Bölge değiştir">🌐</button>
+      <button class="tbtn" onclick="toggleTheme()"></button>
+    </div>
+  </nav>
+  <div class="compbody" id="compbody"></div>
+</div>
+
+<!-- DST SCREEN -->
+<div id="screen-dst" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome()">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" id="nav-sub-dst">Minecraft Education Training</span>
+    </a>
+    <div class="nav-r">
+      <button class="pbtn" onclick="goHome()" id="back-btn-dst">← Modüller</button>
+      <button class="lang-trigger" id="lang-btn-dst" onclick="toggleLangDropdown(event)" title="Change region / Bölge değiştir">🌐</button>
+      <button class="tbtn" onclick="toggleTheme()"></button>
+    </div>
+  </nav>
+  <!-- DST content injected here by JS -->
+  <div id="dst-content-wrapper"></div>
+
+  <!-- DST CONTENT — Minecraft Education (2026) Instructor Technical Skills Assessment -->
+  <div id="dst-body-en">
+  <div class="dst-body">
+    <div style="margin-bottom:32px">
+      <div class="dst-badge">🏆 Demonstration Skills Test</div>
+      <div class="dst-h1">Minecraft Education (2026) – Penilaian Keterampilan Teknis Instruktur</div>
+      <div class="dst-sub">Selamat — kamu telah menyelesaikan semua 9 modul pelatihan! Penilaian ini mengevaluasi <strong>kompetensi teknis, instruksional, dan budaya</strong> yang diperlukan untuk mengajar menggunakan Minecraft Education. Selesaikan semua 5 tugas dan kirimkan materimu menggunakan formulir di bawah ini.</div>
+    </div>
+
+    <div class="dst-stage-header">
+      <div class="dst-stage-pill">Tugas 1</div>
+      <div class="dst-stage-title">Eksplorasi MakeCode – Agen Siap Bertugas</div>
+    </div>
+    <div class="dst-task">
+      <div class="dst-task-num">1</div>
+      <div class="dst-task-body">
+        <h3>Pengaturan &amp; Eksplorasi</h3>
+        <p>Instal Minecraft Education dan jalankan. Akses editor MakeCode dengan menekan tombol <strong>C</strong> dalam permainan. Jelajahi template bawaan dan tunjukkan pemahamanmu tentang dasar-dasar pemrograman Python yang berlaku untuk kursus ini.</p>
+        <ul>
+          <li>Tunjukkan bagaimana Agen dapat <strong>bergerak</strong> melalui dunia</li>
+          <li>Demonstrasikan Agen <strong>menempatkan blok</strong></li>
+          <li>Tunjukkan Agen <strong>menambang</strong> dan <strong>mengumpulkan item</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dst-stage-header">
+      <div class="dst-stage-pill">Tugas 2</div>
+      <div class="dst-stage-title">Arsitek Kode – Bangun dengan Agen</div>
+    </div>
+    <div class="dst-task">
+      <div class="dst-task-num">2</div>
+      <div class="dst-task-body">
+        <h3>Konstruksi Rumah dengan Python</h3>
+        <p>Tonton video referensi <strong>(House.mov)</strong> tentang sebuah rumah yang sedang dibangun. Tulis kode Python yang memungkinkan Agen membangun ulang struktur yang sama.</p>
+        <ul>
+          <li>Gunakan perintah utama Agen: <code>move</code>, <code>place</code>, <code>turn</code></li>
+          <li>Implementasikan <strong>loop</strong> untuk mengoptimalkan tindakan berulang</li>
+          <li>Struktur akhir harus cocok <strong>persis</strong> dengan video referensi</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dst-stage-header">
+      <div class="dst-stage-pill">Tugas 3</div>
+      <div class="dst-stage-title">Tantangan MakeCode – Agen Membangun Kolam Kecil</div>
+    </div>
+    <div class="dst-task">
+      <div class="dst-task-num">3</div>
+      <div class="dst-task-body">
+        <h3>Pemrograman Berbasis Blok</h3>
+        <p>Menggunakan <strong>MakeCode berbasis blok</strong> (bukan Python), program Agen untuk menyelesaikan hal berikut:</p>
+        <ul>
+          <li>Gali <strong>lubang 2×6</strong> di tanah</li>
+          <li>Isi lubang dengan <strong>air</strong></li>
+          <li>Tempatkan <strong>bunga</strong> di sekitar kolam</li>
+        </ul>
+        <p style="margin-top:8px">Programmu harus mencakup perintah gerak, menggali/menempatkan blok, loop, dan pemicu mulai yang jelas melalui perintah obrolan atau tombol acara.</p>
+      </div>
+    </div>
+
+    <div class="dst-stage-header">
+      <div class="dst-stage-pill">Tugas 4</div>
+      <div class="dst-stage-title">Penyihir Konsol – Kendalikan Dunia</div>
+    </div>
+    <div class="dst-task">
+      <div class="dst-task-num">4</div>
+      <div class="dst-task-body">
+        <h3>Penguasaan Konsol Perintah</h3>
+        <p>Menggunakan konsol perintah dalam permainan, demonstrasikan hal berikut:</p>
+        <ul>
+          <li><strong>Teleportasi</strong> pemain ke koordinat tertentu pilihanmu</li>
+          <li><strong>Ubah waktu dalam permainan</strong> menggunakan perintah konsol</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dst-stage-header">
+      <div class="dst-stage-pill">Tugas 5</div>
+      <div class="dst-stage-title">Blok Perintah – Tombol Hujan Ajaib</div>
+    </div>
+    <div class="dst-task">
+      <div class="dst-task-num">5</div>
+      <div class="dst-task-body">
+        <h3>Redstone &amp; Blok Perintah</h3>
+        <p>Bangun "Tombol Hujan Ajaib" menggunakan blok perintah:</p>
+        <ul>
+          <li>Dapatkan blok perintah melalui konsol</li>
+          <li>Tempatkan di dunia</li>
+          <li>Konfigurasikan untuk <strong>memicu hujan</strong></li>
+          <li>Aktifkan menggunakan <strong>tombol</strong>, <strong>tuas</strong>, atau <strong>mekanisme redstone</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="dst-submit-card" style="margin-top:32px">
+      <div class="dst-submit-title">📤 Kirim Penilaianmu</div>
+      <p style="font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:16px">Rekam video yang mendemonstrasikan semua 5 tugas. Upload materimu — video dan file kode apa pun — ke <strong>folder Google Drive publik</strong>, lalu kirimkan tautan yang dapat dibagikan menggunakan formulir di bawah ini.</p>
+      <a href="#" class="dst-link-btn" style="opacity:.6;cursor:not-allowed;" onclick="return false">📝 Buka formulir pengiriman — segera hadir</a>
+    </div>
+
+    <div style="text-align:center;margin-top:32px;padding-bottom:20px">
+      <p style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--text);margin-bottom:6px">Semangat! 🎉</p>
+      <p style="font-size:13px;color:var(--text-muted)">Tim Kodland mendukungmu.</p>
+      <button class="bline" onclick="goHome()" style="max-width:260px;margin:20px auto 0">← Kembali ke Dasbor</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+<!-- SHARED LANGUAGE DROPDOWN / REGION SWITCHER -->
+<div id="lang-dropdown" class="lang-dropdown" role="menu">
+  <a class="lang-option" href="EnLv2.html" style="color:var(--text2)">
+    <span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="28" height="19" style="vertical-align:middle;border-radius:2px"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="5"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="13"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="8"/></svg></span>
+    <span>ENG</span>
+  </a>
+  <a class="lang-option" href="ItLv2.html" style="color:var(--text2)">
+    <span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="28" height="19" style="vertical-align:middle;border-radius:2px"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg></span>
+    <span>IT</span>
+  </a>
+  <a class="lang-option" href="EsLv2.html" style="color:var(--text2)">
+    <span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="28" height="19" style="vertical-align:middle;border-radius:2px"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span>
+    <span>ES</span>
+  </a>
+  <a class="lang-option" href="PlLv2.html" style="color:var(--text2)">
+    <span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="28" height="19" style="vertical-align:middle;border-radius:2px"><rect width="60" height="20" fill="#fff"/><rect y="20" width="60" height="20" fill="#DC143C"/></svg></span>
+    <span>PL</span>
+  </a>
+  <a class="lang-option" href="PtLv2.html" style="color:var(--text2)">
+    <span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="28" height="19" style="vertical-align:middle;border-radius:2px"><rect width="60" height="40" fill="#009C3B"/><polygon points="30,4 56,20 30,36 4,20" fill="#FFDF00"/><circle cx="30" cy="20" r="9" fill="#002776"/></svg></span>
+    <span>PT</span>
+  </a>
+  <a class="lang-option" href="TrLv2.html" style="color:var(--text2)">
+    <span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="28" height="19" style="vertical-align:middle;border-radius:2px"><rect width="60" height="40" fill="#E30A17"/><circle cx="23" cy="20" r="10" fill="#fff"/><circle cx="26" cy="20" r="8" fill="#E30A17"/><polygon points="33,20 35.5,12.5 37.5,20 30,16 40,16" fill="#fff"/></svg></span>
+    <span>TR</span>
+  </a>
+  <a class="lang-option active" href="IdLv2.html" style="color:var(--text2)">
+    <span class="flag"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="28" height="19" style="vertical-align:middle;border-radius:2px"><rect width="60" height="20" fill="#CE1126"/><rect y="20" width="60" height="20" fill="#fff"/></svg></span>
+    <span>ID</span>
+    <span class="check">✓</span>
+  </a>
+  <div style="height:1px;background:var(--border);margin:4px 0"></div>
+  <a class="lang-option" href="index.html" style="color:var(--text-muted);font-size:12px">
+    <span class="flag">🌐</span>
+    <span>Change region</span>
+  </a>
+</div>
+
+<script>
+// THEME
+(function(){
+  const s=localStorage.getItem('kl-theme');
+  const sys=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  const t=s||sys;
+  if(t==='dark') document.documentElement.setAttribute('data-theme','dark');
+  setIcons(t);
+})();
+function setIcons(t){ document.querySelectorAll('.tbtn').forEach(b=>b.textContent=t==='dark'?'☀️':'🌙'); }
+function toggleTheme(){
+  const d=document.documentElement.getAttribute('data-theme')==='dark';
+  const n=d?'light':'dark';
+  n==='dark'?document.documentElement.setAttribute('data-theme','dark'):document.documentElement.removeAttribute('data-theme');
+  localStorage.setItem('kl-theme',n); setIcons(n);
+}
+
+// ─── LANGUAGE ───────────────────────────────────────────────────────────────
+// Detect language: use saved preference, else browser/system language
+
+let lang = 'id';
+
+const UI = {
+  id: {
+    navSub: 'Pelatihan Tutor Minecraft Education',
+    heroEyebrow: '⛏️ Program Pelatihan Tutor',
+    heroTitle: 'Bersiaplah untuk mengajar<br><span class="h-pill">Minecraft Education</span><br>Python kepada anak-anak',
+    heroSub: 'Selesaikan semua modul dan lulus setiap kuis untuk menyelesaikan persiapan tutor kamu. Dapatkan 70%+ untuk membuka kunci modul berikutnya. Ini mencerminkan struktur kursus Minecraft Education LVL2 yang akan kamu ajarkan.',
+    plbl: 'modul selesai',
+    slbl: 'Modul kamu',
+    skipBtn: 'Lewati pelatihan dan langsung ke DST →',
+    skipTitle: 'Lewati pelatihan?',
+    skipBody: 'Apakah kamu yakin ingin melewati materi pelatihan dan langsung ke Demonstration Skills Test?',
+    skipNo: 'Tidak, lanjut belajar',
+    skipYes: 'Ya, ke DST',
+    backModules: '← Modul',
+    backDashboard: '← Kembali ke Dasbor',
+    exitQuiz: '← Keluar dari Kuis',
+    badgeDone: '✓ Lulus',
+    badgeLocked: '🔒 Terkunci',
+    badgeStart: 'Mulai →',
+    badgeRead: 'Baca',
+    noQuiz: 'Tanpa kuis',
+    hasQuiz: 'Pemeriksaan pengetahuan',
+    completePrevModule: (n) => `Selesaikan modul ${n}`,
+    nextQ: 'Lanjut →',
+    seeResults: 'Lihat hasil →',
+    correct: '✅ Benar! ',
+    wrong: '❌ Kurang tepat. ',
+    passed: 'Modul Lulus!',
+    failed: 'Terus belajar',
+    scoreLabel: (s,t) => `Kamu menjawab benar ${s}/${t} pertanyaan.`,
+    passMsg: ' Modul berikutnya terbuka!',
+    failMsg: ' Kamu butuh 70% untuk lulus. Ulangi dan coba lagi!',
+    backToModules: '← Kembali ke Modul',
+    retakeQuiz: '🔄 Ulangi Kuis',
+    nextModule: (n) => `Mulai Modul ${n} →`,
+    goDST: '🏆 Ke DST',
+    goodluck: 'Semangat! 🎉',
+    kodlandRooting: 'Tim Kodland mendukungmu.',
+    moduleOf: (id, total) => `Modul ${id} dari ${total}`,
+    objective: 'Tujuan',
+    takeQuiz: '📝 Ikuti Pemeriksaan Pengetahuan →',
+    retakeLabel: '🔄 Ulangi Pemeriksaan Pengetahuan',
+    moduleLabel: 'Modul',
+    allDone: 'Semua selesai!',
+    completedLabel: 'selesai',
+    scorePrefix: 'Nilai',
+    dstCard: { title: 'Demonstration Skills Test', desc: 'Buktikan bahwa kamu bisa mengajar kursus ini dan menulis Python yang akan ditulis para siswa.', lastStage: 'Tahap Akhir', badge: 'Siap', badgeLocked: '🔒 Terkunci', practicalEval: 'Penilaian praktis' }
+  }
+};
+UI.en = UI.id;
+UI.tr = UI.id;
+
+const MODULES_EN=[
+  {id:1,emoji:'🧭',title:'Course Foundations & The Agent',desc:'How the LVL2 course works, the lesson flow your students follow, and the Agent — the robot helper students command with Python.',obj:'Understand how the course is structured and confidently introduce the Agent and the idea of a "program" to a beginner.',color:'#5B8DEF',
+   sections:[
+    {t:'🎓 How the Course Works',cards:[
+      {type:'text',h:'What you are preparing to teach',b:'Minecraft Education <strong>LVL2</strong> teaches children real <strong>Python</strong> inside Minecraft. Students type Python in the in-game <strong>Code Builder</strong> and watch it move an <strong>Agent</strong>, place blocks and react to the world. The hook is simple: code does something visible and fun <em>immediately</em>.'},
+      {type:'text',h:'The repeating lesson shape',b:'Almost every lesson follows the same rhythm, and your students rely on that predictability:<br>① <strong>Warm-up / Briefing</strong> — reconnect, check homework, set the goal.<br>② <strong>Theory + Python practice</strong> — a new concept, demonstrated then tried.<br>③ <strong>A Cognitive Break</strong> — a short mental reset.<br>④ <strong>Creative Stage</strong> — students apply the concept to their own build.<br>⑤ <strong>Reflection</strong> — summarise, set homework, celebrate a small win.'},
+      {type:'tip',txt:'A 90-minute lesson is a marathon for a child. The Cognitive Break is not optional padding — it is what keeps focus alive for the Creative Stage that follows.'},
+      {type:'text',h:'Your job as the tutor',b:'You are not lecturing. You <strong>demonstrate</strong> a tiny piece of code, the students <strong>copy and run it</strong>, then you <strong>nudge them to change one thing</strong> and predict what happens. The magic of this course is the loop: <em>type → run → observe → tweak</em>.'},
+    ]},
+    {t:'🤖 Meet the Agent',cards:[
+      {type:'text',h:'What is the Agent?',b:'The Agent is a friendly robot that lives in the Minecraft world and does exactly what your Python code tells it. It is the student\'s first "character" to command. Crucially, the Agent <strong>cannot get hurt</strong> and its actions are safe to repeat — perfect for fearless experimentation.'},
+      {type:'code',lbl:'First commands students ever type',code:'agent.move(FORWARD, 1)\nagent.turn(LEFT)\nplayer.say("Hello!")'},
+      {type:'text',h:'Command vs. Program',b:'These two words anchor the whole course, so define them in kid language:<br>• A <strong>command</strong> is a single instruction — one line, one action.<br>• A <strong>program</strong> is a list of commands the computer runs in order, top to bottom.<br><br>A great analogy: a command is one step of a recipe; a program is the whole recipe.'},
+      {type:'twocol',left:{h:'Tutor does',items:['Type one command live and run it','Read the line out loud as plain English','Ask "what do you think will happen?" before running','Let students copy then change a number']},right:{h:'Tutor avoids',items:['Pasting a finished 10-line program','Explaining syntax rules abstractly','Running code before students predict','Fixing every typo for them instantly']}},
+    ]},
+    {t:'🧭 Directions & the Grid',cards:[
+      {type:'text',h:'Why FORWARD is not "north"',b:'Movement is <strong>relative to the way the Agent is facing</strong>, not to the compass. <code>FORWARD</code> means "the direction the Agent currently looks". This trips up children constantly — and it is your single most useful debugging question: <em>"Which way is the Agent facing right now?"</em>'},
+      {type:'code',lbl:'Direction keywords',code:'FORWARD   BACK\nLEFT      RIGHT\nUP        DOWN'},
+      {type:'hi',h:'Teaching move that always works',b:'When a student\'s Agent goes "the wrong way", don\'t correct the code. Ask them to add <code>agent.turn(LEFT)</code> and run again. Watching the turn happen teaches relative direction better than any explanation.'},
+    ]},
+   ],
+   quiz:[
+    {q:'In this course, what is a "program"?',opts:['A single instruction to the Agent','A list of commands the computer runs in order','The Minecraft world file','The Agent itself'],c:1,fb:'A program is an ordered list of commands; a single instruction is just one command — like one step of a recipe vs. the whole recipe.'},
+    {q:'A student\'s Agent moves the "wrong way" with agent.move(FORWARD, 1). What is the best first question?',opts:['"Did you spell move correctly?"','"Which way is the Agent currently facing?"','"Should you restart Minecraft?"','"Have you tried RIGHT instead?"'],c:1,fb:'FORWARD is relative to the Agent\'s facing. Asking which way it faces teaches the concept instead of just patching the code.'},
+    {q:'What is the main purpose of the "A Cognitive Break" stage?',opts:['To give the tutor time to prepare','A mental reset so focus survives into the Creative Stage','To assess the students','To reinstall Minecraft'],c:1,fb:'90 minutes is long for a child. The break protects attention for the hands-on Creative Stage that follows.'},
+    {q:'Which tutor behaviour best matches how this course is meant to be taught?',opts:['Paste a complete program and explain each line','Demonstrate one line, have students run it, then change one thing','Lecture on Python syntax for 20 minutes','Fix every typo for the student immediately'],c:1,fb:'The course runs on the loop: type → run → observe → tweak. Small live steps beat big finished programs.'},
+    {q:'Why is the Agent a good "first character" for nervous beginners?',opts:['It is faster than the player','Its actions are safe and repeatable, so mistakes cost nothing','It can only run correct code','It writes the Python for them'],c:1,fb:'Because the Agent can\'t be harmed and actions repeat safely, students experiment fearlessly — exactly what beginners need.'},
+   ]
+  },
+  {id:2,emoji:'📦',title:'Variables & Coordinates',desc:'Storing values in variables, and using X/Y/Z coordinates to teleport, place blocks and find your way around the world.',obj:'Explain a variable in plain language, and help students read and use coordinates without fear of the numbers.',color:'#22A06B',
+   sections:[
+    {t:'📦 What is a Variable?',cards:[
+      {type:'text',h:'A labelled box',b:'A <strong>variable</strong> is a named box that holds a value so you can use it again. You put something in once, then refer to it by name. The name is the label on the box.'},
+      {type:'code',lbl:'Creating and using a variable',code:'length = 10\nagent.move(FORWARD, length)\nplayer.say(length)'},
+      {type:'text',h:'Why bother?',b:'Two reasons children actually feel:<br>① <strong>Change once, update everywhere.</strong> Change <code>length = 10</code> to <code>length = 20</code> and every place that used it updates.<br>② <strong>Readable code.</strong> <code>steps</code> means more than a lonely <code>7</code> floating in the program.'},
+      {type:'tip',txt:'Demonstrate the "change once" power live: build something with a variable, then change only the number and re-run. The whole structure resizes. Kids find this genuinely magical.'},
+    ]},
+    {t:'🗺️ Coordinates: X, Y, Z',cards:[
+      {type:'text',h:'Three numbers, one spot',b:'Every position in the world is three numbers:<br>• <strong>X</strong> — east / west<br>• <strong>Y</strong> — up / down (height)<br>• <strong>Z</strong> — north / south<br><br>The trio <code>(X, Y, Z)</code> pins down exactly one block.'},
+      {type:'code',lbl:'Teleport the player to a coordinate',code:'player.teleport(120, 70, -45)'},
+      {type:'text',h:'Reading coordinates in-game',b:'Students can see their current position on screen (or via chat). Get them in the habit: <em>before</em> teleporting somewhere, note the coordinates of where they want to go. Coordinates feel scary until they realise the game just hands them the numbers.'},
+      {type:'hi',h:'The Y mistake everyone makes',b:'A huge number of "my build is buried/floating" bugs are a wrong <strong>Y</strong>. When a student\'s structure is in the ground or in the sky, your first check is almost always the Y value.'},
+    ]},
+    {t:'🎯 Relative vs. Absolute',cards:[
+      {type:'twocol',left:{h:'Absolute coordinates',items:['Exact spot in the whole world','Example: teleport(120,70,-45)','Same place no matter where you are','Best for fixed landmarks']},right:{h:'Relative position (Agent)',items:['Relative to the Agent right now','Example: agent.move(FORWARD,3)','Depends on facing & location','Best for "do this from here"']}},
+      {type:'good',txt:'Teaching tip: give students a tiny mission — "teleport to the top of that tower". They must read the tower\'s coordinates and adjust Y. This turns abstract numbers into a treasure hunt.'},
+    ]},
+   ],
+   quiz:[
+    {q:'What is a variable, in kid-friendly terms?',opts:['A type of block','A named box that stores a value for reuse','A command that moves the Agent','An error message'],c:1,fb:'A variable is a labelled box holding a value you can refer to by name — change the box once and everywhere that uses it updates.'},
+    {q:'Which coordinate controls height (up and down)?',opts:['X','Y','Z','W'],c:1,fb:'Y is height. X is east/west and Z is north/south.'},
+    {q:'A student says their build is buried underground. What do you check first?',opts:['The block colour','The Y coordinate','Whether Minecraft is updated','The Agent\'s name'],c:1,fb:'Buried or floating builds are almost always a wrong Y (height) value.'},
+    {q:'A student wrote length = 12 then used it three times in their program. What is the key benefit you should highlight?',opts:['It makes the Agent faster','Changing length once updates all three uses at once','It hides the code from other players','It prevents all errors'],c:1,fb:'"Change once, update everywhere" is the headline benefit of variables — demonstrate it live for maximum impact.'},
+    {q:'Best mini-activity to make coordinates feel concrete?',opts:['Read a slide of definitions aloud','Have students teleport to a landmark by reading and adjusting its coordinates','Tell them to memorise X, Y, Z','Skip coordinates until later'],c:1,fb:'A "teleport to that tower" mission turns abstract numbers into a hands-on treasure hunt.'},
+   ]
+  },
+  {id:3,emoji:'🔁',title:'Loops: Repeating Commands',desc:'The for loop, range(), and nested loops — how students stop copy-pasting the same command and let Python do the repeating.',obj:'Introduce the for loop as "do this N times", read range() aloud naturally, and untangle nested loops with a clear mental model.',color:'#E8873A',
+   sections:[
+    {t:'🔁 Why Loops Exist',cards:[
+      {type:'text',h:'The pain that motivates loops',b:'Before loops, a student who wants the Agent to move forward 10 times writes the same line 10 times. It is tedious and error-prone. The loop is the relief: <em>"do this, this many times"</em>. Always introduce loops by first feeling the pain of repetition.'},
+      {type:'code',lbl:'The painful way',code:'agent.move(FORWARD, 1)\nagent.move(FORWARD, 1)\nagent.move(FORWARD, 1)\n# ...seven more times'},
+      {type:'code',lbl:'The loop way',code:'for i in range(10):\n    agent.move(FORWARD, 1)'},
+      {type:'tip',txt:'Read the loop out loud as English: "for ten times, move the Agent forward by one". Reading code aloud is the single best habit you can model for beginners.'},
+    ]},
+    {t:'🔢 Understanding range()',cards:[
+      {type:'text',h:'range(n) counts from 0',b:'<code>range(10)</code> produces the numbers 0,1,2,…,9 — that is <strong>ten</strong> numbers, but it stops <em>before</em> 10. Children expect it to include 10. Don\'t fight this with theory; show it.'},
+      {type:'code',lbl:'See the numbers',code:'for i in range(5):\n    player.say(i)\n# prints 0 1 2 3 4'},
+      {type:'hi',h:'Indentation is not decoration',b:'The indented lines are the loop\'s "body" — what gets repeated. If a line is not indented, it runs only once, after the loop. Mis-indentation is the #1 loop bug. Teach: <em>"indented = inside the loop"</em>.'},
+    ]},
+    {t:'🟦 Nested Loops',cards:[
+      {type:'text',h:'A loop inside a loop',b:'To build a flat square floor you need rows <em>and</em> columns — a loop inside a loop. The outer loop is "for each row"; the inner loop is "for each block in that row". This is the concept that unlocks real building.'},
+      {type:'code',lbl:'Build a 5×5 floor',code:'for row in range(5):\n    for col in range(5):\n        agent.place(DOWN)\n        agent.move(FORWARD, 1)\n    agent.turn(LEFT)\n    agent.move(FORWARD, 1)\n    agent.turn(LEFT)'},
+      {type:'text',h:'The clock analogy',b:'Nested loops are like a clock: the inner loop is the second hand (spins fast, completes fully), the outer loop is the minute hand (ticks once each time the inner finishes). The inner loop runs <em>all</em> its turns for <em>each</em> single turn of the outer.'},
+      {type:'good',txt:'Don\'t start nested loops with code. Start by walking it physically: "Take 5 steps (inner), turn, do it again for 5 rows (outer)." Body-first, code-second.'},
+    ]},
+   ],
+   quiz:[
+    {q:'How should you introduce loops to make them feel necessary?',opts:['Define "iteration" formally first','Let students feel the pain of writing the same line many times, then show the loop','Start with a nested loop','Give them the finished code to copy'],c:1,fb:'Loops land best when students first experience the tedium of repetition — the loop then feels like relief, not a rule.'},
+    {q:'How many times does the body of `for i in range(4):` run?',opts:['3','4','5','0'],c:1,fb:'range(4) gives 0,1,2,3 — four values — so the body runs four times.'},
+    {q:'What numbers does range(5) produce?',opts:['1,2,3,4,5','0,1,2,3,4','0,1,2,3,4,5','5,4,3,2,1'],c:1,fb:'range(5) starts at 0 and stops before 5: 0,1,2,3,4. Show this with player.say(i) rather than explaining it.'},
+    {q:'A student\'s loop only repeats the first line, not the second. What is the most likely cause?',opts:['Minecraft needs restarting','The second line is not indented, so it is outside the loop','range() is broken','The Agent is facing the wrong way'],c:1,fb:'Indented = inside the loop. An un-indented line runs once after the loop, not on every repeat. Indentation is the #1 loop bug.'},
+    {q:'In a nested loop, how does the inner loop behave relative to the outer?',opts:['It runs once total','It runs all its repeats for each single repeat of the outer loop','It runs only if the outer fails','Inner and outer always run the same number of times'],c:1,fb:'Like a clock: the inner loop (second hand) completes fully for every single tick of the outer loop (minute hand).'},
+   ]
+  },
+  {id:4,emoji:'⛏️',title:'Building & Gathering',desc:'Using the Agent to place and destroy blocks, choose materials, and gather resources — turning code into visible structures.',obj:'Help students command the Agent to build and gather, choose block types correctly, and combine loops with placement to make real structures.',color:'#9B59B6',
+   sections:[
+    {t:'🧱 Placing & Destroying',cards:[
+      {type:'text',h:'The Agent as builder',b:'The Agent can place a block in any direction relative to itself, and destroy blocks too. This is where loops pay off: a loop + a place command = a wall, a floor, a tower.'},
+      {type:'code',lbl:'Place and destroy',code:'agent.place(DOWN)      # place below the Agent\nagent.place(FORWARD)   # place in front\nagent.destroy(FORWARD) # break the block ahead'},
+      {type:'text',h:'What block gets placed?',b:'The Agent places whatever is in its currently selected inventory slot. Students must <strong>give the Agent blocks first</strong>. "Nothing is being placed" almost always means an empty or wrong slot — not broken code.'},
+      {type:'code',lbl:'Give the Agent blocks, then build',code:'agent.set_slot(1, STONE, 64)\nfor i in range(5):\n    agent.place(DOWN)\n    agent.move(FORWARD, 1)'},
+    ]},
+    {t:'🪨 Choosing Materials',cards:[
+      {type:'text',h:'Block names are constants',b:'Materials are written as names like <code>STONE</code>, <code>OAK_PLANKS</code>, <code>GLASS</code>, <code>GLOWSTONE</code>. They are case-sensitive and must match exactly. A typo in a block name is a common, quiet failure.'},
+      {type:'hi',h:'The "Smart Lantern" lesson',b:'A signature project: build a column of blocks topped with <strong>GLOWSTONE</strong> that follows the player to light their way. It combines a variable (the height), a coordinate (where to build) and the right material — a perfect mini-showcase of everything so far.'},
+      {type:'tip',txt:'When a build looks wrong, check three things in order: (1) does the Agent have blocks? (2) is the block name spelled right? (3) which way is the Agent facing? This checklist solves most build bugs.'},
+    ]},
+    {t:'🏗️ Bridges, Walls & Restoration',cards:[
+      {type:'text',h:'Combining the skills',b:'Lessons like "Build the bridge" and "Restore the factory" ask students to fill gaps and rebuild walls using loops and nested loops. The assessment rewards <em>using code</em> to build walls rather than placing blocks by hand — reinforce that the point is the program, not the pixels.'},
+      {type:'code',lbl:'A simple bridge across a gap',code:'agent.set_slot(1, OAK_PLANKS, 64)\nfor i in range(8):\n    agent.place(DOWN)\n    agent.move(FORWARD, 1)'},
+      {type:'good',txt:'Celebrate "the code did it" moments loudly. When a student\'s loop builds a whole wall in one run, name it: "You just told the computer to do 25 things with 3 lines." That feeling is what brings them back.'},
+    ]},
+   ],
+   quiz:[
+    {q:'A student runs a build loop but no blocks appear. What is the most likely cause?',opts:['The loop syntax is wrong','The Agent has no blocks in its selected slot','Minecraft needs reinstalling','range() is too small'],c:1,fb:'The Agent places whatever is in its slot. Empty/wrong slot = nothing placed. Give it blocks first with set_slot.'},
+    {q:'Which command makes the Agent break the block directly in front of it?',opts:['agent.place(FORWARD)','agent.destroy(FORWARD)','agent.move(FORWARD)','agent.break(AHEAD)'],c:1,fb:'agent.destroy(FORWARD) breaks the block ahead; place() adds a block instead.'},
+    {q:'A build is using the wrong material. What should you check?',opts:['The Agent\'s name','That the block name constant is spelled exactly (e.g. GLOWSTONE)','The player\'s health','The Y coordinate only'],c:1,fb:'Block names are exact, case-sensitive constants. A small typo silently changes or breaks the material.'},
+    {q:'In the wall/bridge assessments, what does the rubric most reward?',opts:['Placing each block by hand quickly','Using code (loops) to build the structure','Using the rarest block','Finishing before everyone else'],c:1,fb:'The whole point is programming the build — using loops to place blocks — not hand-placing them.'},
+    {q:'What is the best three-step checklist when a build looks wrong?',opts:['Restart, reinstall, reboot','Does the Agent have blocks? Is the block name correct? Which way is it facing?','Check the colour, the sound, the time','Delete the code and start over'],c:1,fb:'Blocks → spelling → facing direction resolves the large majority of build bugs quickly.'},
+   ]
+  },
+  {id:5,emoji:'🧩',title:'Functions in Python',desc:'Writing your own functions with def, calling them, and passing parameters — packaging code into reusable, named actions.',obj:'Explain a function as a "named recipe", show how parameters make functions flexible, and help students refactor repeated code into a function.',color:'#E84393',
+   sections:[
+    {t:'🧩 What is a Function?',cards:[
+      {type:'text',h:'A named recipe',b:'A <strong>function</strong> bundles several commands under one name. Define it once, then "call" it whenever you want all those commands to run. It is the natural next step after loops: loops repeat lines, functions name and reuse a whole block.'},
+      {type:'code',lbl:'Define and call a function',code:'def build_wall():\n    for i in range(5):\n        agent.place(FORWARD)\n        agent.move(FORWARD, 1)\n\nbuild_wall()   # this line runs the recipe'},
+      {type:'hi',h:'Define ≠ Run',b:'Writing <code>def build_wall():</code> only <em>teaches</em> the computer the recipe — nothing happens yet. The function runs only when you <strong>call</strong> it by name with <code>build_wall()</code>. "I wrote the function but nothing happened" almost always means it was never called.'},
+    ]},
+    {t:'🎛️ Parameters',cards:[
+      {type:'text',h:'Making a function flexible',b:'A <strong>parameter</strong> is a value you hand to the function so it can behave differently each time. The same recipe, different ingredient. This is the leap from "a wall of 5" to "a wall of any length".'},
+      {type:'code',lbl:'A flexible wall',code:'def build_wall(length):\n    for i in range(length):\n        agent.place(FORWARD)\n        agent.move(FORWARD, 1)\n\nbuild_wall(5)\nbuild_wall(10)'},
+      {type:'tip',txt:'Demonstrate by calling the same function twice with different numbers. Watching one recipe make a short wall then a long wall makes parameters click instantly.'},
+    ]},
+    {t:'♻️ Refactoring to Functions',cards:[
+      {type:'twocol',left:{h:'Before (repeated)',items:['Same block of code pasted 3 times','Change one thing = fix 3 places','Hard to read','Errors multiply']},right:{h:'After (a function)',items:['One named recipe, called 3 times','Change one thing = fix 1 place','Reads like plain English','Bugs fixed in one spot']}},
+      {type:'text',h:'The set_item / nested-loop project',b:'A capstone-style assignment combines a function, variables and <strong>nested loops</strong> to rebuild walls and a roof. The rubric explicitly rewards using a function plus nested loops — so coach students toward "name the repeated part, then call it".'},
+      {type:'good',txt:'When you spot a student copy-pasting the same chunk, that is your teachable moment: "Could we give this a name and just call it?" Let the repetition motivate the function — same pattern as loops.'},
+    ]},
+   ],
+   quiz:[
+    {q:'What is a function, in kid-friendly terms?',opts:['A single block type','A named recipe that bundles commands for reuse','A type of loop counter','An error in the code'],c:1,fb:'A function packages several commands under one name; you define it once and call it whenever you need it.'},
+    {q:'A student wrote def build_wall(): but nothing happened when they ran the program. Why?',opts:['The function name is too long','They defined it but never called it with build_wall()','Functions don\'t work in Minecraft','They needed a loop instead'],c:1,fb:'Defining a function only teaches the recipe. It runs only when called by name — the most common functions mistake.'},
+    {q:'What does a parameter let a function do?',opts:['Run faster','Behave differently each time it is called','Hide the code','Repeat forever'],c:1,fb:'A parameter is a value passed in so the same function can do different work — e.g. build a wall of any length.'},
+    {q:'You see a student pasting the same 4 lines three times. Best teaching move?',opts:['Tell them to paste it more carefully','Ask "could we give this a name and just call it?"','Let them continue','Write it for them'],c:1,fb:'Repetition is the natural motivation for a function — guide them to name the chunk and call it, just like loops.'},
+    {q:'Why is refactoring repeated code into a function valuable?',opts:['It makes the Agent move faster','Change one thing in one place instead of many; code reads clearly','It uses rarer blocks','It removes the need for loops'],c:1,fb:'"Fix in one place" and readability are the headline wins — the same logic as the variable benefit, scaled up to whole blocks of code.'},
+   ]
+  },
+  {id:6,emoji:'🔀',title:'Conditions & Booleans',desc:'if / else, comparison operators, and True/False — teaching the Agent and the program to make decisions.',obj:'Explain conditions with everyday "if it rains, then…" language, distinguish if from else, and read comparisons aloud naturally.',color:'#0FB5C9',
+   sections:[
+    {t:'🔀 The if Statement',cards:[
+      {type:'text',h:'If this, then that',b:'A <strong>condition</strong> lets the program choose. It checks something, and only runs the indented code <em>if</em> the check is true. The everyday anchor: <em>"If it rains, then I\'ll grab the umbrella."</em> The "if it rains" part is the condition.'},
+      {type:'code',lbl:'A simple condition',code:'score = 100\nif score >= 70:\n    player.say("Hooray! A new level achieved!")'},
+      {type:'text',h:'Comparison operators',b:'Conditions usually compare two things:<br>• <code>==</code> equal to (note: two equals!)<br>• <code>!=</code> not equal to<br>• <code>&gt;</code> greater than &nbsp; <code>&lt;</code> less than<br>• <code>&gt;=</code> at least &nbsp; <code>&lt;=</code> at most'},
+      {type:'hi',h:'The = vs == trap',b:'<code>=</code> <strong>puts a value into</strong> a variable. <code>==</code> <strong>asks "are these equal?"</strong>. Mixing them up is the classic conditions bug. Read <code>==</code> aloud as "is equal to" to keep them separate in students\' minds.'},
+    ]},
+    {t:'⚖️ if / else',cards:[
+      {type:'text',h:'Two paths',b:'<code>else</code> covers "otherwise" — what happens when the condition is <em>not</em> true. Together, if/else guarantees exactly one of two paths runs.'},
+      {type:'code',lbl:'Choosing between two outcomes',code:'if score >= 70:\n    player.say("You passed!")\nelse:\n    player.say("Keep trying!")'},
+      {type:'tip',txt:'Act it out before coding: stand by the door and say "if it\'s raining I take the umbrella, else I leave it". Physicalising the fork in the road makes else obvious.'},
+    ]},
+    {t:'✅ Booleans: True & False',cards:[
+      {type:'text',h:'Everything boils down to yes/no',b:'A condition is really just a question that answers <strong>True</strong> or <strong>False</strong>. <code>score >= 70</code> is not a number — it is a yes/no. Once students see that comparisons <em>produce</em> True/False, conditions stop feeling mysterious.'},
+      {type:'code',lbl:'See the True/False',code:'player.say(10 > 3)    # True\nplayer.say(2 == 5)    # False'},
+      {type:'good',txt:'A strong check-for-understanding: give a value and a condition and ask the class to shout "True!" or "False!" before you run it. Fast, loud, and it reveals misunderstandings immediately.'},
+    ]},
+   ],
+   quiz:[
+    {q:'What is the everyday analogy that best introduces an if statement?',opts:['"Repeat this 5 times"','"If it rains, then I\'ll grab the umbrella"','"Give this a name and call it"','"Put a value in a box"'],c:1,fb:'"If it rains, then…" maps directly onto condition → action and is instantly familiar to children.'},
+    {q:'Which operator checks whether two values are equal?',opts:['=','==','=>','!='],c:1,fb:'== asks "are these equal?". A single = assigns a value to a variable — the classic beginner trap.'},
+    {q:'What does the else block do?',opts:['Repeats the if','Runs only when the condition is NOT true','Always runs','Defines a function'],c:1,fb:'else is the "otherwise" path — it runs when the if condition is false, guaranteeing exactly one branch runs.'},
+    {q:'What does the expression score >= 70 actually produce?',opts:['A number','A True or False value','A block','An error'],c:1,fb:'A comparison evaluates to a Boolean — True or False. Seeing this makes conditions click.'},
+    {q:'A student wrote `if score = 70:` and got an error. What is wrong?',opts:['score is not allowed as a name','They used = (assign) instead of == (compare)','70 is too large','Conditions need a loop'],c:1,fb:'= assigns, == compares. Reading == aloud as "is equal to" helps students keep them apart.'},
+   ]
+  },
+  {id:7,emoji:'🎲',title:'Randomness & Creating Mobs',desc:'Using randint() for unpredictable results, and spawning mobs (animals and creatures) to bring the world to life.',obj:'Show how randomness makes programs feel alive, use randint() safely, and help students spawn and place mobs with code.',color:'#F2B705',
+   sections:[
+    {t:'🎲 Why Randomness?',cards:[
+      {type:'text',h:'Programs that surprise you',b:'So far every program does the exact same thing every run. <strong>Randomness</strong> changes that: each run can differ. This is what makes games replayable and is hugely motivating for kids — "run it again and see something new".'},
+      {type:'code',lbl:'Import and roll a number',code:'import random\nn = random.randint(1, 6)   # like rolling a dice\nplayer.say(n)'},
+      {type:'hi',h:'randint includes BOTH ends',b:'Unlike <code>range()</code>, <code>random.randint(1, 6)</code> can return 1 <em>or</em> 6 — both ends included. This difference from range() genuinely confuses students, so call it out directly.'},
+    ]},
+    {t:'🐮 Spawning Mobs',cards:[
+      {type:'text',h:'Bringing the world to life',b:'Mobs are the creatures of Minecraft — <code>COW</code>, <code>CHICKEN</code>, <code>SHEEP</code>, <code>PIG</code>, <code>WOLF</code>, <code>VILLAGER</code> and more. Students can spawn them at a coordinate, instantly turning an empty world into a busy farm or zoo.'},
+      {type:'code',lbl:'Spawn an animal',code:'mobs.spawn(COW, 120, 70, -45)'},
+      {type:'text',h:'Random + mobs = magic',b:'Combine the two skills: pick a random animal and/or a random spot, then spawn. A loop around this fills a field with a surprising mix of creatures every single run — a favourite Creative Stage.'},
+      {type:'code',lbl:'A random petting zoo',code:'import random\nanimals = [COW, SHEEP, PIG, CHICKEN]\nfor i in range(10):\n    a = random.choice(animals)\n    x = random.randint(100, 120)\n    z = random.randint(-50, -30)\n    mobs.spawn(a, x, 70, z)'},
+    ]},
+    {t:'🎯 Teaching With Randomness',cards:[
+      {type:'tip',txt:'Randomness is the best "run it again!" hook in the whole course. Lean into it — ask students to predict what *kind* of thing will happen (not the exact value) before each run.'},
+      {type:'good',txt:'Watch for the misconception that random means "broken" or "wrong". Reassure students: different output each run is exactly what we asked for — that is the program working perfectly.'},
+      {type:'text',h:'Common pitfalls',b:'① Forgetting <code>import random</code> at the top → name errors. ② Expecting <code>randint(1,6)</code> to stop at 5 (it includes 6). ③ Spawning mobs at a buried Y so they suffocate — same Y discipline as building.'},
+    ]},
+   ],
+   quiz:[
+    {q:'What does randomness add to a student\'s program?',opts:['It makes the program shorter','Different, surprising results on each run — the "run it again!" hook','It removes the need for loops','It hides errors'],c:1,fb:'Randomness makes programs feel alive and replayable, which is hugely motivating for learners.'},
+    {q:'How does random.randint(1, 6) differ from range(1, 6)?',opts:['They are identical','randint can return 6 (both ends included); range stops before 6','randint only returns even numbers','range includes 6 but randint does not'],c:1,fb:'randint includes both endpoints, so 1 through 6 are all possible — unlike range, which stops before the end value.'},
+    {q:'A student gets a NameError when using randint. What did they most likely forget?',opts:['To spawn a mob','import random at the top','To indent the loop','A semicolon'],c:1,fb:'randint lives in the random module — without import random, Python doesn\'t know the name.'},
+    {q:'Which command spawns a creature at a coordinate?',opts:['agent.place(COW)','mobs.spawn(COW, 120, 70, -45)','player.say(COW)','random.cow()'],c:1,fb:'mobs.spawn(type, x, y, z) places a mob at the given coordinate.'},
+    {q:'A student worries their random program is "broken" because it changes every run. What do you say?',opts:['"Yes, fix it so it\'s the same each time"','"That\'s exactly right — different output each run is the program working as asked"','"Random doesn\'t work in Minecraft"','"You must remove the loop"'],c:1,fb:'Varying output is the intended behaviour of randomness — reassure them it means success, not a bug.'},
+   ]
+  },
+  {id:8,emoji:'💡',title:'Redstone, Sensors & Reacting',desc:'Redstone as Minecraft "electricity", sensors that detect the player, and writing programs that respond to events.',obj:'Explain redstone with the electricity analogy, connect sensors to actions, and help students build a program that reacts to the world.',color:'#E74C3C',
+   sections:[
+    {t:'💡 Redstone = Electricity',cards:[
+      {type:'text',h:'The power that flows',b:'<strong>Redstone</strong> is Minecraft\'s version of electricity. It carries a signal that can switch things on and off — lamps, doors, pistons. The whole idea: a signal travels and <em>activates</em> something at the other end.'},
+      {type:'text',h:'Sensor → signal → action',b:'The classic chain children build:<br>① a <strong>sensor</strong> detects something (e.g. the player approaches),<br>② it sends a <strong>redstone signal</strong>,<br>③ a device <strong>reacts</strong> (e.g. a lamp turns on).<br>This is the same shape as an if-statement, but physical — perfect for reinforcing conditions.'},
+      {type:'hi',h:'Daylight Sensor & Redstone Lamp',b:'A signature build: a <strong>Daylight Sensor</strong> in night mode plus a <strong>Redstone Lamp</strong> = lamps that light up automatically when it gets dark. It is a "smart" behaviour with no code at all — a brilliant bridge into event-driven thinking.'},
+    ]},
+    {t:'🔔 Reacting to Events',cards:[
+      {type:'text',h:'Code that waits and responds',b:'Beyond redstone wiring, students write Python that <em>reacts</em>: when a chat message is sent, when a block is placed, when the player moves. The program is no longer a fixed list run once — it listens and responds. This is a big conceptual step.'},
+      {type:'code',lbl:'React to a chat command',code:'def on_message(msg):\n    if msg == "light":\n        agent.set_slot(1, GLOWSTONE, 64)\n        agent.place(DOWN)\n\nplayer.on_chat("light", on_message)'},
+      {type:'tip',txt:'Tie it back: "remember if/else? A sensor is just an if-statement made of blocks." Linking new ideas to mastered ones builds confidence and a coherent mental model.'},
+    ]},
+    {t:'🌟 The Smart Lantern, Upgraded',cards:[
+      {type:'text',h:'Combining everything',b:'Late-course projects layer the skills: a lantern that <em>follows</em> the player (coordinates), only lights <em>when dark</em> (condition/sensor), and rebuilds itself with a <em>loop</em>. By now students are composing several concepts into one satisfying machine.'},
+      {type:'good',txt:'These projects can frustrate when one piece breaks the whole. Coach debugging by isolation: "Let\'s turn off the loop and test just the light first." Teaching them to test one part at a time is a gift that outlasts the course.'},
+      {type:'warn',txt:'Watch the cognitive load. Reacting-to-events plus redstone plus prior concepts is a lot at once. Slow down, demo each piece alone, and only then combine. Confused students go quiet — circulate and check.'},
+    ]},
+   ],
+   quiz:[
+    {q:'What is the best analogy for redstone?',opts:['Water pipes','Electricity — a signal that flows and switches things on/off','A type of mob','A loop counter'],c:1,fb:'Redstone behaves like electricity: a travelling signal that activates devices at the other end.'},
+    {q:'The "sensor → signal → action" chain is conceptually most similar to which Python idea?',opts:['A variable','An if-statement (condition → action)','A function definition','range()'],c:1,fb:'A sensor is essentially a physical if-statement: it checks something, and if true, triggers an action. Linking them reinforces conditions.'},
+    {q:'What does a Daylight Sensor + Redstone Lamp build demonstrate?',opts:['Random number generation','Automatic, event-driven behaviour (lights on when dark) with no code','How to spawn mobs','Nested loops'],c:1,fb:'It is a "smart" reaction to a condition (darkness) — a perfect, code-free bridge into event-driven thinking.'},
+    {q:'How is event-reacting code different from earlier programs?',opts:['It runs faster','It listens and responds to events instead of running once top-to-bottom','It needs no variables','It cannot use functions'],c:1,fb:'Reactive programs wait for events (chat, movement) and respond — a meaningful step beyond a fixed, run-once list.'},
+    {q:'A student\'s combined project breaks and they can\'t tell why. Best coaching move?',opts:['Rewrite it for them','Have them test one piece at a time (isolate the parts)','Tell them to delete it','Add more features'],c:1,fb:'Debugging by isolation — testing each component alone — is a durable skill far more valuable than a one-time fix.'},
+   ]
+  },
+  {id:9,emoji:'🤝',title:'The Shared World & Teaching Craft',desc:'Connecting to a shared multiplayer world, plus the classroom skills that make a Kodland tutor great: pacing, feedback, breaks and reflection.',obj:'Run a smooth shared-world session and apply the lesson rhythm — warm-ups, breaks, reflection and homework — like a confident Kodland tutor.',color:'#16A085',
+   sections:[
+    {t:'🌐 The Shared World',cards:[
+      {type:'text',h:'Building together',b:'The <strong>last lesson of each module</strong> (Lesson 8) connects students to a <strong>shared world</strong> where everyone\'s code affects the same space. It is the social peak of each module — collaboration, comparing builds, and a shared sense of ownership.'},
+      {type:'twocol',left:{h:'Set up for success',items:['Agree on areas so builds don\'t collide','Remind: one person\'s code changes the world for all','Have a "house rules" chat for the world','Know how to host / join before the lesson']},right:{h:'Watch out for',items:['Accidental griefing (test in a corner first)','Everyone building at one coordinate','A student stuck unable to join','Off-task wandering in the open world']}},
+      {type:'tip',txt:'Always test the shared-world connection yourself before the lesson. A class of children waiting to join a broken world is the fastest way to lose a room.'},
+    ]},
+    {t:'⏱️ Running the Lesson',cards:[
+      {type:'text',h:'Warm-up & checking homework',b:'Open warmly — greet, ask how they are, and check homework <em>kindly</em>. If many struggled with homework, review it together; if it went well, celebrate. Never shame a missed task — it teaches kids to hide, not to try.'},
+      {type:'text',h:'Pacing & the break',b:'Keep an eye on the clock. The <strong>Cognitive Break</strong> exists to reset focus before the demanding Creative Stage — don\'t skip it to "save time", because tired students learn nothing in the minutes you save.'},
+      {type:'hi',h:'When a student is stuck',b:'Resist fixing it for them. Ask guiding questions: "What did you expect? What happened? Which way is the Agent facing?" The goal is a student who can debug, not a student who waits for rescue.'},
+    ]},
+    {t:'🎉 Reflection & Feedback',cards:[
+      {type:'text',h:'Closing the lesson',b:'<strong>Reflection is part of every lesson</strong> and usually has two parts. First, <strong>students reflect</strong> on what they have learned and achieved. Second, the <strong>teacher summarises</strong> the results of the lesson. Both parts matter — the first gives students ownership of their progress, the second ties the learning together. Set homework clearly too; a warm, structured close is as important as a strong start.'},
+      {type:'good',txt:'Vary how students reflect across lessons — sharing a small win, rating how hard something felt, naming one new thing learned, or a quick emoji mood check. Different reflection formats keep the close fresh and reveal different things about how the class is doing.'},
+      {type:'text',h:'The mindset that matters most',b:'The best tutors are not the ones with the most Python knowledge — they are <strong>patient, curious problem-solvers</strong> who model "I don\'t know yet, let\'s find out". Your enthusiasm and calm are the real curriculum.'},
+      {type:'warn',txt:'A quiet child is often a confused child, not an engaged one. Circulate, glance at screens, and check in by name. Silence is a signal to investigate, not a sign that all is well.'},
+    ]},
+   ],
+   quiz:[
+    {q:'Before a shared-world lesson, what should you always do?',opts:['Memorise every block name','Test the world connection yourself first','Disable the Agent','Skip the warm-up'],c:1,fb:'A class waiting to join a broken world loses focus fast — verify the connection before the lesson starts.'},
+    {q:'Many students didn\'t finish the homework. Best response?',opts:['Publicly note who failed','Review it together kindly and move on, without shaming','Cancel today\'s lesson','Give them double homework'],c:1,fb:'Shaming teaches children to hide. Reviewing kindly keeps them willing to try and to be honest.'},
+    {q:'Why should you not skip the Cognitive Break to save time?',opts:['It is graded','Tired students learn little, so the saved minutes are wasted anyway','Minecraft requires it','It is when the Agent recharges'],c:1,fb:'The break protects attention for the Creative Stage; skipping it costs more learning than it saves time.'},
+    {q:'A student is stuck. What is the most developmental response?',opts:['Fix the code for them quickly','Ask guiding questions: what did you expect, what happened, which way is the Agent facing?','Tell them to wait until next week','Move on to another student'],c:1,fb:'Guiding questions build a student who can debug independently — the real goal — rather than one who waits to be rescued.'},
+    {q:'What matters MOST for being a great Kodland tutor?',opts:['Knowing every Python detail perfectly','Being a patient, curious problem-solver who models "let\'s find out"','Speaking quickly to cover more','Never admitting you don\'t know something'],c:1,fb:'Patience, curiosity and a calm problem-solving attitude matter far more than encyclopaedic knowledge — your enthusiasm is the real curriculum.'},
+   ]
+  }
+]
+
+const MODULES = MODULES_EN;
+
+
+function t(key, ...args){
+  const v = UI[lang][key];
+  if(typeof v==='function') return v(...args);
+  return v;
+}
+
+function applyLangUI(){
+  document.documentElement.lang = lang;
+  // nav labels
+  ['home','content','quiz','results','dst'].forEach(id=>{
+    const el = document.getElementById('nav-sub-'+id);
+    if(el) el.textContent = t('navSub');
+  });
+  // lang dropdown active state
+  updateLangDropdown();
+  // hero
+  document.getElementById('hero-eyebrow').textContent = t('heroEyebrow');
+  document.getElementById('hero-title').innerHTML = t('heroTitle');
+  document.getElementById('hero-sub').textContent = t('heroSub');
+  document.getElementById('plbl').textContent = t('plbl');
+  document.getElementById('slbl').textContent = t('slbl');
+  document.getElementById('skip-btn').textContent = t('skipBtn');
+  document.getElementById('skip-title').textContent = t('skipTitle');
+  document.getElementById('skip-body').textContent = t('skipBody');
+  document.getElementById('skip-no').textContent = t('skipNo');
+  document.getElementById('skip-yes').textContent = t('skipYes');
+  // back buttons
+  ['content','results'].forEach(id=>{
+    const el=document.getElementById('back-btn-'+id);
+    if(el) el.textContent = t('backModules');
+  });
+  const dstBack=document.getElementById('back-btn-dst');
+  if(dstBack) dstBack.textContent = t('backModules');
+  const exitQ=document.getElementById('exit-quiz-btn');
+  if(exitQ) exitQ.textContent = t('exitQuiz');
+}
+
+
+function toggleLangDropdown(e){
+  e.stopPropagation();
+  const dd = document.getElementById('lang-dropdown');
+  const btn = e.currentTarget;
+  const isOpen = dd.classList.contains('open');
+  closeLangDropdown();
+  if(isOpen) return;
+  const r = btn.getBoundingClientRect();
+  dd.style.top = (r.bottom + 6) + 'px';
+  dd.style.right = (window.innerWidth - r.right) + 'px';
+  dd.style.left = 'auto';
+  dd.classList.add('open');
+  btn.classList.add('open');
+  dd._triggerId = btn.id;
+}
+
+function closeLangDropdown(){
+  const dd = document.getElementById('lang-dropdown');
+  dd.classList.remove('open');
+  if(dd._triggerId){
+    const t = document.getElementById(dd._triggerId);
+    if(t) t.classList.remove('open');
+    dd._triggerId = null;
+  }
+}
+
+function updateLangDropdown(){
+  const optTr = document.getElementById('lang-opt-tr');
+  const optEn = document.getElementById('lang-opt-en');
+  if(optTr) optTr.classList.toggle('active', lang==='tr');
+  if(optEn) optEn.classList.toggle('active', lang==='en');
+}
+
+let _pendingUrl = null;
+
+function confirmRegionSwitch(url, flag, label){
+  closeLangDropdown();
+  if(url === 'en.html') return;
+  _pendingUrl = url;
+  const messages = {
+    'tr.html': { line1: 'You are about to switch to the [TR] Turkish training. Your progress for each region is saved separately. Are you sure?', line2: 'Türkçe eğitime geçmek üzeresiniz. Her bölgenin ilerlemesi ayrı kaydedilir. Emin misiniz?' },
+    'it.html': { line1: 'You are about to switch to the [IT] Italian training. Your progress for each region is saved separately. Are you sure?', line2: 'Stai per passare alla formazione italiana. I progressi di ogni regione vengono salvati separatamente. Sei sicuro?' },
+    'pl.html': { line1: 'You are about to switch to the [PL] Polish training. Your progress for each region is saved separately. Are you sure?', line2: 'Zamierzasz przejść do szkolenia w języku polskim. Postępy każdego regionu są zapisywane osobno. Czy jesteś pewien?' },
+      'es.html': { line1: 'You are about to switch to the [ES] Spanish training. Your progress for each region is saved separately. Are you sure?', line2: 'Estás a punto de cambiar a la formación en español. El progreso de cada región se guarda por separado. ¿Estás seguro?' },
+    'pt.html': { line1: 'You are about to switch to the [PT] Portuguese training. Your progress for each region is saved separately. Are you sure?', line2: 'Você está prestes a mudar para o treinamento em português. O progresso de cada região é salvo separadamente. Tem certeza?' },
+    'id.html': { line1: 'You are about to switch to the [ID] Indonesian training. Your progress for each region is saved separately. Are you sure?', line2: 'Anda akan beralih ke pelatihan bahasa Indonesia. Kemajuan setiap wilayah disimpan secara terpisah. Apakah Anda yakin?' },
+      'pt.html': { line1: 'You are about to switch to the [PT] Portuguese training. Your progress for each region is saved separately. Are you sure?', line2: 'Você está prestes a mudar para o treinamento em português. O progresso de cada região é salvo separadamente. Tem certeza?' },
+    'id.html': { line1: 'You are about to switch to the [ID] Indonesian training. Your progress for each region is saved separately. Are you sure?', line2: 'Anda akan beralih ke pelatihan bahasa Indonesia. Kemajuan setiap wilayah disimpan secara terpisah. Apakah Anda yakin?' },
+  };
+  const msg = messages[url];
+  const body = msg ? msg.line1 + '<br><br>' + msg.line2 : 'You are about to switch regions. Your progress is saved separately. Are you sure?';
+  document.getElementById('lang-modal').classList.add('show');
+  document.getElementById('lang-modal-body').innerHTML = body;
+}
+
+function confirmLangSwitch(){
+  document.getElementById('lang-modal').classList.remove('show');
+  if(_pendingUrl) window.location.href = _pendingUrl;
+  _pendingUrl = null;
+}
+
+// ─── DATA ───────────────────────────────────────────────────────────────────
+
+function getMods(){ return MODULES_EN; }
+
+// ─── PROGRESS ───────────────────────────────────────────────────────────────
+function getProgress(){
+  const key = 'kl-id-progress';
+  try{ return JSON.parse(localStorage.getItem(key)||'{}'); }catch(e){ return {}; }
+}
+function saveProgress(p){
+  const key = 'kl-id-progress';
+  localStorage.setItem(key, JSON.stringify(p));
+}
+function isPassed(id){ const p=getProgress(); return p[id]?.passed===true; }
+function getScore(id){ const p=getProgress(); return p[id]?.score||0; }
+function setResult(id, pct, passed){
+  const p=getProgress();
+  if(!p[id]?.passed||pct>(p[id]?.score||0)){ p[id]={passed,score:pct}; }
+  saveProgress(p);
+}
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let currentModule=null, quizData=[], qi=0, score=0;
+
+// ─── HOME ─────────────────────────────────────────────────────────────────
+function renderHome(){
+  const mods = getMods();
+  const total = mods.length;
+  const done = mods.filter(m=>isPassed(m.id)).length;
+  document.getElementById('pnum').textContent=done+'/'+total;
+  document.getElementById('pfill').style.width=(done/total*100)+'%';
+  const tag=document.getElementById('ntag');
+  if(done>0){tag.style.display='inline';tag.textContent=done===total?('🏆 '+t('allDone')):done+'/'+total+' '+t('completedLabel');}else tag.style.display='none';
+  const g=document.getElementById('mgrid'); g.innerHTML='';
+
+  mods.forEach((m,i)=>{
+    const prev = i===0 ? true : isPassed(mods[i-1].id);
+    const isDone = isPassed(m.id);
+    const locked = !prev;
+    const el=document.createElement('div');
+    el.className='mc'+(locked?' locked':'')+(isDone?' done':'');
+    const pct=getScore(m.id);
+    const badge=isDone?`<span class="badge bd">${t('badgeDone')}</span>`:locked?`<span class="badge bl">${t('badgeLocked')}</span>`:`<span class="badge bs">${t('badgeStart')}</span>`;
+    const stag=isDone?`<span class="stag">${t('scorePrefix')}: <b>${pct}%</b></span>`:locked?`<span class="stag">${t('completePrevModule',i)}</span>`:`<span class="stag">${t('hasQuiz')}</span>`;
+    el.innerHTML=`<div class="mc-stripe" style="background:${m.color}"></div>
+    <div class="mc-body">
+      <div class="mc-top"><div class="mc-num">${t('moduleLabel')} ${m.id}</div><div class="mc-em">${m.emoji}</div></div>
+      <div class="mc-title">${m.title}</div>
+      <div class="mc-desc">${m.desc}</div>
+      <div class="mc-foot">${badge}${stag}</div>
+    </div>`;
+    if(!locked) el.onclick=()=>openModule(m);
+    g.appendChild(el);
+  });
+
+  // DST card — always shown, unlocks once every module is passed
+  {
+    const allDone=mods.every(m=>isPassed(m.id));
+    const dstEl=document.createElement('div');
+    dstEl.className='mc'+(allDone?'':' locked');
+    dstEl.innerHTML=`<div class="mc-stripe" style="background:linear-gradient(90deg,var(--lime),var(--pink))"></div>
+    <div class="mc-body">
+      <div class="mc-top"><div class="mc-num">${t('dstCard').lastStage}</div><div class="mc-em">🏆</div></div>
+      <div class="mc-title">${t('dstCard').title}</div>
+      <div class="mc-desc">${t('dstCard').desc}</div>
+      <div class="mc-foot"><span class="badge ${allDone?'bd':'bl'}">${allDone?t('dstCard').badge:t('dstCard').badgeLocked}</span><span class="stag">${t('dstCard').practicalEval}</span></div>
+    </div>`;
+    if(allDone) dstEl.onclick=showDST;
+    g.appendChild(dstEl);
+  }
+}
+
+// ─── MODULE 0 (TR) ────────────────────────────────────────────────────────
+function openModule0(){ goHome(); }
+
+// ─── MODULE CONTENT ───────────────────────────────────────────────────────
+function openModule(m){
+  currentModule=m;
+  const total = getMods().length;
+  let html=`<div class="meyebrow">${t('moduleOf',m.id,total)}</div><div class="mh1">${m.emoji} ${m.title}</div><div class="mobj" style="border-left-color:${m.color}"><strong>${t('objective')}:</strong> ${m.obj}</div>`;
+  m.sections.forEach(s=>{html+=`<div class="sch">${s.t}</div>`;s.cards.forEach(c=>{html+=rc(c);});});
+  const lbl=isPassed(m.id)?t('retakeLabel'):t('takeQuiz');
+  html+=`<hr class="divider"><button class="ctabtn" onclick="startQuiz(${m.id})">${lbl}</button>`;
+  document.getElementById('cbody').innerHTML=html;
+  showScreen('screen-content');
+  window.scrollTo(0,0);
+}
+
+function rc(c){
+  if(c.type==='text')return`<div class="card"><h4>${c.h}</h4><p>${c.b}</p></div>`;
+  if(c.type==='hi')return`<div class="card hi"><h4>${c.h}</h4><p>${c.b}</p></div>`;
+  if(c.type==='warn')return`<div class="callout cw"><span class="ci">⚠️</span><span>${c.txt}</span></div>`;
+  if(c.type==='tip')return`<div class="callout ct"><span class="ci">💡</span><span>${c.txt}</span></div>`;
+  if(c.type==='good')return`<div class="callout cg"><span class="ci">✅</span><span>${c.txt}</span></div>`;
+  if(c.type==='code')return`<div class="card codecard"><div class="clbl">${c.lbl}</div><pre>${c.code}</pre></div>`;
+  if(c.type==='img')return`<img class="mod-img" src="${c.src}" alt="${c.alt||''}" loading="lazy">`;
+  if(c.type==='twocol'){
+    const li=items=>items.map(i=>`<li>${i}</li>`).join('');
+    return`<div class="two-col"><div class="card"><h4>${c.left.h}</h4><ul>${li(c.left.items)}</ul></div><div class="card hi"><h4 style="color:var(--hi-t)">${c.right.h}</h4><ul>${li(c.right.items)}</ul></div></div>`;
+  }
+  return'';
+}
+
+// ─── QUIZ ─────────────────────────────────────────────────────────────────
+function startQuiz(id){
+  currentModule=id;
+  const m=getMods().find(x=>x.id===id);
+  // shuffle question order, and shuffle the options within each question
+  quizData=[...m.quiz].sort(()=>Math.random()-.5).map(q=>{
+    const correctText=q.opts[q.c];
+    const shuffledOpts=[...q.opts].sort(()=>Math.random()-.5);
+    return {...q, opts:shuffledOpts, c:shuffledOpts.indexOf(correctText)};
+  });
+  qi=0; score=0;
+  renderQ(); showScreen('screen-quiz');
+}
+function renderQ(){
+  const q=quizData[qi];
+  document.getElementById('qfill').style.width=(qi/quizData.length*100)+'%';
+  document.getElementById('qcount').textContent=`Pertanyaan ${qi+1} dari ${quizData.length}`;
+  document.getElementById('qtext').textContent=q.q;
+  const el=document.getElementById('qopts'); el.innerHTML='';
+  q.opts.forEach((o,idx)=>{const b=document.createElement('button');b.className='qopt';b.textContent=o;b.onclick=()=>answerQ(idx);el.appendChild(b);});
+  document.getElementById('qfb').className='qfb';
+  document.getElementById('qnxt').className='qnxt';
+}
+function answerQ(idx){
+  if(document.querySelector('.qopt.answered')) return;
+  const q=quizData[qi]; const ok=idx===q.c;
+  if(ok)score++;
+  document.querySelectorAll('.qopt').forEach((b,i)=>{b.classList.add('answered');if(i===q.c)b.classList.add('correct');else if(i===idx&&!ok)b.classList.add('wrong');});
+  const fb=document.getElementById('qfb');
+  fb.className='qfb show '+(ok?'ok':'bad');
+  fb.innerHTML=(ok?t('correct'):t('wrong'))+q.fb;
+  const nx=document.getElementById('qnxt');
+  nx.className='qnxt show';
+  nx.textContent=qi===quizData.length-1?t('seeResults'):t('nextQ');
+}
+function nextQ(){
+  qi++;
+  if(qi<quizData.length){renderQ();return;}
+  const pct=Math.round(score/quizData.length*100);
+  const passed=pct>=70;
+  setResult(currentModule, pct, passed);
+  showResults(pct, passed);
+}
+
+// ─── RESULTS ──────────────────────────────────────────────────────────────
+function showResults(pct, passed){
+  const mods=getMods(); const m=mods.find(x=>x.id===currentModule);
+  let acts='';
+  const totalMods=mods.length;
+  acts+=`<button class="bdark" onclick="goHome()">${t('backToModules')}</button>`;
+  acts+=`<button class="bline" onclick="startQuiz(${currentModule})">${t('retakeQuiz')}</button>`;
+  if(passed&&m.id<totalMods) acts+=`<button class="bline" onclick="openModule(getMods().find(x=>x.id==${m.id+1}))">${t('nextModule',m.id+1)}</button>`;
+  if(passed&&m.id===totalMods) acts+=`<button class="bline" onclick="showDST()">${t('goDST')}</button>`;
+  document.getElementById('rbody').innerHTML=`<div class="remi">${passed?'🎉':'😅'}</div><div class="rtitle">${t(passed?'passed':'failed')}</div><div class="rpct ${passed?'pass':'fail'}">${pct}%</div><div class="rsub">${t('scoreLabel',score,quizData.length)}${passed?t('passMsg'):t('failMsg')}</div>${acts}`;
+  showScreen('screen-results');
+  window.scrollTo(0,0);
+  setTimeout(renderHome, 100);
+}
+
+// ─── COMPLETE (EN) ────────────────────────────────────────────────────────
+function showComplete(){
+  const mods=getMods();
+  const avg=Math.round(mods.map(m=>getScore(m.id)).reduce((a,b)=>a+b,0)/mods.length);
+  document.getElementById('compbody').innerHTML=`<div style="font-size:72px">🏆</div><h1 style="font-family:'Nunito',sans-serif;font-size:32px;font-weight:900;letter-spacing:-.5px;margin-top:14px;color:var(--text)">Training Complete!</h1><p style="color:var(--text2);margin-top:8px;font-size:15px;line-height:1.65">You've mastered all 9 modules — congratulations! You're ready for the Demonstration Skills Test.</p><div class="cert"><div class="clbl2">Certificate of Completion</div><h2>Minecraft Education LVL2 Tutor Training</h2><p>Kodland · All ${mods.length} modules · Average score: ${avg}%</p><div class="cmods">${mods.map(m=>`<div class="cmod" style="background:${m.color}20;color:${m.color}">${m.emoji}</div>`).join('')}</div></div><button class="bdark" style="margin-bottom:10px" onclick="showDST()">🎯 Take the Demonstration Skills Test →</button><button class="bline" onclick="goHome()">← Back to Dashboard</button>`;
+  showScreen('screen-complete');
+  window.scrollTo(0,0);
+}
+
+// ─── DST ─────────────────────────────────────────────────────────────────
+function showDST(){
+  showScreen('screen-dst');
+  window.scrollTo(0,0);
+}
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────
+function exitQuiz(){ if(currentModule) openModule(getMods().find(x=>x.id===currentModule)); }
+function goHome(){ renderHome(); showScreen('screen-home'); window.scrollTo(0,0); }
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// Close dropdown on outside click
+document.addEventListener('click', function(e){
+  const dd = document.getElementById('lang-dropdown');
+  if(dd && dd.classList.contains('open') && !dd.contains(e.target)){
+    closeLangDropdown();
+  }
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────
+applyLangUI();
+renderHome();
+showScreen('screen-home');
+// ─── DEV MODE (Shift+D × 3 to toggle) ───────────────────────────────────────
+(function(){
+  let _dSeq = 0, _dTimer = null;
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'D' && e.shiftKey){
+      clearTimeout(_dTimer);
+      _dSeq++;
+      _dTimer = setTimeout(() => _dSeq = 0, 1200);
+      if(_dSeq >= 3){ _dSeq = 0; toggleDevMode(); }
+    }
+  });
+
+  function toggleDevMode(){
+    const active = localStorage.getItem('kl-devmode') === '1';
+    if(!active){
+      // Unlock all modules: mark every module as passed in all progress keys
+      const keys = ['kl-en-progress','kl-tr-progress','kl-it-progress','kl-pl-progress','kl-es-progress','kl-pt-progress','kl-id-progress'];
+      const mods = getMods();
+      keys.forEach(key => {
+        const p = {};
+        mods.forEach(m => { p[m.id] = { passed: true, score: 100 }; });
+        // Also handle TR format (numeric score)
+        if(key === 'kl-tr-progress') mods.forEach(m => { p[m.id] = 100; });
+        localStorage.setItem(key, JSON.stringify(p));
+      });
+      localStorage.setItem('kl-devmode','1');
+      showDevBadge(true);
+      renderHome();
+      alert('🔓 Dev mode ON — all modules unlocked');
+    } else {
+      localStorage.removeItem('kl-devmode');
+      // Clear progress to restore locked state
+      ['kl-en-progress','kl-tr-progress','kl-it-progress','kl-pl-progress','kl-es-progress','kl-pt-progress','kl-id-progress']
+        .forEach(k => localStorage.removeItem(k));
+      showDevBadge(false);
+      renderHome();
+      alert('🔒 Dev mode OFF — progress cleared');
+    }
+  }
+
+  function showDevBadge(on){
+    let b = document.getElementById('dev-badge');
+    if(!b){
+      b = document.createElement('div');
+      b.id = 'dev-badge';
+      b.style.cssText = 'position:fixed;bottom:12px;right:12px;background:#f03d9e;color:#fff;font-family:Nunito,sans-serif;font-weight:900;font-size:12px;padding:4px 10px;border-radius:20px;z-index:9999;pointer-events:none;letter-spacing:.5px';
+      b.textContent = '🔓 DEV MODE';
+      document.body.appendChild(b);
+    }
+    b.style.display = on ? 'block' : 'none';
+  }
+
+  // Restore badge if dev mode was already on from a previous session
+  if(localStorage.getItem('kl-devmode') === '1') {
+    window.addEventListener('DOMContentLoaded', () => showDevBadge(true));
+  }
+})();
+// ─────────────────────────────────────────────────────────────────────────────
+
+</script>
+
+<footer style="text-align:center;padding:20px 24px;font-size:11px;color:var(--text2);border-top:1px solid var(--border);margin-top:auto;line-height:1.7;opacity:0.7;">
+  © 2026 Kodland. Designed and developed by Ayberk Temizci for internal tutor training purposes.<br>
+  This material is the exclusive property of Kodland. Unauthorized duplication, distribution, or use outside of Kodland's internal training program is strictly prohibited.
+</footer>
+</body>
+</html>
+
+
+<!-- This web app was created by Ayberk Toygar Temizci for Kodland -->

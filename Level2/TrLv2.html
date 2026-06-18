@@ -1189,8 +1189,6 @@ showScreen('screen-home');
       keys.forEach(key => {
         const p = {};
         mods.forEach(m => { p[m.id] = { passed: true, score: 100 }; });
-        // Also handle TR format (numeric score)
-        if(key === 'kl-tr-progress') mods.forEach(m => { p[m.id] = 100; });
         localStorage.setItem(key, JSON.stringify(p));
       });
       localStorage.setItem('kl-devmode','1');
